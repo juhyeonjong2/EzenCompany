@@ -2,8 +2,8 @@ use ezencompany;
 
 CREATE TABLE member (
 	mno int unsigned not null primary key auto_increment comment '회원번호',
-    mid varchar(50) not null unique comment '아이디',
-    mpassword varchar(300) not null comment '비밀번호',
+    mid varchar(50) unique comment '아이디',
+    mpassword varchar(300) comment '비밀번호',
     mname text not null comment '이름',
     email varchar(100) not null unique comment '이메일',
     authority varchar(30) not null comment '권한',
@@ -36,6 +36,7 @@ CREATE TABLE reply(
     rdate timestamp not null comment '작성일',
     rcontent varchar(2200) not null comment '내용',
     rpno int unsigned comment '부모댓글',
+    delyn char(1) comment '삭제여부',
     bno int unsigned not null comment '글번호',
 	foreign key(bno) references board(bno),
 	mno int unsigned not null comment '회원번호',
@@ -84,6 +85,7 @@ CREATE TABLE blogReply(
 	bgrdate timestamp not null comment '작성일',
     bgrcontent varchar(2200) not null comment '댓글내용',
     bgrpno int unsigned comment '부모댓글',
+    delyn char(1) comment '삭제여부',
     bgno int unsigned not null comment '블로그번호',
 	foreign key(bgno) references blog(bgno),
 	mno int unsigned not null comment '회원번호',
