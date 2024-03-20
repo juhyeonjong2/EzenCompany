@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<security:http pattern="/resources/**" security="none" /><!-- 제외 url pattern -->
+	<security:http auto-config="true" use-expressions="true" create-session="never" >
+		<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+		<security:intercept-url pattern="/user/**" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')"/>
+		<security:intercept-url pattern="/" access="permitAll"/>
+		<security:form-login login-page="/security/login.do"
+							 login-processing-url="/security/loginOk.do"
+							 authentication-success-handler-ref="userLoginSuccessHandler"
+							 authentication-failure-handler-ref="userLoginFailureHandler"
+							 username-parameter="username" password-parameter="password"/>
+		<security:session-management>
+			<security:concurrency-control max-sessions="1" 
+										  expired-url="/security/login.do"
+										  error-if-maximum-exceeded="true"/>
+		</security:session-management>
+		<security:logout logout-url="/security/logout.do" logout-success-url="/security/login.do"
+						 invalidate-session="true" delete-cookies="JSESSIONID,SPRING_SECURITY_REMEMBER_ME_COOKIE"/>
+		<security:access-denied-handler ref="userDeniedHandler"/>
+		<security:remember-me key="userKey" token-validity-seconds="86400"/>
+	</security:http>
+	
+<!-- 	<bean id="userLoginSuccessHandler" class="edu.springboard.service.UserLoginSuccessHandler" />
+	<bean id="userLoginFailureHandler" class="edu.springboard.service.UserLoginFailureHandler" />
+	<bean id="userDeniedHandler"  class="edu.springboard.service.UserDeniedHandler"/>
+	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	<bean id="userService" class="edu.springboard.service.UserAuthenticationService">
+		<constructor-arg name="sqlSession" ref="sqlSession" />
+	</bean> -->
+	
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="userService">
+			<security:password-encoder ref="passwordEncoder" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+</beans>
