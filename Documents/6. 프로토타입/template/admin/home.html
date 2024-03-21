@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Home</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+ <!-- Vendor CSS Files -->
+ <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+ <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+ <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+ <link href="../assets/vendor/simple-datatables/style.css" rel="stylesheet">
+ 
+  <!-- Template Main CSS File -->
+  <link href="../assets/css/style_admin.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Updated: Mar 17 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+<body>
+  <!-- ======= Header - Admin ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="home.html" class="logo d-flex align-items-center">
+        <i class="bi bi-wrench"></i>
+        <span class="d-none d-lg-block">Admin</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+        <li class="nav-item">
+            <a class="nav-link nav-icon" href="../admin/home.html">
+              <i class="bi bi-key"></i>
+            </a>
+        </li><!-- End Admin Icon-->
+
+        <li class="nav-item dropdown">
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-bell"></i>
+            <span class="badge bg-primary badge-number">4</span>
+          </a><!-- End Notification Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+            <li class="dropdown-header">
+              You have 4 new notifications
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-exclamation-circle text-warning"></i>
+              <div>
+                <h4>Lorem Ipsum</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>30 min. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-x-circle text-danger"></i>
+              <div>
+                <h4>Atque rerum nesciunt</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>1 hr. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-check-circle text-success"></i>
+              <div>
+                <h4>Sit rerum fuga</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>2 hrs. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-info-circle text-primary"></i>
+              <div>
+                <h4>Dicta reprehenderit</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>4 hrs. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li class="dropdown-footer">
+              <a href="#">Show all notifications</a>
+            </li>
+
+          </ul><!-- End Notification Dropdown Items -->
+        </li><!-- End Notification Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link nav-icon" href="#">
+            <i class="bi bi-chat-left-text"></i>
+            <span class="badge bg-success badge-number">3</span>
+          </a>
+        </li><!-- End Messages Icon -->
+        
+        <li class="nav-item">
+            <a class="nav-link nav-icon search-bar-toggle" href="../board/home.html">
+              <i class="bi bi-grid"></i>
+            </a>
+        </li><!-- End Board Icon-->
+
+        <li class="nav-item">
+            <a class="nav-link nav-icon search-bar-toggle" href="../blog/home.html">
+              <i class="bi bi-house-door"></i>
+            </a>
+        </li><!-- End Home Icon-->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar - Admin ======= -->
+  <aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="home.html">
+                <i class="bi bi-people"></i>
+                <span>사원 목록</span>
+            </a>
+        </li><!-- End Employee Page Nav  -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="board.html">
+                <i class="bi bi-columns-gap"></i>
+                <span>게시판 목록</span>
+            </a>
+        </li><!-- End board list Page Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="category.html">
+                <i class="bi bi-layers"></i>
+                <span>분류</span>
+            </a>
+        </li><!-- End category  Page Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="attribute.html">
+                <i class="bi bi-puzzle"></i>
+                <span>속성</span>
+            </a>
+        </li><!-- End attribute Page Nav -->
+
+
+
+<!--      <li class="nav-heading">Pages</li> -->
+    </ul>
+
+  </aside><!-- End Sidebar-->
+
+  <main id="main" class="main">
+    <!--
+    <div class="pagetitle">
+        <h1>사원 목록</h1>
+        
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="home.html">Admin</a></li>
+            <li class="breadcrumb-item">Tables</li>
+            <li class="breadcrumb-item active">Data</li>
+          </ol>
+        </nav>
+        
+      </div>
+      -->
+      <!-- End Page Title -->
+      
+      <section class="section">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="card-title"><b>사원 목록</b></h5>
+                    <button type="button" class="btn btn-primary h-50">+ 사원 등록</button>
+                    <!--<p>Add lightweight datatables to your project with using the <a href="https://github.com/fiduswriter/Simple-DataTables" target="_blank">Simple DataTables</a> library. Just add <code>.datatable</code> class name to any table you wish to conver to a datatable. Check for <a href="https://fiduswriter.github.io/simple-datatables/demos/" target="_blank">more examples</a>.</p>-->
+                </div>
+
+                <!-- Table with stripped rows -->
+                <table class="table datatable">
+                  <thead>
+                    <tr>
+                      <th>아이디</th>
+                      <th>이름</th>
+                      <th>이메일</th>
+                      <th>권한</th>
+                      <th>상태</th>
+                      <th data-type="date" data-format="YYYY/DD/MM">Start Date</th>
+                      <th>&nbsp;</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                        <td>UnityPugh</td>
+                        <td>Unity Pugh</td>
+                        <td>UnityPugh@abc.com</td>
+                        <td>ROLE_USER</td>
+                        <td><img src="../assets/icon/active.png" alt="active"></td>
+                        <td>2005/02/11</td>
+                        <td><a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a></td>
+                      </tr>
+                      <tr>
+                        <td>KylieBishop</td>
+                        <td>Kylie Bishoph</td>
+                        <td>KylieBishop@abc.com</td>
+                        <td>ROLE_USER</td>
+                        <td><img src="../assets/icon/active.png" alt="active"></td>
+                        <td>2005/09/08</td>
+                        <td><a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a></td>
+                      </tr>
+                      <tr>
+                        <td>WillowGilliam</td>
+                        <td>Willow Gilliam</td>
+                        <td>WillowGilliam@gmail.com</td>
+                        <td>ROLE_USER</td>
+                        <td><img src="../assets/icon/active.png" alt="active"></td>
+                        <td>2009/29/11</td>
+                        <td><a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a></td>
+                      </tr>
+                      <tr>
+                        <td>BlossomDickerson</td>
+                        <td>Blossom Dickerson</td>
+                        <td>BlossomDickerson@gmail.com</td>
+                        <td>ROLE_USER</td>
+                        <td><img src="../assets/icon/inactive.png" alt="inactive"></td>
+                        <td>2006/11/09</td>
+                        <td><a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a></td>
+                      </tr>
+                      <tr>
+                        <td>CastorPugh</td>
+                        <td>Castor Pugh</td>
+                        <td>CastorPugh@gmail.com</td>
+                        <td>ROLE_ADMIN</td>
+                        <td><img src="../assets/icon/active.png" alt="active"></td>
+                        <td>2014/23/12</td>
+                        <td><a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a></td>
+                      </tr>
+                      <tr>
+                        <td>DanielBaldwin</td>
+                        <td>Daniel Baldwin</td>
+                        <td>DanielBaldwin@gmail.com</td>
+                        <td>ROLE_USER</td>
+                        <td><img src="../assets/icon/active.png" alt="active"></td>
+                        <td>2000/11/01</td>
+                        <td><a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a></td>
+                      </tr>
+                      <tr>
+                        <td>PhelanKane</td>
+                        <td>Phelan Kane</td>
+                        <td>PhelanKane@gmail.com</td>
+                        <td>ROLE_USER</td>
+                        <td><img src="../assets/icon/active.png" alt="active"></td>
+                        <td>1999/16/04</td>
+                        <td><a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a></td>
+                      </tr>
+                      <tr>
+                        <td>ArmandSuarez</td>
+                        <td>Armand Suarez</td>
+                        <td>ArmandSuarez@gmail.com</td>
+                        <td>ROLE_USER</td>
+                        <td><img src="../assets/icon/active.png" alt="active"></td>
+                        <td>1999/06/11</td>
+                        <td><a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a></td>
+                      </tr>
+                      <tr>
+                        <td>MiraRocha</td>
+                        <td>Mira Rocha</td>
+                        <td>MiraRocha@gmail.com</td>
+                        <td>ROLE_USER</td>
+                        <td><img src="../assets/icon/active.png" alt="active"></td>
+                        <td>2002/04/10</td>
+                        <td><a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a></td>
+                      </tr>
+                      <tr>
+                        <td>LoisTalley</td>
+                        <td>Lois Talley</td>
+                        <td>LoisTalley@gmail.com</td>
+                        <td>ROLE_USER</td>
+                        <td><img src="../assets/icon/active.png" alt="active"></td>
+                        <td>2015/28/04</td>
+                        <td><a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a></td>
+                      </tr>
+                      <tr>
+                        <td>DesireeFerguson</td>
+                        <td>Desiree Ferguson</td>
+                        <td>DesireeFerguson@gmail.com</td>
+                        <td>ROLE_USER</td>
+                        <td><img src="../assets/icon/active.png" alt="active"></td>
+                        <td>2009/15/02</td>
+                        <td><a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a></td>
+                      </tr>
+                      <tr>
+                        <td>HildaNelson</td>
+                        <td>Hilda Nelson</td>
+                        <td>HildaNelson@gmail.com</td>
+                        <td>ROLE_USER</td>
+                        <td><img src="../assets/icon/active.png" alt="active"></td>
+                        <td>2004/23/05</td>
+                        <td><a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a></td>
+                      </tr>
+                      <tr>
+                        <td>EvangelineBeasley</td>
+                        <td>Evangeline Beasley</td>
+                        <td>EvangelineBeasley@gmail.com</td>
+                        <td>ROLE_USER</td>
+                        <td><img src="../assets/icon/active.png" alt="active"></td>
+                        <td>2009/12/03</td>
+                        <td><a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a></td>
+                      </tr>
+                      <tr>
+                        <td>KaliaDiaz</td>
+                        <td>Kalia Diaz</td>
+                        <td>KaliaDiaz@gmail.com</td>
+                        <td>ROLE_USER</td>
+                        <td><img src="../assets/icon/active.png" alt="active"></td>
+                        <td>2013/26/06</td>
+                        <td><a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a></td>
+                      </tr>
+                      <tr>
+                        <td>WyattMccarthy</td>
+                        <td>Wyatt Mccarthy</td>
+                        <td>WyattMccarthy@gmail.com</td>
+                        <td>ROLE_USER</td>
+                        <td><img src="../assets/icon/active.png" alt="active"></td>
+                        <td>2014/23/06</td>
+                        <td><a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a></td>
+                      </tr>
+                      <tr>
+                        <td>LeighRuiz</td>
+                        <td>Leigh Ruiz</td>
+                        <td>LeighRuiz@gmail.com</td>
+                        <td>ROLE_USER</td>
+                        <td><img src="../assets/icon/active.png" alt="active"></td>
+                        <td>2010/24/03</td>
+                        <td><a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a></td>
+                      </tr>
+                   
+                  </tbody>
+                </table>
+                <!-- End Table with stripped rows -->
+  
+              </div>
+            </div>
+  
+          </div>
+        </div>
+      </section>
+
+
+  </main><!-- End #main -->
+
+  <!-- Last -->
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+
+    <!-- Vendor JS Files -->
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/simple-datatables/simple-datatables.js"></script>
+    
+
+
+    <!-- Template Main JS File -->
+    <script src="../assets/js/main.js"></script>
+
+</body>
+</html>
