@@ -11,7 +11,9 @@ public class MemberService {
 	@Autowired
 	MemberDAO memberDAO;
 	
+	//중복체크하는 dao호출
 	public int checkID(String text) {
 		return memberDAO.checkID(text);
 	}
+	
 }

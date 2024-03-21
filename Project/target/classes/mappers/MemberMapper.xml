@@ -6,6 +6,11 @@
 	<select id="checkID" parameterType="String" resultType="int">
 		SELECT count(mid) FROM member where mid = #{text};
 	</select>
+	
+	<insert id="joinOk" parameterType="java.util.Map">	
+		INSERT INTO member(mid, mpassword) 
+		          VALUES(#{mid}, #{mpassword});
+	</insert>
 
 </mapper>
 
