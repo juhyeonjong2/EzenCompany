@@ -2,11 +2,11 @@ use ezencompany;
 
 CREATE TABLE member (
 	mno int unsigned not null primary key auto_increment comment '회원번호',
-    mid varchar(50) unique comment '아이디',
+    mid varchar(20) unique comment '아이디',
     mpassword varchar(300) comment '비밀번호',
     mname text not null comment '이름',
     email varchar(100) not null unique comment '이메일',
-    authority varchar(30) not null comment '권한',
+    authority varchar(10) not null comment '권한',
     joindate timestamp comment '가입일',
     enabled int comment '탈퇴 여부',
     mphone varchar(13) comment '연락처'
@@ -23,8 +23,8 @@ CREATE TABLE board (
 	bno int unsigned not null primary key auto_increment comment '글번호',
     bhit int unsigned not null comment '조회수',
     bdate timestamp not null comment '작성일',
-    bcontent varchar(2200) comment '게시글 내용',
-    btitle varchar(200) comment '게시글 제목',
+    bcontent text comment '게시글 내용',
+    btitle varchar(100) comment '게시글 제목',
     mno int  unsigned not null comment '회원번호',
     foreign key(mno) references member(mno),
     bindex int unsigned not null comment '게시판타입번호',
@@ -34,7 +34,7 @@ CREATE TABLE board (
 CREATE TABLE reply(
 	rno int unsigned not null primary key auto_increment comment '댓글번호',
     rdate timestamp not null comment '작성일',
-    rcontent varchar(2200) not null comment '내용',
+    rcontent varchar(500) not null comment '내용',
     rpno int unsigned comment '부모댓글',
     delyn char(1) comment '삭제여부',
     bno int unsigned not null comment '글번호',
@@ -64,8 +64,8 @@ CREATE TABLE blog(
 	blockyn char(1) comment '비공개 여부',
     bghit int unsigned not null comment '조회수',
     bgdate timestamp not null comment '작성일',
-    bgcontent varchar(2200) comment '블로그 내용',
-    bgtitle varchar(200) comment '블로그 제목',
+    bgcontent text comment '블로그 내용',
+    bgtitle varchar(100) comment '블로그 제목',
     mno int  unsigned not null comment '회원번호',
     foreign key(mno) references member(mno),
     fno int unsigned not null comment '폴더번호',
@@ -83,7 +83,7 @@ CREATE TABLE blogAttach(
 CREATE TABLE blogReply(
 	bgrno int unsigned not null primary key auto_increment comment '블로그댓글번호',
 	bgrdate timestamp not null comment '작성일',
-    bgrcontent varchar(2200) not null comment '댓글내용',
+    bgrcontent varchar(500) not null comment '댓글내용',
     bgrpno int unsigned comment '부모댓글',
     delyn char(1) comment '삭제여부',
     bgno int unsigned not null comment '블로그번호',
@@ -144,6 +144,12 @@ CREATE TABLE memberAttach (
 	foreign key(mno) references member(mno)
 );
 
+#메일발송 테이블
+CREATE TABLE joinMail (
+	shortUrl varchar(100) not null unique comment '짧은 경로',
+	mno int unsigned not null comment '회원번호',
+	foreign key(mno) references member(mno)
+);
 
 
 

@@ -17,4 +17,5 @@ drop table member;
 drop table memberattach;
 drop table notification;
 drop table reply;
+drop table joinMail;
 set FOREIGN_KEY_CHECKS = 1;
