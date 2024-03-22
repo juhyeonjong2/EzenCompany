@@ -195,6 +195,8 @@
         
       </div>
       -->
+
+      
       <!-- End Page Title -->
       
       <section class="section">
@@ -204,7 +206,7 @@
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <h5 class="card-title"><b>사원 목록</b></h5>
-                    <button type="button" class="btn btn-primary h-50">+ 사원 등록</button>
+                    <button type="button" class="btn btn-primary h-50" data-bs-toggle="modal" data-bs-target="#employeeAddModal" >+ 사원 등록</button>
                     <!--<p>Add lightweight datatables to your project with using the <a href="https://github.com/fiduswriter/Simple-DataTables" target="_blank">Simple DataTables</a> library. Just add <code>.datatable</code> class name to any table you wish to conver to a datatable. Check for <a href="https://fiduswriter.github.io/simple-datatables/demos/" target="_blank">more examples</a>.</p>-->
                 </div>
 
@@ -229,14 +231,18 @@
                         <td>ROLE_USER</td>
                         <td><img src="../assets/icon/active.png" alt="active"></td>
                         <td>2005/02/11</td>
-                        <td><a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a></td>
+                        <td>
+                          <a class="link-dark" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#employeeDetailModal" data-bs-mno="1">
+                            <i class="bi bi-three-dots-vertical"></i>
+                          </a>
+                        </td>
                       </tr>
                       <tr>
-                        <td>KylieBishop</td>
+                        <td><a href="#"><i class="bx bx-mail-send"> 재전송</i></a></td>
                         <td>Kylie Bishoph</td>
                         <td>KylieBishop@abc.com</td>
                         <td>ROLE_USER</td>
-                        <td><img src="../assets/icon/active.png" alt="active"></td>
+                        <td><img src="../assets/icon/inactive.png" alt="inactive"></td>
                         <td>2005/09/08</td>
                         <td><a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a></td>
                       </tr>
@@ -381,6 +387,319 @@
 
   </main><!-- End #main -->
 
+  <section class="popup">
+
+    <!-- 사원 등록 팝업 -->
+    <div class="modal fade" id="employeeAddModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">사원 등록</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">  
+            <div class="row mb-3">
+              <label for="join_inputName" class="col-sm-2 col-form-label">이름</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="join_inputName">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label for="join_inputEmail" class="col-sm-2 col-form-label">이메일</label>
+              <div class="col-sm-10">
+                <input type="email" class="form-control" id="join_inputEmail">
+              </div>
+            </div>
+            <hr>
+            <div class="row mb-3">
+              <label class="col-sm-2 col-form-label">직위</label>
+              <div class="col-sm-10">
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>사원</option>
+                  <option value="1">사원</option>
+                  <option value="2">주임</option>
+                  <option value="3">대리</option>
+                </select>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label class="col-sm-2 col-form-label">부서</label>
+              <div class="col-sm-10">
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>개발</option>
+                  <option value="1">개발</option>
+                  <option value="2">운영</option>
+                  <option value="3">영업</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer d-flex align-items-center justify-content-center">
+            <button type="button" class="btn btn-warning btn-lg" data-bs-dismiss="modal">사원 추가</button>
+          </div>
+        </div>
+      </div>
+    </div><!-- End Basic Modal-->
+
+     <!-- 사원 정보 보기 팝업-->
+    <div class="modal fade" id="employeeDetailModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">사원 정보</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body d-flex">
+             <div class="leftleft">
+               <div>
+                <img src="../assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+                <i class="bi bi-camera align-self-end"></i>
+               </div>
+
+                <div class="row mb-3">
+                  <label for="inputId" class="col-sm-2 col-form-label">아이디</label>
+                  <div class="col">
+                    <input type="text" class="form-control" id="info_inputId" value="UnityPugh" disabled >
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="inputName" class="col-sm-2 col-form-label">이름</label>
+                  <div class="col">
+                    <input type="text" class="form-control" id="info_inputName">
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="info_inputEmail" class="col-sm-2 col-form-label">이메일</label>
+                  <div class="col">
+                    <input type="email" class="form-control" id="info_inputEmail">
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="info_inputEmail" class="col-sm-2 col-form-label">이메일</label>
+                  <div class="col">
+                    <input type="email" class="form-control" id="info_inputEmail">
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="info_inputEmail" class="col-sm-2 col-form-label">이메일</label>
+                  <div class="col">
+                    <input type="email" class="form-control" id="info_inputEmail">
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">직위</label>
+                  <div class="col-sm-10">
+                    <select class="form-select" aria-label="Default select example">
+                      <option selected>사원</option>
+                      <option value="1">사원</option>
+                      <option value="2">주임</option>
+                      <option value="3">대리</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">부서</label>
+                  <div class="col-sm-10">
+                    <select class="form-select" aria-label="Default select example">
+                      <option selected>개발</option>
+                      <option value="1">개발</option>
+                      <option value="2">운영</option>
+                      <option value="3">영업</option>
+                    </select>
+                  </div>
+                </div>
+            </div>
+
+            <div class="rtrt overflow-y-auto">
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">부서</label>
+                <div class="col-sm-10">
+                  <select class="form-select" aria-label="Default select example">
+                    <option selected>개발</option>
+                    <option value="1">개발</option>
+                    <option value="2">운영</option>
+                    <option value="3">영업</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">부서</label>
+                <div class="col-sm-10">
+                  <select class="form-select" aria-label="Default select example">
+                    <option selected>개발</option>
+                    <option value="1">개발</option>
+                    <option value="2">운영</option>
+                    <option value="3">영업</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">부서</label>
+                <div class="col-sm-10">
+                  <select class="form-select" aria-label="Default select example">
+                    <option selected>개발</option>
+                    <option value="1">개발</option>
+                    <option value="2">운영</option>
+                    <option value="3">영업</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">부서</label>
+                <div class="col-sm-10">
+                  <select class="form-select" aria-label="Default select example">
+                    <option selected>개발</option>
+                    <option value="1">개발</option>
+                    <option value="2">운영</option>
+                    <option value="3">영업</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">부서</label>
+                <div class="col-sm-10">
+                  <select class="form-select" aria-label="Default select example">
+                    <option selected>개발</option>
+                    <option value="1">개발</option>
+                    <option value="2">운영</option>
+                    <option value="3">영업</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">부서</label>
+                <div class="col-sm-10">
+                  <select class="form-select" aria-label="Default select example">
+                    <option selected>개발</option>
+                    <option value="1">개발</option>
+                    <option value="2">운영</option>
+                    <option value="3">영업</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">부서</label>
+                <div class="col-sm-10">
+                  <select class="form-select" aria-label="Default select example">
+                    <option selected>개발</option>
+                    <option value="1">개발</option>
+                    <option value="2">운영</option>
+                    <option value="3">영업</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">부서</label>
+                <div class="col-sm-10">
+                  <select class="form-select" aria-label="Default select example">
+                    <option selected>개발</option>
+                    <option value="1">개발</option>
+                    <option value="2">운영</option>
+                    <option value="3">영업</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">부서</label>
+                <div class="col-sm-10">
+                  <select class="form-select" aria-label="Default select example">
+                    <option selected>개발</option>
+                    <option value="1">개발</option>
+                    <option value="2">운영</option>
+                    <option value="3">영업</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">부서</label>
+                <div class="col-sm-10">
+                  <select class="form-select" aria-label="Default select example">
+                    <option selected>개발</option>
+                    <option value="1">개발</option>
+                    <option value="2">운영</option>
+                    <option value="3">영업</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">부서</label>
+                <div class="col-sm-10">
+                  <select class="form-select" aria-label="Default select example">
+                    <option selected>개발</option>
+                    <option value="1">개발</option>
+                    <option value="2">운영</option>
+                    <option value="3">영업</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">부서</label>
+                <div class="col-sm-10">
+                  <select class="form-select" aria-label="Default select example">
+                    <option selected>개발</option>
+                    <option value="1">개발</option>
+                    <option value="2">운영</option>
+                    <option value="3">영업</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">부서</label>
+                <div class="col-sm-10">
+                  <select class="form-select" aria-label="Default select example">
+                    <option selected>개발</option>
+                    <option value="1">개발</option>
+                    <option value="2">운영</option>
+                    <option value="3">영업</option>
+                  </select>
+                </div>
+              </div>
+
+
+
+
+
+            </div>
+
+
+            
+          </div>
+          <div class="modal-footer d-flex align-items-center justify-content-center">
+            <button type="button" class="btn btn-danger btn-lg"  onclick="openMultiModal('employeeRemoveModal')">탈퇴</button>
+            <button type="button" class="btn btn-warning btn-lg" data-bs-dismiss="modal">수정</button>
+          </div>
+        </div>
+      </div>
+    </div><!-- End Modal Dialog Scrollable-->
+
+
+    <!-- 탈퇴 확인 모달-->
+    <div class="modal fade" id="employeeRemoveModal" tabindex="-1" data-bs-backdrop="false">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">탈퇴 확인</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            정말 탈퇴할것?
+          </div>
+          <div class="modal-footer d-flex align-items-center justify-content-center">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+            <button type="button" class="btn btn-danger">탈퇴</button>
+          </div>
+        </div>
+      </div>
+    </div><!-- End Disabled Backdrop Modal-->
+
+
+  </section>
   <!-- Last -->
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
@@ -393,6 +712,8 @@
 
     <!-- Template Main JS File -->
     <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/admin/datatable.js"></script>
+    <script src="../assets/js/admin/employee.js"></script>
 
 </body>
 </html>

@@ -38,6 +38,8 @@ h6 {
   font-family: "Nunito", sans-serif;
 }
 
+
+
 /*--------------------------------------------------------------
 # Main
 --------------------------------------------------------------*/
@@ -217,6 +219,8 @@ h6 {
 }
 
 /* Card */
+
+
 .card {
   margin-bottom: 30px;
   border: none;
@@ -254,6 +258,11 @@ h6 {
   background-color: rgba(255, 255, 255, 0.6);
 }
 
+.text-bg-primary {
+  background-color: #8D8EF3 !important;
+}
+
+
 /* Alerts */
 .alert-heading {
   font-weight: 500;
@@ -276,6 +285,13 @@ h6 {
   color: #fff;
   background-color: #8D8EF3 !important;
 }
+
+.btn-warning{
+  color: #fff;
+  background-color: #F08142 !important;
+}
+
+
 
 /* Accordion */
 .accordion-item {
