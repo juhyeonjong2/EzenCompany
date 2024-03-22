@@ -4,8 +4,8 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
 	<!-- 시큐리티와 인코딩 추가 -->
-	<!-- security -->
-	<!-- <filter>
+	<!-- security 
+	 <filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>
 			org.springframework.web.filter.DelegatingFilterProxy
@@ -40,7 +40,7 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			/WEB-INF/spring/root-context.xml
-			<!-- 시큐리티 사용을 위해 가져옴
+			 <!-- 시큐리티 사용을 위해 가져옴
 			/WEB-INF/spring/security/security-context.xml -->
 		</param-value>
 	</context-param>

@@ -22,12 +22,12 @@
           <div class="loginFormTop">
             <div class="textBox">
               <img src="resources/icon/user.png">
-              <input type="text" class="inputText" placeholder="아이디">
+              <input type="text" class="inputText" placeholder="아이디" name="username">
               <div class="Line1"></div>
             </div>
             <div>
               <img src="resources/icon/lock.png">
-              <input type="password" class="inputText" placeholder="비밀번호">
+              <input type="password" class="inputText" placeholder="비밀번호" name="password">
               <div class="Line1"></div>
             </div>
           </div> <!--loginFormTop-->
@@ -36,7 +36,7 @@
             <input type="submit" class="LoginButton" value="로그인">
             <br>
             <a class="ForgotButton" href="searchPW">비밀번호를 잊으셨나요?</a>
-            <a class="ForgotButton" href="aa">회원가입(임시)</a>
+            <a class="ForgotButton" href="join">회원가입(임시)</a>
           </div>
         </form>
       </div> <!--메인의 파란박스-->

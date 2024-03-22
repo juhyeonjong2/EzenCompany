@@ -7,10 +7,17 @@
 		SELECT count(mid) FROM member where mid = #{text};
 	</select>
 	
-	<insert id="joinOk" parameterType="java.util.Map">	
-		INSERT INTO member(mid, mpassword) 
-		          VALUES(#{mid}, #{mpassword});
-	</insert>
+	<select id="requestMno" parameterType="String" resultType="int">
+		SELECT mno FROM joinmail WHERE shortUrl = #{url};
+	</select>
+	
+	<update id="joinOk" parameterType="MemberVO">
+		UPDATE member SET mid = #{mid}, mpassword = #{mpassword} WHERE mno = #{mno}; 
+	</update>
+	
+	<select id="selectLogin" parameterType="String" resultType="java.util.Map">
+		SELECT userid as username, name, password, enabled, authority from user WHERE userid = #{value} 
+	</select>
 
 </mapper>
 

@@ -1,8 +1,26 @@
 package ezen.ezencompany.vo;
 
-//시큐리티가 아닌 다른곳에서 사용할 VO
-public class MemberVO{
-	 
+import java.util.Collection;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+
+//시큐리티에서 사용할 VO
+public class UserVO extends User{
+	
+	//생성자 만들기
+	public UserVO(String username, String password, boolean enabled, boolean accountNonExpired,
+			boolean credentialsNonExpired, boolean accountNonLocked,
+			Collection<? extends GrantedAuthority> authorities, String authority) {
+		
+			super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+			
+			// security 외 필요한 유저 정보를 추가한다.(어디에 사용할 지는 연구 필요)
+			this.mid = username;
+			this.mpassword = password;
+			this.authority = authority;
+	}
+	
 	private int mno;
 	private String mid;
 	private String mpassword;
@@ -12,7 +30,7 @@ public class MemberVO{
 	private String mphone;
 	private int enabled;
 	
-
+	
 	public int getMno() {
 		return mno;
 	}
@@ -61,4 +79,6 @@ public class MemberVO{
 	public void setEnabled(int enabled) {
 		this.enabled = enabled;
 	}
+	
+	
 }

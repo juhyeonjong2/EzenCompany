@@ -1,7 +1,8 @@
 package ezen.ezencompany.controller;
 
 import java.io.IOException;
-
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,10 +25,6 @@ public class SecurityController {
 	@Autowired
 	MemberService memberService;
 	
-	//디비 바로사용하기(집에서는 없어도 경고가 안나오던데 단순 컴퓨터 문제인지 확인필요)
-	@Autowired
-	SqlSession sqlSession;
-	
 	//로그인으로 돌아오기
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String login() {
@@ -47,7 +44,7 @@ public class SecurityController {
 	}
 	
 	//회원가입으로 가기(임시)
-	@RequestMapping(value = "aa", method = RequestMethod.GET)
+	@RequestMapping(value = "join", method = RequestMethod.GET)
 	public String aa() {
 		return "member/join";
 	}
@@ -66,24 +63,39 @@ public class SecurityController {
 	
 	//회원가입을 누른경우
 	@RequestMapping(value = "joinOk", method = RequestMethod.POST)
-	public String joinOk(String mid, String mpassword, String checkpassword,
+	public void joinOk(String mid, String mpassword, String checkpassword,
 						HttpServletResponse response,HttpServletRequest request) throws IOException {
 
-		//비번과 비번확인이 일치하는 경우 
-		if(vo.getMpassword() == checkpassword) {
-			//  링크에 아무 정보 1개가 들어있는 상황이라면
-			//	그 정보를 분해해서 업데이트를 한다 (aws하는법 배우고 적용)
+		//비번과 비번확인이 일치하는 경우 (String타입이기에 내용비교함(참조경로는 달라서))
+		if(mpassword.equals(checkpassword)) {
+			//  링크에 아무 정보 1개가 들어있는 상황이라면(aws하는법 배우고 적용)
+			//	그 정보를 분해해서 업데이트를 한다 (메일발송테이블에 asdfghjkl정보가 있고(db에 임시로 넣어둠) 이걸 mno로 수정후 업데이트)
+			
+			//링크데이터를 mno로 변환(안에 짧은 경로를 집어넣으면됨)
+			int mno = memberService.requestMno("asdfghjkl4");
 			
 			//비밀번호 인코딩
 			BCryptPasswordEncoder epwe = new BCryptPasswordEncoder();
 			
-			Map<String,Object> vo = new HashMap<String,Object>();
-			vo.put("mid", mid);
-			vo.put("mpassword",epwe.encode(mpassword));
+			//객체를 만들어서 파라미터 값을 담는다
+			MemberVO vo = new MemberVO();
+			vo.setMid(mid);
+			vo.setMpassword(epwe.encode(mpassword));
+			vo.setMno(mno);
 			
-			int result = sqlSession.insert("ezen.ezencompany.mapper.memberMapper.joinOk",vo);
+			//관리자에 의해 만들어진 계정에 업데이트
+			int result = memberService.joinOk(vo);
+			System.out.println(result);
 			
-			return "redirect:/member/login";
+			//회원가입 성공메세지와 로그인창으로 이동
+			//응답할때 인코딩하기
+			response.setContentType("text/html; charset=utf-8");
+			response.setCharacterEncoding("UTF-8");
+			
+			response
+			.getWriter()
+			.append("<script>alert('회원가입에 성공하셨습니다. 로그인을 해주세요');location.href='"
+					+request.getContextPath()+"/login'</script>").flush();
 			
 		}else {
 			//응답할때 인코딩하기
@@ -93,13 +105,17 @@ public class SecurityController {
 			response
 			.getWriter() //servlet에서의 응답은 text로 보내기때문에 택스트로 코드를 짜서 보낸다
 			.append("<script>alert('비밀번호가 일치하지 않습니다');location.href='"
-					+request.getContextPath()+"/login'</script>").flush();
+					+request.getContextPath()+"/join'</script>").flush();
 			//request.getContextPath()이게 없다면 domain/controller/member까지 고정에 +경로이다
 			//(다른 컨트롤러에서 이동하는 매퍼사용시 그거 쓸려면 get.context사용해야해(컨트롤러에서 컨트롤러로 이동))
-			//이 부분 리턴 사용할지 위 처럼 사용할지 고민중
-			return "member/login";
 		}
 		
+	}
+	
+	//시큐리티 로그인
+	@RequestMapping(value="/security/login")
+	public String slogin() {
+		return "member/login";
 	}
 	
 }
