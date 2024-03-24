@@ -151,3 +151,38 @@
   }
 
 })();
+
+
+
+// 모달 기능 추가
+
+// 멀티 모달 열기(오픈할 모달 ID)
+function openMultiModal(modalId){
+  const modal = bootstrap.Modal.getInstance(document.getElementById(modalId));
+  if(modal){   
+      modal.show();
+  }
+/*
+  const multiModal = new bootstrap.Modal(document.getElementById(modalId), {} );
+  if(multiModal){
+      multiModal.show();
+  }
+  */
+}
+
+// 멀티 모달 닫기(닫을때 수행할 함수, 함께 닫을 모달ID)
+function closeMultiModal(act, closeModalId){
+  
+  // 기능 실행
+  if(act != null){
+      act();
+  }
+  
+  // 관련 창 닫음
+  if(closeModalId != null){
+      const modal = bootstrap.Modal.getInstance(document.getElementById(closeModalId));
+      if(modal){   
+          modal.hide();
+      }
+  }
+}
