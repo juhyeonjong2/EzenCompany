@@ -27,9 +27,9 @@
 		<security:access-denied-handler ref="userDeniedHandler"/>
 	</security:http>
 	
-	<!-- <bean id="userLoginSuccessHandler" class="ezen.ezencompany.service.UserLoginSuccessHandler" />
-	 <bean id="userLoginFailureHandler" class="edu.springboard.service.UserLoginFailureHandler" />
-	<bean id="userDeniedHandler"  class="edu.springboard.service.UserDeniedHandler"/> 
+	<bean id="userLoginSuccessHandler" class="ezen.ezencompany.service.UserLoginSuccessHandler" />
+	<bean id="userLoginFailureHandler" class="ezen.ezencompany.service.UserLoginFailureHandler" />
+	<bean id="userDeniedHandler"  class="ezen.ezencompany.service.UserDeniedHandler"/> 
 	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	<bean id="userService" class="ezen.ezencompany.service.UserAuthenticationService">
 		<constructor-arg name="sqlSession" ref="sqlSession" />
