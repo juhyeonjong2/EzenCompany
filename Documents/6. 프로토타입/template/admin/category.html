@@ -13,18 +13,12 @@
  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+ <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
  <link href="../assets/vendor/simple-datatables/style.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
   <link href="../assets/css/style_admin.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: NiceAdmin
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Updated: Mar 17 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 <body>
   <!-- ======= Header - Admin ======= -->
@@ -189,7 +183,7 @@
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center">
                   <h5 class="card-title"><b>분류 목록</b></h5>
-                  <button type="button" class="btn btn-primary h-50">+ 분류 추가</button>
+                  <button type="button" class="btn btn-primary h-50" data-bs-toggle="modal" data-bs-target="#categoryAddModal">+ 분류 추가</button>
               </div>
 
               <!-- Table with stripped rows -->
@@ -208,7 +202,9 @@
                     <td>직무</td>
                     <td>TRUE</td>
                     <td>
-                      <a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a>
+                      <a class="link-dark" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#categoryDetailModal" data-bs-category="job">
+                        <i class="bi bi-three-dots-vertical"></i>
+                      </a>
                     </td>
                   </tr>
                   <tr>
@@ -216,7 +212,9 @@
                     <td>직군</td>
                     <td>FALSE</td>
                     <td>
-                      <a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a>
+                      <a class="link-dark" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#categoryDetailModal" data-bs-category="OCCUPATION">
+                        <i class="bi bi-three-dots-vertical"></i>
+                      </a>
                     </td>
                   </tr>
                   <tr>
@@ -224,7 +222,9 @@
                     <td>직위</td>
                     <td>FALSE</td>
                     <td>
-                      <a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a>
+                      <a class="link-dark" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#categoryDetailModal" data-bs-category="POSITION">
+                        <i class="bi bi-three-dots-vertical"></i>
+                      </a>
                     </td>
                   </tr> 
 
@@ -235,6 +235,124 @@
             </div>
           </div>
 
+        </div>
+      </div>
+    </section>
+
+    <section class="popup">
+
+      <!-- 분류 추가 팝업 -->
+      <div class="modal fade" id="categoryAddModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">분류 추가</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+  
+            <div class="modal-body">  
+              <div class="container-fluid">
+                <div class="row mb-1">
+                  <div>
+                    <label for="category_inputCode" class="col-sm-4 col-form-label">코드</label>
+                    <div class="col">
+                      <input type="text" class="form-control" id="category_inputCode">
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-1">
+                  <div>
+                    <label for="category_inputValue" class="col-sm-4 col-form-label">값</label>
+                    <div class="col">
+                      <input type="email" class="form-control" id="category_inputValue">
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-1">
+                  <div>
+                    <label class="col-sm-4 col-form-label">블로그 표시</label>
+                    <div class="col">
+                      <select class="form-select" aria-label="Default select example">
+                        <option selected>FALSE</option>
+                        <option value="1">FALSE</option>
+                        <option value="2">TRUE</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer d-flex align-items-center justify-content-center">
+              <button type="button" class="btn btn-warning btn-lg" data-bs-dismiss="modal">추가</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+       <!-- 분류 정보 보기 팝업-->
+      <div class="modal fade" id="categoryDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">분류 정보</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                  <div class="row mb-1">
+                    <div>
+                      <label for="attribute_inputKey" class="col-sm-4 col-form-label">코드</label>
+                      <div class="col">
+                        <input type="text" class="form-control" id="attribute_inputKey" value="TEAM">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-1">
+                    <div>
+                      <label for="attribute_inputValue" class="col-sm-4 col-form-label">값</label>
+                      <div class="col">
+                        <input type="email" class="form-control" id="attribute_inputValue" value="프로그래밍팀">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-1">
+                    <div>
+                      <label class="col-sm-4 col-form-label">블로그 표시</label>
+                      <div class="col">
+                        <select class="form-select" aria-label="Default select example">
+                          <option selected>FALSE</option>
+                          <option value="1">FALSE</option>
+                          <option value="2">TRUE</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer d-flex align-items-center justify-content-center">
+              <button type="button" class="btn btn-danger btn-lg"  onclick="openMultiModal('categoryRemoveModal')">삭제</button>
+              <button type="button" class="btn btn-warning btn-lg" data-bs-dismiss="modal">수정</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- 분류 삭제 확인 모달-->
+      <div class="modal fade" id="categoryRemoveModal" tabindex="-1" data-bs-backdrop="false">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">삭제 확인</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              정말 삭제 하시겠습니까?
+            </div>
+            <div class="modal-footer d-flex align-items-center justify-content-center">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="closeMultiModal(()=>{},'categoryDetailModal')">삭제</button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -252,6 +370,9 @@
 
     <!-- Template Main JS File -->
     <script src="../assets/js/main.js"></script>
-    <script src="../assets/js/admin/datatable.js"></script>
+    <script src="../assets/js/admin/category.js"></script>
+
+    <!-- Last JS-->
+    <script src="../assets/js/tooltips.js"></script>
 </body>
 </html>

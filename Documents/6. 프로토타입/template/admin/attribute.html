@@ -13,18 +13,12 @@
  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+ <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
  <link href="../assets/vendor/simple-datatables/style.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
   <link href="../assets/css/style_admin.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: NiceAdmin
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Updated: Mar 17 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 <body>
   <!-- ======= Header - Admin ======= -->
@@ -183,37 +177,28 @@
   <main id="main" class="main">
     <div class="pagetitle">
         <h1>분류</h1>
-        <!--
-        <nav>
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="home.html">Admin</a></li>
-            <li class="breadcrumb-item">Tables</li>
-            <li class="breadcrumb-item active">Data</li>
-          </ol>
-        </nav>
-        -->
     </div><!-- End Page Title -->
       
     <section class="section">
       <div class="row row-cols-1 row-cols-md-5 g-1">
         <div class="col">
           <div class="card text-bg-primary m-1">
-            <a class="link-light" href="attribute_list.html"><p class="text-center m-5 fs-5">직무</p></a>
+            <a class="link-light" href="attribute_list.html?category=job"><p class="text-center m-5 fs-5">직무</p></a>
           </div>
         </div>
         <div class="col">
           <div class="card text-bg-primary m-1">
-            <a class="link-light" href="attribute_list.html"><p class="text-center m-5 fs-5">직군</p></a>
+            <a class="link-light" href="attribute_list.html?category=jobgroup"><p class="text-center m-5 fs-5">직군</p></a>
           </div>
         </div>
         <div class="col">
           <div class="card text-bg-primary m-1">
-            <a class="link-light" href="attribute_list.html"><p class="text-center m-5 fs-5">직위</p></a>
+            <a class="link-light" href="attribute_list.html?category=position"><p class="text-center m-5 fs-5">직위</p></a>
           </div>
         </div>
         <div class="col">
           <div class="card text-bg-primary m-1">
-            <a class="link-light" href="attribute_list.html"><p class="text-center m-5 fs-5">부서</p></a>
+            <a class="link-light" href="attribute_list.html?category=part"><p class="text-center m-5 fs-5">부서</p></a>
           </div>
         </div>
         <div class="col">
@@ -221,6 +206,7 @@
             <a class="link-light" href="attribute_list.html"><p class="text-center m-5 fs-5">팀</p></a>
           </div>
         </div>
+        <!-- dummy -->
         <div class="col">
           <div class="card text-bg-primary m-1">
             <p class="text-center m-5 fs-5">A</p>
@@ -320,7 +306,6 @@
   </div>
   </main><!-- End #main -->
 
-
   <!-- Last -->
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
@@ -332,6 +317,5 @@
 
     <!-- Template Main JS File -->
     <script src="../assets/js/main.js"></script>
-    <script src="../assets/js/admin/datatable.js"></script>
 </body>
 </html>

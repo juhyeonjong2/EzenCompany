@@ -23,31 +23,50 @@
       }
     }
 
-
     /**
      * Initiate Datatables
      */
     const datatables = select('.datatable', true);
     datatables.forEach(datatable => {
-      new simpleDatatables.DataTable(datatable, {
+    new simpleDatatables.DataTable(datatable, {
         perPageSelect: [5, 10, 15, ["All", -1]],
+        /*
         labels:{
-          info: "총 {rows}명"
-        },
+        info: "총 {rows}개"
+        },*/
+
+        /*
         columns: [{
             select: 2,
             sortSequence: ["desc", "asc"]
-          },
-          {
+        },
+        {
             select: 3,
             sortSequence: ["desc"]
-          },
-          {
+        },
+        {
             select: 4,
             cellClass: "green",
             headerClass: "red"
-          }
-        ]
-      });
+        }
+        ]*/
+    });
     })
+
+
+    /**
+     * Initiate Modals
+     */
+     // 분류 수정 팝업 (category 넘겨받기)
+     const categoryEditModal = document.getElementById('categoryEditModal')
+     if (categoryEditModal) {
+        categoryEditModal.addEventListener('show.bs.modal', event => 
+         {
+             const button = event.relatedTarget;             
+             const category = button.getAttribute('data-bs-category');
+             console.log(category);
+ 
+             // to do
+         });   
+     }
   })();

@@ -112,18 +112,9 @@
   }
 
   /**
-   * Initiate tooltips
-   */
-  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-  var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl)
-  })
-
-  /**
    * Initiate Bootstrap validation check
    */
   var needsValidation = document.querySelectorAll('.needs-validation')
-
   Array.prototype.slice.call(needsValidation)
     .forEach(function(form) {
       form.addEventListener('submit', function(event) {
@@ -135,21 +126,6 @@
         form.classList.add('was-validated')
       }, false)
     })
-
-  /**
-   * Autoresize echart charts
-   */
-  const mainContainer = select('#main');
-  if (mainContainer) {
-    setTimeout(() => {
-      new ResizeObserver(function() {
-        select('.echart', true).forEach(getEchart => {
-          echarts.getInstanceByDom(getEchart).resize();
-        })
-      }).observe(mainContainer);
-    }, 200);
-  }
-
 })();
 
 
@@ -158,21 +134,22 @@
 
 // 멀티 모달 열기(오픈할 모달 ID)
 function openMultiModal(modalId){
+  const modal = new bootstrap.Modal(document.getElementById(modalId), {} );
+  if(modal){
+    modal.show();
+  }
+
+/*
   const modal = bootstrap.Modal.getInstance(document.getElementById(modalId));
   if(modal){   
       modal.show();
-  }
-/*
-  const multiModal = new bootstrap.Modal(document.getElementById(modalId), {} );
-  if(multiModal){
-      multiModal.show();
   }
   */
 }
 
 // 멀티 모달 닫기(닫을때 수행할 함수, 함께 닫을 모달ID)
 function closeMultiModal(act, closeModalId){
-  
+  console.log("closeMultiModal", closeModalId, document.getElementById(closeModalId));
   // 기능 실행
   if(act != null){
       act();
@@ -181,6 +158,7 @@ function closeMultiModal(act, closeModalId){
   // 관련 창 닫음
   if(closeModalId != null){
       const modal = bootstrap.Modal.getInstance(document.getElementById(closeModalId));
+      console.log("closeMultiModal" , modal);
       if(modal){   
           modal.hide();
       }

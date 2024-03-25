@@ -13,18 +13,12 @@
  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+ <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
  <link href="../assets/vendor/simple-datatables/style.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
   <link href="../assets/css/style_admin.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: NiceAdmin
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Updated: Mar 17 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 <body>
   <!-- ======= Header - Admin ======= -->
@@ -188,8 +182,9 @@
           <div class="card">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center">
-                  <h5 class="card-title"><b>직군 속성 목록</b></h5>
-                  <button type="button" class="btn btn-primary h-50">+ 속성 추가</button>
+                  <h5 class="card-title"><b><span class="category">직군</span> 속성 목록</b></h5>
+                  <!-- data-bs-category 에 카테고리 코드를 넘겨야함.-->
+                  <button type="button" class="btn btn-primary h-50" data-bs-toggle="modal" data-bs-target="#attributeAddModal" data-bs-category="job">+ 속성 추가</button>
               </div>
 
               <!-- Table with stripped rows -->
@@ -206,7 +201,9 @@
                     <td>PG</td>
                     <td>프로그래머</td>
                     <td>
-                      <a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a>
+                      <a class="link-dark" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#attributeDetailModal" data-bs-category="job" data-bs-attribute="PG">
+                        <i class="bi bi-three-dots-vertical"></i>
+                      </a>
                     </td>
                   </tr>
                   <tr>
@@ -236,21 +233,115 @@
       </div>
     </section>
 
-  </div>
-  </main><!-- End #main -->
+    <section class="popup">
 
+      <!-- 속성 추가 팝업 -->
+      <div class="modal fade" id="attributeAddModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">속성 추가</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+  
+            <div class="modal-body">  
+              <div class="container-fluid">
+                <div class="row mb-1">
+                  <div>
+                    <label for="join_inputName" class="col-sm-4 col-form-label">이름</label>
+                    <div class="col">
+                      <input type="text" class="form-control" id="join_inputName">
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-1">
+                  <div>
+                    <label for="join_inputEmail" class="col-sm-4 col-form-label">이메일</label>
+                    <div class="col">
+                      <input type="email" class="form-control" id="join_inputEmail">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer d-flex align-items-center justify-content-center">
+              <button type="button" class="btn btn-warning btn-lg" data-bs-dismiss="modal">추가</button>
+            </div>
+          </div>
+        </div>
+      </div><!-- End Basic Modal-->
+  
+       <!-- 속성 정보 보기 팝업-->
+      <div class="modal fade" id="attributeDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">속성 정보</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                  <div class="row mb-1">
+                    <div>
+                      <label for="attribute_inputKey" class="col-sm-4 col-form-label">키</label>
+                      <div class="col">
+                        <input type="text" class="form-control" id="attribute_inputKey" value="QA">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-1">
+                    <div>
+                      <label for="attribute_inputValue" class="col-sm-4 col-form-label">값</label>
+                      <div class="col">
+                        <input type="email" class="form-control" id="attribute_inputValue" value="품질보증">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer d-flex align-items-center justify-content-center">
+              <button type="button" class="btn btn-danger btn-lg"  onclick="openMultiModal('attributeRemoveModal')">삭제</button>
+              <button type="button" class="btn btn-warning btn-lg" data-bs-dismiss="modal">수정</button>
+            </div>
+          </div>
+        </div>
+      </div><!-- End Modal Dialog Scrollable-->
+  
+      <!-- 탈퇴 확인 모달-->
+      <div class="modal fade" id="attributeRemoveModal" tabindex="-1" data-bs-backdrop="false">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">삭제 확인</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              정말 삭제 하시겠습니까?
+            </div>
+            <div class="modal-footer d-flex align-items-center justify-content-center">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="closeMultiModal(()=>{},'attributeDetailModal')">삭제</button>
+            </div>
+          </div>
+        </div>
+      </div><!-- End Disabled Backdrop Modal-->
+    </section>
+
+  </main><!-- End #main -->
 
   <!-- Last -->
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
+  <!-- Vendor JS Files -->
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/simple-datatables/simple-datatables.js"></script>
 
-    <!-- Vendor JS Files -->
-    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/vendor/simple-datatables/simple-datatables.js"></script>
 
+  <!-- Template Main JS File -->
+  <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/admin/attribute.js"></script>
 
-    <!-- Template Main JS File -->
-    <script src="../assets/js/main.js"></script>
-    <script src="../assets/js/admin/datatable.js"></script>
+  <!-- Last JS-->
+  <script src="../assets/js/tooltips.js"></script>
 </body>
 </html>
