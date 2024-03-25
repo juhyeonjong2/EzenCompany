@@ -26,7 +26,7 @@ public class SecurityController {
 	MemberService memberService;
 	
 	//로그인으로 돌아오기
-	@RequestMapping(value = "login", method = RequestMethod.GET)
+	@RequestMapping(value = "/login")
 	public String login() {
 		return "member/login";
 	}
@@ -72,7 +72,7 @@ public class SecurityController {
 			//	그 정보를 분해해서 업데이트를 한다 (메일발송테이블에 asdfghjkl정보가 있고(db에 임시로 넣어둠) 이걸 mno로 수정후 업데이트)
 			
 			//링크데이터를 mno로 변환(안에 짧은 경로를 집어넣으면됨)
-			int mno = memberService.requestMno("asdfghjkl4");
+			int mno = memberService.requestMno("asdfghjkl5");
 			
 			//비밀번호 인코딩
 			BCryptPasswordEncoder epwe = new BCryptPasswordEncoder();
@@ -85,7 +85,6 @@ public class SecurityController {
 			
 			//관리자에 의해 만들어진 계정에 업데이트
 			int result = memberService.joinOk(vo);
-			System.out.println(result);
 			
 			//회원가입 성공메세지와 로그인창으로 이동
 			//응답할때 인코딩하기
@@ -109,13 +108,7 @@ public class SecurityController {
 			//request.getContextPath()이게 없다면 domain/controller/member까지 고정에 +경로이다
 			//(다른 컨트롤러에서 이동하는 매퍼사용시 그거 쓸려면 get.context사용해야해(컨트롤러에서 컨트롤러로 이동))
 		}
-		
-	}
-	
-	//시큐리티 로그인
-	@RequestMapping(value="/security/login")
-	public String slogin() {
-		return "member/login";
-	}
+
+	} //join
 	
 }

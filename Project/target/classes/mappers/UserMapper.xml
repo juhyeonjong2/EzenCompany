@@ -4,7 +4,7 @@
 <mapper namespace="ezen.ezencompany.mapper.userMapper">
 	
 	<select id="selectLogin" parameterType="String" resultType="java.util.Map">
-		SELECT userid as username, name, password, enabled, authority from user WHERE userid = #{value} 
+		SELECT mid as username, mname, mpassword, enabled, authority from member WHERE mid = #{value} 
 	</select>
 
 </mapper>

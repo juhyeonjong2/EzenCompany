@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import ezen.ezencompany.vo.UserVO;
+
 
 public class UserLoginSuccessHandler implements AuthenticationSuccessHandler{
 	//로그인성공시 이쪽으로 오게된다
@@ -20,7 +22,7 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler{
 
 			UserVO loginUser = (UserVO)authentication.getPrincipal();
 			
-			System.out.println(loginUser.getUserid());
+			System.out.println(loginUser.getMid());
 			
 
 			response.sendRedirect(request.getContextPath());

@@ -17,8 +17,7 @@
           <br>
           <img src="resources/icon/mainUser.png" class="loginImg">
         </div>
-        
-        <form action="#">
+        <form action="<%=request.getContextPath()%>/loginOk" method="post">
           <div class="loginFormTop">
             <div class="textBox">
               <img src="resources/icon/user.png">

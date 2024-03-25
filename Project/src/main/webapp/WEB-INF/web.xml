@@ -40,8 +40,8 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			/WEB-INF/spring/root-context.xml
-			 <!-- 시큐리티 사용을 위해 가져옴
-			/WEB-INF/spring/security/security-context.xml -->
+			 <!-- 시큐리티를 읽어오는 로직-->
+			/WEB-INF/spring/security/security-context.xml
 		</param-value>
 	</context-param>
 	
