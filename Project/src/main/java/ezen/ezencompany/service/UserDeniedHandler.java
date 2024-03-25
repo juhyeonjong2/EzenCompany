@@ -16,7 +16,7 @@ public class UserDeniedHandler implements AccessDeniedHandler {
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response,
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {
-		System.out.println("12");
+		System.out.println("권한 없어요");
 		response.sendRedirect(request.getContextPath());
 	}
 

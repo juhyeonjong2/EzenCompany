@@ -25,6 +25,25 @@
 				
 			});
 		}
+
+		//출처: https://velog.io/@yu_oolong/SpringFramework-%EC%9D%B4%EB%A9%94%EC%9D%BC-%EC%9D%B8%EC%A6%9D-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0feat.-%EB%84%A4%EC%9D%B4%EB%B2%84-%EB%A9%94%EC%9D%BC
+		//인증번호 받기 클릭 시
+		$(".joinButton").click(function() {
+	    	const email = $("#email").val(); //사용자가 입력한 이메일 값 얻어오기 
+	    	//짧은경로를 가공해 email을 얻는 dao를 호출함
+	    	
+	    	//Ajax로 전송
+	        $.ajax({
+	        	url : './EmailAuth', //컨트롤러에서 사용할 경로(수정필요)
+	        	data : {email : email},
+	        	type : 'POST',
+	        	dataType : 'json',
+	        	success : function(result) {
+	        		code = result; //밖에서 인증번호와 맞는지 비교하기 위해서 만듬
+	        		alert("인증 코드가 입력하신 이메일로 전송 되었습니다.");
+	       		}
+	        }); //End Ajax
+	    });
 	</script>
 </head>
 <body>

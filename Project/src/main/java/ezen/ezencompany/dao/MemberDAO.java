@@ -31,4 +31,9 @@ public class MemberDAO {
 	public int joinOk(MemberVO vo) {
 		return sqlSession.update(namespace+".joinOk", vo);
 	}
+	
+	//비밀번호 재설정 클릭 시 아이디를 이메일로 가공
+	public String getEmail(String mid) {
+		return sqlSession.selectOne(namespace+".getEmail", mid);
+	}
 }

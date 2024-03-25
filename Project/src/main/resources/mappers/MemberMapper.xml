@@ -14,11 +14,10 @@
 	<update id="joinOk" parameterType="MemberVO">
 		UPDATE member SET mid = #{mid}, mpassword = #{mpassword} WHERE mno = #{mno}; 
 	</update>
-	
-	<select id="selectLogin" parameterType="String" resultType="java.util.Map">
-		SELECT userid as username, name, password, enabled, authority from user WHERE userid = #{value} 
-	</select>
 
+	<select id="getEmail" parameterType="String" resultType="String" >
+		SELECT email from member WHERE mid = #{mid} 
+	</select>
 </mapper>
 
 

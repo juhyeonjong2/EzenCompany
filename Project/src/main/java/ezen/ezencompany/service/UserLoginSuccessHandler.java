@@ -19,11 +19,10 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler{
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {;
 		
-
+			//authentication = 저장된 모든 정보, loginUser = db에 있는 정보만 있음
 			UserVO loginUser = (UserVO)authentication.getPrincipal();
 			
-			System.out.println(loginUser.getMid());
-			
+			System.out.println("로그인 성공");
 
 			response.sendRedirect(request.getContextPath());
 	}

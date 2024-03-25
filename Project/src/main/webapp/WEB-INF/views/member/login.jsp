@@ -34,7 +34,7 @@
           <div class="submitBox">
             <input type="submit" class="LoginButton" value="로그인">
             <br>
-            <a class="ForgotButton" href="searchPW">비밀번호를 잊으셨나요?</a>
+            <a class="ForgotButton" href="pwSearch">비밀번호를 잊으셨나요?</a>
             <a class="ForgotButton" href="join">회원가입(임시)</a>
           </div>
         </form>
