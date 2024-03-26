@@ -11,6 +11,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -60,6 +61,11 @@ public class SecurityController {
 			return "false";
 		}
 	}
+	// 경로로 온 경우 값 받아오는 예시
+	//@RequestMapping(value = "joinOk/{id}", method = RequestMethod.POST)
+	//public void joinOk(String mid, String mpassword, String checkpassword, @PathVariable("id") String id,
+	//		HttpServletResponse response,HttpServletRequest request) throws IOException {
+	
 	
 	//회원가입을 누른경우
 	@RequestMapping(value = "joinOk", method = RequestMethod.POST)

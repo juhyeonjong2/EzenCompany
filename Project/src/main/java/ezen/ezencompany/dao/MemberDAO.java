@@ -1,5 +1,7 @@
 package ezen.ezencompany.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -35,5 +37,10 @@ public class MemberDAO {
 	//비밀번호 재설정 클릭 시 아이디를 이메일로 가공
 	public String getEmail(String mid) {
 		return sqlSession.selectOne(namespace+".getEmail", mid);
+	}
+	
+	//사원목록을 가져온다
+	public List<MemberVO> employeeList(){
+		return sqlSession.selectList(namespace+".employeeList");
 	}
 }

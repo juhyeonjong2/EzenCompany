@@ -32,7 +32,7 @@ public class UserAuthenticationService implements UserDetailsService {
 			= sqlSession.selectOne("ezen.ezencompany.mapper.userMapper.selectLogin",username);
 
 		if(user == null) {
-			System.out.println("user::"+user);
+			//System.out.println("user::"+user); 로그사용권장함
 			throw new UsernameNotFoundException(username);
 		}
 		

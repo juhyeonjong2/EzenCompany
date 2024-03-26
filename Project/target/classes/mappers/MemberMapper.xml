@@ -18,6 +18,10 @@
 	<select id="getEmail" parameterType="String" resultType="String" >
 		SELECT email from member WHERE mid = #{mid} 
 	</select>
+	
+	<select id="employeeList" parameterType="MemberVO" resultType="MemberVO" >
+		SELECT mid, mname, email, authority, substr(joindate, '1', '10' ) as joindate from member; 
+	</select>
 </mapper>
 
 

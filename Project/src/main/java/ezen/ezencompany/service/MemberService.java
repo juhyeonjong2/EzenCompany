@@ -1,5 +1,8 @@
 package ezen.ezencompany.service;
 
+import java.util.List;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +28,11 @@ public class MemberService {
 	//관리자에 의해 만들어진 계정에 업데이트
 	public int joinOk(MemberVO vo) {
 		return memberDAO.joinOk(vo);
+	}
+	
+	//사원 리스트를 가져옴
+	public List<MemberVO> employeeList() {
+		return memberDAO.employeeList();
 	}
 	
 }
