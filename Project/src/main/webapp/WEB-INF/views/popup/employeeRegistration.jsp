@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,18 +11,19 @@
       <div class="modal fade" id="employeeAddModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div class="modal-content">
+          
+          <form action="registration" method="post">
             <div class="modal-header">
               <h5 class="modal-title">사원 등록</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-  
             <div class="modal-body">  
               <div class="container-fluid">
                 <div class="row mb-1">
                   <div>
                     <label for="join_inputName" class="col-sm-4 col-form-label">이름</label>
                     <div class="col">
-                      <input type="text" class="form-control" id="join_inputName">
+                      <input type="text" class="form-control" id="join_inputName" name="name">
                     </div>
                   </div>
                 </div>
@@ -29,42 +31,39 @@
                   <div>
                     <label for="join_inputEmail" class="col-sm-4 col-form-label">이메일</label>
                     <div class="col">
-                      <input type="email" class="form-control" id="join_inputEmail">
+                      <input type="email" class="form-control" id="join_inputEmail" name="email">
                     </div>
                   </div>
                 </div>
                 <hr>
-                <div class="row mb-1">
-                  <div>
-                    <label class="col-sm-4 col-form-label">직위</label>
-                    <div class="col">
-                      <select class="form-select" aria-label="Default select example">
-                        <option selected>사원</option>
-                        <option value="1">사원</option>
-                        <option value="2">주임</option>
-                        <option value="3">대리</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                <div class="row mb-1">
-                  <div>
-                    <label class="col-sm-4 col-form-label">부서</label>
-                    <div class="col">
-                      <select class="form-select" aria-label="Default select example">
-                        <option selected>개발</option>
-                        <option value="1">개발</option>
-                        <option value="2">운영</option>
-                        <option value="3">영업</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
+                
+                <%--1차반복문 사용(분류 나열) --%>
+                <c:forEach var="cate" items="${cate}">
+	                <div class="row mb-1">
+	                  <div>
+	                    <label class="col-sm-4 col-form-label">${cate.value}</label>
+	                    <div class="col">
+	                      <select class="form-select" aria-label="Default select example" name="${cate.code}">
+	                      
+	                      <%-- 2차반복문으로 속성과 분류의 코드를 비교하고 맞는것만 나열--%>
+	                      	<c:forEach var="attr" items="${attr}">
+	                      		<c:if test="${cate.code eq attr.code}">
+	                      			<option value="${attr.otkey}">${attr.value}</option>
+	                      		</c:if>
+	                        </c:forEach>
+	                        
+	                      </select>
+	                    </div>
+	                  </div>
+	                </div>
+                </c:forEach>
+                        
               </div>
-            </div>
-            <div class="modal-footer d-flex align-items-center justify-content-center">
-              <button type="button" class="btn btn-warning btn-lg" data-bs-dismiss="modal">사원 추가</button>
-            </div>
+             </div>
+             <div class="modal-footer d-flex align-items-center justify-content-center">
+               <button type="submit" class="btn btn-warning btn-lg" data-bs-dismiss="modal">사원 추가</button>
+             </div>
+            </form> <%--form태그 --%>
           </div>
         </div>
       </div><!-- End Basic Modal-->
@@ -87,7 +86,7 @@
                       <div class="row mb-1 d-flex align-items-center justify-content-center">
                         <div class="card border w-50">
                           <div class="card-body profile-card p-0 pt-4 d-flex flex-column align-items-center">
-                            <img src="../assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+                            <img src="<%=request.getContextPath()%>/resources/img/profile-img.jpg" alt="Profile" class="rounded-circle">
                             <a class="align-self-end" href="#" onclick="()=>{}"><i class="bi bi-camera"></i></a>
                           </div>
                         </div>  

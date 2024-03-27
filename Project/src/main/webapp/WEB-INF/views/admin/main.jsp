@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    <!-- 우선순위 1.계정리스트를 전부 들고온다  (컨트롤러에서 모달에 넣은 뒤 for문 돌린다)
-    		   2. 회원가입하지 않은 직원은 메일발송으로 나오게 한다
+    <!-- 우선순위 1.계정리스트를 전부 들고온다  (컨트롤러에서 모달에 넣은 뒤 for문 돌린다) ok
+    		   2. 회원가입하지 않은 직원은 메일발송으로 나오게 한다(아이디가 null일 경우 ) ok
     		   3. 사원 등록로직을 작성한다
     		   4. 메일발송 로직을 작성한다 -->
 <!DOCTYPE html>
@@ -61,11 +61,34 @@
                 <tbody>
                 <c:forEach var="vo" items="${list}">
                   <tr>
-                      <td>${vo.mid}</td>
+                  	  <c:choose>
+                  		<%--아이디가 null이거나 빈문자열일 경우 --%>
+                  		<c:when test="${vo.mid eq null || vo.mid == ''}">
+                  			<td style="color:#4154f1" onclick="aa()"><i class="bx bx-mail-send"> 재전송</td>
+                  		</c:when>
+                  		
+                  		<%--아이디가 null이아니면서 빈문자열이 아닌경우 --%>
+                  		<c:when test="${vo.mid ne null && vo.mid ne ''}">
+                  			<td>${vo.mid}</td>
+                  		</c:when>
+                  	  </c:choose>
+                  	   
                       <td>${vo.mname}</td>
                       <td>${vo.email}</td>
                       <td>${vo.authority}</td>
-                      <td><img src="<%=request.getContextPath()%>/resources/icon/active.png" alt="active"></td>
+
+                      <c:choose>
+                      	<%--아이디가 null이거나 빈문자열이거나 회원탈퇴한 경우(enabled가 1이 아닌경우) --%>
+                  		<c:when test="${vo.mid eq null || vo.mid == '' || vo.enabled ne 1}">
+                  			<td><img src="<%=request.getContextPath()%>/resources/icon/inactive.png" alt="inactive"></td>
+                  		</c:when>
+                  		
+                  		<%--아이디가 null이아니면서 빈문자열이 아니면서 회원탈퇴한 경우가 아닌경우 --%>
+                  		<c:when test="${vo.mid ne null && vo.mid ne '' && vo.enabled eq 1}">
+                  			<td><img src="<%=request.getContextPath()%>/resources/icon/active.png" alt="active"></td> 
+                  		</c:when>
+                      </c:choose>
+                      
                       <td>${vo.joindate}</td>
                       <td>
                         <a class="link-dark" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#employeeDetailModal" data-bs-mno="1">

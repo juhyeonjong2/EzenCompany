@@ -78,7 +78,7 @@ public class SecurityController {
 			//	그 정보를 분해해서 업데이트를 한다 (메일발송테이블에 asdfghjkl정보가 있고(db에 임시로 넣어둠) 이걸 mno로 수정후 업데이트)
 			
 			//링크데이터를 mno로 변환(안에 짧은 경로를 집어넣으면됨)
-			int mno = memberService.requestMno("asdfghjkl6");
+			int mno = memberService.requestMno("asdfghjkl");
 			
 			//비밀번호 인코딩
 			BCryptPasswordEncoder epwe = new BCryptPasswordEncoder();
