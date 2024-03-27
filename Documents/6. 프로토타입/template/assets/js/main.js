@@ -133,10 +133,15 @@
 // 모달 기능 추가
 
 // 멀티 모달 열기(오픈할 모달 ID)
-function openMultiModal(modalId){
-  const modal = new bootstrap.Modal(document.getElementById(modalId), {} );
+function openMultiModal(modalId, options){
+  
+  if(options == null){
+    options = {};
+  }
+  
+  const modal = new bootstrap.Modal(document.getElementById(modalId), options );
   if(modal){
-    modal.show();
+    modal.show(modal);
   }
 
 /*
