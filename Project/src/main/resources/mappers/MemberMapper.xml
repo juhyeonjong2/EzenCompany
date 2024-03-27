@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ezen.ezencompany.mapper.memberMapper">
+	
+	<select id="checkID" parameterType="String" resultType="int">
+		SELECT count(mid) FROM member where mid = #{text};
+	</select>
+	
+	<select id="requestMno" parameterType="String" resultType="int">
+		SELECT mno FROM joinmail WHERE shortUrl = #{url};
+	</select>
+	
+	<update id="joinOk" parameterType="MemberVO">
+		UPDATE member SET mid = #{mid}, mpassword = #{mpassword} WHERE mno = #{mno}; 
+	</update>
+
+	<select id="getEmail" parameterType="String" resultType="String" >
+		SELECT email from member WHERE mid = #{mid} 
+	</select>
+</mapper>
+
+
+

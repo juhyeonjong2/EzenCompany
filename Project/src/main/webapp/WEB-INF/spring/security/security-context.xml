@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<security:http pattern="/resources/**" security="none" /><!-- 제외 url pattern -->
+	<security:http auto-config="true" use-expressions="true" create-session="never" > <!--filter는 default, el사용함-->
+		<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/> <!-- admin경로는 ROLE_ADMIN만 가능 -->
+		<security:intercept-url pattern="/user/**" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')"/>
+		<security:intercept-url pattern="/" access="permitAll"/> <!-- permitAll이건 모두가 들어올 수 있음 -->
+		<!-- 로그인 파트 -->
+		<security:form-login login-page="/login"
+							 login-processing-url="/loginOk"
+							 authentication-success-handler-ref="userLoginSuccessHandler" 
+							 authentication-failure-handler-ref="userLoginFailureHandler" 
+							 username-parameter="username" password-parameter="password"/>
+		<security:session-management>
+			<security:concurrency-control max-sessions="1" 
+										  expired-url="/login"
+										  error-if-maximum-exceeded="true"/>
+		</security:session-management>
+		<security:logout logout-url="/logout" logout-success-url="/login"
+						 invalidate-session="true" delete-cookies="JSESSIONID,SPRING_SECURITY_REMEMBER_ME_COOKIE"/>
+		<security:access-denied-handler ref="userDeniedHandler"/>
+	</security:http>
+	
+	<bean id="userLoginSuccessHandler" class="ezen.ezencompany.service.UserLoginSuccessHandler" />
+	<bean id="userLoginFailureHandler" class="ezen.ezencompany.service.UserLoginFailureHandler" />
+	<bean id="userDeniedHandler"  class="ezen.ezencompany.service.UserDeniedHandler"/> 
+	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	<bean id="userService" class="ezen.ezencompany.service.UserAuthenticationService">
+		<constructor-arg name="sqlSession" ref="sqlSession" />
+	</bean>
+	
+	<security:authentication-manager> <!--처음 intercept에 적용된 경로에 걸치면 무조건 이거 실행(안의 인코딩은 db와 비교하기 위해 인코딩해줌) -->
+		<security:authentication-provider user-service-ref="userService">
+			<security:password-encoder ref="passwordEncoder" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+</beans>

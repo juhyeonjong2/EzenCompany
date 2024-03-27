@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>속성 목록</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+ <!-- Vendor CSS Files -->
+ <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+ <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+ <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+ <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+ <link href="../assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="../assets/css/style_admin.css" rel="stylesheet">
+
+</head>
+<body>
+  <!-- ======= Header - Admin ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="home.html" class="logo d-flex align-items-center">
+        <i class="bi bi-wrench"></i>
+        <span class="d-none d-lg-block">Admin</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+        <li class="nav-item">
+            <a class="nav-link nav-icon" href="../admin/home.html">
+              <i class="bi bi-key"></i>
+            </a>
+        </li><!-- End Admin Icon-->
+
+        <li class="nav-item dropdown">
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-bell"></i>
+            <span class="badge bg-primary badge-number">4</span>
+          </a><!-- End Notification Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+            <li class="dropdown-header">
+              You have 4 new notifications
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-exclamation-circle text-warning"></i>
+              <div>
+                <h4>Lorem Ipsum</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>30 min. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-x-circle text-danger"></i>
+              <div>
+                <h4>Atque rerum nesciunt</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>1 hr. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-check-circle text-success"></i>
+              <div>
+                <h4>Sit rerum fuga</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>2 hrs. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-info-circle text-primary"></i>
+              <div>
+                <h4>Dicta reprehenderit</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>4 hrs. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li class="dropdown-footer">
+              <a href="#">Show all notifications</a>
+            </li>
+
+          </ul><!-- End Notification Dropdown Items -->
+        </li><!-- End Notification Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link nav-icon" href="#">
+            <i class="bi bi-chat-left-text"></i>
+            <span class="badge bg-success badge-number">3</span>
+          </a>
+        </li><!-- End Messages Icon -->
+        
+        <li class="nav-item">
+            <a class="nav-link nav-icon search-bar-toggle" href="../board/home.html">
+              <i class="bi bi-grid"></i>
+            </a>
+        </li><!-- End Board Icon-->
+
+        <li class="nav-item">
+            <a class="nav-link nav-icon search-bar-toggle" href="../blog/home.html">
+              <i class="bi bi-house-door"></i>
+            </a>
+        </li><!-- End Home Icon-->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar - Admin ======= -->
+  <aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="home.html">
+                <i class="bi bi-people"></i>
+                <span>사원 목록</span>
+            </a>
+        </li><!-- End Employee Page Nav  -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="board.html">
+                <i class="bi bi-columns-gap"></i>
+                <span>게시판 목록</span>
+            </a>
+        </li><!-- End board list Page Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="category.html">
+                <i class="bi bi-layers"></i>
+                <span>분류</span>
+            </a>
+        </li><!-- End category  Page Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="attribute.html">
+                <i class="bi bi-puzzle"></i>
+                <span>속성</span>
+            </a>
+        </li><!-- End attribute Page Nav -->
+
+
+
+<!--      <li class="nav-heading">Pages</li> -->
+    </ul>
+
+  </aside><!-- End Sidebar-->
+
+  <main id="main" class="main">
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center">
+                  <h5 class="card-title"><b><span class="category">직군</span> 속성 목록</b></h5>
+                  <!-- data-bs-category 에 카테고리 코드를 넘겨야함.-->
+                  <button type="button" class="btn btn-primary h-50" data-bs-toggle="modal" data-bs-target="#attributeAddModal" data-bs-category="job">+ 속성 추가</button>
+              </div>
+
+              <!-- Table with stripped rows -->
+              <table class="table datatable">
+                <thead>
+                  <tr>
+                    <th>키</th>
+                    <th>값</th>
+                    <th>&nbsp;</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>PG</td>
+                    <td>프로그래머</td>
+                    <td>
+                      <a class="link-dark" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#attributeDetailModal" data-bs-category="job" data-bs-attribute="PG">
+                        <i class="bi bi-three-dots-vertical"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>ART</td>
+                    <td>그래픽 디자이너</td>
+                    <td>
+                      <a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>DESIGN</td>
+                    <td>기획자</td>
+                    <td>
+                      <a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a>
+                    </td>
+                  </tr>
+
+                  
+                </tbody>
+              </table>
+              <!-- End Table with stripped rows -->
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="popup">
+
+      <!-- 속성 추가 팝업 -->
+      <div class="modal fade" id="attributeAddModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">속성 추가</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+  
+            <div class="modal-body">  
+              <div class="container-fluid">
+                <div class="row mb-1">
+                  <div>
+                    <label for="join_inputName" class="col-sm-4 col-form-label">이름</label>
+                    <div class="col">
+                      <input type="text" class="form-control" id="join_inputName">
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-1">
+                  <div>
+                    <label for="join_inputEmail" class="col-sm-4 col-form-label">이메일</label>
+                    <div class="col">
+                      <input type="email" class="form-control" id="join_inputEmail">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer d-flex align-items-center justify-content-center">
+              <button type="button" class="btn btn-warning btn-lg" data-bs-dismiss="modal">추가</button>
+            </div>
+          </div>
+        </div>
+      </div><!-- End Basic Modal-->
+  
+       <!-- 속성 정보 보기 팝업-->
+      <div class="modal fade" id="attributeDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">속성 정보</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                  <div class="row mb-1">
+                    <div>
+                      <label for="attribute_inputKey" class="col-sm-4 col-form-label">키</label>
+                      <div class="col">
+                        <input type="text" class="form-control" id="attribute_inputKey" value="QA">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-1">
+                    <div>
+                      <label for="attribute_inputValue" class="col-sm-4 col-form-label">값</label>
+                      <div class="col">
+                        <input type="email" class="form-control" id="attribute_inputValue" value="품질보증">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer d-flex align-items-center justify-content-center">
+              <button type="button" class="btn btn-danger btn-lg"  onclick="openMultiModal('attributeRemoveModal')">삭제</button>
+              <button type="button" class="btn btn-warning btn-lg" data-bs-dismiss="modal">수정</button>
+            </div>
+          </div>
+        </div>
+      </div><!-- End Modal Dialog Scrollable-->
+  
+      <!-- 탈퇴 확인 모달-->
+      <div class="modal fade" id="attributeRemoveModal" tabindex="-1" data-bs-backdrop="false">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">삭제 확인</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              정말 삭제 하시겠습니까?
+            </div>
+            <div class="modal-footer d-flex align-items-center justify-content-center">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="closeMultiModal(()=>{},'attributeDetailModal')">삭제</button>
+            </div>
+          </div>
+        </div>
+      </div><!-- End Disabled Backdrop Modal-->
+    </section>
+
+  </main><!-- End #main -->
+
+  <!-- Last -->
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/simple-datatables/simple-datatables.js"></script>
+
+
+  <!-- Template Main JS File -->
+  <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/admin/attribute.js"></script>
+
+  <!-- Last JS-->
+  <script src="../assets/js/tooltips.js"></script>
+</body>
+</html>
