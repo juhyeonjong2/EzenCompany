@@ -57,6 +57,17 @@
     /**
      * Initiate Modals
      */
+     // 게시판 추가 모달
+     
+     const boardAddModal = document.getElementById('boardAddModal')
+     if (boardAddModal) {
+      boardAddModal.addEventListener('show.bs.modal', event => 
+         {
+            $.fn.zTree.init($("#tree_reader"), setting, zNodes);
+            $.fn.zTree.init($("#tree_wirter"), setting, zNodes);
+         });   
+     }
+
      // 분류 수정 팝업 (treename 넘겨받기)
      const boardAddCategoryModal = document.getElementById('boardAddCategoryModal')
      if (boardAddCategoryModal) {
@@ -72,7 +83,7 @@
 
           // 직위, 직책, 직무, 부서
           // 디비에서 불러온 데이터. (ajax로 불러올것)
-          let dbCategorys = FetchCategorys();
+          let dbCategorys = fetchCategorys();
              
           // 카테고리 목록 만들기
           let body = $(boardAddCategoryModal).find('.modal-body .container-fluid');
@@ -127,7 +138,7 @@
           $(boardAddAttributeModal).find('.modal-body .category_code_input').val(categoryCode);
 
           // categoryCode에 따라 속성 데이터 가져오기.
-          let dbAttributes =FetchAttributes(categoryCode);
+          let dbAttributes =fetchAttributes(categoryCode);
           let body = $(boardAddAttributeModal).find('.modal-body .container-fluid');
           let aleadyAttr = body.find('.attribute');
           if(aleadyAttr != null){
@@ -291,6 +302,8 @@ $(document).ready(function(){
 
   //$.fn.zTree.init($("#tree_edit_reader"), setting, zNodes);
   //$.fn.zTree.init($("#tree_edit_writer"), setting, zNodes);
+
+  
   
 });
 
@@ -299,7 +312,7 @@ $(document).ready(function(){
 /**********************************
  *  모달 제어
  ************************************/
-function FetchCategorys(){
+function fetchCategorys(){
   let dbCategorys = [
     {'code' : 'POSITION' ,'value' : '직위'},
     {'code' : 'RESPONSIBILITY' ,'value' : '직책'},
@@ -310,7 +323,7 @@ function FetchCategorys(){
     return dbCategorys;
 }
 
-function FetchAttributes(categoryCode){
+function fetchAttributes(categoryCode){
 // 디비에서 가져오는 로직 샘플 (ajax로 불러올것)
   let dbAttributes =null;
 
@@ -398,13 +411,37 @@ function FetchAttributes(categoryCode){
   return dbAttributes;
 }
 
+function addBoard(name, read_permission, write_permission){
+
+console.log("addBoard");
+console.log(name);
+console.log(read_permission);
+console.log(write_permission);
+// ws comment : to do 여기 작업중 권한 버튼 만들기.
+
+  let html= '<tr>'
+  + '  <td>공지사항</td>'
+  + '  <td>'
+  + '      <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="All">모두</button>'
+  + '  </td>'
+  + '  <td>'
+  + '      <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Admin Only">없음</button>'
+  + '  </td>'
+  + '  <td>'
+  + '    <a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a>'
+  + '  </td>'
+  + '</tr>';
+
+  return html;
+}
+
 
 function changePopupCategory(modal, val){
   if(modal == null)
     return;
 
   // val 정보를 가지고 디비에서 속성값을 가져온다.
-  let dbAttributes =FetchAttributes(val);
+  let dbAttributes =fetchAttributes(val);
   let body = $(modal).find('.modal-body .container-fluid');
   let aleadyAttr = body.find('.attribute');
   if(aleadyAttr != null){
@@ -463,36 +500,51 @@ function insertAttribute(o){
   addAttribute(treeName, parentTreeId, attributeValue, attributeKey);
 }
 
-function insertBoard(o){
+function insertBoard(){
+  
+  let boardName = $("#board_inputName").val();
+  let reader = getTreeData('tree_reader');
+  let writer = getTreeData('tree_writer');
+  let html = addBoard(boardName,reader,writer);
+
 
   let datatable = document.querySelector('.datatable ');
-  
-  
- // ws comment - 여기 작업중
-  console.log("insertBoard");
-  console.log(datatable);
-
-  let root =$(datatable).find('.tbody');
-  console.log(root);
-  let html= '<tr>'
-          + '  <td>공지사항</td>'
-          + '  <td>'
-          + '      <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="All">모두</button>'
-          + '  </td>'
-          + '  <td>'
-          + '      <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Admin Only">없음</button>'
-          + '  </td>'
-          + '  <td>'
-          + '    <a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a>'
-          + '  </td>'
-          + '</tr>';
-
+  let root =$(datatable).find('tbody');
   root.append(html);
-
-
-
-
+ 
+  initTooltips();
 }
+
+function getTreeData(treeName){
+  const zTree = $.fn.zTree.getZTreeObj(treeName);
+  let nodes = zTree.getNodes();
+
+  let categorys=[];
+  for(let i=0;i<nodes.length;i++){
+    let node = nodes[i];
+  
+    let category = 
+    {
+      categoryCode : node.ename,
+      categoryValue : node.name
+    }
+    let attributes = [];
+    for(let j=0;j<node.children.length;j++){
+      let children = node.children[j];
+      let attribute ={
+        attributeKey : children.ename,
+        attributeValue : children.name
+      };
+      attributes.push(attribute);
+    }
+    category['attributes'] = attributes;
+    
+    categorys.push(category);
+  }
+  
+  return categorys;
+}
+
 
 function editBoard(o){
 
