@@ -109,7 +109,7 @@ CREATE TABLE category (
 
 #속성 테이블
 CREATE TABLE attribute (
-	code varchar(100) not null unique comment '코드',
+	code varchar(100) not null comment '코드',
     foreign key(code) references category(code),
     value varchar(100) comment '값',
     otkey varchar(100) not null comment '키'
@@ -119,7 +119,7 @@ CREATE TABLE attribute (
 CREATE TABLE employeeOption (
 	mno int unsigned not null comment '회원번호',
 	foreign key(mno) references member(mno),
-	code varchar(100) not null unique comment '코드',
+	code varchar(100) not null comment '코드',
     foreign key(code) references category(code),
     value varchar(100) comment '옵션값'
 );
