@@ -28,125 +28,153 @@
 <body>
     <!-- 여기는 베이스 작업만. 실제는 blog/home.html과 같음.-->
     <!-- ======= Header - Blog ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
-    <div class="d-flex align-items-center justify-content-between">
-      <a href="./blog/home.html" class="logo d-flex align-items-center">
-        <i class="bi bi-house-door"></i>
-        <span class="d-none d-lg-block">Home</span>
-      </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
-    </div><!-- End Logo -->
+<!-- ======= Header - Blog ======= -->
+<header id="header" class="header fixed-top d-flex align-items-center">
+  <div class="d-flex align-items-center justify-content-between">
+    <a href="home.html" class="logo d-flex align-items-center">
+      <i class="bi bi-house-door"></i>
+      <span class="d-none d-lg-block">Home</span>
+    </a>
+    <i class="bi bi-list toggle-sidebar-btn"></i>
+  </div><!-- End Logo -->
 
-    <nav class="header-nav ms-auto">
-      <ul class="d-flex align-items-center">
+  <nav class="header-nav ms-auto">
+    <ul class="d-flex align-items-center">
 
-        <!-- 관리자가 아니라면 보이지 않음.-->
-        <li class="nav-item">
-          <a class="nav-link nav-icon" href="../admin/home.html">
-              <i class="bi bi-key"></i>
-            </a>
-        </li><!-- End Admin Icon-->
-
-        <li class="nav-item dropdown">
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-bell"></i>
-            <span class="badge bg-primary badge-number">4</span>
-          </a><!-- End Notification Icon -->
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-            <li class="dropdown-header">
-              You have 4 new notifications
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-exclamation-circle text-warning"></i>
-              <div>
-                <h4>Lorem Ipsum</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>30 min. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-x-circle text-danger"></i>
-              <div>
-                <h4>Atque rerum nesciunt</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>1 hr. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-check-circle text-success"></i>
-              <div>
-                <h4>Sit rerum fuga</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>2 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-info-circle text-primary"></i>
-              <div>
-                <h4>Dicta reprehenderit</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>4 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li class="dropdown-footer">
-              <a href="#">Show all notifications</a>
-            </li>
-
-          </ul><!-- End Notification Dropdown Items -->
-        </li><!-- End Notification Nav -->
-
-        <li class="nav-item">
-          <a class="nav-link nav-icon" href="#">
-            <i class="bi bi-chat-left-text"></i>
-            <span class="badge bg-success badge-number">3</span>
+      <!-- 관리자가 아니라면 보이지 않음.-->
+      <li class="nav-item">
+          <a class="nav-link nav-icon" href="./admin/home.html">
+            <i class="bi bi-key"></i>
           </a>
-        </li><!-- End Messages Icon -->
-        
-        <li class="nav-item">
-          <a class="nav-link nav-icon search-bar-toggle" href="../board/home.html">
+      </li><!-- End Admin Icon-->
+
+      <li class="nav-item dropdown">
+        <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+          <i class="bi bi-bell"></i>
+          <span class="badge bg-primary badge-number">4</span>
+        </a><!-- End Notification Icon -->
+
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+          <li class="dropdown-header">
+            You have 4 new notifications
+            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li class="notification-item">
+            <i class="bi bi-exclamation-circle text-warning"></i>
+            <div>
+              <h4>Lorem Ipsum</h4>
+              <p>Quae dolorem earum veritatis oditseno</p>
+              <p>30 min. ago</p>
+            </div>
+          </li>
+
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li class="notification-item">
+            <i class="bi bi-x-circle text-danger"></i>
+            <div>
+              <h4>Atque rerum nesciunt</h4>
+              <p>Quae dolorem earum veritatis oditseno</p>
+              <p>1 hr. ago</p>
+            </div>
+          </li>
+
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li class="notification-item">
+            <i class="bi bi-check-circle text-success"></i>
+            <div>
+              <h4>Sit rerum fuga</h4>
+              <p>Quae dolorem earum veritatis oditseno</p>
+              <p>2 hrs. ago</p>
+            </div>
+          </li>
+
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li class="notification-item">
+            <i class="bi bi-info-circle text-primary"></i>
+            <div>
+              <h4>Dicta reprehenderit</h4>
+              <p>Quae dolorem earum veritatis oditseno</p>
+              <p>4 hrs. ago</p>
+            </div>
+          </li>
+
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li class="dropdown-footer">
+            <a href="#">Show all notifications</a>
+          </li>
+
+        </ul><!-- End Notification Dropdown Items -->
+      </li><!-- End Notification Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link nav-icon" href="#">
+          <i class="bi bi-chat-left-text"></i>
+          <span class="badge bg-success badge-number">3</span>
+        </a>
+      </li><!-- End Messages Icon -->
+      
+      <li class="nav-item">
+          <a class="nav-link nav-icon search-bar-toggle" href="./board/home.html">
             <i class="bi bi-grid"></i>
           </a>
       </li><!-- End Board Icon-->
 
       <li class="nav-item">
-          <a class="nav-link nav-icon search-bar-toggle" href="../blog/home.html">
+          <a class="nav-link nav-icon search-bar-toggle" href="./blog/home.html">
             <i class="bi bi-house-door"></i>
           </a>
       </li><!-- End Home Icon-->
+    </ul>
+  </nav><!-- End Icons Navigation -->
 
-      </ul>
-    </nav><!-- End Icons Navigation -->
+</header><!-- End Header -->
 
-  </header><!-- End Header -->
+ <!-- ======= Sidebar ======= -->
+ <aside id="sidebar" class="sidebar">
+  <ul class="sidebar-nav" id="sidebar-nav">
+      <li class="nav-item">
+          <a class="nav-link collapsed" href="./blog/home.html">
+              <i class="bi bi-house-door"></i>
+              <span>홈 화면</span>
+          </a>
+      </li><!-- End Employee Page Nav  -->
 
-  <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" class="sidebar">
-  </aside><!-- End Sidebar-->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="./blog/write.html">
+          <i class="bi bi-journal-plus"></i>
+            <span>블로그 등록</span>
+        </a>
+      </li><!-- End board list Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" onclick="logout(); return false;">
+          <i class="bi bi-person-dash"></i>
+            <span>로그아웃</span>
+        </a>
+      </li><!-- End category  Page Nav -->
+  </ul>
+
+  <div class="blog_tree_frame mt-5 ms-4 w-75 rounded overflow-y-auto">
+    <ul id="blog_tree" class="ztree"></ul>
+  </div>
+
+</aside><!-- End Sidebar-->
+
 
   <main id="main" class="main">
   </main><!-- End #main -->
