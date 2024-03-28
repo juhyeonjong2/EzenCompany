@@ -169,3 +169,7 @@ function closeMultiModal(act, closeModalId){
       }
   }
 }
+
+function logout(){
+    alert("로그아웃 되었습니다.");
+}
