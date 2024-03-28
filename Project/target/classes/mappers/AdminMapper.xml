@@ -3,14 +3,21 @@
 			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ezen.ezencompany.mapper.adminMapper">
 
-	<insert id="memberRegistration" parameterType="List">
+	<insert id="memberRegistration" parameterType="String">
 		INSERT INTO member (mname, email, authority, joindate, enabled)
  			VALUES(#{name}, #{email}, 'ROLE_USER', now(), 1);
 	</insert>
 	
-	<insert id="employeeRegistration" parameterType="List">
-		INSERT INTO employeeOption (mno, code, value)
- 			VALUES(#{방금업뎃한 mno}, #{반복문 1의 값1}, #{반복문1의 값2(내가 보낸값)});
+	<select id="getLastMno" parameterType="String" resultType="int">
+		SELECT mno FROM member WHERE email = #{email};
+	</select>
+	
+	<!-- #{optionMap.mno, jdbcType=INTEGER}이 부분 수정 -->
+	<insert id="employeeRegistration" parameterType="java.util.List">
+		INSERT INTO employeeOption (mno, option, value) VALUES
+		  <foreach collection="optionsList" item="optionMap" separator=",">
+		    (#{mno}, #{optionMap.option}, #{optionMap.value})
+		  </foreach>
 	</insert>
 	
 </mapper>

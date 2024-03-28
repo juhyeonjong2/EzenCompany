@@ -12,13 +12,20 @@ public class AdminDAO {
 	SqlSession sqlSession;
 	
 	//Mapper의 경로를 적어줌
-	private final String namespace = "ezen.ezencompany.mapper.memberMapper";
+	private final String namespace = "ezen.ezencompany.mapper.adminMapper";
 	
-	public int memberRegistration(List names){
-		return sqlSession.insert(namespace+".memberRegistration", names);
+	//1차로 member에 등록
+	public int memberRegistration(String name, String email){
+		return sqlSession.insert(namespace+".memberRegistration", name, email);
 	}
 	
-	public int employeeRegistration(String aa){
-		return sqlSession.insert(namespace+".employeeRegistration", aa);
+	//2차로 mno를가져옴 (email은 고유함)
+	public int getLastMno(String email) {
+		return sqlSession.selectOne(namespace+".requestMno", email);
+	}
+	
+	//3차로 사원옵션에 등록
+	public int employeeRegistration(List<HashMap<String, Object>> list){
+		return sqlSession.insert(namespace+".employeeRegistration", list);
 	}
 }

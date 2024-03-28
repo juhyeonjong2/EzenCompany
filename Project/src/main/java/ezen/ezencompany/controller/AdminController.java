@@ -1,6 +1,7 @@
 package ezen.ezencompany.controller;
 
 import java.util.ArrayList;
+
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
@@ -25,8 +26,8 @@ public class AdminController {
 	@Autowired
 	MemberService memberService;
 	
-	//@Autowired
-	//AdminService adminService;
+	@Autowired
+	AdminService adminService;
 	
 	@Autowired
 	SqlSession sqlSession;
@@ -54,23 +55,27 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/registration")
-	public String registration(HttpServletRequest request) {
+	public String registration(HttpServletRequest request, String name, String email) {
 		Enumeration name = request.getParameterNames();
 		//hasMoreElements 다음에 읽어올 내용이 있다면 true반환 
 		//nextElement 사용할 때마다 처음부터 하나씩 name을 반환한다
-		List names = new ArrayList();
-		System.out.println(name.nextElement());
+		
+		// map들을 담을 리스트 생성
+		List <HashMap<String, Object>> list = new ArrayList<>();
+ 		System.out.println(name.nextElement());
 		System.out.println(name.nextElement()+"코드가 후져서 대안 생각해야할듯 일단은 이렇게하면 되긴함");
+		//이곳에서 member에 집어넣고 아래 반복문으로 집어넣으면 문제는 트랜잭션이 안됨
 		while (name.hasMoreElements()) {
-			//처음에 String name 등등 2개 받아와서 서비스로 보냄(그럼 트랜잭션은 어디서?)
+			Map<String,Object> map = new HashMap<>();
 			String aa = (String) name.nextElement();
 			String bb = request.getParameter(aa);
-			System.out.println(aa); //키
-			System.out.println(bb); //값 이걸 묶어서 가져가면 될거같음 단 member에 들어갈 것은 따로 분리해서 넣어야할듯함
-		        //값을 리스트로 만들어서 인서트함 -> 
-		        //names.add(name.nextElement());
+			map.put("option", aa);
+			map.put("value", bb);
+			list.add(map);
 		}
-		//adminService.employeeRegistration(names);
+		
+		//트랜잭션 들어간 서비스 호출
+		adminService.employeeRegistration(name, email, list);
 		
 		//컨트롤러 간 이동을 할때(view resolver에 걸리지 않게 하려면)리다이렉트를 사용함
 		return "redirect:/admin/home";
