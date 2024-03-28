@@ -58,13 +58,24 @@
      * Initiate Modals
      */
      // 게시판 추가 모달
-     
      const boardAddModal = document.getElementById('boardAddModal')
      if (boardAddModal) {
       boardAddModal.addEventListener('show.bs.modal', event => 
          {
             $.fn.zTree.init($("#tree_reader"), setting, zNodes);
-            $.fn.zTree.init($("#tree_wirter"), setting, zNodes);
+            $.fn.zTree.init($("#tree_writer"), setting, zNodes);
+            $('#board_inputName').val('');
+         });   
+     }
+
+     // 게시판 정보 모달
+     const boardEditModal = document.getElementById('boardEditModal')
+     if (boardEditModal) {
+      boardEditModal.addEventListener('show.bs.modal', event => 
+         {
+            $.fn.zTree.init($("#tree_edit_writer"), setting, zEditNodes);
+            $.fn.zTree.init($("#tree_edit_reader"), setting, zEditNodes);
+            $('#board_inputEditName').val('샘플 게시판');
          });   
      }
 
@@ -97,14 +108,10 @@
                     + '  <label class="col-sm-4 col-form-label">분류</label>'
                     + '  <div class="col">'
                     + '    <select class="form-select" onchange="changePopupCategory(boardAddCategoryModal, this.value)" aria-label="Default select example">';
-
+              html += '      <option selected value="ALL">모두</option>';
               // 목록 시작 : 디비에서 정보 가져오기
                 for(let i=0;i<dbCategorys.length;i++){
-                  if(i==0){
-                    html += '      <option selected value="' + dbCategorys[i].code +'">' + dbCategorys[i].value +'</option>';
-                  }else {
                     html += '      <option value="' + dbCategorys[i].code +'">' + dbCategorys[i].value +'</option>';
-                  }
                 }
               // 목록 종료
 
@@ -114,7 +121,7 @@
                     + '</div>';
           body.append(html);
 
-          changePopupCategory(boardAddCategoryModal, 'POSITION');
+          changePopupCategory(boardAddCategoryModal, 'ALL');
   
          });   
      }
@@ -205,9 +212,32 @@ const categoryCloseIconPath ="../assets/icon/layers-fill.svg";
 const attributeIconPath ="../assets/icon/puzzle.svg";
 
 // zTree data attributes, refer to the API documentation (treeNode data details)
-/*
-var zNodes =[
 
+var zEditNodes =[
+
+  { id:1, pId:0, name:'직위', ename:'POSITION', isParent:true, open:true, iconOpen:categoryOpenIconPath, iconClose:categoryCloseIconPath},
+  { id:11, pId:1, name:'사원', ename:'Associate', icon:attributeIconPath},
+  { id:12, pId:1, name:'주임', ename:'Associate Manager', icon:attributeIconPath},
+  { id:13, pId:1, name:'대리', ename:'General Manager', icon:attributeIconPath},
+  { id:14, pId:1, name:'과장', ename:'Deputy General Manager', icon:attributeIconPath},
+
+  { id:2, pId:0, name:'직무', ename:'DUTY', isParent:true, open:true, iconOpen:categoryOpenIconPath, iconClose:categoryCloseIconPath},
+  { id:21, pId:2, name:'개발', ename:'Development', icon:attributeIconPath},
+  { id:22, pId:2, name:'경영지원', ename:'anagement Support', icon:attributeIconPath},
+  { id:23, pId:2, name:'사업', ename:'Business', icon:attributeIconPath},
+
+  { id:3, pId:0, name:'부서', ename:'DEPARTMENT', isParent:true, open:true, iconOpen:categoryOpenIconPath, iconClose:categoryCloseIconPath},
+  { id:31, pId:3, name:'경영지원', ename:'Management Support', icon:attributeIconPath},
+  { id:32, pId:3, name:'개발1팀', ename:'DevelopmentA', icon:attributeIconPath},
+
+  { id:4, pId:0, name:'직책', ename:'RESPONSIBILITY', isParent:true, open:true, iconOpen:categoryOpenIconPath, iconClose:categoryCloseIconPath},
+  { id:41, pId:4, name:'파트장', ename:'Part Leader', icon:attributeIconPath},
+  { id:42, pId:4, name:'임원', ename:'Executive', icon:attributeIconPath},
+  { id:43, pId:4, name:'최고기술책임자', ename:'CTO', icon:attributeIconPath},
+  { id:44, pId:4, name:'대표이사', ename:'CEO', icon:attributeIconPath},
+
+
+  /*
   { id:1, pId:0, name:"카테고리1", isParent:true, open:true, iconOpen:categoryOpenIconPath, iconClose:categoryCloseIconPath},
   { id:11, pId:1, name:"속성1" , icon:attributeIconPath},
   { id:12, pId:1, name:"속성2" , icon:attributeIconPath},
@@ -220,10 +250,9 @@ var zNodes =[
   { id:24, pId:2, name:"속성1" , icon:attributeIconPath},
   { id:3, pId:0, name:"카테고리3", isParent:true, open:true, iconOpen:categoryOpenIconPath, iconClose:categoryCloseIconPath},
   { id:4, pId:0, name:"카테고리4", isParent:true, open:true, iconOpen:categoryOpenIconPath, iconClose:categoryCloseIconPath},
-  
-
+  */
 ];
-*/
+
 var zNodes =[];
 
 function addHoverDom(treeId, treeNode) {
@@ -300,11 +329,8 @@ $(document).ready(function(){
   $.fn.zTree.init($("#tree_reader"), setting, zNodes);
   $.fn.zTree.init($("#tree_writer"), setting, zNodes);
 
-  //$.fn.zTree.init($("#tree_edit_reader"), setting, zNodes);
-  //$.fn.zTree.init($("#tree_edit_writer"), setting, zNodes);
-
-  
-  
+  $.fn.zTree.init($("#tree_edit_reader"), setting, zNodes);
+  $.fn.zTree.init($("#tree_edit_writer"), setting, zNodes);
 });
 
 
@@ -325,7 +351,7 @@ function fetchCategorys(){
 
 function fetchAttributes(categoryCode){
 // 디비에서 가져오는 로직 샘플 (ajax로 불러올것)
-  let dbAttributes =null;
+  let dbAttributes =[];
 
   if(categoryCode=='POSITION') 
   {
@@ -411,27 +437,95 @@ function fetchAttributes(categoryCode){
   return dbAttributes;
 }
 
+function parsePermission(category){
+  // 읽기 권한에 아무것도 없으면 '없음' 처리(관리자만)
+  let result = {
+    categoryKor : "없음",
+    attributesKor : "관리자"
+  };
+
+  // 없음 처리
+  if(category == null)
+    return result;
+
+  // 카테고리만 있고 속성이 빈경우에는 오류다. (모든 사원은 분류에 해당하는 데이터를 가지고있음.)
+  let _attributesKor ="Unknown";
+  if(category.categoryCode == 'ALL'){
+    _attributesKor ="모두";
+  }
+ 
+  if(category.attributes != null && category.attributes.length >0 ){
+    _attributesKor ="";
+    for(let i=0;i<category.attributes.length;i++){
+      let attribute = category.attributes[i];
+      if(i==0){
+        _attributesKor += attribute.attributeValue;
+      }else {
+        _attributesKor += ", " + attribute.attributeValue;
+      }
+    }
+  }
+
+  result.categoryKor = category.categoryValue;
+  result.attributesKor = _attributesKor;
+  return result;
+}
+
+let boardNo = 4; // 임시데이터 (디비에 있어야하는 값임)
 function addBoard(name, read_permission, write_permission){
 
-console.log("addBoard");
-console.log(name);
-console.log(read_permission);
-console.log(write_permission);
-// ws comment : to do 여기 작업중 권한 버튼 만들기.
+  if(name == null || name == '')
+    return '';
+
+  if(read_permission == null )
+    return '';
+
+  if(write_permission == null )
+    return '';
 
   let html= '<tr>'
-  + '  <td>공지사항</td>'
-  + '  <td>'
-  + '      <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="All">모두</button>'
-  + '  </td>'
-  + '  <td>'
-  + '      <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Admin Only">없음</button>'
-  + '  </td>'
-  + '  <td>'
-  + '    <a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a>'
-  + '  </td>'
-  + '</tr>';
+          + '  <td>'+ name +'</td>'
+          + '  <td>';
 
+  if(read_permission.length == 0){
+    let result = parsePermission(null);
+    html += '      <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="'
+        + result.attributesKor +'">'+  result.categoryKor 
+        +'</button>';
+  }else {
+    // 카테고리반복 
+    for(let i=0;i<read_permission.length;i++){
+      let result = parsePermission(read_permission[i]);
+      html += '      <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="'
+          + result.attributesKor +'">'+  result.categoryKor 
+          +'</button>';
+    }
+  }
+  html += '  </td>'
+        + '  <td>';
+  if(write_permission.length == 0){
+    let result = parsePermission(null);
+      html += '      <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="'
+          + result.attributesKor +'">'+  result.categoryKor 
+          +'</button>';
+  }else {
+    for(let i=0;i<write_permission.length;i++){
+      let result = parsePermission(write_permission[i]);
+      html += '      <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="'
+          + result.attributesKor +'">'+  result.categoryKor 
+          +'</button>';
+    }
+  }
+  html += '  </td>'
+      + '  <td>'
+      + '   <a class="link-dark" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#boardEditModal" data-bs-no="'+ boardNo +'">'
+      + '     <i class="bi bi-three-dots-vertical"></i>'
+      + '   </a>'
+      + '  </td>'
+      + '</tr>';
+
+    
+  boardNo++;
   return html;
 }
 
@@ -501,16 +595,24 @@ function insertAttribute(o){
 }
 
 function insertBoard(){
-  
+
   let boardName = $("#board_inputName").val();
   let reader = getTreeData('tree_reader');
   let writer = getTreeData('tree_writer');
   let html = addBoard(boardName,reader,writer);
+  if(html == ''){
+    alert("게시판 추가 실패");
+    return;
+  }
 
-
-  let datatable = document.querySelector('.datatable ');
-  let root =$(datatable).find('tbody');
+  let table = document.querySelector('.datatable ');
+  let root =$(table).find('tbody');
   root.append(html);
+
+  //let datatable = new simpleDatatables.DataTable(table);
+  //console.log(datatable);
+ // datatable.refresh();
+
  
   initTooltips();
 }
@@ -529,13 +631,15 @@ function getTreeData(treeName){
       categoryValue : node.name
     }
     let attributes = [];
-    for(let j=0;j<node.children.length;j++){
-      let children = node.children[j];
-      let attribute ={
-        attributeKey : children.ename,
-        attributeValue : children.name
-      };
-      attributes.push(attribute);
+    if(node.children != null){
+      for(let j=0;j<node.children.length;j++){
+        let children = node.children[j];
+        let attribute ={
+          attributeKey : children.ename,
+          attributeValue : children.name
+        };
+        attributes.push(attribute);
+      }
     }
     category['attributes'] = attributes;
     
@@ -546,6 +650,6 @@ function getTreeData(treeName){
 }
 
 
-function editBoard(o){
-
+function editBoard(){
+  // 더미
 }

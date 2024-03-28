@@ -208,7 +208,9 @@
                       <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Admin Only">없음</button>
                   </td>
                   <td>
-                    <a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a>
+                    <a class="link-dark" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#boardEditModal" data-bs-no="1">
+                      <i class="bi bi-three-dots-vertical"></i>
+                    </a>
                   </td>
                 </tr>
 
@@ -220,7 +222,11 @@
                     <td>
                         <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top"  title="All">모두</button>
                     </td>
-                    <td><a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a></td>
+                    <td>
+                      <a class="link-dark" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#boardEditModal" data-bs-no="2">
+                        <i class="bi bi-three-dots-vertical"></i>
+                      </a>
+                    </td>
                 </tr>
                   
                 <tr>
@@ -233,7 +239,11 @@
                   <td>
                       <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top"  title="2D그래픽, 3D그래픽, 배경">직무</button>
                   </td>
-                  <td><a class="link-dark" href="#"><i class="bi bi-three-dots-vertical"></i></a></td>
+                  <td>
+                    <a class="link-dark" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#boardEditModal" data-bs-no="3">
+                      <i class="bi bi-three-dots-vertical"></i>
+                    </a>
+                  </td>
                 </tr>
 
                 </tbody>
@@ -304,57 +314,65 @@
         </div>
       </div>
   
-       <!-- 분류 정보 보기 팝업-->
-      <div class="modal fade" id="categoryDetailModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+       <!-- 게시판 정보 보기 팝업-->
+      <div class="modal fade" id="boardEditModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">분류 정보</h5>
+              <h5 class="modal-title">게시판 정보</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
             <div class="modal-body">
                 <div class="container-fluid">
                   <div class="row mb-1">
                     <div>
-                      <label for="attribute_inputKey" class="col-sm-4 col-form-label">코드</label>
+                      <label for="board_inputEditName" class="col-sm-4 col-form-label">게시판 이름</label>
                       <div class="col">
-                        <input type="text" class="form-control" id="attribute_inputKey" value="TEAM">
+                        <input type="text" class="form-control" id="board_inputEditName">
                       </div>
                     </div>
                   </div>
                   <div class="row mb-1">
                     <div>
-                      <label for="attribute_inputValue" class="col-sm-4 col-form-label">값</label>
-                      <div class="col">
-                        <input type="email" class="form-control" id="attribute_inputValue" value="프로그래밍팀">
+                      <div class="d-flex justify-content-between">
+                        <label for="board_reader" class="col-sm-4 col-form-label">읽기 권한</label>
+                        <a class="link-dark pt-2 ms-1" href="#" onclick="openMultiModal('boardAddCategoryModal', { 'data-bs-tree' : 'tree_edit_reader'}); return false;">
+                          <i class="bi bi-plus-square "></i>
+                        </a>                      
+                      </div>
+                      <div class="col border authority_frame overflow-y-auto">
+                        <ul id="tree_edit_reader" class="ztree"></ul>
                       </div>
                     </div>
                   </div>
                   <div class="row mb-1">
                     <div>
-                      <label class="col-sm-4 col-form-label">블로그 표시</label>
-                      <div class="col">
-                        <select class="form-select" aria-label="Default select example">
-                          <option selected>FALSE</option>
-                          <option value="1">FALSE</option>
-                          <option value="2">TRUE</option>
-                        </select>
+                      <div class="d-flex justify-content-between">
+                        <label for="board_reader" class="col-sm-4 col-form-label">쓰기 권한</label>
+                        <a class="link-dark pt-2 ms-1" href="#" onclick="openMultiModal('boardAddCategoryModal', { 'data-bs-tree' : 'tree_edit_writer'}); return false;">
+                          <i class="bi bi-plus-square "></i>
+                        </a>   
+                      </div>
+                      <div class="col border authority_frame overflow-y-auto">
+                        <ul id="tree_edit_writer" class="ztree"></ul>
                       </div>
                     </div>
                   </div>
                 </div>
             </div>
+
             <div class="modal-footer d-flex align-items-center justify-content-center">
-              <button type="button" class="btn btn-danger btn-lg"  onclick="openMultiModal('categoryRemoveModal')">삭제</button>
-              <button type="button" class="btn btn-warning btn-lg" data-bs-dismiss="modal">수정</button>
+              <button type="button" class="btn btn-danger btn-lg"  onclick="openMultiModal('boardRemoveModal')">삭제</button>
+              <button type="button" class="btn btn-warning btn-lg" data-bs-dismiss="modal" onclick="editBoard()">수정</button>
             </div>
           </div>
         </div>
       </div>
   
-      <!-- 분류 삭제 확인 모달-->
-      <div class="modal fade" id="categoryRemoveModal" tabindex="-1" data-bs-backdrop="false">
-        <div class="modal-dialog modal-dialog-centered">
+      <!-- 게시판 삭제 확인 모달-->
+      <div class="modal fade" id="boardRemoveModal" tabindex="-1" data-bs-backdrop="false">
+        <div class="modal-dialog modal-dialog-bottom">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">삭제 확인</h5>
@@ -365,7 +383,7 @@
             </div>
             <div class="modal-footer d-flex align-items-center justify-content-center">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="closeMultiModal(()=>{},'categoryDetailModal')">삭제</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="closeMultiModal(()=>{},'boardEditModal')">삭제</button>
             </div>
           </div>
         </div>
