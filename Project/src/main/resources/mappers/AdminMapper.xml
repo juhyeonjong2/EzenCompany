@@ -3,21 +3,19 @@
 			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ezen.ezencompany.mapper.adminMapper">
 
-	<insert id="memberRegistration" parameterType="String">
+	<insert id="memberRegistration" parameterType="java.util.Map">
 		INSERT INTO member (mname, email, authority, joindate, enabled)
  			VALUES(#{name}, #{email}, 'ROLE_USER', now(), 1);
 	</insert>
 	
-	<select id="getLastMno" parameterType="String" resultType="int">
+	<select id="getLastMno" parameterType="java.util.Map" resultType="int">
 		SELECT mno FROM member WHERE email = #{email};
 	</select>
 	
 	<!-- #{optionMap.mno, jdbcType=INTEGER}이 부분 수정 -->
-	<insert id="employeeRegistration" parameterType="java.util.List">
-		INSERT INTO employeeOption (mno, option, value) VALUES
-		  <foreach collection="optionsList" item="optionMap" separator=",">
-		    (#{mno}, #{optionMap.option}, #{optionMap.value})
-		  </foreach>
+	<insert id="employeeRegistration" parameterType="java.util.Map">
+		INSERT INTO employeeOption (mno, code, value) VALUES
+		    (#{mno}, #{code}, #{value});
 	</insert>
 	
 </mapper>
