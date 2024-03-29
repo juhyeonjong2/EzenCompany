@@ -6,12 +6,16 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.logging.Logger;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +33,10 @@ public class AdminController {
 	
 	@Autowired
 	AdminService adminService;
+	
+	//이메일 보내는 객체
+	@Autowired
+	JavaMailSenderImpl mailSender;
 	
 	@Autowired
 	SqlSession sqlSession;
@@ -81,7 +89,32 @@ public class AdminController {
 		
 		//트랜잭션 들어간 서비스 호출
 		adminService.employeeRegistration(aaa, list);
-
+		//메일발송 여기메일에 추가로 /uuid 인가 그거 설정해서 같이 보내야함
+		String id = UUID.randomUUID().toString();
+		System.out.println(id);
+		//이 uuid를 db에 넣음(mno는 방금 email로 찾음 insert()시도 해보자)
+		String setFrom = "vhahaha513@naver.com"; //2단계 인증 x, 메일 설정에서 POP/IMAP 사용 설정에서 POP/SMTP 사용함으로 설정o
+		String toMail = email;
+		String title = "[이젠컴퍼니]회원가입 링크입니다.";
+		String content = "이젠컴퍼니 회원가입 링크는 " + email +"/"+ id + " 입니다." +
+						 "<br>" +
+						 "해당 링크로 들어가서 회원가입을 해주세요.";
+		
+		try {
+			//System.out.println("트라이 실행");
+			MimeMessage message = mailSender.createMimeMessage(); //Spring에서 제공하는 mail API
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+            helper.setFrom(setFrom);
+            helper.setTo(toMail);
+            helper.setSubject(title);
+            helper.setText(content, true);
+            //System.out.println("메일 준비 끝");
+            mailSender.send(message);
+            //System.out.println("메일 보냄");
+		}catch (Exception e) {
+			//System.out.println("메일실패");
+			e.printStackTrace();
+		}
 		
 		//컨트롤러 간 이동을 할때(view resolver에 걸리지 않게 하려면)리다이렉트를 사용함
 		return "redirect:/admin/home";
