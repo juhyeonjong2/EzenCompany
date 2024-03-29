@@ -1,0 +1,14 @@
+
+/*--------------------------------------------------------------
+# Reply
+--------------------------------------------------------------*/
+.ezReply ul {
+    /*list-style: none;*/
+    list-style-image:url(../icon/arrow-return-right.svg);
+  }
+  
+.ezReply{
+list-style: none;
+margin: 0;
+padding: 0;
+}

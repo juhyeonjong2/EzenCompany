@@ -1,7 +1,7 @@
-
-
+/*--------------------------------------------------------------
+# zTree
+--------------------------------------------------------------*/
 //var zTreeObj;
-
 // zTree configuration information, refer to API documentation (setting details)
 var setting = {
     view: {
@@ -36,7 +36,32 @@ var zNodes =[
 
 ];
 
+/*--------------------------------------------------------------
+# ezReply
+--------------------------------------------------------------*/
+var replyNodes =[
+    { id:1, pId:0, author:"김길동", content:"내용1"  },
+    { id:11, pId:1, author:"고길동", content:"내용2" },
+    { id:12, pId:1, author:"홍길동", content:"내용3" },
+    { id:2, pId:0, author:"김길동", content:"내용4"},
+    { id:21, pId:2, author:"김길동", content:"내용5"},
+    { id:221, pId:21, author:"김길동", content:"내용6" },
+];
+
+
+
+
+
+
+
+
+
+/*--------------------------------------------------------------
+# Init
+--------------------------------------------------------------*/
+
 $(document).ready(function(){
     $.fn.zTree.init($("#blog_tree"), setting, zNodes);
+    $.ezen.ezReply.init($("#"),  replyNodes);
 });
 

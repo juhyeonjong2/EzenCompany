@@ -11,7 +11,8 @@
  * Date: 2020-11-21
  */
 
-(function ($) {
+(function ($) 
+{
   var settings = {}, roots = {}, caches = {},
     //default consts of core
     _consts = {
