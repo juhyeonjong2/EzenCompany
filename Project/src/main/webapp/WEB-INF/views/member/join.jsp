@@ -18,6 +18,8 @@
 				success:function(data){
 				  if(data == "true"){
 					alert("사용할 수 있는 아이디");
+					//인증성공시 버튼클릭 가능
+					$(".LoginButton").attr("disabled", false);
 				  }else{
 					alert("아이디가 중복됨");
 				  }
@@ -29,21 +31,74 @@
 		//출처: https://velog.io/@yu_oolong/SpringFramework-%EC%9D%B4%EB%A9%94%EC%9D%BC-%EC%9D%B8%EC%A6%9D-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0feat.-%EB%84%A4%EC%9D%B4%EB%B2%84-%EB%A9%94%EC%9D%BC
 		//인증번호 받기 클릭 시
 		$(".joinButton").click(function() {
-	    	const email = $("#email").val(); //사용자가 입력한 이메일 값 얻어오기 
-	    	//짧은경로를 가공해 email을 얻는 dao를 호출함
+			
+			let url = $(".shortUrl").val();
+			let email = "";
+			
+			//Ajax로 email 반환
+		    $.ajax({
+		    	url : 'getEmail2',
+		    	data : {url : url},
+		    	type : 'POST',
+		    	async: false,
+		    	success : function(result) {
+		    		email = result;
+		   		}
+		    });
 	    	
 	    	//Ajax로 전송
 	        $.ajax({
-	        	url : './EmailAuth', //컨트롤러에서 사용할 경로(수정필요)
+	        	url : 'certSend', //컨트롤러에서 사용할 경로(수정필요)
 	        	data : {email : email},
 	        	type : 'POST',
 	        	dataType : 'json',
 	        	success : function(result) {
-	        		code = result; //밖에서 인증번호와 맞는지 비교하기 위해서 만듬
 	        		alert("인증 코드가 입력하신 이메일로 전송 되었습니다.");
 	       		}
 	        }); //End Ajax
 	    });
+		
+		//회원가입 버튼을 누른경우
+		function checkJoin(){
+			//1.비번을 가져와서 비번확인과 일치하는지 확인
+			let pw = $(".password");
+			let pw2 = $(".password2");
+			
+			if(pw == pw2){
+				//2.ajax를 통해 인증번호적은걸 확인
+				let url = $(".shortUrl").val();
+				let email = "";
+				
+				//Ajax로 email 반환
+			    $.ajax({
+			    	url : 'getEmail2',
+			    	data : {url : url},
+			    	type : 'POST',
+			    	async: false,
+			    	success : function(result) {
+			    		email = result;
+			   		}
+			    });
+				
+				let certNum = $(".certNum");
+				
+			    $.ajax({
+			    	url : 'checkCert',
+			    	data : {certNum : certNum, email : email},
+			    	type : 'POST',
+			    	async: false,
+			    	success : function(result) {
+			    		if(result == true){
+			    			$("joinOk").submit();
+			    		}else{
+			    			alert("인증번호가 일치하지 않습니다");
+			    		}
+			   		}
+			    });
+			}else{
+				alert("비밀번호확인이 일치하지 않습니다");
+			}
+		}
 	</script>
 </head>
 <body>
@@ -66,26 +121,27 @@
 
               <div class="textBox">
                 <img src="resources/icon/lock.png">
-                <input type="password" class="inputText" placeholder="비밀번호" name="mpassword">
+                <input type="password" class="password" placeholder="비밀번호" name="mpassword">
                 <div class="Line1"></div>
               </div>
 
               <div class="textBox">
                 <img src="resources/icon/lock.png">
-                <input type="password" class="inputText" placeholder="비밀번호확인" name="checkpassword">
+                <input type="password" class="password2" placeholder="비밀번호확인" name="checkpassword">
                 <div class="Line1"></div>
               </div>
 
               <div>
                 <img src="resources/icon/email.png" class="iconImg">
-                <input type="password" class="inputTextButton" placeholder="인증번호 확인">
+                <input type="password" class="certNum" placeholder="인증번호 확인">
                     <input type="button" value="인증번호 받기" class="joinButton">
+                    <input type="hidden" value="${shortUrl}" class="shortUrl" name="shortUrl">
                 <div class="Line2"></div>
               </div>
             </div> <!--joinFormTop-->
     
             <div class="submitBox">
-              <input type="submit" class="LoginButton" value="회원가입">
+              <input type="button" class="LoginButton" value="회원가입" onclick="checkJoin()">
             </div>
           </form>
   

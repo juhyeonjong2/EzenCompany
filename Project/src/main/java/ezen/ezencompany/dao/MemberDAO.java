@@ -34,6 +34,31 @@ public class MemberDAO {
 		return sqlSession.update(namespace+".joinOk", vo);
 	}
 	
+	//인증번호받기를 누른경우 mno를 이메일로 가공
+	public String getEmail2(int mno) {
+		return sqlSession.selectOne(namespace+".getEmail2", mno);
+	}
+	
+	//인증번호가 존재하는지 확인
+	public int selectNum(String email) {
+		return sqlSession.selectOne(namespace+".selectNum", email);
+	}
+	
+	//인증번호를 insert
+	public int insertNum(Map<String, Object> map) {
+		return sqlSession.insert(namespace+".insertNum", map);
+	}
+	
+	//인증번호를 update
+	public int updateNum(Map<String, Object> map) {
+		return sqlSession.update(namespace+".updateNum", map);
+	}
+	
+	//인증번호가 일치하는지 확인
+	public int checkCert(Map<String, Object> map) {
+		return sqlSession.selectOne(namespace+".checkCert", map);
+	}
+	
 	//비밀번호 재설정 클릭 시 아이디를 이메일로 가공
 	public String getEmail(String mid) {
 		return sqlSession.selectOne(namespace+".getEmail", mid);

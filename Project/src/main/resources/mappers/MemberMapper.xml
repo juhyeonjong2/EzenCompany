@@ -19,6 +19,26 @@
 		SELECT email from member WHERE mid = #{mid} 
 	</select>
 	
+	<select id="getEmail2" parameterType="int" resultType="String" >
+		SELECT email from member WHERE mno = #{mno} 
+	</select>
+	
+	<select id="selectNum" parameterType="String" resultType="int" >
+		SELECT cert from joincert WHERE email = #{email} 
+	</select>
+	
+	<insert id="insertNum" parameterType="java.util.Map">
+		INSERT INTO joincert (email, cert) VALUES (#{email}, #{num});
+	</insert>
+	
+	<update id="updateNum" parameterType="java.util.Map">
+		UPDATE joincert SET cert = #{num} WHERE email = #{email};
+	</update>
+	
+	<select id="checkCert" parameterType="java.util.Map" resultType="int" >
+		SELECT cert from joincert WHERE email = #{email}, cert = #{certNum}; 
+	</select>
+	
 	<select id="employeeList" parameterType="MemberVO" resultType="MemberVO" >
 		SELECT mid, mname, email, authority, substr(joindate, '1', '10' ) as joindate, enabled from member; 
 	</select>

@@ -49,10 +49,10 @@ public class MemberController {
 		//이메일 보낼 양식 
 		String setFrom = "vhahaha513@naver.com"; //2단계 인증 x, 메일 설정에서 POP/IMAP 사용 설정에서 POP/SMTP 사용함으로 설정o
 		String toMail = email;
-		String title = "[이젠컴퍼니]비밀번호 재설정 링크입니다.";
-		String content = "비밀번호 재설정 링크는 " + checkNum + " 입니다." +
+		String title = "[이젠컴퍼니]비밀번호 재설정 링크 입니다.";
+		String content = "인증번호는 " + checkNum + " 입니다." +
 						 "<br>" +
-						 "해당 링크로 들어가서 비밀번호를 재설정 해주세요.";
+						 "해당 링크로 들어가서 비밀번호 재설정을 해주세요.";
 		
 		try {
 			//System.out.println("트라이 실행");

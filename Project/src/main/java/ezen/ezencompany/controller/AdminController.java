@@ -91,7 +91,19 @@ public class AdminController {
 		adminService.employeeRegistration(aaa, list);
 		//메일발송 여기메일에 추가로 /uuid 인가 그거 설정해서 같이 보내야함
 		String id = UUID.randomUUID().toString();
-		System.out.println(id);
+		
+		//생각해보니 자신의 ip주소를 구한다고 하더라도 자신이 타인이 세팅안하면 못쓰니 시험용으로만 사용하고 aws배운뒤 그걸로 수정필요
+		
+		InetAddress local;
+		try {
+			local = InetAddress.getLocalHost();
+			String ip = local.getHostAddress();
+			System.out.println("local ip : "+ip);
+			//이걸로 필요한 정보를 찾은 뒤 그걸 추가해서 아래에 더해줌(집에서 시험이 안되어서 학언에서 아침에 시험)(잘 되면 비번찾기에도 복붙)
+		} catch (UnknownHostException e1) {
+			e1.printStackTrace();
+		}
+
 		//이 uuid를 db에 넣음(mno는 방금 email로 찾음 insert()시도 해보자)
 		String setFrom = "vhahaha513@naver.com"; //2단계 인증 x, 메일 설정에서 POP/IMAP 사용 설정에서 POP/SMTP 사용함으로 설정o
 		String toMail = email;

@@ -6,7 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ezen.ezencompany.dao.Map;
 import ezen.ezencompany.dao.MemberDAO;
+import ezen.ezencompany.dao.Object;
+import ezen.ezencompany.dao.String;
 import ezen.ezencompany.vo.MemberVO;
 
 @Service
@@ -35,4 +38,23 @@ public class MemberService {
 		return memberDAO.employeeList();
 	}
 	
+	//인증번호가 존재하는지 확인
+	public int selectNum(String email) {
+		return memberDAO.selectNum(email);
+	}
+	
+	//인증번호를 insert
+	public int insertNum(Map<String, Object> map) {
+		return memberDAO.insertNum(map);
+	}
+	
+	//인증번호를 update
+	public int updateNum(Map<String, Object> map) {
+		return memberDAO.updateNum(map);
+	}
+	
+	//인증번호가 일치하는지 확인
+	public int checkCert(Map<String, Object> map) {
+		return memberDAO.checkCert(map);
+	}
 }
