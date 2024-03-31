@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>블로그 작성</title>
+    <title>Home</title>
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -14,16 +14,14 @@
  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
  <link href="../assets/vendor/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" type="text/css">
- 
+
   <!-- Template Main CSS File -->
   <link href="../assets/css/style.css" rel="stylesheet">
   <link href="../assets/css/ezReply.css" rel="stylesheet">
-  
 
-   <!-- Predefined Script -->
-   <script src="https://cdn.tiny.cloud/1/3bif3ntggq2j5i7kj5tgxwt4wodd6se5f35dq4qu2s1aj007/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
-   <script type="text/javascript" src="../assets/js/jquery-3.7.1.min.js"></script>
-   <script type="text/javascript" src="../assets/vendor/zTree/js/jquery.ztree.all.js"></script>
+  <!-- Predefined Script -->
+  <script type="text/javascript" src="../assets/js/jquery-3.7.1.min.js"></script>
+  <script type="text/javascript" src="../assets/vendor/zTree/js/jquery.ztree.all.js"></script>
 
 </head>
 <body>
@@ -33,7 +31,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="home.html" class="logo d-flex align-items-center">
         <i class="bi bi-house-door"></i>
-        <span class="d-none d-lg-block">블로그 등록</span>
+        <span class="d-none d-lg-block">Home</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -146,93 +144,55 @@
   </aside><!-- End Sidebar-->
 
   <main id="main" class="main">
+    <div class="pagetitle container-md text-center">
+      <h1>임시</h1>
+      <hr class="mt-0 mb-0 w-auto ">
+    </div><!-- End Page Title -->
+    
     <section class="section container-md">
-      <div class="input-group mb-3">
-        <input type="text" class="form-control"  placeholder="제목을 입력하세요..">
-      </div>
-      <div class="input-group mb-3">
-        <label class="input-group-text" for="formFileMultiple" >파일첨부</label>
-        <input type="file" class="form-control"  id="formFileMultiple" multiple>
-      </div>
-      <div class="col-auto mb-3 d-flex" >
-        <div class="col d-flex justify-content-start">
-          <div>
-            <select class="form-select" aria-label="Default select example">
-              <option selected value="1">기본</option>
-              <option value="2">스프링 일지</option>
-              <option value="3">임시</option>
-              <option value="4">임시/임시 폴더</option>
-            </select>
-          </div>
-          <div class="m-1">
-            폴더 추가하기
-          </div>
-          <div class="m-1">
-            <a class="link-dark" href="#" data-bs-toggle="modal" data-bs-target="#folderAddModal">
-              <i class="bi bi-plus-square"></i>
-            </a>  
-          </div>
-        </div>
-        <div class="col d-flex justify-content-end">
-          <div class="form-check form-switch form-check-reverse">
-            <label class="form-check-label" for="flexSwitchCheckDefault">비공개</label>
-            <button class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-          </div>
-        </div>
-      </div>
-      <div class="col-auto mb-3">
-        <!--tinymce 영역-->
-        <textarea id="editor_blog_content"></textarea>
-      </div>
-      <div class="blog_buttons mt-3 d-flex justify-content-end">
-        <button class="btn btn-primary me-2">등록</button>
-      </div>
-    </section>
-
-    <section class="popup">
-      <!-- 폴더 추가 팝업 -->
-      <div class="modal fade" id="folderAddModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">폴더 추가</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="d-flex flex-column">
+          <div class="card">
+            <div class="card-header">
+              임시/임시 폴더
             </div>
-
-            <div class="modal-body">  
-              <div class="container-fluid">
-                <div class="row mb-1">
-                  <div>
-                    <label class="col-sm-4 col-form-label">부모 폴더</label>
-                    <div class="col">
-                      <select class="form-select" aria-label="Default select example">
-                        <option selected value="1">기본</option>
-                        <option value="2">스프링 일지</option>
-                        <option value="3">임시</option>
-                        <option value="4">임시/임시 폴더</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                <div class="row mb-1">
-                  <div>
-                    <label for="folder_inputName" class="col-sm-4 col-form-label">폴더</label>
-                    <div class="col">
-                      <input type="text" class="form-control" id="folder_inputName">
-                    </div>
-                  </div>
-                </div>
-                
+            <a href="home.html"> <!-- 실제 링크로 변경해야함 -->
+              <div class="card-body">
+                <h5 class="card-title">[임시] 임시로 만들어본 블로그 입니다.</h5>
+                <p class="card-text">Body Extra Large. Most fonts have a particular weight which corresponds to one of the numbers in Common weight name mapping. However some fonts, called variable fonts, can support a range of weights with a more .......</p>
               </div>
+            </a>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              스프링 일지
             </div>
-            <div class="modal-footer d-flex align-items-center justify-content-center">
-              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">추가</button>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-            </div>
+            <a href="home.html"> <!-- 실제 링크로 변경해야함 -->
+              <div class="card-body">
+                <h5 class="card-title">스프링 일지 임시</h5>
+                <p class="card-text">
+
+                  국가는 농·어민과 중소기업의 자조조직을 육성하여야 하며, 그 자율적 활동과 발전을 보장한다. 국회는 의장 1인과 부의장 2인을 선출한다. 국민의 자유와 권리는 헌법에 열거되지 아니한 이유로 경시되지 아니한다. <br>
+                  국가는 농수산물의 수급균형과 유통구조의 개선에 노력하여 가격안정을 도모함으로써 농·어민의 이익을 보호한다. 모든 국민은 근로의 권리를 가진다. 국가는 사회적·경제적 방법으로 근로자의 고용의 증진과 적정임금의 보장에 노력하여야 하며, 법률이 정하는 바에 의하여 최저임금제를 시행하여야 한다. <br>
+                </p>
+              </div>
+            </a>
           </div>
         </div>
-      </div><!-- End Basic Modal-->
+
+        <div clsas="blog_search mt-5">
+          <div class="input-group mb-3 mt-3 w-25 mx-auto">
+            <input type="text" class="form-control" placeholder="검색.." aria-label="blog search">
+            <span class="input-group-text m-0">
+              <a hre="#" onClick="alert('검색!'); return false;">
+                <i class="bi bi-search"></i>
+              </a>
+            </span>
+        </div>
+
+      </div>
     </section>
+
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
@@ -251,19 +211,17 @@
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-  <!-- Vendor JS Files -->
-  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <!-- lib -->
-  <!--<script src="../assets/js/ezReply.js"></script>-->
+    <!-- Vendor JS Files -->
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Template Main JS File -->
-  <script src="../assets/js/main.js"></script>
-  <script src="../assets/js/blog/base.js"></script>
-  <script src="../assets/js/blog/write.js"></script>
+    <!-- Template Main JS File -->
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/blog/base.js"></script>
+    <script src="../assets/js/blog/search.js"></script>
 
-  <!-- Last JS-->
-  <script src="../assets/js/tooltips.js"></script>
+    <!-- Last JS-->
+    <script src="../assets/js/tooltips.js"></script>
 
 </body>
 </html>
