@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
 	<!-- 시큐리티와 인코딩 추가 -->
-	 security 
+	 <!--  security--> 
 	 <filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>

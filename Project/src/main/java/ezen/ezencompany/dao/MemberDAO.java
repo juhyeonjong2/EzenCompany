@@ -1,5 +1,6 @@
 package ezen.ezencompany.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -45,17 +46,17 @@ public class MemberDAO {
 	}
 	
 	//인증번호를 insert
-	public int insertNum(Map<String, Object> map) {
+	public int insertNum(HashMap<String, Object> map) {
 		return sqlSession.insert(namespace+".insertNum", map);
 	}
 	
 	//인증번호를 update
-	public int updateNum(Map<String, Object> map) {
+	public int updateNum(HashMap<String, Object> map) {
 		return sqlSession.update(namespace+".updateNum", map);
 	}
 	
 	//인증번호가 일치하는지 확인
-	public int checkCert(Map<String, Object> map) {
+	public int checkCert(HashMap<String, Object> map) {
 		return sqlSession.selectOne(namespace+".checkCert", map);
 	}
 	

@@ -24,7 +24,7 @@
 	</select>
 	
 	<select id="selectNum" parameterType="String" resultType="int" >
-		SELECT cert from joincert WHERE email = #{email} 
+		SELECT count(cert) from joincert WHERE email = #{email} 
 	</select>
 	
 	<insert id="insertNum" parameterType="java.util.Map">
@@ -36,7 +36,7 @@
 	</update>
 	
 	<select id="checkCert" parameterType="java.util.Map" resultType="int" >
-		SELECT cert from joincert WHERE email = #{email}, cert = #{certNum}; 
+		SELECT cert from joincert WHERE email = #{email} and cert = #{certNum}; 
 	</select>
 	
 	<select id="employeeList" parameterType="MemberVO" resultType="MemberVO" >

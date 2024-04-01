@@ -33,7 +33,9 @@
 	    <!-- 보안연결 SSL과 관련된 설정 -->
 	    <property name="javaMailProperties">
 		    <props>
-		      <prop key="mail.smtp.auth">true</prop>
+			  <prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
+		      <prop key="mail.smtp.ssl.enable">true</prop>
+			  <prop key="mail.smtp.auth">true</prop>
 		      <prop key="mail.smtp.starttls.enable">true</prop>
 		      <prop key="mail.smtps.checkserveridentity">true</prop>
 		      <prop key="mail.smtps.ssl.trust">*</prop>

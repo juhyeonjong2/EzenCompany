@@ -19,17 +19,22 @@ public class AdminDAO {
 	private final String namespace = "ezen.ezencompany.mapper.adminMapper";
 	
 	//1차로 member에 등록
-	public int memberRegistration(Map<String, Object> aaa){
-		return sqlSession.insert(namespace+".memberRegistration", aaa);
+	public int memberRegistration(Map<String, Object> member){
+		return sqlSession.insert(namespace+".memberRegistration", member);
 	}
 	
 	//2차로 mno를가져옴 (email은 고유함)
-	public int getLastMno(Map<String, Object> aaa) {
-		return sqlSession.selectOne(namespace+".getLastMno", aaa);
+	public int getLastMno(Map<String, Object> member) {
+		return sqlSession.selectOne(namespace+".getLastMno", member);
 	}
 	
 	//3차로 사원옵션에 등록
-	public int employeeRegistration(HashMap<String, Object> mm){
-		return sqlSession.insert(namespace+".employeeRegistration", mm);
+	public int employeeRegistration(HashMap<String, Object> map){
+		return sqlSession.insert(namespace+".employeeRegistration", map);
+	}
+	
+	//짧은 경로 생성
+	public int insertShortUrl(HashMap<String, Object> shortUrl){
+		return sqlSession.insert(namespace+".insertShortUrl", shortUrl);
 	}
 }

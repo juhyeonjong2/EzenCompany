@@ -24,22 +24,32 @@ public class AdminService {
 	//2. employeeOption에 분류테이블의 코드 수만큼 반복해서 넣는다
 	// 나중에 트랜잭션이 잘 작동하는지 확인 필요
 	@Transactional()
-	public void employeeRegistration (Map<String, Object> aaa, List<HashMap<String, Object>> list) throws Exception{
+	public void employeeRegistration (Map<String, Object> member, List<HashMap<String, Object>> list) throws Exception{
 		 //member
-		 adminDAO.memberRegistration(aaa);
+		 adminDAO.memberRegistration(member);
 		 //mno
-		 int mno = adminDAO.getLastMno(aaa);
+		 int mno = adminDAO.getLastMno(member);
 		 //employeeOption
 		 //여기서 리스트를 map으로 분해 -> 그리고 mno를 넣음
-		 HashMap<String, Object> mm = new HashMap<>();
-		 for(HashMap<String, Object> ss : list) {
-			 for ( String key : ss.keySet() ) {
-				    mm.put("value", key);
-				    mm.put("code", ss.get(key));
-				    mm.put("mno", mno);
-				    adminDAO.employeeRegistration(mm);
+		 HashMap<String, Object> map = new HashMap<>();
+		 for(HashMap<String, Object> category : list) {
+			 for ( String aidx : category.keySet() ) {
+				 map.put("aidx", aidx);
+				 map.put("cidx", category.get(aidx));
+				 map.put("mno", mno);
+				 adminDAO.employeeRegistration(map);
 				}
 		 }
+	}
+	//짧은 경로를 만드는 함수
+	public void insertShortUrl(Map<String, Object> member, String url) {
+		//mno를 구함
+		 int mno = adminDAO.getLastMno(member);
+		//mno와 짧은 경로를 합쳐서 dao호출
+		 HashMap<String, Object> shortUrl = new HashMap<>();
+		 shortUrl.put("mno", mno);
+		 shortUrl.put("url", url);
+		 adminDAO.insertShortUrl(shortUrl);
 	}
 
 }

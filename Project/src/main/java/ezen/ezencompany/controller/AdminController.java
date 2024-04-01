@@ -1,5 +1,7 @@
 package ezen.ezencompany.controller;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import java.util.Enumeration;
@@ -70,45 +72,47 @@ public class AdminController {
 		//nextElement 사용할 때마다 처음부터 하나씩 name을 반환한다
 		
 		//이름 이메일 담을 list
-		Map<String, Object> aaa = new HashMap<>();
-		aaa.put("name", name);
-		aaa.put("email",email);
+		Map<String, Object> member = new HashMap<>();
+		member.put("name", name);
+		member.put("email",email);
 		
-		// map들을 담을 리스트 생성
+		// 분류<map>들을 담을 리스트 생성
 		List <HashMap<String, Object>> list = new ArrayList<>();
  		System.out.println(names.nextElement());
-		System.out.println(names.nextElement()+"코드가 후져서 대안 생각해야할듯 일단은 이렇게하면 되긴함");
-		//이곳에서 member에 집어넣고 아래 반복문으로 집어넣으면 문제는 트랜잭션이 안됨
+		System.out.println(names.nextElement());
 		while (names.hasMoreElements()) {
 			HashMap<String, Object> map = new HashMap<>();
-			String aa = (String) names.nextElement();
-			String bb = request.getParameter(aa);
-			map.put(bb, aa);
+			String cidx = (String) names.nextElement();
+			String aidx = request.getParameter(cidx);
+			map.put(aidx, cidx);
 			list.add(map);
 		}
 		
 		//트랜잭션 들어간 서비스 호출
-		adminService.employeeRegistration(aaa, list);
-		//메일발송 여기메일에 추가로 /uuid 인가 그거 설정해서 같이 보내야함
-		String id = UUID.randomUUID().toString();
+		adminService.employeeRegistration(member, list);
+		//uuid 생성
+		String url = UUID.randomUUID().toString();
+		//여기서 id(짧은 경로)를 디비에 넣어줌
+		adminService.insertShortUrl(member, url);
 		
 		//생각해보니 자신의 ip주소를 구한다고 하더라도 자신이 타인이 세팅안하면 못쓰니 시험용으로만 사용하고 aws배운뒤 그걸로 수정필요
-		
+		String ip = "";
 		InetAddress local;
 		try {
 			local = InetAddress.getLocalHost();
-			String ip = local.getHostAddress();
+			ip = local.getHostAddress();
 			System.out.println("local ip : "+ip);
 			//이걸로 필요한 정보를 찾은 뒤 그걸 추가해서 아래에 더해줌(집에서 시험이 안되어서 학언에서 아침에 시험)(잘 되면 비번찾기에도 복붙)
 		} catch (UnknownHostException e1) {
 			e1.printStackTrace();
 		}
 
-		//이 uuid를 db에 넣음(mno는 방금 email로 찾음 insert()시도 해보자)
+		//메일 발송
+		String link = "http://"+ ip + ":8080/ezencompany/join/" + url;
 		String setFrom = "vhahaha513@naver.com"; //2단계 인증 x, 메일 설정에서 POP/IMAP 사용 설정에서 POP/SMTP 사용함으로 설정o
 		String toMail = email;
-		String title = "[이젠컴퍼니]회원가입 링크입니다.";
-		String content = "이젠컴퍼니 회원가입 링크는 " + email +"/"+ id + " 입니다." +
+		String title = "[이젠컴퍼니]회원가입 링크입니다."; 
+		String content = "이젠컴퍼니 회원가입 <a href='"+ link +"'> 링크 </a> 입니다." +
 						 "<br>" +
 						 "해당 링크로 들어가서 회원가입을 해주세요.";
 		

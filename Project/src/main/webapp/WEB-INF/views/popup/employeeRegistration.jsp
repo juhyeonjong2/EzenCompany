@@ -43,12 +43,12 @@
 	                  <div>
 	                    <label class="col-sm-4 col-form-label">${cate.value}</label>
 	                    <div class="col">
-	                      <select class="form-select" aria-label="Default select example" name="${cate.code}">
+	                      <select class="form-select" aria-label="Default select example" name="${cate.cidx}">
 	                      
 	                      <%-- 2차반복문으로 속성과 분류의 코드를 비교하고 맞는것만 나열--%>
 	                      	<c:forEach var="attr" items="${attr}">
-	                      		<c:if test="${cate.code eq attr.code}">
-	                      			<option value="${attr.otkey}">${attr.value}</option>
+	                      		<c:if test="${cate.cidx eq attr.cidx}">
+	                      			<option value="${attr.aidx}">${attr.value}</option>
 	                      		</c:if>
 	                        </c:forEach>
 	                        

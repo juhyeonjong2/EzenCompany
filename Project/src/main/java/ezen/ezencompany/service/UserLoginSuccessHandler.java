@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import ezen.ezencompany.vo.UserVO;
+
 
 public class UserLoginSuccessHandler implements AuthenticationSuccessHandler{
 	//로그인성공시 이쪽으로 오게된다
@@ -18,8 +20,9 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler{
 			Authentication authentication) throws IOException, ServletException {;
 		
 			//authentication = 저장된 모든 정보, loginUser = db에 있는 정보만 있음
-			//UserVO loginUser = (UserVO)authentication.getPrincipal();
+			UserVO loginUser = (UserVO)authentication.getPrincipal();
 			
+			System.out.println(loginUser);
 			//System.out.println("로그인 성공");
 			Logger logger = Logger.getLogger("UserLoginSuccessHandler.java");
 			logger.info("로그연습: 로그인 성공");

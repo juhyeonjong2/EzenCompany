@@ -14,8 +14,13 @@
 	
 	<!-- #{optionMap.mno, jdbcType=INTEGER}이 부분 수정 -->
 	<insert id="employeeRegistration" parameterType="java.util.Map">
-		INSERT INTO employeeOption (mno, code, value) VALUES
-		    (#{mno}, #{code}, #{value});
+		INSERT INTO employeeOption (mno, cidx, aidx) VALUES
+		    (#{mno}, #{cidx}, #{aidx});
+	</insert>
+	
+	<insert id="insertShortUrl" parameterType="java.util.Map">
+		INSERT INTO joinMail (mno, shortUrl) VALUES
+		    (#{mno}, #{url});
 	</insert>
 	
 </mapper>

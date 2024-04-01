@@ -24,20 +24,22 @@ input{
 }
 
 
-
-
-
-
-
-
 .mainDiv{width: 585px; height: 800px; background: #8FC3F2}
-
 .loginFormTop{width: 442px; margin: auto; margin-top: 57px; margin-bottom: 136px; }
 .textBox{margin-bottom: 68px;}
 .Line1{width: 442px; height: 0px; border: 1px #2D3648 solid}
 .inputText{
     width: 405px; color: #2D3648; font-size: 18px; font-weight: 300; word-wrap: break-word; 
     background-color: #8FC3F2; border: 0; font-family: 'Pretendard-Regular'; height: 32px;}
+
+/*어드민 페이지 css*/
+.adminDiv{width: 585px; height: 800px; background: #5D5FEF}
+.adminText{
+    width: 405px; color: #2D3648; font-size: 18px; font-weight: 300; word-wrap: break-word; 
+    background-color: #5D5FEF; border: 0; font-family: 'Pretendard-Regular'; height: 32px;}
+
+
+
 
 /*placefolder 색 변경*/
 input::placeholder{
