@@ -24,7 +24,7 @@
    <script src="https://cdn.tiny.cloud/1/3bif3ntggq2j5i7kj5tgxwt4wodd6se5f35dq4qu2s1aj007/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
    <script type="text/javascript" src="../assets/js/jquery-3.7.1.min.js"></script>
    <script type="text/javascript" src="../assets/vendor/zTree/js/jquery.ztree.all.js"></script>
-
+   
 </head>
 <body>
     
@@ -33,7 +33,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="home.html" class="logo d-flex align-items-center">
         <i class="bi bi-house-door"></i>
-        <span class="d-none d-lg-block">블로그 등록</span>
+        <span class="d-none d-lg-block">블로그 수정</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -148,20 +148,30 @@
   <main id="main" class="main">
     <section class="section container-md">
       <div class="input-group mb-3">
-        <input type="text" class="form-control"  placeholder="제목을 입력하세요..">
+        <input type="text" class="form-control" value="[임시] 임시로 만들어본 블로그 입니다.">
       </div>
       <div class="input-group mb-3">
         <label class="input-group-text" for="formFileMultiple" >파일첨부</label>
         <input type="file" class="form-control"  id="formFileMultiple" multiple>
+        <div class="dropdown me-5">
+          <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            첨부 파일
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">첨부파일1.pdf</a></li>
+            <li><a class="dropdown-item" href="#">첨부파일2.png</a></li>
+            <li><a class="dropdown-item" href="#">첨부파일3.pptx</a></li>
+          </ul>
+        </div>
       </div>
       <div class="col-auto mb-3 d-flex" >
         <div class="col d-flex justify-content-start">
           <div>
             <select class="form-select" aria-label="Default select example">
-              <option selected value="1">기본</option>
+              <option value="1">기본</option>
               <option value="2">스프링 일지</option>
               <option value="3">임시</option>
-              <option value="4">임시/임시 폴더</option>
+              <option selected value="4">임시/임시 폴더</option>
             </select>
           </div>
           <div class="m-1">
@@ -182,10 +192,15 @@
       </div>
       <div class="col-auto mb-3">
         <!--tinymce 영역-->
-        <textarea id="editor_blog_content"></textarea>
+        <textarea id="editor_blog_content">
+          Body Extra Large. Most fonts have a particular weight which corresponds to one of the numbers in Common weight name mapping. However some fonts, called variable fonts, can support a range of weights with a more or less fine granularity, and this can give the designer a much closer degree of control over the chosen weight.
+          <br>
+          <br>
+          Body Large. Most fonts have a particular weight which corresponds to one of the numbers in Common weight name mapping. However some fonts, called variable fonts, can support a range of weights with a more or less fine granularity, and this can give the designer a much closer degree of control over the chosen weight.
+        </textarea>
       </div>
       <div class="blog_buttons mt-3 d-flex justify-content-end">
-        <button class="btn btn-primary me-2">등록</button>
+        <button class="btn btn-primary me-2">수정</button>
       </div>
     </section>
 
@@ -260,7 +275,7 @@
   <!-- Template Main JS File -->
   <script src="../assets/js/main.js"></script>
   <script src="../assets/js/blog/base.js"></script>
-  <script src="../assets/js/blog/write.js"></script>
+  <script src="../assets/js/blog/modify.js"></script>
 
   <!-- Last JS-->
   <script src="../assets/js/tooltips.js"></script>

@@ -1259,3 +1259,34 @@ h6 {
   background-color: #D4D8E2;
   
 }
+
+.board_tree_frame{
+  height: 700px;
+  background-color: #D4D8E2;
+  
+}
+
+
+/*--------------------------------------------------------------
+# Blog
+--------------------------------------------------------------*/
+.blog_frame {
+  /*height: 750px;*/
+  background-color: #F3F4F3;
+  
+}
+
+
+/*--------------------------------------------------------------
+# Board
+--------------------------------------------------------------*/
+td p.mini_table_title{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 20rem;
+  /*width: 250px;
+  height: 20px;*/
+}
+
+

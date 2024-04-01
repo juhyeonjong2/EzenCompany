@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>View</title>
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -13,25 +13,26 @@
  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
- <link href="../assets/vendor/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" type="text/css">
+ <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+ <link href="../assets/vendor/simple-datatables/style.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
   <link href="../assets/css/style.css" rel="stylesheet">
   <link href="../assets/css/ezReply.css" rel="stylesheet">
 
   <!-- Predefined Script -->
+  <script src="https://cdn.tiny.cloud/1/3bif3ntggq2j5i7kj5tgxwt4wodd6se5f35dq4qu2s1aj007/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
   <script type="text/javascript" src="../assets/js/jquery-3.7.1.min.js"></script>
-  <script type="text/javascript" src="../assets/vendor/zTree/js/jquery.ztree.all.js"></script>
 
 </head>
 <body>
     
-    <!-- ======= Header - Blog ======= -->
+    <!-- ======= Header - Board ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center justify-content-between">
       <a href="home.html" class="logo d-flex align-items-center">
-        <i class="bi bi-house-door"></i>
-        <span class="d-none d-lg-block">Home</span>
+        <i class="bx bx-world"></i> <!-- boxicons-->
+        <span class="d-none d-lg-block">EzenCompany</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -107,132 +108,60 @@
               <i class="bi bi-house-door"></i>
             </a>
         </li><!-- End Home Icon-->
+
       </ul>
     </nav><!-- End Icons Navigation -->
 
   </header><!-- End Header -->
 
-  <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" class="sidebar">
-    <ul class="sidebar-nav" id="sidebar-nav">
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="home.html">
-                <i class="bi bi-house-door"></i>
-                <span>홈 화면</span>
-            </a>
-        </li><!-- End Employee Page Nav  -->
-
-        <li class="nav-item">
-          <a class="nav-link collapsed" href="write.html">
-            <i class="bi bi-journal-plus"></i>
-              <span>블로그 등록</span>
+  <!-- ======= Sidebar - Board======= -->
+    <aside id="sidebar" class="sidebar">
+      <div class="board_tree_frame mt-5 ms-4 w-75 rounded overflow-y-auto">
+        <div class="list-group">
+          <a href="list.html" class="list-group-item list-group-item-action active" aria-current="true">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 1</span>
           </a>
-        </li><!-- End board list Page Nav -->
-
-        <li class="nav-item">
-          <a class="nav-link collapsed" href="#" onclick="logout(); return false;">
-            <i class="bi bi-person-dash"></i>
-              <span>로그아웃</span>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 2</span>
           </a>
-        </li><!-- End category  Page Nav -->
-    </ul>
-
-    <div class="blog_tree_frame mt-5 ms-4 w-75 rounded overflow-y-auto">
-      <ul id="blog_tree" class="ztree"></ul>
-    </div>
-
-  </aside><!-- End Sidebar-->
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 3</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 4</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 5</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 6</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 7</span>
+          </a>
+          
+        </div>
+      </div>
+  
+    </aside><!-- End Sidebar-->
 
   <main id="main" class="main">
-    <div class="pagetitle container-md">
-      <div class="accordion" id="accordionExample">
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-              퇴사자 블로그
-            </button>
-          </h2>
-          <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-              <a href="#">장윤석</a>
-              <a href="#">예지환</a>
-              <a href="#">조창원</a>
-              <a href="#">황보윤호</a>
-              <a href="#">손은성</a>
-              <a href="#">홍종석</a>
-              <a href="#">송윤성</a>
-              <a href="#">봉용호</a>
-              <a href="#">허시우</a>
-              <a href="#">강광민</a>
-              <a href="#">사공은옥</a>
-              <a href="#">양혜성</a>
-              <a href="#">서유준</a>
-              <a href="#">허성빈</a>
-              <a href="#">황보광민</a>
-              <a href="#">정재경</a>
-              <a href="#">류성준</a>
-              <a href="#">임상혁</a>
-              <a href="#">하진기</a>
-              <a href="#">풍경재</a>
-              <a href="#">남석주</a>
-              <a href="#">김홍석</a>
-              <a href="#">탁용환</a>
-              <a href="#">정정은</a>
-              <a href="#">설세미</a>
-              <a href="#">성희수</a>
-              <a href="#">제갈우민</a>
-              <a href="#">황보문희</a>
-              <a href="#">추태식</a>
-              <a href="#">풍희윤</a>
-              
-            </div>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-              프로그래밍 팀 블로그
-            </button>
-          </h2>
-          <div id="collapseTwo" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-              <a href="#">서병지</a>
-              <a href="#">이태기</a>
-              <a href="#">백정식</a>
-              <a href="#">설우식</a>
-              <a href="#">한지수</a>
-              <a href="#">사공태식</a>
-              <a href="#">전창환</a>
-              <a href="#">남궁종석</a>
-              <a href="#">남영현</a>
-              <a href="#">배영미</a>
-              <a href="#">안석호</a>
-              <a href="#">한영희</a>
-              <a href="#">장승호</a>
-              <a href="#">양진성</a>
-              <a href="#">한만석</a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-       <!-- <h1>사원 목록</h1>
-        <nav>
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="home.html">Admin</a></li>
-            <li class="breadcrumb-item">Tables</li>
-            <li class="breadcrumb-item active">Data</li>
-          </ol>
-        </nav>    
-        -->
-    </div> 
-    <!-- End Page Title -->
+    <div class="pagetitle container-md mb-3">
+      <h1>게시판 1</h1>
+    </div><!-- End Page Title -->
 
     <section class="section container-md">
       <div class="blog_frame">
           <div class="blog_title">
                 <div class="d-flex justify-content-center mb-3" >
-                  <h2 class="mt-3">[임시] 임시로 만들어본 블로그 입니다.</h2>
+                  <h2 class="mt-3">게시판 샘플</h2>
                 </div>
                 <div class="d-flex justify-content-start ms-5">
                   <img width="25" height="25" src="../assets/icon/user.png" alt="user_profile">
@@ -291,7 +220,7 @@
                             <p class="text-center m-0 t-0">고길동 :</p>
                           </div>
                           <div class="reply_author_me">
-                            <!--<p class="text-center m-0 t-0">(블로그 주인)</p>-->
+                            <!--<p class="text-center m-0 t-0">(작성자)</p>-->
                           </div>
                        </div>
                        <div class="col pt-2">
@@ -326,7 +255,7 @@
                                  <p class="text-center m-0 t-0">홍길동 :</p>
                                </div>
                                <div class="reply_author_me">
-                                 <p class="text-center m-0 t-0 text-info-emphasis">(블로그 주인)</p>
+                                 <p class="text-center m-0 t-0 text-info-emphasis">(작성자)</p>
                                </div>
                             </div>
                             <div class="col pt-2">
@@ -356,7 +285,7 @@
                                      <p class="text-center m-0 t-0">고길동 :</p>
                                    </div>
                                    <div class="reply_author_me">
-                                     <!--<p class="text-center m-0 t-0 text-info-emphasis">(블로그 주인)</p>-->
+                                     <!--<p class="text-center m-0 t-0 text-info-emphasis">(작성자)</p>-->
                                    </div>
                                 </div>
                                 <div class="col pt-2">
@@ -392,7 +321,7 @@
                            <p class="text-center m-0 t-0">김길동 :</p>
                          </div>
                          <div class="reply_author_me">
-                           <!--<p class="text-center m-0 t-0">(블로그 주인)</p>-->
+                           <!--<p class="text-center m-0 t-0">(작성자)</p>-->
                          </div>
                       </div>
                       <div class="col pt-2">
@@ -422,7 +351,7 @@
                                <p class="text-center m-0 t-0">홍길동 :</p>
                              </div>
                              <div class="reply_author_me">
-                               <p class="text-center m-0 t-0">(블로그 주인)</p>
+                               <p class="text-center m-0 t-0">(작성자)</p>
                              </div>
                           </div>
                           <div class="col pt-2">
@@ -453,7 +382,7 @@
                                <p class="text-center m-0 t-0">한만석 :</p>
                              </div>
                              <div class="reply_author_me">
-                               <!--<p class="text-center m-0 t-0">(블로그 주인)</p>-->
+                               <!--<p class="text-center m-0 t-0">(작성자)</p>-->
                              </div>
                           </div>
                           <div class="col pt-2">
@@ -492,24 +421,15 @@
       </div>
       <div class="blog_buttons mt-3 d-flex justify-content-end">
           <a class="btn btn-primary me-2" role="button" href="modify.html">수정</a>
-          <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#blogRemoveModal">삭제</button>
+          <button class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#boardRemoveModal">삭제</button>
+          <a class="btn btn-secondary" role="button" href="list.html">목록</a>
       </div>
-      <div clsas="blog_search mt-5">
-        <div class="input-group mb-3 mt-3 w-25 mx-auto">
-          <input type="text" class="form-control" placeholder="검색.." aria-label="blog search">
-          <span class="input-group-text m-0">
-            <a href="search.html" onClick="alert('검색!'); return true;">
-              <i class="bi bi-search"></i>
-            </a>
-          </span>
-      </div>
-
-      </div>
+      
     </section>
 
     <section class="popup">
-      <!-- 블로그 삭제 팝업-->
-      <div class="modal fade" id="blogRemoveModal" tabindex="-1" data-bs-backdrop="false">
+      <!-- 게시글 삭제 팝업-->
+      <div class="modal fade" id="boardRemoveModal" tabindex="-1" data-bs-backdrop="false">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
@@ -517,7 +437,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              현재 블로그를 삭제하시겠습니까?
+              게시글을 삭제하시겠습니까?
             </div>
             <div class="modal-footer d-flex align-items-center justify-content-center">
               <button type="button" class="btn btn-danger" data-bs-dismiss="modal">삭제</button>
@@ -529,7 +449,6 @@
 
      
     </section>
-
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
@@ -551,11 +470,12 @@
 
     <!-- Vendor JS Files -->
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/simple-datatables/simple-datatables.js"></script>
+
 
     <!-- Template Main JS File -->
     <script src="../assets/js/main.js"></script>
-    <script src="../assets/js/blog/base.js"></script>
-    <script src="../assets/js/blog/blog.js"></script>
+    <script src="../assets/js/board/write.js"></script>
 
     <!-- Last JS-->
     <script src="../assets/js/tooltips.js"></script>

@@ -13,8 +13,15 @@
     } else {
       return document.querySelector(el)
     }
-    }
+  }
 
+    
+     /**
+     * Initiate Editor
+     */
+     tinymce.init({
+        selector: '#editor_board_content'
+      });
 
+ 
   })();
-

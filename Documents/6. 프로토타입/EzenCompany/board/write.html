@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>블로그 작성</title>
+    <title>Write</title>
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -13,27 +13,26 @@
  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
- <link href="../assets/vendor/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" type="text/css">
- 
+ <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+ <link href="../assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
   <!-- Template Main CSS File -->
   <link href="../assets/css/style.css" rel="stylesheet">
   <link href="../assets/css/ezReply.css" rel="stylesheet">
-  
 
-   <!-- Predefined Script -->
-   <script src="https://cdn.tiny.cloud/1/3bif3ntggq2j5i7kj5tgxwt4wodd6se5f35dq4qu2s1aj007/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
-   <script type="text/javascript" src="../assets/js/jquery-3.7.1.min.js"></script>
-   <script type="text/javascript" src="../assets/vendor/zTree/js/jquery.ztree.all.js"></script>
+  <!-- Predefined Script -->
+  <script src="https://cdn.tiny.cloud/1/3bif3ntggq2j5i7kj5tgxwt4wodd6se5f35dq4qu2s1aj007/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+  <script type="text/javascript" src="../assets/js/jquery-3.7.1.min.js"></script>
 
 </head>
 <body>
     
-    <!-- ======= Header - Blog ======= -->
+    <!-- ======= Header - Board ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center justify-content-between">
       <a href="home.html" class="logo d-flex align-items-center">
-        <i class="bi bi-house-door"></i>
-        <span class="d-none d-lg-block">블로그 등록</span>
+        <i class="bx bx-world"></i> <!-- boxicons-->
+        <span class="d-none d-lg-block">EzenCompany</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -109,43 +108,55 @@
               <i class="bi bi-house-door"></i>
             </a>
         </li><!-- End Home Icon-->
+
       </ul>
     </nav><!-- End Icons Navigation -->
 
   </header><!-- End Header -->
 
-  <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" class="sidebar">
-    <ul class="sidebar-nav" id="sidebar-nav">
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="home.html">
-                <i class="bi bi-house-door"></i>
-                <span>홈 화면</span>
-            </a>
-        </li><!-- End Employee Page Nav  -->
-
-        <li class="nav-item">
-          <a class="nav-link collapsed" href="write.html">
-            <i class="bi bi-journal-plus"></i>
-              <span>블로그 등록</span>
+  <!-- ======= Sidebar - Board======= -->
+    <aside id="sidebar" class="sidebar">
+      <div class="board_tree_frame mt-5 ms-4 w-75 rounded overflow-y-auto">
+        <div class="list-group">
+          <a href="list.html" class="list-group-item list-group-item-action active" aria-current="true">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 1</span>
           </a>
-        </li><!-- End board list Page Nav -->
-
-        <li class="nav-item">
-          <a class="nav-link collapsed" href="#" onclick="logout(); return false;">
-            <i class="bi bi-person-dash"></i>
-              <span>로그아웃</span>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 2</span>
           </a>
-        </li><!-- End category  Page Nav -->
-    </ul>
-
-    <div class="blog_tree_frame mt-5 ms-4 w-75 rounded overflow-y-auto">
-      <ul id="blog_tree" class="ztree"></ul>
-    </div>
-
-  </aside><!-- End Sidebar-->
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 3</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 4</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 5</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 6</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 7</span>
+          </a>
+          
+        </div>
+      </div>
+  
+    </aside><!-- End Sidebar-->
 
   <main id="main" class="main">
+    <div class="pagetitle container-md">
+      <h1>게시글 쓰기</h1>
+    </div><!-- End Page Title -->
+
     <section class="section container-md">
       <div class="input-group mb-3">
         <input type="text" class="form-control"  placeholder="제목을 입력하세요..">
@@ -154,84 +165,13 @@
         <label class="input-group-text" for="formFileMultiple" >파일첨부</label>
         <input type="file" class="form-control"  id="formFileMultiple" multiple>
       </div>
-      <div class="col-auto mb-3 d-flex" >
-        <div class="col d-flex justify-content-start">
-          <div>
-            <select class="form-select" aria-label="Default select example">
-              <option selected value="1">기본</option>
-              <option value="2">스프링 일지</option>
-              <option value="3">임시</option>
-              <option value="4">임시/임시 폴더</option>
-            </select>
-          </div>
-          <div class="m-1">
-            폴더 추가하기
-          </div>
-          <div class="m-1">
-            <a class="link-dark" href="#" data-bs-toggle="modal" data-bs-target="#folderAddModal">
-              <i class="bi bi-plus-square"></i>
-            </a>  
-          </div>
-        </div>
-        <div class="col d-flex justify-content-end">
-          <div class="form-check form-switch form-check-reverse">
-            <label class="form-check-label" for="flexSwitchCheckDefault">비공개</label>
-            <button class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-          </div>
-        </div>
-      </div>
       <div class="col-auto mb-3">
         <!--tinymce 영역-->
-        <textarea id="editor_blog_content"></textarea>
+        <textarea id="editor_board_content"></textarea>
       </div>
       <div class="blog_buttons mt-3 d-flex justify-content-end">
         <button class="btn btn-primary me-2">등록</button>
       </div>
-    </section>
-
-    <section class="popup">
-      <!-- 폴더 추가 팝업 -->
-      <div class="modal fade" id="folderAddModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">폴더 추가</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <div class="modal-body">  
-              <div class="container-fluid">
-                <div class="row mb-1">
-                  <div>
-                    <label class="col-sm-4 col-form-label">부모 폴더</label>
-                    <div class="col">
-                      <select class="form-select" aria-label="Default select example">
-                        <option selected value="1">기본</option>
-                        <option value="2">스프링 일지</option>
-                        <option value="3">임시</option>
-                        <option value="4">임시/임시 폴더</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                <div class="row mb-1">
-                  <div>
-                    <label for="folder_inputName" class="col-sm-4 col-form-label">폴더</label>
-                    <div class="col">
-                      <input type="text" class="form-control" id="folder_inputName">
-                    </div>
-                  </div>
-                </div>
-                
-              </div>
-            </div>
-            <div class="modal-footer d-flex align-items-center justify-content-center">
-              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">추가</button>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-            </div>
-          </div>
-        </div>
-      </div><!-- End Basic Modal-->
     </section>
   </main><!-- End #main -->
 
@@ -251,19 +191,18 @@
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-  <!-- Vendor JS Files -->
-  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <!-- lib -->
-  <!--<script src="../assets/js/ezReply.js"></script>-->
+    <!-- Vendor JS Files -->
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/simple-datatables/simple-datatables.js"></script>
 
-  <!-- Template Main JS File -->
-  <script src="../assets/js/main.js"></script>
-  <script src="../assets/js/blog/base.js"></script>
-  <script src="../assets/js/blog/write.js"></script>
 
-  <!-- Last JS-->
-  <script src="../assets/js/tooltips.js"></script>
+    <!-- Template Main JS File -->
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/board/write.js"></script>
+
+    <!-- Last JS-->
+    <script src="../assets/js/tooltips.js"></script>
 
 </body>
 </html>
