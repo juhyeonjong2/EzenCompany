@@ -95,22 +95,22 @@ CREATE TABLE blogReply(
 # 회원가입 인증번호 테이블 생성
 CREATE TABLE joinCert (
 	email varchar(100) not null primary key comment '이메일',
-    cert char(8) not null comment '인증번호',
-	expiretime timestamp not null comment '만료일',
-	verifyyn char(1) comment '인증유무'
+    cert char(8) not null comment '인증번호'
 );
 
 #분류 테이블
 CREATE TABLE category (
-	code varchar(100) not null unique primary key comment '코드',
+	cidx int  not null unique primary key auto_increment comment '분류번호',
+	code varchar(100) not null unique comment '코드',
     value varchar(100) not null unique comment '분류',
     blogview boolean not null comment '블로그리스트 뷰'
 );
 
 #속성 테이블
 CREATE TABLE attribute (
-	code varchar(100) not null comment '코드',
-    foreign key(code) references category(code),
+	aidx int  not null unique primary key auto_increment comment '속성번호',
+	cidx int not null comment '분류번호',
+    foreign key(cidx) references category(cidx) on delete cascade,
     value varchar(100) comment '값',
     otkey varchar(100) not null comment '키'
 );
@@ -119,9 +119,10 @@ CREATE TABLE attribute (
 CREATE TABLE employeeOption (
 	mno int unsigned not null comment '회원번호',
 	foreign key(mno) references member(mno),
-	code varchar(100) not null comment '코드',
-    foreign key(code) references category(code),
-    value varchar(100) comment '옵션값'
+	cidx int not null comment '분류번호',
+    foreign key(cidx) references category(cidx) on delete cascade,
+    aidx int not null comment '속성번호',
+    foreign key(aidx) references attribute(aidx) on delete cascade
 );
 
 #알림 테이블
