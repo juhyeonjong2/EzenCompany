@@ -57,6 +57,32 @@
     /**
      * Initiate Modals
      */
+    const DetailModal = document.getElementById('employeeDetailModal')
+    if (employeeDetailModal) {
+        employeeDetailModal.addEventListener('show.bs.modal', event => 
+        {
+            // Button that triggered the modal
+            const button = event.relatedTarget;
+            // Extract info from data-bs-* attributes
+            const mno = button.getAttribute('data-bs-mno');
+            console.log(mno);
+            // If necessary, you could initiate an Ajax request here
+            // and then do the updating in a callback.
+            // Update the modal's content.
+           
+           // const modalTitle = exampleModal.querySelector('.modal-title')
+            //const modalBodyInput = exampleModal.querySelector('.modal-body input')
+
+            //modalTitle.textContent = `New message to ${recipient}`
+            //modalBodyInput.value = recipient
+        });
+        
+    }
+
+
+
+
+
      // 분류 수정 팝업 (category 넘겨받기)
      const categoryEditModal = document.getElementById('categoryEditModal')
      if (categoryEditModal) {
