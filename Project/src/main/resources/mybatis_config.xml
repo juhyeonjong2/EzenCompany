@@ -4,6 +4,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="ezen.ezencompany.vo.MemberVO" alias="memberVO"/>
+		<typeAlias type="ezen.ezencompany.vo.BoardVO" alias="boardVO"/>
 		<!-- <typeAlias type="edu.springboard.vo.BoardVO" alias="boardVO"/> -->
 	</typeAliases>
 </configuration>

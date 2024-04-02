@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 이 문서가 xml 이라는 표시 -->
+<!-- mapper tag 시작 -->
+<!-- namespace 의 값은 TestDao 파일에서 호출하는 값과 같아야한다 -->
+<mapper namespace="ezen.ezencompany.mapper.boardmapper"> 
+
+	<select id="list" resultType="boardVO">
+	SELECT * from board
+	</select>
+	
+	
+</mapper>
