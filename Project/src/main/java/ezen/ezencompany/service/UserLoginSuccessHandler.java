@@ -22,10 +22,13 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler{
 			//authentication = 저장된 모든 정보, loginUser = db에 있는 정보만 있음
 			UserVO loginUser = (UserVO)authentication.getPrincipal();
 			
-			System.out.println(loginUser);
+			if(loginUser.getAuthority().equals("ROLE_ADMIN")) {
+				response.sendRedirect(request.getContextPath()+"/admin/home");
+			}else {
+				response.sendRedirect(request.getContextPath()+"/pwSearch");
+			}
 			//System.out.println("로그인 성공");
-			Logger logger = Logger.getLogger("UserLoginSuccessHandler.java");
-			logger.info("로그연습: 로그인 성공");
-			response.sendRedirect(request.getContextPath()+"/admin/home");
+			//Logger logger = Logger.getLogger("UserLoginSuccessHandler.java");
+			//logger.info("로그연습: 로그인 성공");
 	}
 }
