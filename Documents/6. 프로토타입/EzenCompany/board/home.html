@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+ <!-- Vendor CSS Files -->
+ <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+ <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+ <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+ <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+ <link href="../assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="../assets/css/style.css" rel="stylesheet">
+  <link href="../assets/css/ezReply.css" rel="stylesheet">
+
+  <!-- Predefined Script -->
+  <script type="text/javascript" src="../assets/js/jquery-3.7.1.min.js"></script>
+
+</head>
+<body>
+    
+    <!-- ======= Header - Board ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="home.html" class="logo d-flex align-items-center">
+        <i class="bx bx-world"></i> <!-- boxicons-->
+        <span class="d-none d-lg-block">EzenCompany</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <!-- 관리자가 아니라면 보이지 않음.-->
+        <li class="nav-item">
+            <a class="nav-link nav-icon" href="../admin/home.html">
+              <i class="bi bi-key"></i>
+            </a>
+        </li><!-- End Admin Icon-->
+
+        <li class="nav-item dropdown">
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-bell"></i>
+            <span class="badge bg-primary badge-number">3</span>
+          </a><!-- End Notification Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+            <li class="dropdown-header" style="width: 200px;">
+              알림
+            </li>
+
+            <li><hr class="dropdown-divider"></li>
+
+            <li class="notification-item">
+              <i class="bi bi-exclamation-circle text-warning"></i>
+              <div>
+                <p><a href='#'>이길동</a>님이 블로그에 댓글을 남기셧습니다.</p>
+              </div>
+            </li>
+
+            <li><hr class="dropdown-divider"></li>
+
+            <li class="notification-item">
+              <i class="bi bi-exclamation-circle text-warning"></i>
+              <div>
+                <p><a href='#'>박길동</a>님이 게시글에 댓글을 남기셧습니다.</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-exclamation-circle text-warning"></i>
+              <div>
+                <p><a href='#'>박길동</a>님이 회원님을 언급하셨습니다.</p>
+              </div>
+            </li>
+
+          </ul><!-- End Notification Dropdown Items -->
+        </li><!-- End Notification Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link nav-icon" href="#">
+            <i class="bi bi-chat-left-text"></i>
+            <span class="badge bg-success badge-number">3</span>
+          </a>
+        </li><!-- End Messages Icon -->
+        
+        <li class="nav-item">
+            <a class="nav-link nav-icon search-bar-toggle" href="../board/home.html">
+              <i class="bi bi-grid"></i>
+            </a>
+        </li><!-- End Board Icon-->
+
+        <li class="nav-item">
+            <a class="nav-link nav-icon search-bar-toggle" href="../blog/home.html">
+              <i class="bi bi-house-door"></i>
+            </a>
+        </li><!-- End Home Icon-->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar - Board======= -->
+    <aside id="sidebar" class="sidebar">
+      <div class="board_tree_frame mt-5 ms-4 w-75 rounded overflow-y-auto">
+        <div class="list-group">
+          <a href="list.html" class="list-group-item list-group-item-action active" aria-current="true">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 1</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 2</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 3</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 4</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 5</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 6</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 7</span>
+          </a>
+          
+        </div>
+      </div>
+  
+    </aside><!-- End Sidebar-->
+
+  <main id="main" class="main">
+    <section class="section">
+      <div class="row row-cols-1 row-cols-md-3 g-1">
+
+        <div class="col">
+            <div class="card m-1">
+              <div class="card-body">
+                <div class="d-flex justify-content-between">
+                  <h5 class="card-title">게시판 제목1</h5>
+                  <span class="m-3"><a href="list.html">+ 더보기</a></span>
+                </div>
+                <hr class="m-0">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td>
+                          <a href="#">
+                            <p class="mini_table_title">제목11111111111111111111111111111111111111111111111111111</p>
+                          </a>
+                      </td>
+                      <td class="text-end">2024.03.29</td>
+                    </tr>
+                    <tr>
+                      <td>
+                          <a href="#">
+                            <p class="mini_table_title">제목2</p>
+                          </a>
+                      </td>
+                      <td class="text-end">2024.03.29</td>
+                    </tr>
+                    <tr>
+                      <td>
+                          <a href="#">
+                            <p class="mini_table_title">제목3</p>
+                          </a>
+                      </td>
+                      <td class="text-end">2024.03.29</td>
+                    </tr>
+                    <tr>
+                      <td>
+                          <a href="#">
+                            <p class="mini_table_title">제목4</p>
+                          </a>
+                      </td>
+                      <td class="text-end">2024.03.29</td>
+                    </tr>
+                    <tr>
+                      <td>
+                          <a href="#">
+                            <p class="mini_table_title">제목5</p>
+                          </a>
+                      </td>
+                      <td class="text-end">2024.03.29</td>
+                    </tr>
+                  
+                  </tbody>
+                </table>
+                <!-- End Default Table Example -->
+              </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card m-1">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <h5 class="card-title">게시판 제목2</h5>
+                <span class="m-3"><a href="list.html">+ 더보기</a></span>
+              </div>
+              <hr class="m-0">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td>
+                        <a href="#">
+                          <p class="mini_table_title">제목11111111111111111111111111111111111111111111111111111</p>
+                        </a>
+                    </td>
+                    <td class="text-end">2024.03.29</td>
+                  </tr>
+                  <tr>
+                    <td>
+                        <a href="#">
+                          <p class="mini_table_title">제목2</p>
+                        </a>
+                    </td>
+                    <td class="text-end">2024.03.29</td>
+                  </tr>
+                  <tr>
+                    <td>
+                        <a href="#">
+                          <p class="mini_table_title">제목3</p>
+                        </a>
+                    </td>
+                    <td class="text-end">2024.03.29</td>
+                  </tr>
+                  <tr>
+                    <td>
+                        <a href="#">
+                          <p class="mini_table_title">제목4</p>
+                        </a>
+                    </td>
+                    <td class="text-end">2024.03.29</td>
+                  </tr>
+                  <tr>
+                    <td>
+                        <a href="#">
+                          <p class="mini_table_title">제목5</p>
+                        </a>
+                    </td>
+                    <td class="text-end">2024.03.29</td>
+                  </tr>
+                
+                </tbody>
+              </table>
+              <!-- End Default Table Example -->
+            </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card m-1">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h5 class="card-title">게시판 제목3</h5>
+              <span class="m-3"><a href="list.html">+ 더보기</a></span>
+            </div>
+            <hr class="m-0">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td>
+                      <a href="#">
+                        <p class="mini_table_title">제목11111111111111111111111111111111111111111111111111111</p>
+                      </a>
+                  </td>
+                  <td class="text-end">2024.03.29</td>
+                </tr>
+                <tr>
+                  <td>
+                      <a href="#">
+                        <p class="mini_table_title">제목2</p>
+                      </a>
+                  </td>
+                  <td class="text-end">2024.03.29</td>
+                </tr>
+                <tr>
+                  <td>
+                      <a href="#">
+                        <p class="mini_table_title">제목3</p>
+                      </a>
+                  </td>
+                  <td class="text-end">2024.03.29</td>
+                </tr>
+                <tr>
+                  <td>
+                      <a href="#">
+                        <p class="mini_table_title">제목4</p>
+                      </a>
+                  </td>
+                  <td class="text-end">2024.03.29</td>
+                </tr>
+                <tr>
+                  <td>
+                      <a href="#">
+                        <p class="mini_table_title">제목5</p>
+                      </a>
+                  </td>
+                  <td class="text-end">2024.03.29</td>
+                </tr>
+              
+              </tbody>
+            </table>
+            <!-- End Default Table Example -->
+          </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card m-1">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <h5 class="card-title">게시판 제목4</h5>
+            <span class="m-3"><a href="list.html">+ 더보기</a></span>
+          </div>
+          <hr class="m-0">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td>
+                    <a href="#">
+                      <p class="mini_table_title">제목11111111111111111111111111111111111111111111111111111</p>
+                    </a>
+                </td>
+                <td class="text-end">2024.03.29</td>
+              </tr>
+              <tr>
+                <td>
+                    <a href="#">
+                      <p class="mini_table_title">제목2</p>
+                    </a>
+                </td>
+                <td class="text-end">2024.03.29</td>
+              </tr>
+              <tr>
+                <td>
+                    <a href="#">
+                      <p class="mini_table_title">제목3</p>
+                    </a>
+                </td>
+                <td class="text-end">2024.03.29</td>
+              </tr>
+              <tr>
+                <td>
+                    <a href="#">
+                      <p class="mini_table_title">제목4</p>
+                    </a>
+                </td>
+                <td class="text-end">2024.03.29</td>
+              </tr>
+              <tr>
+                <td>
+                    <a href="#">
+                      <p class="mini_table_title">제목5</p>
+                    </a>
+                </td>
+                <td class="text-end">2024.03.29</td>
+              </tr>
+            
+            </tbody>
+          </table>
+          <!-- End Default Table Example -->
+        </div>
+    </div>
+  </div>
+
+    <div class="col">
+      <div class="card m-1">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <h5 class="card-title">게시판 제목5</h5>
+            <span class="m-3"><a href="list.html">+ 더보기</a></span>
+          </div>
+          <hr class="m-0">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td>
+                    <a href="#">
+                      <p class="mini_table_title">제목11111111111111111111111111111111111111111111111111111</p>
+                    </a>
+                </td>
+                <td class="text-end">2024.03.29</td>
+              </tr>
+              <tr>
+                <td>
+                    <a href="#">
+                      <p class="mini_table_title">제목2</p>
+                    </a>
+                </td>
+                <td class="text-end">2024.03.29</td>
+              </tr>
+              <tr>
+                <td>
+                    <a href="#">
+                      <p class="mini_table_title">제목3</p>
+                    </a>
+                </td>
+                <td class="text-end">2024.03.29</td>
+              </tr>
+              <tr>
+                <td>
+                    <a href="#">
+                      <p class="mini_table_title">제목4</p>
+                    </a>
+                </td>
+                <td class="text-end">2024.03.29</td>
+              </tr>
+              <tr>
+                <td>
+                    <a href="#">
+                      <p class="mini_table_title">제목5</p>
+                    </a>
+                </td>
+                <td class="text-end">2024.03.29</td>
+              </tr>
+            
+            </tbody>
+          </table>
+          <!-- End Default Table Example -->
+        </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card m-1">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <h5 class="card-title">게시판 제목6</h5>
+          <span class="m-3"><a href="list.html">+ 더보기</a></span>
+        </div>
+        <hr class="m-0">
+        <table class="table">
+          <tbody>
+            <tr>
+              <td>
+                  <a href="#">
+                    <p class="mini_table_title">제목11111111111111111111111111111111111111111111111111111</p>
+                  </a>
+              </td>
+              <td class="text-end">2024.03.29</td>
+            </tr>
+            <tr>
+              <td>
+                  <a href="#">
+                    <p class="mini_table_title">제목2</p>
+                  </a>
+              </td>
+              <td class="text-end">2024.03.29</td>
+            </tr>
+            <tr>
+              <td>
+                  <a href="#">
+                    <p class="mini_table_title">제목3</p>
+                  </a>
+              </td>
+              <td class="text-end">2024.03.29</td>
+            </tr>
+            <tr>
+              <td>
+                  <a href="#">
+                    <p class="mini_table_title">제목4</p>
+                  </a>
+              </td>
+              <td class="text-end">2024.03.29</td>
+            </tr>
+            <tr>
+              <td>
+                  <a href="#">
+                    <p class="mini_table_title">제목5</p>
+                  </a>
+              </td>
+              <td class="text-end">2024.03.29</td>
+            </tr>
+          
+          </tbody>
+        </table>
+        <!-- End Default Table Example -->
+      </div>
+  </div>
+  </div>
+
+  <div class="col">
+    <div class="card m-1">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <h5 class="card-title">게시판 제목7</h5>
+          <span class="m-3"><a href="list.html">+ 더보기</a></span>
+        </div>
+        <hr class="m-0">
+        <table class="table">
+          <tbody>
+            <tr>
+              <td>
+                  <a href="#">
+                    <p class="mini_table_title">제목11111111111111111111111111111111111111111111111111111</p>
+                  </a>
+              </td>
+              <td class="text-end">2024.03.29</td>
+            </tr>
+            <tr>
+              <td>
+                  <a href="#">
+                    <p class="mini_table_title">제목2</p>
+                  </a>
+              </td>
+              <td class="text-end">2024.03.29</td>
+            </tr>
+            <tr>
+              <td>
+                  <a href="#">
+                    <p class="mini_table_title">제목3</p>
+                  </a>
+              </td>
+              <td class="text-end">2024.03.29</td>
+            </tr>
+            <tr>
+              <td>
+                  <a href="#">
+                    <p class="mini_table_title">제목4</p>
+                  </a>
+              </td>
+              <td class="text-end">2024.03.29</td>
+            </tr>
+            <tr>
+              <td>
+                  <a href="#">
+                    <p class="mini_table_title">제목5</p>
+                  </a>
+              </td>
+              <td class="text-end">2024.03.29</td>
+            </tr>
+          
+          </tbody>
+        </table>
+        <!-- End Default Table Example -->
+      </div>
+  </div>
+  </div>
+
+        
+      </div>
+    </section>
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>EzenCompany</span></strong>. All Rights Reserved
+    </div>
+    <div class="credits">
+      <!-- All the links in the footer should remain intact. -->
+      <!-- You can delete the links only if you purchased the pro version. -->
+      <!-- Licensing information: https://bootstrapmade.com/license/ -->
+      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+      <!-- Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> -->
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+
+    <!-- Vendor JS Files -->
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/simple-datatables/simple-datatables.js"></script>
+
+
+    <!-- Template Main JS File -->
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/board/board.js"></script>
+
+
+    <!-- Last JS-->
+    <script src="../assets/js/tooltips.js"></script>
+
+</body>
+</html>
