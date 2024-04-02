@@ -56,4 +56,9 @@ public class MemberService {
 	public int checkCert(HashMap<String, Object> map) {
 		return memberDAO.checkCert(map);
 	}
+	
+	//이메일로 그 사람의 정보를 memberVO에 넣는다
+	public MemberVO getMember(String email) {
+		return memberDAO.getMember(email);
+	}
 }

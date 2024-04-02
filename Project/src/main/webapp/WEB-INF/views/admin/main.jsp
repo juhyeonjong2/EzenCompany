@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    <!-- 우선순위 1.계정리스트를 전부 들고온다  (컨트롤러에서 모달에 넣은 뒤 for문 돌린다) ok
-    		   2. 회원가입하지 않은 직원은 메일발송으로 나오게 한다(아이디가 null일 경우 ) ok
-    		   3. 사원 등록로직을 작성한다
-    		   4. 메일발송 로직을 작성한다 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -25,8 +21,19 @@
  
   <!-- Template Main CSS File -->
   <link href="<%=request.getContextPath()%>/resources/css/style_admin.css" rel="stylesheet">
-  
-
+  <script src="<%=request.getContextPath()%>/resources/js/jquery-3.7.1.min.js"></script>
+  <script>
+	//썸네일 생성 함수
+	function thumbnail(event,obj){
+	  const file = event.target.files[0];
+	  const img = $(obj).prev().prev();
+	  const reader = new FileReader();
+	  reader.onload = (e) => {
+	    	$(img).attr("src", e.target?.result );
+	  };
+	  reader.readAsDataURL(file);
+	}
+  </script>
 </head>
 <body>
 	<%@ include file="../include/adminHeader.jsp"%>
@@ -91,7 +98,7 @@
                       
                       <td>${vo.joindate}</td>
                       <td>
-                        <a class="link-dark" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#employeeDetailModal" data-bs-mno="1">
+                        <a class="link-dark" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#employeeDetailModal" data-bs-email="${vo.email}">
                           <i class="bi bi-three-dots-vertical"></i>
                         </a>
                       </td>
@@ -125,7 +132,96 @@
 
   <!-- Template Main JS File -->
   <script src="<%=request.getContextPath()%>/resources/js/main.js"></script>
-  <script src="<%=request.getContextPath()%>/resources/js/admin/employee.js"></script>
+
+  <!-- 가독성이 안좋아서 일단 여기서 작성후 잘 된다면 js파일로 이동예정 -->
+  <script>
+  (			
+		    function() {
+		    "use strict";
+		   /**
+		   * Easy selector helper function
+		   */
+		   const select = (el, all = false) => {
+		    el = el.trim()
+		    if (all) {
+		      return [...document.querySelectorAll(el)]
+		    } else {
+		      return document.querySelector(el)
+		    }
+		  }
+
+		    /**
+		     * Initiate Datatables
+		     */
+		    const datatables = select('.datatable', true);
+		    datatables.forEach(datatable => {
+		      new simpleDatatables.DataTable(datatable, {
+		        perPageSelect: [5, 10, 15, ["All", -1]],
+		        labels:{
+		          info: "총 {rows}명"
+		        },
+		        columns: [{
+		            select: 2,
+		            sortSequence: ["desc", "asc"]
+		          },
+		          {
+		            select: 3,
+		            sortSequence: ["desc"]
+		          },
+		          {
+		            select: 4,
+		            cellClass: "green",
+		            headerClass: "red"
+		          }
+		        ]
+		      });
+		    })
+
+		    // 2. 회원 디테일 정보 팝업
+		    const employeeDetailModal = document.getElementById('employeeDetailModal')
+		    if (employeeDetailModal) {
+		        employeeDetailModal.addEventListener('show.bs.modal', event => 
+		        {
+		            const button = event.relatedTarget;
+		            //클릭한 사람의 이메일을 가져옴
+		            const email = button.getAttribute('data-bs-email');
+		            //vo안에 이사람의 정보를 전부 가져와서 뿌려준다
+		            $.ajax({
+		            	url:"<%=request.getContextPath()%>/admin/getMember",
+		            	data:{email : email},
+		            	async: false,
+						success:function(member){
+						 $("#info_inputId").attr("value", member.mid);
+						 $("#info_inputName").attr("value", member.mname);
+						 $("#info_inputEmail").attr("value", member.email);
+						 $("#info_inputPhone").attr("value", member.mphone);
+						 $("#info_inputDate").attr("value", member.joindate);
+						 if(member.authority == "ROLE_ADMIN"){
+							 $("#info_authority").val("2").prop("selected",true);
+						 }else{
+							 $("#info_authority").val("1").prop("selected",true);
+						 }
+						 if(member.enabled == 0 || member.mid == null || member.mid == ""){
+							 $("#info_enabled").val("2").prop("selected",true);
+						 }else{
+							 $("#info_enabled").val("1").prop("selected",true);
+						 }
+						 //추가로 이미지도 받아와서 그거 넣어야함
+						} //success
+		            }); //ajax파트
+		            
+		        }); //모달 파트    
+		    }
+		    
+			
+		  })();
+  </script>
+
+
+
+
+
+
 
   <!-- Last JS-->
   <script src="<%=request.getContextPath()%>/resources/js/tooltips.js"></script>

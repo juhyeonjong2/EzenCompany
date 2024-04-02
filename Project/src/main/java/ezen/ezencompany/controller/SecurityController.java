@@ -56,11 +56,7 @@ public class SecurityController {
 	public String ChangePW() {
 		return "member/passwordModify";
 	}
-	// 경로로 온 경우 값 받아오는 예시
-	//@RequestMapping(value = "joinOk/{id}", method = RequestMethod.POST)
-	//public void joinOk(String mid, String mpassword, String checkpassword, @PathVariable("id") String id,
-	//		HttpServletResponse response,HttpServletRequest request) throws IOException {
-	// model 안에 id값을 집어넣는다 그리고 회원가입창을 호출
+
 	//회원가입으로 가기(임시)
 	@RequestMapping(value = "join/{id}", method = RequestMethod.GET)
 	public String aa(@PathVariable("id") String id, Model model) {

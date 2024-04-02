@@ -69,4 +69,9 @@ public class MemberDAO {
 	public List<MemberVO> employeeList(){
 		return sqlSession.selectList(namespace+".employeeList");
 	}
+	
+	//이메일로 그 사람의 정보를 MemberVO안에 집어넣는다
+	public MemberVO getMember(String email) {
+		return sqlSession.selectOne(namespace+".getMember", email);
+	}
 }

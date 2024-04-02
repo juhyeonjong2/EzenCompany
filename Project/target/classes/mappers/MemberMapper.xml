@@ -42,6 +42,11 @@
 	<select id="employeeList" parameterType="MemberVO" resultType="MemberVO" >
 		SELECT mid, mname, email, authority, substr(joindate, '1', '10' ) as joindate, enabled from member; 
 	</select>
+	
+	<select id="getMember" parameterType="String" resultType="MemberVO" >
+		SELECT mid, mname, email, authority, substr(joindate, '1', '10' ) as joindate, enabled from member 
+			WHERE email = #{email}; 
+	</select>
 </mapper>
 
 
