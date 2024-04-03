@@ -7,34 +7,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
- <!-- Vendor CSS Files --> <!-- request.get이거 적는이유 -> 이게 없으면 컨트롤러간 이동할 경우 상대경로라서 경로를 못찾게 된다(/member/resources이런느낌인듯) -->
- <link href="<%=request.getContextPath()%>/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
- <link href="<%=request.getContextPath()%>/resources/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
- <link href="<%=request.getContextPath()%>/resources/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
- <link href="<%=request.getContextPath()%>/resources/vendor/remixicon/remixicon.css" rel="stylesheet">
- <link href="<%=request.getContextPath()%>/resources/vendor/simple-datatables/style.css" rel="stylesheet">
+	<!-- Google Fonts -->
+	<link href="https://fonts.gstatic.com" rel="preconnect">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+	
+	<!-- Vendor CSS Files --> <!-- request.get이거 적는이유 -> 이게 없으면 컨트롤러간 이동할 경우 상대경로라서 경로를 못찾게 된다(/member/resources이런느낌인듯) -->
+	<link href="<%=request.getContextPath()%>/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="<%=request.getContextPath()%>/resources/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+	<link href="<%=request.getContextPath()%>/resources/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+	<link href="<%=request.getContextPath()%>/resources/vendor/remixicon/remixicon.css" rel="stylesheet">
+<%-- 	<link href="<%=request.getContextPath()%>/resources/vendor/simple-datatables/style.css" rel="stylesheet"> --%>
  
-  <!-- Template Main CSS File -->
-  <link href="<%=request.getContextPath()%>/resources/css/style_admin.css" rel="stylesheet">
-  <link href="<%=request.getContextPath()%>/resources/css/chatting.css" rel="stylesheet">
+	<!-- Template Main CSS File -->
+	<link href="<%=request.getContextPath()%>/resources/css/style.css" rel="stylesheet">
+	<link href="<%=request.getContextPath()%>/resources/css/ezReply.css" rel="stylesheet">
+	<link href="<%=request.getContextPath()%>/resources/css/chatting.css" rel="stylesheet">
   
-
+	<!-- Predefined Script -->
+	<script src="<%=request.getContextPath()%>/resources/js/jquery-3.7.1.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/vendor/zTree/js/jquery.ztree.all.js"></script>
+	
+	
 </head>
 <body>
-	<%@ include file="../include/adminHeader.jsp"%>
-	<%@ include file="../include/adminSidebar.jsp"%>
+	<%@ include file="../include/blogHeader.jsp"%>
+	<%@ include file="../include/blogSidebar.jsp"%>
 
   <main id="main" class="main">
     <section class="section">
-    
+    	
     </section>
 
     <section class="popup">
-		  <%@ include file="../popup/employeeRegistration.jsp"%>
+		<%--  <%@ include file="../popup/employeeRegistration.jsp"%> --%> 
 	</section>
 	
 	<section class="chatting_popup">
@@ -42,6 +47,8 @@
 	</section>
 
   </main><!-- End #main -->
+  
+  <%@ include file="../include/footer.jsp"%>
 
   <!-- Last -->
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

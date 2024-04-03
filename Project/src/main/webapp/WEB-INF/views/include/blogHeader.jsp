@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +8,7 @@
   <!-- ======= Header - Blog ======= -->
 <header id="header" class="header fixed-top d-flex align-items-center">
   <div class="d-flex align-items-center justify-content-between">
-    <a href="home.html" class="logo d-flex align-items-center">
+    <a href="<%=request.getContextPath()%>/blog/home" class="logo d-flex align-items-center">
       <i class="bi bi-house-door"></i>
       <span class="d-none d-lg-block">Home</span>
     </a>
@@ -18,14 +17,14 @@
 
   <nav class="header-nav ms-auto">
     <ul class="d-flex align-items-center">
-
+<% if(request.isUserInRole("ROLE_ADMIN")){ %>
       <!-- 관리자가 아니라면 보이지 않음.-->
       <li class="nav-item">
-          <a class="nav-link nav-icon" href="../admin/home.html">
+          <a class="nav-link nav-icon" href="<%=request.getContextPath()%>/admin/home">
             <i class="bi bi-key"></i>
           </a>
       </li><!-- End Admin Icon-->
-
+<% } %>
       <li class="nav-item dropdown">
         <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
           <i class="bi bi-bell"></i>
