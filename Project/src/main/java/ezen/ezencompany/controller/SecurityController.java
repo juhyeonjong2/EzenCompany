@@ -105,7 +105,6 @@ public class SecurityController {
 		//단 이 경우에 인증번호를 두번 누른경우 두개가 생성되는데 그걸 전부 친 경우 다 되면 안되니
 		//일단 셀렉트로 이메일을 찾은 뒤 없다면 인서트 있다면 업데이트 방식으로 해야할듯하다
 		int num = memberService.selectNum(email);
-		System.out.println(num);
 		if(num == 0) {
 		// 저장된 인증번호가 없다면 insert
 			HashMap<String, Object> map = new HashMap<>();

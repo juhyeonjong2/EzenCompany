@@ -44,8 +44,16 @@
 	</select>
 	
 	<select id="getMember" parameterType="String" resultType="MemberVO" >
-		SELECT mid, mname, email, authority, substr(joindate, '1', '10' ) as joindate, enabled from member 
-			WHERE email = #{email}; 
+		SELECT mid, mname, email, authority, substr(joindate, '1', '10' ) as joindate, 
+		enabled, mphone from member WHERE email = #{email}; 
+	</select>
+	
+	<select id="getImg" parameterType="int" resultType="String" >
+		SELECT mfrealname from memberattach WHERE mno = #{mno}; 
+	</select>
+	
+	<select id="getOption" resultType="java.util.Map" >
+		SELECT aidx, cidx FROM employeeoption WHERE mno = #{mno};
 	</select>
 </mapper>
 

@@ -2,6 +2,7 @@ package ezen.ezencompany.service;
 
 import java.util.HashMap;
 
+
 import java.util.List;
 
 
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ezen.ezencompany.dao.MemberDAO;
+import ezen.ezencompany.vo.MemberAttachVO;
 import ezen.ezencompany.vo.MemberVO;
 
 @Service
@@ -61,4 +63,10 @@ public class MemberService {
 	public MemberVO getMember(String email) {
 		return memberDAO.getMember(email);
 	}
+	
+	//프로필 이미지를 가져온다
+	public String getImg(int mno) {
+		return memberDAO.getImg(mno);
+	}
+	
 }

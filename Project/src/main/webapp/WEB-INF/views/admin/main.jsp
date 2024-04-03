@@ -33,6 +33,49 @@
 	  };
 	  reader.readAsDataURL(file);
 	}
+	
+	//수정버튼 클릭 시 submit
+	function modify(){
+		$("#modifrm").submit();
+	}
+	
+	//탈퇴버튼 클릭 시 탈퇴 ajax실행
+	function deleteMember(){
+		let email = $("#info_inpupHidden").val();
+	    $.ajax({
+	    	url : '<%=request.getContextPath()%>/admin/deleteMember',
+	    	data : {email : email},
+	    	async: false,
+	    	success : function(result) {
+	    		console.log(result);
+	    		if(result == "true"){
+	    			alert("해당 회원이 탈퇴되었습니다.");
+	    		}else{
+	    			alert("회원탈퇴에 실패하였습니다.");
+	    		}
+	   		}
+	    });
+	}
+	
+	//재전송 클릭 시
+	function reSend(o){
+		let email = $(o).next().next().text();	
+		//메일을 재전송 해준다
+	    $.ajax({
+	    	url : '<%=request.getContextPath()%>/admin/reSend',
+	    	data : {email : email},
+	    	async: false,
+	    	success : function(result) {
+	    		console.log(result);
+	    		if(result == "true"){
+	    			alert("메일을 재발송 했습니다.");
+	    		}else{
+	    			alert("메일발송에 실패하였습니다.");
+	    		}
+	   		}
+	    });
+	    
+	}
   </script>
 </head>
 <body>
@@ -71,7 +114,7 @@
                   	  <c:choose>
                   		<%--아이디가 null이거나 빈문자열일 경우 --%>
                   		<c:when test="${vo.mid eq null || vo.mid == ''}">
-                  			<td style="color:#4154f1" onclick="aa()"><i class="bx bx-mail-send"> 재전송</td>
+                  			<td style="color:#4154f1" onclick="reSend(this)"><i class="bx bx-mail-send"> 재전송</td>
                   		</c:when>
                   		
                   		<%--아이디가 null이아니면서 빈문자열이 아닌경우 --%>
@@ -185,30 +228,62 @@
 		            const button = event.relatedTarget;
 		            //클릭한 사람의 이메일을 가져옴
 		            const email = button.getAttribute('data-bs-email');
+		            
 		            //vo안에 이사람의 정보를 전부 가져와서 뿌려준다
 		            $.ajax({
 		            	url:"<%=request.getContextPath()%>/admin/getMember",
 		            	data:{email : email},
 		            	async: false,
 						success:function(member){
-						 $("#info_inputId").attr("value", member.mid);
-						 $("#info_inputName").attr("value", member.mname);
-						 $("#info_inputEmail").attr("value", member.email);
-						 $("#info_inputPhone").attr("value", member.mphone);
-						 $("#info_inputDate").attr("value", member.joindate);
+						 //attr("value",ss)이렇게 넣으면 수정 안하고 닫으면 잘 읽어오지 못한다 val()로 작업해야함
+						 $("#info_inputId").val(member.mid);
+						 $("#info_inputName").val(member.mname);
+						 $("#info_inputEmail").val(member.email);
+						 $("#info_inputPhone").val(member.mphone);
+						 $("#info_inputDate").val(member.joindate);
+						 $("#info_inpupHidden").val(member.email);
 						 if(member.authority == "ROLE_ADMIN"){
-							 $("#info_authority").val("2").prop("selected",true);
+							 $("#info_authority").val("ROLE_ADMIN").prop("selected",true);
 						 }else{
-							 $("#info_authority").val("1").prop("selected",true);
+							 $("#info_authority").val("ROLE_USER").prop("selected",true);
 						 }
 						 if(member.enabled == 0 || member.mid == null || member.mid == ""){
 							 $("#info_enabled").val("2").prop("selected",true);
 						 }else{
 							 $("#info_enabled").val("1").prop("selected",true);
 						 }
-						 //추가로 이미지도 받아와서 그거 넣어야함
 						} //success
 		            }); //ajax파트
+		            
+		            //한번에 가져오기엔 프로필사진이 없는경우 다른 정보도 안가져와지는 문제가 있어 ajax통신을 한번더 사용
+		            $.ajax({
+		            	url:"<%=request.getContextPath()%>/admin/getImg",
+		            	data:{email : email},
+		            	async: false,
+						success:function(img){
+							if(img != null && img != ""){
+								//사진이 있는경우만 추가해준다
+								let imgUrl = "<%=request.getContextPath()%>/resources/img/"+ img
+							    $('.rounded-circle').attr("src", imgUrl);
+							}else{
+								$('.rounded-circle').attr("src", "");
+							}
+						}	
+		        	}); //ajax파트
+		            
+		            //분류테이블을 json타입으로 가져온다
+		            $.ajax({
+		            	url:"<%=request.getContextPath()%>/admin/getCategory",
+		            	data:{email : email},
+		            	async: false,
+						success:function(data){
+							console.log(data);
+							//과장/디자이너인 사람을 누르고 임시1을 누르면 과장/디자이너로 표시되는 버그가있는데 다른애는 문제없어서 버그를 못찾겠다
+							for(let i = 0; i<data.length; i++){
+								$("#"+data[i].cidx).val(data[i].aidx).prop("selected",true);
+							}
+						}	
+		        	}); //ajax파트
 		            
 		        }); //모달 파트    
 		    }
@@ -216,12 +291,6 @@
 			
 		  })();
   </script>
-
-
-
-
-
-
 
   <!-- Last JS-->
   <script src="<%=request.getContextPath()%>/resources/js/tooltips.js"></script>

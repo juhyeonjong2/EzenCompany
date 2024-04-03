@@ -29,6 +29,32 @@
 			});
 		}
 
+		//작업 중 비번이랑 아이디 손 땔때 이 함수 실행시켜서 작업
+		function checkPassword(){
+			let me = $("#joinPass");
+			let divParent = me.closest(".group");
+			let errorSpan = divParent.find(".checkBox span");
+			let value = me.val();
+			
+			const regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,20}$/; // 대소문자, 특문, 숫자 최소 한개씩 포함 8~20자 
+			let regRs = regex.test(value);
+			
+			if(value == ""){
+				errorSpan.text("필수입력입니다");
+				errorSpan.css("color", "red");
+				return false;
+			}else if(!regRs){
+				errorSpan.text("영문 대소문자, 숫자, 특수문자 포함 8~20자입니다.");
+				errorSpan.css("color", "red");
+				return false;
+			} else {
+				errorSpan.text("사용가능합니다.");
+				errorSpan.css("color", "green");
+				return true;
+			}
+		}
+		
+		
 		//출처: https://velog.io/@yu_oolong/SpringFramework-%EC%9D%B4%EB%A9%94%EC%9D%BC-%EC%9D%B8%EC%A6%9D-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0feat.-%EB%84%A4%EC%9D%B4%EB%B2%84-%EB%A9%94%EC%9D%BC
 		//인증번호 받기 클릭 시
 		function getCert() {
