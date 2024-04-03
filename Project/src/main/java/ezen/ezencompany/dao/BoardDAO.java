@@ -19,4 +19,17 @@ public class BoardDAO {
 	public List<BoardVO> list(){
 		return sqlSession.selectList("ezen.ezencompany.mapper.boardmapper.list"); 
 	}
+	
+	public BoardVO selectOneByBno(int bno) {
+		return sqlSession.selectOne("ezen.ezencompany.mapper.boardmapper.selectOneByBno", bno);
+	}
+	
+	public int update(BoardVO vo) {
+		return sqlSession.update("ezen.ezencompany.mapper.boardmapper.update", vo);
+		
+	}
+
+	public int delete(int bno) {
+		return sqlSession.insert("ezen.ezencompany.mapper.boardmapper.delete", bno);
+	}
 }

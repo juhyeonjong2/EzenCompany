@@ -21,5 +21,20 @@ public class BoardServicelmpl implements BoardService {
 		return blist;
 	}
 	
+	@Override
+	public BoardVO selectOneByBno(int bno) throws Exception {
+		
+		BoardVO bvo = boardDAO.selectOneByBno(bno);
+		return bvo;
+	}
 	
+	@Override
+	public int update(BoardVO vo) throws Exception {
+		return boardDAO.update(vo);
+	}
+	
+	@Override
+	public int delete(int bno) throws Exception {
+		return boardDAO.delete(bno);
+	}
 }

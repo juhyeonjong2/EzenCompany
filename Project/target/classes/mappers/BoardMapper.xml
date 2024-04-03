@@ -8,8 +8,29 @@
 <mapper namespace="ezen.ezencompany.mapper.boardmapper"> 
 
 	<select id="list" resultType="boardVO">
-	SELECT * from board
+	SELECT b.bno,b.btitle,b.bcontent, b.mno, b.bindex,b.bhit,date_format(b.bdate, '%Y-%m-%d') as bdate,m.mid from board b
+		Inner JOIN member m
+		ON b.mno = m.mno
 	</select>
 	
+	<update id="update" parameterType="boardVO">
+		UPDATE board
+		   SET bcontent = #{bcontent}
+		WHERE bno = #{bno}
+	</update>
 	
+	<select id="selectOneByBno" 
+			resultType="boardVO" 
+			parameterType="int">
+		SELECT b.bno,b.btitle,b.bcontent, b.mno, b.bindex,b.bhit,date_format(b.bdate, '%Y-%m-%d') as bdate,m.mid from board b
+		Inner JOIN member m
+		ON b.mno = m.mno
+		 WHERE b.bno = #{bno}
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		DELETE 
+		  FROM board
+		 WHERE bno = #{bno}
+</delete>
 </mapper>

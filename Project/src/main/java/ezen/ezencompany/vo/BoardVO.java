@@ -5,9 +5,18 @@ public class BoardVO {
 	int mno;
 	int bindexl;
 	int bhit;
-	int bdate;
+	String bdate;
 	String bcontent;
 	String btitle;
+	String mid;
+	
+	
+	public String getMid() {
+		return mid;
+	}
+	public void setMid(String mid) {
+		this.mid = mid;
+	}
 	public int getBno() {
 		return bno;
 	}
@@ -32,10 +41,11 @@ public class BoardVO {
 	public void setBhit(int bhit) {
 		this.bhit = bhit;
 	}
-	public int getBdate() {
+	
+	public String getBdate() {
 		return bdate;
 	}
-	public void setBdate(int bdate) {
+	public void setBdate(String bdate) {
 		this.bdate = bdate;
 	}
 	public String getBcontent() {
