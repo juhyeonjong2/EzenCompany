@@ -1,6 +1,7 @@
 package ezen.ezencompany.controller;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,15 +10,14 @@ import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import edu.springboard.vo.BoardVO;
 import ezen.ezencompany.service.BlogService;
 import ezen.ezencompany.vo.BlogVO;
+import ezen.ezencompany.vo.MemberVO;
 import ezen.ezencompany.vo.UserVO;
 
 
@@ -34,18 +34,49 @@ public class BlogController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserVO user = (UserVO) authentication.getPrincipal();
 		
+		// ws comment - 여기 작업중~
+		
 		// 블로그 네비게이션
 		// 1. 퇴사자
+		ArrayList<MemberVO> exitEmployee = blogService.exitEmployee(); // 탈퇴한 사람목록
 		// 2. blogView 정보.
+		HashMap<String, ArrayList<MemberVO>> blogUsers = new HahsMap<String, ArrayList<MemberVO>>();
+		// 내 옵션정보 가져옴
+		HashMap<Integer, Integer> myOptions = blogService.getMyAdditionalOptions(user.getMno());
+		
+		// category에 blogview가 있는목록중.
+		ArrayList<Integer> blogViewCategorys = blogService.blogViewCategorys(); // 탈퇴한 사람목록
+		for(int i=0;i<blogViewCategorys.size();i++) {
+			Integer category = blogViewCategorys.get(i);
+			if(myOptions.containsKey(category)) {
+				Integer attribute = myOptions.get(category);
+				String categoryName = blogService.getCategoryName(category);
+				ArrayList<MemberVO> userList = blogService.userListByOption(category, attribute);
+				if(userList.size() >0 ) {
+					blogUsers.put(categoryName, userList);
+				}
+			}
+		}
+		model.addAttribute("exitEmployee",exitEmployee);
+		model.addAttribute("blogUsers", blogUsers);
 		
 				
+		// 작성자 이름 및 프로필 정보
+		model.addAttribute("writer", user.getMname());
+		model.addAttribute("profileImage", "");
+		
+		
 		// 가장최근에 쓴 블로그
 		BlogVO vo = blogService.getLastOne(user.getMno());
 		model.addAttribute("vo", vo);
+		if(vo!=null) {
+			System.out.println("home vo:");
+			System.out.println(vo.getBgtitle());
+			System.out.println(vo.getBgcontent());
+		}
 		
-		System.out.println("home vo:");
-		System.out.println(vo.getBgtitle());
-		System.out.println(vo.getBgcontent());
+		// 첨부 파일들
+		
 		
 		// 블로그 댓글.
 		

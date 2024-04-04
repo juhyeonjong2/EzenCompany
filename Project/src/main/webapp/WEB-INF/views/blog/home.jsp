@@ -125,273 +125,279 @@
     <!-- End Page Title -->
     
  	<section class="section container-md">
-      <div class="blog_frame">
-          <div class="blog_title">
-                <div class="d-flex justify-content-center mb-3" >
-                  <h2 class="mt-3">${vo.bgtitle}</h2>
-                </div>
-                <div class="d-flex justify-content-start ms-5">
-                  <img width="25" height="25" src="../assets/icon/user.png" alt="user_profile">
-                  <span class="ms-1">홍길동</span>
-                  <span class="ms-2">2024.03.29</span>
-                </div>      
-          </div>
-
-          <div class="blog_top_sep">
-            <hr class="mt-0 mb-0 mx-5 w-auto ">
-            <div class="d-flex justify-content-end">
-              <div class="dropdown me-5">
-                  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    첨부 파일
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">첨부파일1.pdf</a></li>
-                    <li><a class="dropdown-item" href="#">첨부파일2.png</a></li>
-                    <li><a class="dropdown-item" href="#">첨부파일3.pptx</a></li>
-                  </ul>
-                </div>
-            </div>
-          </div>
-
-          <div class="blog_content mt-2 mx-5 w-auto">
-            ${vo.bgcontent}
-          </div>
-
-          <!--분할바-->
-          <div class="blog_bottom_sep">
-            <hr class="mt-2 mx-1 w-auto ">
-          </div>
-
-          <div class="blog_reply reply d-flex flex-column">
-              <div class="reply_top">
-                <div class="ms-3">
-                  전체 댓글 <span>4개</span>
-                </div>
-                <hr class="ms-3 me-1 w-auto border border-secondary border-2 opacity-30">
-              </div>
-              <div class="reply_body ms-3 me-3">
-                <ul class="ezReply" id="blog_reply">
-                  <li>
-                    <div class="reply_node pb-1 d-flex">
-                       <div class="col-1 pt-2">
-                          <div class="reply_author">
-                            <p class="text-center m-0 t-0">고길동 :</p>
-                          </div>
-                          <div class="reply_author_me">
-                            <!--<p class="text-center m-0 t-0">(블로그 주인)</p>-->
-                          </div>
-                       </div>
-                       <div class="col pt-2">
-                          <div class="reply_content">
-                            저번 회의에서 저런방식 말고 다른방식으로 하자고 부장님께서 말씀하셨습니다. 그래서 아마 3번줄부터 25번줄은 제거하는게 좋아보여요. <br>
-                            <br>
-                            그리고 Post.VO 에서 8번줄에 있는 pnum 필드는 왜 만든건가요? 어디서 사용하는지 잘 모르겠어요 <br>
-                            점심시간이 되면 제가 찾아갈테니 알려주실 수 있나요? <br>
-                            <br>
-                            @홍길동
-                          </div>
-                          <div><span class="fs-6 text-body-tertiary">2024.03.19</span></div>
-                          <div class="d-flex">
-                            <div class="col">
-                                <!-- 답장 버튼-->
-                                <button class="btn btn-secondary btn-sm ms-1">답글</button>
-                            </div>
-                            <div class="col d-flex justify-content-end ">
-                              <!-- 삭제/수정 버튼-->
-                              <!--<button class="btn btn-warning btn-sm me-2">수정</button>
-                              <button class="btn btn-danger btn-sm me-2">삭제</button>-->
-                            </div>
-                            
-                          </div>
-                       </div>
-                    </div>
-                    <ul>
-                        <li>
-                          <div class="reply_node pb-1 d-flex">
-                            <div class="col-1 pt-2">
-                               <div class="reply_author">
-                                 <p class="text-center m-0 t-0">홍길동 :</p>
-                               </div>
-                               <div class="reply_author_me">
-                                 <p class="text-center m-0 t-0 text-info-emphasis">(블로그 주인)</p>
-                               </div>
-                            </div>
-                            <div class="col pt-2">
-                               <div class="reply_content">
-                                 네 알겠습니다.
-                               </div>
-                               <div><span class="fs-6 text-body-tertiary">2024.03.19</span></div>
-                               <div class="d-flex">
-                                 <div class="col">
-                                     <!-- 답장 버튼-->
-                                     <button class="btn btn-secondary btn-sm ms-1">답글</button>
-                                 </div>
-                                 <div class="col d-flex justify-content-end ">
-                                   <!-- 삭제/수정 버튼-->
-                                   <button class="btn btn-warning btn-sm me-2">수정</button>
-                                   <button class="btn btn-danger btn-sm me-2">삭제</button>
-                                 </div>
-                                 
-                               </div>
-                            </div>
-                         </div>
-                          <ul>
-                            <li>
-                              <div class="reply_node pb-1 d-flex">
-                                <div class="col-1 pt-2">
-                                   <div class="reply_author">
-                                     <p class="text-center m-0 t-0">고길동 :</p>
-                                   </div>
-                                   <div class="reply_author_me">
-                                     <!--<p class="text-center m-0 t-0 text-info-emphasis">(블로그 주인)</p>-->
-                                   </div>
-                                </div>
-                                <div class="col pt-2">
-                                   <div class="reply_content">
-                                     지금 갑니다.
-                                   </div>
-                                   <div><span class="fs-6 text-body-tertiary">2024.03.19</span></div>
-                                   <div class="d-flex">
-                                     <div class="col">
-                                         <!-- 답장 버튼-->
-                                         <button class="btn btn-secondary btn-sm ms-1">답글</button>
-                                     </div>
-                                     <div class="col d-flex justify-content-end ">
-                                       <!-- 삭제/수정 버튼-->
-                                       <!--<button class="btn btn-warning btn-sm me-2">수정</button>
-                                       <button class="btn btn-danger btn-sm me-2">삭제</button>-->
-                                     </div>
-                                     
-                                   </div>
-                                </div>
-                             </div>
-                              <ul>
-                              </ul>
-                          </li>
-                        </ul>
-                        </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <div class="reply_node pb-1 d-flex">
-                      <div class="col-1 pt-2">
-                         <div class="reply_author">
-                           <p class="text-center m-0 t-0">김길동 :</p>
-                         </div>
-                         <div class="reply_author_me">
-                           <!--<p class="text-center m-0 t-0">(블로그 주인)</p>-->
-                         </div>
-                      </div>
-                      <div class="col pt-2">
-                         <div class="reply_content">
-                          고생하셨습니다.
-                         </div>
-                         <div><span class="fs-6 text-body-tertiary">2024.03.19</span></div>
-                         <div class="d-flex">
-                           <div class="col">
-                               <!-- 답장 버튼-->
-                               <button class="btn btn-secondary btn-sm ms-1">답글</button>
-                           </div>
-                           <div class="col d-flex justify-content-end ">
-                             <!-- 삭제/수정 버튼-->
-                             <!--<button class="btn btn-warning btn-sm me-2">수정</button>
-                             <button class="btn btn-danger btn-sm me-2">삭제</button>-->
-                           </div>
-                           
-                         </div>
-                      </div>
-                    </div>
-                    <ul>
-                      <li>
-                        <div class="reply_node pb-1 d-flex">
-                          <div class="col-1 pt-2">
-                             <div class="reply_author">
-                               <p class="text-center m-0 t-0">홍길동 :</p>
-                             </div>
-                             <div class="reply_author_me">
-                               <p class="text-center m-0 t-0">(블로그 주인)</p>
-                             </div>
-                          </div>
-                          <div class="col pt-2">
-                             <div class="reply_content">
-                              감사합니다.
-                             </div>
-                             <div><span class="fs-6 text-body-tertiary">2024.03.19</span></div>
-                             <div class="d-flex">
-                               <div class="col">
-                                   <!-- 답장 버튼-->
-                                   <button class="btn btn-secondary btn-sm ms-1">답글</button>
-                               </div>
-                               <div class="col d-flex justify-content-end ">
-                                 <!-- 삭제/수정 버튼-->
-                                 <button class="btn btn-warning btn-sm me-2">수정</button>
-                                 <button class="btn btn-danger btn-sm me-2">삭제</button>
-                               </div> 
-                             </div>
-                          </div>
-                        </div>
-                        <ul>
-                        </ul>
-                      </li>
-                      <li>
-                        <div class="reply_node pb-1 d-flex">
-                          <div class="col-1 pt-2">
-                             <div class="reply_author">
-                               <p class="text-center m-0 t-0">한만석 :</p>
-                             </div>
-                             <div class="reply_author_me">
-                               <!--<p class="text-center m-0 t-0">(블로그 주인)</p>-->
-                             </div>
-                          </div>
-                          <div class="col pt-2">
-                             <div class="reply_content">
-                              고생하셨습니다.
-                             </div>
-                             <div><span class="fs-6 text-body-tertiary">2024.03.19</span></div>
-                             <div class="d-flex">
-                               <div class="col">
-                                   <!-- 답장 버튼-->
-                                   <button class="btn btn-secondary btn-sm ms-1">답글</button>
-                               </div>
-                               <div class="col d-flex justify-content-end ">
-                                 <!-- 삭제/수정 버튼-->
-                                 <!--<button class="btn btn-warning btn-sm me-2">수정</button>
-                                 <button class="btn btn-danger btn-sm me-2">삭제</button>-->
-                               </div> 
-                             </div>
-                          </div>
-                        </div>
-                        <ul>
-                        </ul>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </div>
-              <div class="reply_input ms-3">
-                <div class="form-floating">
-                  <input type="text" class="form-control" placeholder="Leave a comment here" id="replyinput" style="width:98%;">
-                  <label for="replyinput">댓글을 입력하세요</label>
-                </div>
-              </div>
-
-          </div>
-      </div>
-      <div class="blog_buttons mt-3 d-flex justify-content-end">
-          <a class="btn btn-primary me-2" role="button" href="modify.html">수정</a>
-          <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#blogRemoveModal">삭제</button>
-      </div>
-      <div clsas="blog_search mt-5">
-        <div class="input-group mb-3 mt-3 w-25 mx-auto">
-          <input type="text" class="form-control" placeholder="검색.." aria-label="blog search">
-          <span class="input-group-text m-0">
-            <a href="search.html" onClick="alert('검색!'); return true;">
-              <i class="bi bi-search"></i>
-            </a>
-          </span>
-      </div>
-
-      </div>
+	 	<c:choose>
+			<c:when test="${empty vo}">
+				블로그를 작성하세요.
+			</c:when>
+	    	<c:otherwise>
+				<div class="blog_frame">
+					<div class="blog_title">
+					           <div class="d-flex justify-content-center mb-3" >
+					             <h2 class="mt-3">${vo.bgtitle}</h2>
+					      </div>
+					      <div class="d-flex justify-content-start ms-5">
+					        <img width="25" height="25" src="../assets/icon/user.png" alt="user_profile">
+					        <span class="ms-1">홍길동</span>
+					        <span class="ms-2">${vo.bgdate}</span>
+					      </div>      
+					</div>
+					
+					<div class="blog_top_sep">
+					  <hr class="mt-0 mb-0 mx-5 w-auto ">
+					  <div class="d-flex justify-content-end">
+					    <div class="dropdown me-5">
+					        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+					          첨부 파일
+					        </button>
+					        <ul class="dropdown-menu">
+					          <li><a class="dropdown-item" href="#">첨부파일1.pdf</a></li>
+					          <li><a class="dropdown-item" href="#">첨부파일2.png</a></li>
+					          <li><a class="dropdown-item" href="#">첨부파일3.pptx</a></li>
+					        </ul>
+					      </div>
+					  </div>
+					</div>
+					
+					<div class="blog_content mt-2 mx-5 w-auto">
+					  ${vo.bgcontent}
+					</div>
+					
+					<!--분할바-->
+					<div class="blog_bottom_sep">
+					  <hr class="mt-2 mx-1 w-auto ">
+					</div>
+					
+					<div class="blog_reply reply d-flex flex-column">
+				    <div class="reply_top">
+				      <div class="ms-3">
+				        전체 댓글 <span>4개</span>
+				      </div>
+				      <hr class="ms-3 me-1 w-auto border border-secondary border-2 opacity-30">
+				    </div>
+				    <div class="reply_body ms-3 me-3">
+				      <ul class="ezReply" id="blog_reply">
+				        <li>
+				          <div class="reply_node pb-1 d-flex">
+				             <div class="col-1 pt-2">
+				                <div class="reply_author">
+				                  <p class="text-center m-0 t-0">고길동 :</p>
+				                </div>
+				                <div class="reply_author_me">
+				                  <!--<p class="text-center m-0 t-0">(블로그 주인)</p>-->
+				              </div>
+				           </div>
+				           <div class="col pt-2">
+				              <div class="reply_content">
+				                저번 회의에서 저런방식 말고 다른방식으로 하자고 부장님께서 말씀하셨습니다. 그래서 아마 3번줄부터 25번줄은 제거하는게 좋아보여요. <br>
+				                <br>
+				                그리고 Post.VO 에서 8번줄에 있는 pnum 필드는 왜 만든건가요? 어디서 사용하는지 잘 모르겠어요 <br>
+				                점심시간이 되면 제가 찾아갈테니 알려주실 수 있나요? <br>
+				                <br>
+				                @홍길동
+				              </div>
+				              <div><span class="fs-6 text-body-tertiary">2024.03.19</span></div>
+				              <div class="d-flex">
+				                <div class="col">
+				                    <!-- 답장 버튼-->
+				                    <button class="btn btn-secondary btn-sm ms-1">답글</button>
+				                </div>
+				                <div class="col d-flex justify-content-end ">
+				                  <!-- 삭제/수정 버튼-->
+				                  <!--<button class="btn btn-warning btn-sm me-2">수정</button>
+				                  <button class="btn btn-danger btn-sm me-2">삭제</button>-->
+				                </div>
+				                
+				              </div>
+				           </div>
+				        </div>
+				        <ul>
+				            <li>
+				              <div class="reply_node pb-1 d-flex">
+				                <div class="col-1 pt-2">
+				                   <div class="reply_author">
+				                     <p class="text-center m-0 t-0">홍길동 :</p>
+				                   </div>
+				                   <div class="reply_author_me">
+				                     <p class="text-center m-0 t-0 text-info-emphasis">(블로그 주인)</p>
+				                   </div>
+				                </div>
+				                <div class="col pt-2">
+				                   <div class="reply_content">
+				                     네 알겠습니다.
+				                   </div>
+				                   <div><span class="fs-6 text-body-tertiary">2024.03.19</span></div>
+				                   <div class="d-flex">
+				                     <div class="col">
+				                         <!-- 답장 버튼-->
+				                         <button class="btn btn-secondary btn-sm ms-1">답글</button>
+				                     </div>
+				                     <div class="col d-flex justify-content-end ">
+				                       <!-- 삭제/수정 버튼-->
+				                       <button class="btn btn-warning btn-sm me-2">수정</button>
+				                       <button class="btn btn-danger btn-sm me-2">삭제</button>
+				                     </div>
+				                     
+				                   </div>
+				                </div>
+				             </div>
+				              <ul>
+				                <li>
+				                  <div class="reply_node pb-1 d-flex">
+				                    <div class="col-1 pt-2">
+				                       <div class="reply_author">
+				                         <p class="text-center m-0 t-0">고길동 :</p>
+				                       </div>
+				                       <div class="reply_author_me">
+				                         <!--<p class="text-center m-0 t-0 text-info-emphasis">(블로그 주인)</p>-->
+				                       </div>
+				                    </div>
+				                    <div class="col pt-2">
+				                       <div class="reply_content">
+				                         지금 갑니다.
+				                       </div>
+				                       <div><span class="fs-6 text-body-tertiary">2024.03.19</span></div>
+				                       <div class="d-flex">
+				                         <div class="col">
+				                             <!-- 답장 버튼-->
+				                             <button class="btn btn-secondary btn-sm ms-1">답글</button>
+				                         </div>
+				                         <div class="col d-flex justify-content-end ">
+				                           <!-- 삭제/수정 버튼-->
+				                           <!--<button class="btn btn-warning btn-sm me-2">수정</button>
+				                           <button class="btn btn-danger btn-sm me-2">삭제</button>-->
+				                         </div>
+				                         
+				                       </div>
+				                    </div>
+				                 </div>
+				                  <ul>
+				                  </ul>
+				              </li>
+				            </ul>
+				            </li>
+				        </ul>
+				      </li>
+				      <li>
+				        <div class="reply_node pb-1 d-flex">
+				          <div class="col-1 pt-2">
+				             <div class="reply_author">
+				               <p class="text-center m-0 t-0">김길동 :</p>
+				             </div>
+				             <div class="reply_author_me">
+				               <!--<p class="text-center m-0 t-0">(블로그 주인)</p>-->
+				             </div>
+				          </div>
+				          <div class="col pt-2">
+				             <div class="reply_content">
+				              고생하셨습니다.
+				             </div>
+				             <div><span class="fs-6 text-body-tertiary">2024.03.19</span></div>
+				             <div class="d-flex">
+				               <div class="col">
+				                   <!-- 답장 버튼-->
+				                   <button class="btn btn-secondary btn-sm ms-1">답글</button>
+				               </div>
+				               <div class="col d-flex justify-content-end ">
+				                 <!-- 삭제/수정 버튼-->
+				                 <!--<button class="btn btn-warning btn-sm me-2">수정</button>
+				                 <button class="btn btn-danger btn-sm me-2">삭제</button>-->
+				               </div>
+				               
+				             </div>
+				          </div>
+				        </div>
+				        <ul>
+				          <li>
+				            <div class="reply_node pb-1 d-flex">
+				              <div class="col-1 pt-2">
+				                 <div class="reply_author">
+				                   <p class="text-center m-0 t-0">홍길동 :</p>
+				                 </div>
+				                 <div class="reply_author_me">
+				                   <p class="text-center m-0 t-0">(블로그 주인)</p>
+				                 </div>
+				              </div>
+				              <div class="col pt-2">
+				                 <div class="reply_content">
+				                  감사합니다.
+				                 </div>
+				                 <div><span class="fs-6 text-body-tertiary">2024.03.19</span></div>
+				                 <div class="d-flex">
+				                   <div class="col">
+				                       <!-- 답장 버튼-->
+				                       <button class="btn btn-secondary btn-sm ms-1">답글</button>
+				                   </div>
+				                   <div class="col d-flex justify-content-end ">
+				                     <!-- 삭제/수정 버튼-->
+				                     <button class="btn btn-warning btn-sm me-2">수정</button>
+				                     <button class="btn btn-danger btn-sm me-2">삭제</button>
+				                   </div> 
+				                 </div>
+				              </div>
+				            </div>
+				            <ul>
+				            </ul>
+				          </li>
+				          <li>
+				            <div class="reply_node pb-1 d-flex">
+				              <div class="col-1 pt-2">
+				                 <div class="reply_author">
+				                   <p class="text-center m-0 t-0">한만석 :</p>
+				                 </div>
+				                 <div class="reply_author_me">
+				                   <!--<p class="text-center m-0 t-0">(블로그 주인)</p>-->
+				                 </div>
+				              </div>
+				              <div class="col pt-2">
+				                 <div class="reply_content">
+				                  고생하셨습니다.
+				                 </div>
+				                 <div><span class="fs-6 text-body-tertiary">2024.03.19</span></div>
+				                 <div class="d-flex">
+				                   <div class="col">
+				                       <!-- 답장 버튼-->
+				                       <button class="btn btn-secondary btn-sm ms-1">답글</button>
+				                   </div>
+				                   <div class="col d-flex justify-content-end ">
+				                     <!-- 삭제/수정 버튼-->
+				                     <!--<button class="btn btn-warning btn-sm me-2">수정</button>
+				                     <button class="btn btn-danger btn-sm me-2">삭제</button>-->
+				                   </div> 
+				                 </div>
+				              </div>
+				            </div>
+				            <ul>
+				            </ul>
+				          </li>
+				        </ul>
+				      </li>
+				    </ul>
+				  </div>
+				  <div class="reply_input ms-3">
+				    <div class="form-floating">
+				      <input type="text" class="form-control" placeholder="Leave a comment here" id="replyinput" style="width:98%;">
+				           <label for="replyinput">댓글을 입력하세요</label>
+				         </div>
+				       </div>
+				
+				   </div>
+				</div>
+				<div class="blog_buttons mt-3 d-flex justify-content-end">
+					<a class="btn btn-primary me-2" role="button" href="modify.html">수정</a>
+					<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#blogRemoveModal">삭제</button>
+				</div>
+				<div clsas="blog_search mt-5">
+					<div class="input-group mb-3 mt-3 w-25 mx-auto">
+					  <input type="text" class="form-control" placeholder="검색.." aria-label="blog search">
+					  <span class="input-group-text m-0">
+					    <a href="search.html" onClick="alert('검색!'); return true;">
+					        <i class="bi bi-search"></i>
+					      </a>
+					    </span>
+					</div>
+				</div>
+	    	</c:otherwise>
+		</c:choose>
     </section>
 
 
