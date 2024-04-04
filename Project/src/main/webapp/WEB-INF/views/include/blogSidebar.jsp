@@ -10,21 +10,21 @@
  <aside id="sidebar" class="sidebar">
    <ul class="sidebar-nav" id="sidebar-nav">
        <li class="nav-item">
-           <a class="nav-link collapsed" href="home.html">
+           <a class="nav-link collapsed" href="home">
                <i class="bi bi-house-door"></i>
                <span>홈 화면</span>
            </a>
        </li><!-- End Employee Page Nav  -->
 
        <li class="nav-item">
-         <a class="nav-link collapsed" href="write.html">
+         <a class="nav-link collapsed" href="write">
            <i class="bi bi-journal-plus"></i>
              <span>블로그 등록</span>
          </a>
        </li><!-- End board list Page Nav -->
 
        <li class="nav-item">
-         <a class="nav-link collapsed" href="#" onclick="logout(); return false;">
+         <a class="nav-link collapsed" href="<%=request.getContextPath() %>/logout">
            <i class="bi bi-person-dash"></i>
              <span>로그아웃</span>
          </a>

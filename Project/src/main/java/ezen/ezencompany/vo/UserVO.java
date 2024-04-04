@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.User;
 
 //시큐리티에서 사용할 VO
 public class UserVO extends User{
-	
+
 	//생성자 만들기
 	public UserVO(String username, String password, boolean enabled, boolean accountNonExpired,
 			boolean credentialsNonExpired, boolean accountNonLocked,

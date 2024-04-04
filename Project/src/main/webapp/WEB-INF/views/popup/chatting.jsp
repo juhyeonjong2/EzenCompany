@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,151 +6,152 @@
 </head>
 <body>
 
- <!-- 채팅 팝업(사람 목록) -->
- <div class="modal fade" id="chattingModal" tabindex="-1">
-   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-     <div class="modal-content">
-       <div class="modal-header">
-         <h5 class="modal-title">대화 상대</h5>
-         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-       </div>
-       <div class="modal-body">  
-         <div class="container-fluid chatting_member">
-           <div class="accordion"> 
-             <div class="accordion-item">
-               <h2 class="accordion-header">
-                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                  프로그래밍 팀
-                 </button>
-               </h2>
-               <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
-                 <div class="accordion-body">
-                   <!-- chatting_user div가 한묶음-->
-                   <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="1">
-                     <div class="d-flex">
-                       <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
-                       <div class="d-flex flex-column ms-2">      
-                           <span class="fw-bold user_name">홍길동</span>
-                           <span class="user_position">사원</span>
-                       </div>
-                     </div>
-                   </div>
-   
-                   <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="2">
-                     <div class="d-flex">
-                       <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
-                       <div class="d-flex flex-column ms-2">      
-                           <span class="fw-bold user_name">김길동</span>
-                           <span class="user_position">과장</span>
-                       </div>
-                     </div>
-                   </div>
-   
-                   <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="3">
-                     <div class="d-flex">
-                       <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
-                       <div class="d-flex flex-column ms-2">      
-                           <span class="fw-bold user_name">고길동</span>
-                           <span class="user_position">부장</span>
-                       </div>
-                     </div>
-                   </div>
-
-                 </div>
-               </div>
-             </div>
-             <div class="accordion-item">
-               <h2 class="accordion-header">
-                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                   디자인 팀
-                 </button>
-               </h2>
-               <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
-                 <div class="accordion-body">
-                   <!-- chatting_user div가 한묶음-->
-                   <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="1">
-                     <div class="d-flex">
-                       <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
-                       <div class="d-flex flex-column ms-2">      
-                           <span class="fw-bold user_name">홍길동</span>
-                           <span class="user_position">사원</span>
-                       </div>
-                     </div>
-                   </div>
-   
-                   <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="2">
-                     <div class="d-flex">
-                       <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
-                       <div class="d-flex flex-column ms-2">      
-                           <span class="fw-bold user_name">김길동</span>
-                           <span class="user_position">과장</span>
-                       </div>
-                     </div>
-                   </div>
-   
-                   <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="3">
-                     <div class="d-flex">
-                       <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
-                       <div class="d-flex flex-column ms-2">      
-                           <span class="fw-bold user_name">고길동</span>
-                           <span class="user_position">부장</span>
-                       </div>
-                     </div>
-                   </div>
-
-                 </div>
-               </div>
-             </div>
-             <div class="accordion-item">
-               <h2 class="accordion-header">
-                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                   기획 팀
-                 </button>
-               </h2>
-               <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
-                 <div class="accordion-body">
-                     <!-- chatting_user div가 한묶음-->
-                     <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="1">
-                       <div class="d-flex">
-                         <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
-                         <div class="d-flex flex-column ms-2">      
-                             <span class="fw-bold user_name">홍길동</span>
-                             <span class="user_position">사원</span>
-                         </div>
-                       </div>
-                     </div>
-     
-                     <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="2">
-                       <div class="d-flex">
-                         <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
-                         <div class="d-flex flex-column ms-2">      
-                             <span class="fw-bold user_name">김길동</span>
-                             <span class="user_position">과장</span>
-                         </div>
-                       </div>
-                     </div>
-     
-                     <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="3">
-                       <div class="d-flex">
-                         <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
-                         <div class="d-flex flex-column ms-2">      
-                             <span class="fw-bold user_name">고길동</span>
-                             <span class="user_position">부장</span>
-                         </div>
-                       </div>
-                     </div>
-                 </div>
-               </div>
-             </div>
-           </div>
-         </div>
-       </div>
-     </div>
-   </div>
- </div>
-
- <!-- 채팅 룸 팝업 -->
- <div class="modal fade" id="chattingRoomModal" tabindex="-1">
+<section class="chatting_popup">
+	 <!-- 채팅 팝업(사람 목록) -->
+	 <div class="modal fade" id="chattingModal" tabindex="-1">
+	   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+	     <div class="modal-content">
+	       <div class="modal-header">
+	         <h5 class="modal-title">대화 상대</h5>
+	         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	       </div>
+	       <div class="modal-body">  
+	         <div class="container-fluid chatting_member">
+	           <div class="accordion"> 
+	             <div class="accordion-item">
+	               <h2 class="accordion-header">
+	                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+	                  프로그래밍 팀
+	                 </button>
+	               </h2>
+	               <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+	                 <div class="accordion-body">
+	                   <!-- chatting_user div가 한묶음-->
+	                   <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="1">
+	                     <div class="d-flex">
+	                       <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+	                       <div class="d-flex flex-column ms-2">      
+	                           <span class="fw-bold user_name">홍길동</span>
+	                           <span class="user_position">사원</span>
+	                       </div>
+	                     </div>
+	                   </div>
+	   
+	                   <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="2">
+	                     <div class="d-flex">
+	                       <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+	                       <div class="d-flex flex-column ms-2">      
+	                           <span class="fw-bold user_name">김길동</span>
+	                           <span class="user_position">과장</span>
+	                       </div>
+	                     </div>
+	                   </div>
+	   
+	                   <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="3">
+	                     <div class="d-flex">
+	                       <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+	                       <div class="d-flex flex-column ms-2">      
+	                           <span class="fw-bold user_name">고길동</span>
+	                           <span class="user_position">부장</span>
+	                       </div>
+	                     </div>
+	                   </div>
+	
+	                 </div>
+	               </div>
+	             </div>
+	             <div class="accordion-item">
+	               <h2 class="accordion-header">
+	                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+	                   디자인 팀
+	                 </button>
+	               </h2>
+	               <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+	                 <div class="accordion-body">
+	                   <!-- chatting_user div가 한묶음-->
+	                   <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="1">
+	                     <div class="d-flex">
+	                       <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+	                       <div class="d-flex flex-column ms-2">      
+	                           <span class="fw-bold user_name">홍길동</span>
+	                           <span class="user_position">사원</span>
+	                       </div>
+	                     </div>
+	                   </div>
+	   
+	                   <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="2">
+	                     <div class="d-flex">
+	                       <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+	                       <div class="d-flex flex-column ms-2">      
+	                           <span class="fw-bold user_name">김길동</span>
+	                           <span class="user_position">과장</span>
+	                       </div>
+	                     </div>
+	                   </div>
+	   
+	                   <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="3">
+	                     <div class="d-flex">
+	                       <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+	                       <div class="d-flex flex-column ms-2">      
+	                           <span class="fw-bold user_name">고길동</span>
+	                           <span class="user_position">부장</span>
+	                       </div>
+	                     </div>
+	                   </div>
+	
+	                 </div>
+	               </div>
+	             </div>
+	             <div class="accordion-item">
+	               <h2 class="accordion-header">
+	                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+	                   기획 팀
+	                 </button>
+	               </h2>
+	               <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+	                 <div class="accordion-body">
+	                     <!-- chatting_user div가 한묶음-->
+	                     <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="1">
+	                       <div class="d-flex">
+	                         <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+	                         <div class="d-flex flex-column ms-2">      
+	                             <span class="fw-bold user_name">홍길동</span>
+	                             <span class="user_position">사원</span>
+	                         </div>
+	                       </div>
+	                     </div>
+	     
+	                     <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="2">
+	                       <div class="d-flex">
+	                         <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+	                         <div class="d-flex flex-column ms-2">      
+	                             <span class="fw-bold user_name">김길동</span>
+	                             <span class="user_position">과장</span>
+	                         </div>
+	                       </div>
+	                     </div>
+	     
+	                     <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="3">
+	                       <div class="d-flex">
+	                         <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+	                         <div class="d-flex flex-column ms-2">      
+	                             <span class="fw-bold user_name">고길동</span>
+	                             <span class="user_position">부장</span>
+	                         </div>
+	                       </div>
+	                     </div>
+	                 </div>
+	               </div>
+	             </div>
+	           </div>
+	         </div>
+	       </div>
+	     </div>
+	   </div>
+	 </div>
+	
+	 <!-- 채팅 룸 팝업 -->
+	 <div class="modal fade" id="chattingRoomModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div class="modal-content">
             <div class="modal-header d-flex flex-column">
@@ -217,6 +217,7 @@
           </div>
         </div>
       </div>
-	
+</section>
+
 </body>
 </html>

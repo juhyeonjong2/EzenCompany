@@ -27,8 +27,7 @@ public class UserAuthenticationService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Map<String,Object> user 
-			= sqlSession.selectOne("ezen.ezencompany.mapper.userMapper.selectLogin",username);
+		Map<String,Object> user  = sqlSession.selectOne("ezen.ezencompany.mapper.userMapper.selectLogin",username);
 
 		if(user == null) {
 			//System.out.println("user::"+user); 로그사용권장함

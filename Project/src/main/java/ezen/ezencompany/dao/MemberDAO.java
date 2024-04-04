@@ -15,6 +15,7 @@ public class MemberDAO {
 	//sql을 사용하기 위해서 생성(자동주입)
 	@Autowired
 	SqlSession sqlSession;
+
 	
 	//Mapper의 경로를 적어줌
 	private final String namespace = "ezen.ezencompany.mapper.memberMapper";
@@ -69,4 +70,6 @@ public class MemberDAO {
 	public List<MemberVO> employeeList(){
 		return sqlSession.selectList(namespace+".employeeList");
 	}
+	
+	public int getMno() { return 0;}
 }

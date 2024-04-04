@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ezen.ezencompany.dao.AdminDAO;
 
 @Service
-public class AdminService {
+public class AdminService{
 	
 	@Autowired
 	AdminDAO adminDAO;

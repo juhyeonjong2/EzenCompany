@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ezen.ezencompany.mapper.blogMapper">
+
+<insert id="postBlog" parameterType="blogVo">
+	INSERT INTO blog( mno, fno, bgtitle, bgcontent, bgrealcontent, blockyn, bghit, bgdate)	 
+	VALUES ( #{mno}, #{fno}, #{bgtitle}, #{bgcontent}, #{bgrealcontent}, #{blockyn}, 0, now());
+</insert>
+	
+<select id="selectLast" parameterType="int" resultType="blogVo">
+	SELECT * FROM ezencompany.blog WHERE mno = #{mno} ORDER BY bgno DESC LIMIT 1;
+</select>
+	
+</mapper>
