@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    <!-- 우선순위 1.계정리스트를 전부 들고온다  (컨트롤러에서 모달에 넣은 뒤 for문 돌린다) ok
-    		   2. 회원가입하지 않은 직원은 메일발송으로 나오게 한다(아이디가 null일 경우 ) ok
-    		   3. 사원 등록로직을 작성한다
-    		   4. 메일발송 로직을 작성한다 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -25,8 +21,62 @@
  
   <!-- Template Main CSS File -->
   <link href="<%=request.getContextPath()%>/resources/css/style_admin.css" rel="stylesheet">
-  
-
+  <script src="<%=request.getContextPath()%>/resources/js/jquery-3.7.1.min.js"></script>
+  <script>
+	//썸네일 생성 함수
+	function thumbnail(event,obj){
+	  const file = event.target.files[0];
+	  const img = $(obj).prev().prev();
+	  const reader = new FileReader();
+	  reader.onload = (e) => {
+	    	$(img).attr("src", e.target?.result );
+	  };
+	  reader.readAsDataURL(file);
+	}
+	
+	//수정버튼 클릭 시 submit
+	function modify(){
+		$("#modifrm").submit();
+	}
+	
+	//탈퇴버튼 클릭 시 탈퇴 ajax실행
+	function deleteMember(){
+		let email = $("#info_inpupHidden").val();
+	    $.ajax({
+	    	url : '<%=request.getContextPath()%>/admin/deleteMember',
+	    	data : {email : email},
+	    	async: false,
+	    	success : function(result) {
+	    		console.log(result);
+	    		if(result == "true"){
+	    			alert("해당 회원이 탈퇴되었습니다.");
+	    		}else{
+	    			alert("회원탈퇴에 실패하였습니다.");
+	    		}
+	   		}
+	    });
+	}
+	
+	//재전송 클릭 시
+	function reSend(o){
+		let email = $(o).next().next().text();	
+		//메일을 재전송 해준다
+	    $.ajax({
+	    	url : '<%=request.getContextPath()%>/admin/reSend',
+	    	data : {email : email},
+	    	async: false,
+	    	success : function(result) {
+	    		console.log(result);
+	    		if(result == "true"){
+	    			alert("메일을 재발송 했습니다.");
+	    		}else{
+	    			alert("메일발송에 실패하였습니다.");
+	    		}
+	   		}
+	    });
+	    
+	}
+  </script>
 </head>
 <body>
 	<%@ include file="../include/adminHeader.jsp"%>
@@ -64,7 +114,7 @@
                   	  <c:choose>
                   		<%--아이디가 null이거나 빈문자열일 경우 --%>
                   		<c:when test="${vo.mid eq null || vo.mid == ''}">
-                  			<td style="color:#4154f1" onclick="aa()"><i class="bx bx-mail-send"> 재전송</td>
+                  			<td style="color:#4154f1" onclick="reSend(this)"><i class="bx bx-mail-send"> 재전송</td>
                   		</c:when>
                   		
                   		<%--아이디가 null이아니면서 빈문자열이 아닌경우 --%>
@@ -91,7 +141,7 @@
                       
                       <td>${vo.joindate}</td>
                       <td>
-                        <a class="link-dark" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#employeeDetailModal" data-bs-mno="1">
+                        <a class="link-dark" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#employeeDetailModal" data-bs-email="${vo.email}">
                           <i class="bi bi-three-dots-vertical"></i>
                         </a>
                       </td>
@@ -125,7 +175,122 @@
 
   <!-- Template Main JS File -->
   <script src="<%=request.getContextPath()%>/resources/js/main.js"></script>
-  <script src="<%=request.getContextPath()%>/resources/js/admin/employee.js"></script>
+
+  <!-- 가독성이 안좋아서 일단 여기서 작성후 잘 된다면 js파일로 이동예정 -->
+  <script>
+  (			
+		    function() {
+		    "use strict";
+		   /**
+		   * Easy selector helper function
+		   */
+		   const select = (el, all = false) => {
+		    el = el.trim()
+		    if (all) {
+		      return [...document.querySelectorAll(el)]
+		    } else {
+		      return document.querySelector(el)
+		    }
+		  }
+
+		    /**
+		     * Initiate Datatables
+		     */
+		    const datatables = select('.datatable', true);
+		    datatables.forEach(datatable => {
+		      new simpleDatatables.DataTable(datatable, {
+		        perPageSelect: [5, 10, 15, ["All", -1]],
+		        labels:{
+		          info: "총 {rows}명"
+		        },
+		        columns: [{
+		            select: 2,
+		            sortSequence: ["desc", "asc"]
+		          },
+		          {
+		            select: 3,
+		            sortSequence: ["desc"]
+		          },
+		          {
+		            select: 4,
+		            cellClass: "green",
+		            headerClass: "red"
+		          }
+		        ]
+		      });
+		    })
+
+		    // 2. 회원 디테일 정보 팝업
+		    const employeeDetailModal = document.getElementById('employeeDetailModal')
+		    if (employeeDetailModal) {
+		        employeeDetailModal.addEventListener('show.bs.modal', event => 
+		        {
+		            const button = event.relatedTarget;
+		            //클릭한 사람의 이메일을 가져옴
+		            const email = button.getAttribute('data-bs-email');
+		            
+		            //vo안에 이사람의 정보를 전부 가져와서 뿌려준다
+		            $.ajax({
+		            	url:"<%=request.getContextPath()%>/admin/getMember",
+		            	data:{email : email},
+		            	async: false,
+						success:function(member){
+						 //attr("value",ss)이렇게 넣으면 수정 안하고 닫으면 잘 읽어오지 못한다 val()로 작업해야함
+						 $("#info_inputId").val(member.mid);
+						 $("#info_inputName").val(member.mname);
+						 $("#info_inputEmail").val(member.email);
+						 $("#info_inputPhone").val(member.mphone);
+						 $("#info_inputDate").val(member.joindate);
+						 $("#info_inpupHidden").val(member.email);
+						 if(member.authority == "ROLE_ADMIN"){
+							 $("#info_authority").val("ROLE_ADMIN").prop("selected",true);
+						 }else{
+							 $("#info_authority").val("ROLE_USER").prop("selected",true);
+						 }
+						 if(member.enabled == 0 || member.mid == null || member.mid == ""){
+							 $("#info_enabled").val("2").prop("selected",true);
+						 }else{
+							 $("#info_enabled").val("1").prop("selected",true);
+						 }
+						} //success
+		            }); //ajax파트
+		            
+		            //한번에 가져오기엔 프로필사진이 없는경우 다른 정보도 안가져와지는 문제가 있어 ajax통신을 한번더 사용
+		            $.ajax({
+		            	url:"<%=request.getContextPath()%>/admin/getImg",
+		            	data:{email : email},
+		            	async: false,
+						success:function(img){
+							if(img != null && img != ""){
+								//사진이 있는경우만 추가해준다
+								let imgUrl = "<%=request.getContextPath()%>/resources/img/"+ img
+							    $('.rounded-circle').attr("src", imgUrl);
+							}else{
+								$('.rounded-circle').attr("src", "");
+							}
+						}	
+		        	}); //ajax파트
+		            
+		            //분류테이블을 json타입으로 가져온다
+		            $.ajax({
+		            	url:"<%=request.getContextPath()%>/admin/getCategory",
+		            	data:{email : email},
+		            	async: false,
+						success:function(data){
+							console.log(data);
+							//과장/디자이너인 사람을 누르고 임시1을 누르면 과장/디자이너로 표시되는 버그가있는데 다른애는 문제없어서 버그를 못찾겠다
+							for(let i = 0; i<data.length; i++){
+								$("#"+data[i].cidx).val(data[i].aidx).prop("selected",true);
+							}
+						}	
+		        	}); //ajax파트
+		            
+		        }); //모달 파트    
+		    }
+		    
+			
+		  })();
+  </script>
 
   <!-- Last JS-->
   <script src="<%=request.getContextPath()%>/resources/js/tooltips.js"></script>

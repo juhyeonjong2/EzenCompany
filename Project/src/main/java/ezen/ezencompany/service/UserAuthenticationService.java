@@ -29,6 +29,8 @@ public class UserAuthenticationService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Map<String,Object> user  = sqlSession.selectOne("ezen.ezencompany.mapper.userMapper.selectLogin",username);
 
+		System.out.println(user);
+		System.out.println(user.get("mno"));
 		if(user == null) {
 			//System.out.println("user::"+user); 로그사용권장함
 			throw new UsernameNotFoundException(username);
@@ -45,8 +47,12 @@ public class UserAuthenticationService implements UserDetailsService {
 							   ,true
 							   ,true
 							   ,authority
-							   ,user.get("authority").toString());
-		
+							   ,user.get("authority").toString()
+							   ,user.get("email").toString()
+							   ,(Integer)Integer.valueOf(user.get("mno").toString())
+							   ,user.get("mphone").toString()
+							   ,user.get("mname").toString());
+		//System.out.println(vo);
 		return vo;
 	}
 

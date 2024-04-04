@@ -1,6 +1,7 @@
 package ezen.ezencompany.dao;
 
 import java.util.HashMap;
+
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -15,7 +16,6 @@ public class MemberDAO {
 	//sql을 사용하기 위해서 생성(자동주입)
 	@Autowired
 	SqlSession sqlSession;
-
 	
 	//Mapper의 경로를 적어줌
 	private final String namespace = "ezen.ezencompany.mapper.memberMapper";
@@ -71,5 +71,23 @@ public class MemberDAO {
 		return sqlSession.selectList(namespace+".employeeList");
 	}
 	
-	public int getMno() { return 0;}
+	//이메일로 그 사람의 정보를 MemberVO안에 집어넣는다
+	public MemberVO getMember(String email) {
+		return sqlSession.selectOne(namespace+".getMember", email);
+	}
+	
+	//이메일로 그 사람의 정보를 MemberVO안에 집어넣는다
+	public String getImg(int mno) {
+		return sqlSession.selectOne(namespace+".getImg", mno);
+	}
+	
+	//아이디로 이메일을 가져온다
+	public String getEmailId(String mid) {
+		return sqlSession.selectOne(namespace+".getEmailId", mid);
+	}
+	
+	//비밀번호를 수정한다
+	public void changePwOk(HashMap<String, Object> map) {
+		sqlSession.update(namespace+".changePwOk", map);
+	}
 }

@@ -1,9 +1,12 @@
 package ezen.ezencompany.controller;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ezen.ezencompany.dao.MemberDAO;
+import ezen.ezencompany.service.AdminService;
 import ezen.ezencompany.service.MemberService;
 import ezen.ezencompany.vo.MemberVO;
 
@@ -31,6 +35,9 @@ public class SecurityController {
 	//값을 가져오기 위해 어노테이션 명시
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	AdminService adminService;
 	
 	@Autowired
 	MemberDAO memberDAO;
@@ -51,20 +58,11 @@ public class SecurityController {
 		return "member/passwordSearch";
 	}
 	
-	//비번 수정 링크로 온 경우
-	@RequestMapping(value = "pwChange", method = RequestMethod.GET)
-	public String ChangePW() {
-		return "member/passwordModify";
-	}
-	// 경로로 온 경우 값 받아오는 예시
-	//@RequestMapping(value = "joinOk/{id}", method = RequestMethod.POST)
-	//public void joinOk(String mid, String mpassword, String checkpassword, @PathVariable("id") String id,
-	//		HttpServletResponse response,HttpServletRequest request) throws IOException {
-	// model 안에 id값을 집어넣는다 그리고 회원가입창을 호출
-	//회원가입으로 가기(임시)
-	@RequestMapping(value = "join/{id}", method = RequestMethod.GET)
-	public String aa(@PathVariable("id") String id, Model model) {
-		model.addAttribute("shortUrl", id);
+
+	//회원가입으로 가기(링크)
+	@RequestMapping(value = "join/{url}", method = RequestMethod.GET)
+	public String join(@PathVariable("url") String url, Model model) {
+		model.addAttribute("shortUrl", url);
 		return "member/join";
 	}
 	
@@ -82,7 +80,7 @@ public class SecurityController {
 	
 	
 	//인증번호 받기를 누른경우 짧은경로로 이메일 찾기
-	@RequestMapping(value = "getEmail2", method = RequestMethod.POST)
+	@RequestMapping(value = "getEmail", method = RequestMethod.POST)
 	@ResponseBody //ajax를 사용하는경우 @ResponseBody이걸 사용하지 않으면 리턴값으로 보내지 않고 경로로 인식해서 보내버린다
 	public String getEmail(String url) {
 		int mno = memberService.requestMno(url);
@@ -109,7 +107,6 @@ public class SecurityController {
 		//단 이 경우에 인증번호를 두번 누른경우 두개가 생성되는데 그걸 전부 친 경우 다 되면 안되니
 		//일단 셀렉트로 이메일을 찾은 뒤 없다면 인서트 있다면 업데이트 방식으로 해야할듯하다
 		int num = memberService.selectNum(email);
-		System.out.println(num);
 		if(num == 0) {
 		// 저장된 인증번호가 없다면 insert
 			HashMap<String, Object> map = new HashMap<>();
@@ -152,16 +149,26 @@ public class SecurityController {
 	//회원가입을 누른경우 인증번호 체크
 	@RequestMapping(value = "checkCert", method = RequestMethod.POST)
 	@ResponseBody //ajax를 사용하는경우 @ResponseBody이걸 사용하지 않으면 리턴값으로 보내지 않고 경로로 인식해서 보내버린다
-	public String getEmail(String email, int certNum) {
-		HashMap<String, Object> map = new HashMap<>();
-		map.put("email", email);
-		map.put("certNum", certNum);
-		int checkCert = memberService.checkCert(map);
-		if(checkCert != 0) {
-			//셀렉트 해서 값이 일치한다면
-			return "true";
+	public String getEmail(String email, int certNum, String valueId, String valuePw) {
+		
+		//안에서 한번 더 정규식으로 검사를 한다
+		// 첫번째 매개값은 정규표현식이고 두번째 매개값은 검증 대상 문자열
+		boolean resultId = Pattern.matches("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^*_+|<>?:{}])[A-Za-z\\d~!@#$%^*_+|<>?:{}]{8,20}$", valueId);
+		boolean resultPw = Pattern.matches("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^*_+|<>?:{}])[A-Za-z\\d~!@#$%^*_+|<>?:{}]{8,20}$", valuePw);
+
+		if(resultId && resultPw) {
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("email", email);
+			map.put("certNum", certNum);
+			int checkCert = memberService.checkCert(map);
+			if(checkCert != 0) {
+				//셀렉트 해서 값이 일치한다면
+				return "true";
+			}else {
+				return "false";
+			}
 		}else {
-			return "false";
+			return "error";
 		}
 	}
 	
@@ -197,18 +204,95 @@ public class SecurityController {
 
 	} //join
 	
-	//관리자 로그인 페이지
-	@RequestMapping(value = "a_4min")
-	public String adminPage() {
-		return "member/adminLogin";
+	//비밀번호 수정 링크받기를 클릭한 경우
+	@RequestMapping(value ="sendEmail", method = RequestMethod.GET)
+	@ResponseBody
+	public String sendEmail(String mid) {
+		//아이디를 email로
+		String email = memberService.getEmailId(mid);
+		
+		//mno구하기
+		int mno = adminService.getMno(email);
+		//mno로 짧은 경로 구하기
+		String url = adminService.getUrl(mno);
+		
+		String ip = "";
+		InetAddress local;
+		try {
+			local = InetAddress.getLocalHost();
+			ip = local.getHostAddress();
+		} catch (UnknownHostException e1) {
+			e1.printStackTrace();
+		}
+
+		//메일 발송
+		String link = "http://"+ ip + ":8080/ezencompany/changePw/" + url;
+		String setFrom = "vhahaha513@naver.com"; //2단계 인증 x, 메일 설정에서 POP/IMAP 사용 설정에서 POP/SMTP 사용함으로 설정o
+		String toMail = email;
+		String title = "[이젠컴퍼니]비밀번호 재설정 링크입니다."; 
+		String content = "이젠컴퍼니 비밀번호 재설정 <a href='"+ link +"'> 링크 </a> 입니다." +
+						 "<br>" +
+						 "해당 링크로 들어가서 비밀번호 재설정을 해주세요.";
+		
+		try {
+			MimeMessage message = mailSender.createMimeMessage(); //Spring에서 제공하는 mail API
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+            helper.setFrom(setFrom);
+            helper.setTo(toMail);
+            helper.setSubject(title);
+            helper.setText(content, true);
+            mailSender.send(message);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "true";
 	}
 	
-	//관리자가 로그인 한 경우
-	//@RequestMapping(value = "adminLogin")
-	//public String adminLogin() {
-		//memberService.adminLogin
-		//이렇게 만들려고 했지만 그러면 관리자는 따로 세션에 추가하고 그렇게 사용해야 하고 일반 사원은 또 달라서 별로 좋은방법은 아닌듯 하다 
-	//	return "member/adminLogin";
-	//}
+	//비밀번호 재설정으로 온 경우
+	@RequestMapping(value = "changePw/{url}", method = RequestMethod.GET)
+	public String rePw(@PathVariable("url") String url, Model model) {
+		model.addAttribute("shortUrl", url);
+		return "member/passwordModify";
+	}
+	
+	//비밀번호 재설정으로 온 경우
+	@RequestMapping(value = "changePwOk", method = RequestMethod.POST)
+	public void changePwOk(String url, String rePassword, HttpServletResponse response,HttpServletRequest request) throws IOException {
+		
+		//안에서 한번 더 정규식으로 검사를 한다
+		// 첫번째 매개값은 정규표현식이고 두번째 매개값은 검증 대상 문자열
+		boolean resultPw = Pattern.matches("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^*_+|<>?:{}])[A-Za-z\\d~!@#$%^*_+|<>?:{}]{8,20}$", rePassword);
+
+		//정규식에서 트루가 나올 경우
+		if(resultPw) {
+			//링크데이터를 mno로 변환(안에 짧은 경로를 집어넣으면됨)
+			int mno = memberService.requestMno(url);
+			
+			//비밀번호 인코딩
+			BCryptPasswordEncoder epwe = new BCryptPasswordEncoder();
+			
+			//비밀번호 수정
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("mno", mno);
+			map.put("rePassword", epwe.encode(rePassword));
+			memberService.changePwOk(map);
+			
+			//응답할때 인코딩하기
+			response.setContentType("text/html; charset=utf-8");
+			response.setCharacterEncoding("UTF-8");
+			
+			response.getWriter().append("<script>alert('비밀번호를 성공적으로 수정하였습니다.');location.href='"
+					+request.getContextPath()+"/login'</script>").flush();
+		}else {
+			response.setContentType("text/html; charset=utf-8");
+			response.setCharacterEncoding("UTF-8");
+			
+			response.getWriter().append("<script>alert('올바르지 않은 접근입니다.');location.href='"
+					+request.getContextPath()+"/login'</script>").flush();
+		}
+		
+		
+	}
 	
 }
