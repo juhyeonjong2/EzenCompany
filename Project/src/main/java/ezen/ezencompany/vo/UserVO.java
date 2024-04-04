@@ -11,7 +11,8 @@ public class UserVO extends User{
 	//생성자 만들기
 	public UserVO(String username, String password, boolean enabled, boolean accountNonExpired,
 			boolean credentialsNonExpired, boolean accountNonLocked,
-			Collection<? extends GrantedAuthority> authorities, String authority) {
+			Collection<? extends GrantedAuthority> authorities, String authority, String email,
+			int mno, String mphone, String mname) {
 		
 			super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 			
@@ -19,6 +20,10 @@ public class UserVO extends User{
 			this.mid = username;
 			this.mpassword = password;
 			this.authority = authority;
+			this.email = email;
+			this.mno = mno;
+			this.mphone = mphone;
+			this.mname = mname;
 	}
 	
 	private int mno;
