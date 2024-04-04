@@ -69,4 +69,13 @@ public class MemberService {
 		return memberDAO.getImg(mno);
 	}
 	
+	//아이디로 이메일을 가져온다
+	public String getEmailId(String mid) {
+		return memberDAO.getEmailId(mid);
+	}
+	
+	//비밀번호를 수정한다
+	public void changePwOk(HashMap<String, Object> map) {
+		memberDAO.changePwOk(map);
+	}
 }

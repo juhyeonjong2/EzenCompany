@@ -36,7 +36,7 @@
 	</update>
 	
 	<select id="checkCert" parameterType="java.util.Map" resultType="int" >
-		SELECT cert from joincert WHERE email = #{email} and cert = #{certNum}; 
+		SELECT count(cert) from joincert WHERE email = #{email} and cert = #{certNum}; 
 	</select>
 	
 	<select id="employeeList" parameterType="MemberVO" resultType="MemberVO" >
@@ -55,6 +55,14 @@
 	<select id="getOption" resultType="java.util.Map" >
 		SELECT aidx, cidx FROM employeeoption WHERE mno = #{mno};
 	</select>
+	
+	<select id="getEmailId" parameterType="String" resultType="String" >
+		SELECT email FROM member WHERE mid = #{mid};
+	</select>
+	
+	<update id="changePwOk" parameterType="java.util.Map">
+		UPDATE member SET mpassword = #{rePassword} WHERE mno = #{mno};
+	</update>
 </mapper>
 
 

@@ -81,4 +81,13 @@ public class MemberDAO {
 		return sqlSession.selectOne(namespace+".getImg", mno);
 	}
 	
+	//아이디로 이메일을 가져온다
+	public String getEmailId(String mid) {
+		return sqlSession.selectOne(namespace+".getEmailId", mid);
+	}
+	
+	//비밀번호를 수정한다
+	public void changePwOk(HashMap<String, Object> map) {
+		sqlSession.update(namespace+".changePwOk", map);
+	}
 }
