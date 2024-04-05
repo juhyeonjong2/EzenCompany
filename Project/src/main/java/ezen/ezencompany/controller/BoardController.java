@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ezen.ezencompany.service.BoardService;
 import ezen.ezencompany.vo.BoardVO;
+import ezen.ezencompany.vo.UserVO;
 
 @RequestMapping(value = "/board")
 @Controller
@@ -52,6 +54,10 @@ public class BoardController {
 		
 		BoardVO vo = boardService.selectOneByBno(bno);
 		
+		
+		//조회수 증가 service 추가
+		// 서비스태우고 dao 태워서 쿼리문 실행되게 만들기
+		
 		model.addAttribute("vo",vo);
 		
 		
@@ -71,7 +77,14 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/modify.do",method=RequestMethod.POST) 
-	public void modify(BoardVO vo, HttpServletResponse res) throws Exception {
+	public void modify(BoardVO vo, HttpServletResponse res, Authentication authentication) throws Exception {
+		
+		/* security 정상화 되면 주석 풀기 
+		UserVO loginVO = (UserVO)authentication.getPrincipal();
+		
+		vo.setMno(loginVO.getMno());
+		*/
+		
 		
 		
 		int result = boardService.update(vo);
@@ -105,6 +118,7 @@ public class BoardController {
 		System.out.println("전송형식이 GET인 write.do");
 		return "board/write";
 	}
+	
 	@RequestMapping(value="/write.do",method=RequestMethod.POST)
 	public String write(BoardVO vo) throws Exception {
 		boardService.insert(vo);
