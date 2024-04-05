@@ -15,9 +15,9 @@ public class BoardServicelmpl implements BoardService {
 	BoardDAO boardDAO;
 	
 	@Override
-	public List<BoardVO> list(){
+	public List<BoardVO> list(int bindex){
 		
-		List<BoardVO> blist = boardDAO.list();
+		List<BoardVO> blist = boardDAO.list(bindex);
 		return blist;
 	}
 	
@@ -37,4 +37,11 @@ public class BoardServicelmpl implements BoardService {
 	public int delete(int bno) throws Exception {
 		return boardDAO.delete(bno);
 	}
+	
+	@Override
+	public int insert(BoardVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		return boardDAO.insert(vo);
+	}
+	
 }

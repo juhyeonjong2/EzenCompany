@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Write</title>
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -24,6 +24,7 @@
   <link href="<%=request.getContextPath()%>/resources/css/ezReply.css" rel="stylesheet">
 
   <!-- Predefined Script -->
+  <script src="https://cdn.tiny.cloud/1/3bif3ntggq2j5i7kj5tgxwt4wodd6se5f35dq4qu2s1aj007/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
   <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery-3.7.1.min.js"></script>
 
 </head>
@@ -93,7 +94,7 @@
         </li><!-- End Notification Nav -->
 
         <li class="nav-item">
-          <a class="nav-link nav-icon" href="#">
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="modal" data-bs-target="#chattingModal">
             <i class="bi bi-chat-left-text"></i>
             <span class="badge bg-success badge-number">3</span>
           </a>
@@ -120,7 +121,7 @@
     <aside id="sidebar" class="sidebar">
       <div class="board_tree_frame mt-5 ms-4 w-75 rounded overflow-y-auto">
         <div class="list-group">
-          <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+          <a href="list.html" class="list-group-item list-group-item-action active" aria-current="true">
             <i class="bi bi-file-text"></i>
             <span>게시판 1</span>
           </a>
@@ -153,59 +154,32 @@
       </div>
   
     </aside><!-- End Sidebar-->
-
+<form action="write.do" method="post">
+<input type="hidden" name="bindex" value="${param.bindex }">
   <main id="main" class="main">
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="card">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center">
-                <h5 class="card-title"><b>게시판 1</b></h5>  <!-- 여기부분도 DB 받아야됨 -->
-                <a class="btn btn-primary h-50" href="write.do?bindex=${param.bindex}" role="button">+ 글쓰기</a>
-                
-            </div>
-
-            <!-- Table with stripped rows -->
-            <table class="table datatable">
-              <thead>
-                <tr>
-                  <th>번호</th>
-                  <th>제목</th>
-                  <th data-type="date" data-format="YYYY/DD/MM">날짜</th>
-                  <th>작성자</th>
-                  <th>조회</th>
-                </tr>
-              </thead>
-              <tbody>
-             	<c:forEach items="${list }" var="vo">
-	 			<tr>
-	 				<td>${vo.bno}</td>
-	 				<td><a href='view.do?bno=${vo.bno}'>${vo.btitle}</a></td>
-	 				<td>${vo.bdate}</td>
-	 				<td>${vo.mid}</td>
-	 				<td>${vo.bno}</td>
-	 			 <!--  	<td>${vo.bhit} 몰라 물어봐야딩--> 
-	 			</tr>
-	 			
-	 			<!--  	 <tr>
-                  <td>10</td>
-                  <td><a href="view.html">글제목 입니다.</a></td>
-                  <td>2024.03.29</td>
-                  <td>홍길동</td>
-                  <td>9999</td>
-                </tr>  -->
-	 		</c:forEach>
-              </tbody>
-            </table>
-            <!-- End Table with stripped rows -->
-
-          </div>
-        </div>
-
+    <div class="pagetitle container-md">
+      <h1>게시글 쓰기</h1>
+    </div><!-- End Page Title -->
+    <section class="section container-md">
+      <div class="input-group mb-3">
+        <input type="text" name="btitle" class="form-control"  placeholder="${vo.btitle}">
       </div>
-    </div>
+      <div class="input-group mb-3">
+        <label class="input-group-text" for="formFileMultiple" >파일첨부</label>
+        <input type="file" class="form-control"  id="formFileMultiple" multiple>
+      </div>
+      <div class="col-auto mb-3">
+        <!--tinymce 영역-->
+        <textarea id="editor_board_content" name="bcontent"></textarea>
+      </div>
+      <div class="blog_buttons mt-3 d-flex justify-content-end">
+        <button class="btn btn-primary me-2">등록</button>
+      </div>
+    </section>
   </main><!-- End #main -->
-
+	
+</form>
+	
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
@@ -224,17 +198,18 @@
 
 
     <!-- Vendor JS Files -->
-    <script src="<%=request.getContextPath()%>/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="<%=request.getContextPath()%>/resourcess/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="<%=request.getContextPath()%>/resources/vendor/simple-datatables/simple-datatables.js"></script>
 
 
     <!-- Template Main JS File -->
     <script src="<%=request.getContextPath()%>/resources/js/main.js"></script>
-    <script src="<%=request.getContextPath()%>/resources/js/board/list.js"></script>
-
+    <script src="<%=request.getContextPath()%>/resources/js/board/write.js"></script>
 
     <!-- Last JS-->
+    <script src="<%=request.getContextPath()%>/resources/js/chatting.js"></script>
     <script src="<%=request.getContextPath()%>/resources/js/tooltips.js"></script>
+    
 
 </body>
 </html>

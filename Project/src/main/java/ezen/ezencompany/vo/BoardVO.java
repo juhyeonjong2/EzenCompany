@@ -3,7 +3,7 @@ package ezen.ezencompany.vo;
 public class BoardVO {
 	int bno;
 	int mno;
-	int bindexl;
+	int bindex;
 	int bhit;
 	String bdate;
 	String bcontent;
@@ -29,11 +29,12 @@ public class BoardVO {
 	public void setMno(int mno) {
 		this.mno = mno;
 	}
-	public int getBindexl() {
-		return bindexl;
+	
+	public int getBindex() {
+		return bindex;
 	}
-	public void setBindexl(int bindexl) {
-		this.bindexl = bindexl;
+	public void setBindex(int bindex) {
+		this.bindex = bindex;
 	}
 	public int getBhit() {
 		return bhit;

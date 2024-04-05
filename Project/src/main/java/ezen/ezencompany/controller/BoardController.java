@@ -23,9 +23,13 @@ public class BoardController {
 	BoardService boardService;
 
 	@RequestMapping(value = "/list.do", method = RequestMethod.GET)
-	public String list(Model model) throws Exception {
-		
-		List<BoardVO> list = boardService.list();
+	public String list(Model model, String bindex) throws Exception {
+		int bindexInt = 1;
+		if(bindex != null) {
+			bindexInt = Integer.parseInt(bindex);
+		}
+		 
+		List<BoardVO> list = boardService.list(bindexInt);
 		model.addAttribute("list", list);
 		return "board/list";
 	}
@@ -94,6 +98,20 @@ public class BoardController {
 		int result = boardService.delete(bno); 
 		
 		return "redirect:list.do"; 
+	}
+	
+	@RequestMapping(value="/write.do",method=RequestMethod.GET)
+	public String write() {
+		System.out.println("전송형식이 GET인 write.do");
+		return "board/write";
+	}
+	@RequestMapping(value="/write.do",method=RequestMethod.POST)
+	public String write(BoardVO vo) throws Exception {
+		boardService.insert(vo);
+		
+		System.out.println("전송형식이 POST인 write.do");
+
+		return "redirect:list.do";
 	}
 	
 }

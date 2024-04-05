@@ -430,17 +430,22 @@
               <h5 class="modal-title"></h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <form action="delete.do" method="post">
+            
             <div class="modal-body">
               게시글을 삭제하시겠습니까?
             </div>
             <div class="modal-footer d-flex align-items-center justify-content-center">
-              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="document.frm.submit();">삭제</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="document.getElementById('frm').submit();">삭제</button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
             </div>
+            </form>
           </div>
         </div>
       </div><!-- End Disabled Backdrop Modal-->
-
+	<form action="delete.do" method="post" id="frm">
+		<input type="hidden" name="bno" value="${vo.bno }"> 
+	</form>
      
     </section>
   </main><!-- End #main -->

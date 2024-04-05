@@ -7,10 +7,11 @@
 <!-- namespace 의 값은 TestDao 파일에서 호출하는 값과 같아야한다 -->
 <mapper namespace="ezen.ezencompany.mapper.boardmapper"> 
 
-	<select id="list" resultType="boardVO">
+	<select id="list" resultType="boardVO" parameterType="int">
 	SELECT b.bno,b.btitle,b.bcontent, b.mno, b.bindex,b.bhit,date_format(b.bdate, '%Y-%m-%d') as bdate,m.mid from board b
 		Inner JOIN member m
 		ON b.mno = m.mno
+		 where b.bindex=#{bindex}
 	</select>
 	
 	<update id="update" parameterType="boardVO">
@@ -32,5 +33,13 @@
 		DELETE 
 		  FROM board
 		 WHERE bno = #{bno}
-</delete>
+		 
+	</delete>
+	
+	<insert id="insert" parameterType="boardVO">
+		INSERT INTO board(btitle, bcontent, bhit, bdate,bindex, mno )
+		 VALUES (#{btitle} ,#{bcontent},0,now(),#{bindex},#{mno})
+	</insert>
+
+
 </mapper>

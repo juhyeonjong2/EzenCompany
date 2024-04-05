@@ -16,8 +16,8 @@ public class BoardDAO {
 	
 	private final String namespace = "ezen.ezencompany.mapper.boardMapper";
 	
-	public List<BoardVO> list(){
-		return sqlSession.selectList("ezen.ezencompany.mapper.boardmapper.list"); 
+	public List<BoardVO> list(int bindex){
+		return sqlSession.selectList("ezen.ezencompany.mapper.boardmapper.list",bindex); 
 	}
 	
 	public BoardVO selectOneByBno(int bno) {
@@ -31,5 +31,9 @@ public class BoardDAO {
 
 	public int delete(int bno) {
 		return sqlSession.insert("ezen.ezencompany.mapper.boardmapper.delete", bno);
+	}
+	
+	public int insert(BoardVO vo) {
+		return sqlSession.insert("ezen.ezencompany.mapper.boardmapper.insert", vo);
 	}
 }
