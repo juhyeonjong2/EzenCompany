@@ -1,0 +1,68 @@
+
+/*--------------------------------------------------------------
+# Chatting
+--------------------------------------------------------------*/
+.chatting_member{
+    height: 500px;
+  }
+  
+  .chatting_room{
+    height: 500px;
+  }
+  
+  .chatting_user{
+    border-radius: 15px;
+    border: 2px solid #fff ;
+    box-sizing: border-box; 
+  }
+  
+  .chatting_user:hover {
+    border: 2px solid #808080;
+  }
+  
+  span.user_name{
+    font-size: 1.25em;
+    font-weight: bold;
+    
+  }
+  
+  span.user_position{
+    font-size: 0.75em;
+  }
+  
+  .chatting_other_msg{
+    display: flex;
+    justify-content: flex-start;
+    align-items:flex-end;
+    margin-top: 10px;
+  }
+  
+  .chatting_my_msg{
+    display: flex;
+    justify-content: flex-end;
+    align-items:flex-end;
+    margin-top: 10px;
+  }
+
+  .chatting_room .msg{
+    max-width: 70%;
+  }
+
+  
+  .chatting_other_msg .msg{
+    /*border: 2px solid #808080;*/
+    border-radius: 10px 10px 10px 0px;
+    margin: 5px 5px 10px 10px;
+    padding: 5px;
+    background-color: #FFC7C7;
+    
+  }
+  
+  .chatting_my_msg .msg{
+    border-radius: 10px 10px 0px 10px;
+    margin: 5px 10px 10px 5px;
+    padding: 5px;
+    background-color: #E0E0E0;
+    
+  }
+  

@@ -1,6 +1,7 @@
 package ezen.ezencompany.dao;
 
 import java.util.HashMap;
+
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -68,5 +69,25 @@ public class MemberDAO {
 	//사원목록을 가져온다
 	public List<MemberVO> employeeList(){
 		return sqlSession.selectList(namespace+".employeeList");
+	}
+	
+	//이메일로 그 사람의 정보를 MemberVO안에 집어넣는다
+	public MemberVO getMember(String email) {
+		return sqlSession.selectOne(namespace+".getMember", email);
+	}
+	
+	//이메일로 그 사람의 정보를 MemberVO안에 집어넣는다
+	public String getImg(int mno) {
+		return sqlSession.selectOne(namespace+".getImg", mno);
+	}
+	
+	//아이디로 이메일을 가져온다
+	public String getEmailId(String mid) {
+		return sqlSession.selectOne(namespace+".getEmailId", mid);
+	}
+	
+	//비밀번호를 수정한다
+	public void changePwOk(HashMap<String, Object> map) {
+		sqlSession.update(namespace+".changePwOk", map);
 	}
 }

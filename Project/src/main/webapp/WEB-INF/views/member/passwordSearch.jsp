@@ -14,28 +14,17 @@
 	function pwSearch() {
 		
 		let mid = $(".inputText").val();
-		let email = "";
 		
-		//Ajax로 email 반환
+		//Ajax로 메일발송
 	    $.ajax({
-	    	url : 'getEmail', //컨트롤러에서 사용할 경로(수정필요)
+	    	url : '<%=request.getContextPath()%>/sendEmail',
 	    	data : {mid : mid},
-	    	type : 'POST',
-	    	async: false,
 	    	success : function(result) {
-	    		email = result;
-	   		}
-	    });
-
-		//Ajax로 메일 전송
-	    $.ajax({
-	    	url : 'emailSend', //컨트롤러에서 사용할 경로(수정필요)
-	    	data : {email : email},
-	    	type : 'POST',
-	    	dataType : 'json',
-	    	success : function(result) {
-	    		code = result; 
-	    		alert("인증 코드가 입력하신 이메일로 전송 되었습니다.");
+	    		if(result == "true"){
+	    			alert("비밀번호 수정 링크를 발송했습니다.");
+	    		}else{
+	    			alert("메일발송에 실패하였습니다.");
+	    		}
 	   		}
 	    });
 	};

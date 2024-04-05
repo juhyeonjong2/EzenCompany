@@ -12,7 +12,6 @@
 		SELECT mno FROM member WHERE email = #{email};
 	</select>
 	
-	<!-- #{optionMap.mno, jdbcType=INTEGER}이 부분 수정 -->
 	<insert id="employeeRegistration" parameterType="java.util.Map">
 		INSERT INTO employeeOption (mno, cidx, aidx) VALUES
 		    (#{mno}, #{cidx}, #{aidx});
@@ -23,4 +22,42 @@
 		    (#{mno}, #{url});
 	</insert>
 	
+	<select id="getMno" parameterType="String" resultType="int">
+		SELECT mno FROM member WHERE email = #{email};
+	</select>
+	
+	<select id="searchMno" parameterType="int" resultType="int">
+		SELECT count(mno) FROM memberattach WHERE mno = #{mno};
+	</select>
+	
+	<insert id="insertImg" parameterType="java.util.Map">
+		INSERT INTO memberattach (mfrealname, mforeignname, mno, rdate)
+ 			VALUES(#{mfrealname}, #{mforeignname}, #{mno}, now());
+	</insert>
+	
+	<update id="updateImg" parameterType="java.util.Map">
+		UPDATE memberattach SET mfrealname = #{mfrealname}, mforeignname = #{mforeignname},
+		rdate = now() WHERE mno = #{mno}; 
+	</update>
+	
+	<update id="employeeUpdate" parameterType="java.util.Map">
+		UPDATE employeeoption SET cidx = #{cidx}, aidx = #{aidx} WHERE mno = #{mno}; 
+	</update>
+	
+	<update id="memberUpdate" parameterType="java.util.Map">
+		UPDATE member SET mname = #{mname}, email = #{email}, mphone = #{mphone},
+		 authority = #{authority},  enabled = #{enabled} WHERE mno = #{mno}; 
+	</update>
+	
+	<update id="deleteMember" parameterType="int">
+		UPDATE member SET enabled = 2 WHERE mno = #{mno}; 
+	</update>
+	
+	<select id="checkDelete" parameterType="int" resultType="int">
+		SELECT enabled FROM member WHERE mno = #{mno};
+	</select>
+	
+	<select id="getUrl" parameterType="int" resultType="String">
+		SELECT shortUrl FROM joinmail WHERE mno = #{mno};
+	</select>
 </mapper>

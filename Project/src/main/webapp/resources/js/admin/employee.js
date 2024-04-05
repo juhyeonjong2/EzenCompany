@@ -47,25 +47,16 @@
      */
 
     // 2. 회원 디테일 정보 팝업
-    const employeeDetailModal = document.getElementById('employeeDetailModal')
-    if (employeeDetailModal) {
-        employeeDetailModal.addEventListener('show.bs.modal', event => 
-        {
-            // Button that triggered the modal
-            const button = event.relatedTarget;
-            // Extract info from data-bs-* attributes
-            const mno = button.getAttribute('data-bs-mno');
-            console.log(mno);
-            // If necessary, you could initiate an Ajax request here
-            // and then do the updating in a callback.
-            // Update the modal's content.
-           
-           // const modalTitle = exampleModal.querySelector('.modal-title')
-            //const modalBodyInput = exampleModal.querySelector('.modal-body input')
-
-            //modalTitle.textContent = `New message to ${recipient}`
-            //modalBodyInput.value = recipient
-        });
+    //const employeeDetailModal = document.getElementById('employeeDetailModal')
+    //if (employeeDetailModal) {
+    //    employeeDetailModal.addEventListener('show.bs.modal', event => 
+    //    {
+    //        const button = event.relatedTarget;
+            //클릭한 사람의 이메일을 가져옴
+    //        const email = button.getAttribute('data-bs-email');
+    //        console.log(email);
+            //vo안에 이사람의 정보를 전부 가져와서 뿌려준다
+    //    });
         
-    }
+   // }
   })();
