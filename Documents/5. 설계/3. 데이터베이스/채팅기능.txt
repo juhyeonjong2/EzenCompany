@@ -1,0 +1,11 @@
+채팅
+https://velog.io/@sunkyuj/Spring-%EC%9B%B9%EC%86%8C%EC%BC%93%EC%9C%BC%EB%A1%9C-%EC%8B%A4%EC%8B%9C%EA%B0%84-%EC%B1%84%ED%8C%85-%EA%B5%AC%ED%98%84
+2
+https://compogetters.tistory.com/entry/WebSocket%EC%9C%BC%EB%A1%9C-%EC%8B%A4%EC%8B%9C%EA%B0%84-%EC%B1%84%ED%8C%85-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0springboot#google_vignette
+
+config는 컨트롤러 위에 만들어서 사용
+
+
+3
+https://kyhyuk.tistory.com/149
+여기는 프레임워크용 설정파일이 적혀있다
