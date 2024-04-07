@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ezen.ezencompany.mapper.boardTypeMapper">
+
+	<select id="searchRead" parameterType="java.util.Map" resultType="BoardTypeVO">
+		SELECT bindex, btname from boardreader where reader = #{cidx} and ridx = #{aidx};
+	</select>
+	
+	<select id="boardList" parameterType="int" resultType="BoardVO2">
+		SELECT bno, btitle, substr(bdate, '1', '10' ) as bdate
+  			FROM board where bindex = #{bindex} ORDER BY bno DESC limit 0, 5;
+	</select>
+</mapper>
