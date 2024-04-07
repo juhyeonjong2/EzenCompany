@@ -39,90 +39,44 @@
 	<%@ include file="../include/blogSidebar.jsp"%>
 
   <main id="main" class="main">
-  <div class="pagetitle container-md">
-      <div class="accordion" id="accordionExample">
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-              퇴사자 블로그
-            </button>
-          </h2>
-        <div id="collapseOne" class="accordion-collapse collapse">
-          <div class="accordion-body">
-            <a href="#">장윤석</a>
-            <a href="#">예지환</a>
-            <a href="#">조창원</a>
-            <a href="#">황보윤호</a>
-            <a href="#">손은성</a>
-            <a href="#">홍종석</a>
-            <a href="#">송윤성</a>
-            <a href="#">봉용호</a>
-            <a href="#">허시우</a>
-            <a href="#">강광민</a>
-            <a href="#">사공은옥</a>
-            <a href="#">양혜성</a>
-            <a href="#">서유준</a>
-            <a href="#">허성빈</a>
-            <a href="#">황보광민</a>
-            <a href="#">정재경</a>
-            <a href="#">류성준</a>
-            <a href="#">임상혁</a>
-            <a href="#">하진기</a>
-            <a href="#">풍경재</a>
-            <a href="#">남석주</a>
-            <a href="#">김홍석</a>
-            <a href="#">탁용환</a>
-            <a href="#">정정은</a>
-            <a href="#">설세미</a>
-            <a href="#">성희수</a>
-            <a href="#">제갈우민</a>
-            <a href="#">황보문희</a>
-            <a href="#">추태식</a>
-            <a href="#">풍희윤</a>
-            
-          </div>
-        </div>
-      </div>
-      
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-              프로그래밍 팀 블로그
-            </button>
-          </h2>
-          <div id="collapseTwo" class="accordion-collapse collapse show">
-            <div class="accordion-body">
-              <a href="#">서병지</a>
-              <a href="#">이태기</a>
-              <a href="#">백정식</a>
-              <a href="#">설우식</a>
-              <a href="#">한지수</a>
-              <a href="#">사공태식</a>
-              <a href="#">전창환</a>
-              <a href="#">남궁종석</a>
-              <a href="#">남영현</a>
-              <a href="#">배영미</a>
-              <a href="#">안석호</a>
-              <a href="#">한영희</a>
-              <a href="#">장승호</a>
-              <a href="#">양진성</a>
-              <a href="#">한만석</a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-       <!-- <h1>사원 목록</h1>
-        <nav>
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="home.html">Admin</a></li>
-            <li class="breadcrumb-item">Tables</li>
-            <li class="breadcrumb-item active">Data</li>
-          </ol>
-        </nav>    
-        -->
-    </div> 
-    <!-- End Page Title -->
+	<div class="pagetitle container-md">
+		<h1 class="mb-3">${blogSubject}</h1>
+	    <div class="accordion" id="accordionExample">
+			<c:if test="${not empty retiredEmployees}">
+			    <div class="accordion-item">
+			      <h2 class="accordion-header">
+			        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+			         	 퇴사자 블로그
+			        </button>
+			      </h2>
+					<div id="collapseOne" class="accordion-collapse collapse">
+						<div class="accordion-body">
+							 <c:forEach var="vo" items="${retiredEmployees}">
+							 	    <a href="<%=request.getContextPath()%>/blog/${vo.blogHome}">${vo.mname}</a>
+							 </c:forEach>
+						</div>
+					</div>
+				</div>
+	    	</c:if>
+			<c:forEach var="entry" items="${blogUsers}">
+				<div class="accordion-item">
+	        		<h2 class="accordion-header">
+	          			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+							${entry.key} 블로그
+	          			</button>
+          			</h2>
+          			<div id="collapseTwo" class="accordion-collapse collapse show">
+			          <div class="accordion-body">
+			          	<c:forEach var="user" items="${entry.value}">
+			          		 <a href="<%=request.getContextPath()%>/blog/${user.blogHome}">${user.mname}</a>
+			          	</c:forEach>
+			          </div>
+		          </div>
+	          </div>
+			</c:forEach>
+		</div>
+	</div> 
+	<!-- End Page Title -->
     
  	<section class="section container-md">
 	 	<c:choose>
@@ -136,8 +90,8 @@
 					             <h2 class="mt-3">${vo.bgtitle}</h2>
 					      </div>
 					      <div class="d-flex justify-content-start ms-5">
-					        <img width="25" height="25" src="../assets/icon/user.png" alt="user_profile">
-					        <span class="ms-1">홍길동</span>
+					        <img width="25" height="25" src="${profileImage}" alt="user_profile">
+					        <span class="ms-1">${writer}</span>
 					        <span class="ms-2">${vo.bgdate}</span>
 					      </div>      
 					</div>
