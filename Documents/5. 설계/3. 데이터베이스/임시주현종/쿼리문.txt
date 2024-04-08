@@ -1,0 +1,5 @@
+SELECT
+  b.bindex,
+  substring_index(group_concat(btitle SEPARATOR ','), ',', 5) as btitle,
+  substring_index(group_concat(substr(bdate, '1', '10' ) SEPARATOR ','), ',', 5) as bdate
+  FROM board b inner join boardreader r on b.bindex = r.bindex where r.reader = 2 and r.ridx = 3 GROUP BY bindex ORDER BY bindex DESC ;

@@ -11,4 +11,8 @@
 		SELECT * FROM attribute;
 	</select>
 	
+	<select id="selectJson" resultType="java.util.Map">
+		SELECT reader->'$."-1"' as a, writer->'$' as b, bindex FROM boardtype;
+	</select>
+	
 </mapper>

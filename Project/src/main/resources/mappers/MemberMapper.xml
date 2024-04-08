@@ -52,7 +52,7 @@
 		SELECT mfrealname from memberattach WHERE mno = #{mno}; 
 	</select>
 	
-	<select id="getOption" resultType="java.util.Map" >
+	<select id="getOption" resultType="AttributeVO" >
 		SELECT aidx, cidx FROM employeeoption WHERE mno = #{mno};
 	</select>
 	

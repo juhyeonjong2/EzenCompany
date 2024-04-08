@@ -11,11 +11,7 @@
 		<typeAlias type="ezen.ezencompany.vo.CategoryVO" alias="categoryVO"/>
 		<typeAlias type="ezen.ezencompany.vo.AttributeVO" alias="attributeVO"/>
 		<typeAlias type="ezen.ezencompany.vo.FolderVO" alias="folderVO"/>
-		
-		
-		
-		
-		
-		<!-- <typeAlias type="edu.springboard.vo.BoardVO" alias="boardVO"/> -->
+		<typeAlias type="ezen.ezencompany.vo.BoardReaderVO" alias="boardReaderVO"/>
+		<typeAlias type="ezen.ezencompany.vo.BoardVO2" alias="boardVO2"/>
 	</typeAliases>
 </configuration>
