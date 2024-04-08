@@ -15,7 +15,7 @@
         
         <!-- 반복문 시작 -->
         <c:forEach var="boardType" items="${boardType}">
-          <a href="list?"+${boardType.bindex} class="list-group-item list-group-item-action active" aria-current="true">
+          <a href="list.do?bindex=${boardType.bindex}" class="list-group-item list-group-item-action active" aria-current="true">
             <i class="bi bi-file-text"></i>
             <span>${boardType.btname}</span>
           </a>

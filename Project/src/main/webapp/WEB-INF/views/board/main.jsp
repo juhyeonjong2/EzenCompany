@@ -40,10 +40,10 @@
 		 <c:forEach var="boardType" items="${boardType}">
 	        <div class="col">
 	            <div class="card m-1">
-	              <div class="card-body">
+	              <div class="card-body boardType">
 	                <div class="d-flex justify-content-between">
 	                  <h5 class="card-title">${boardType.btname}</h5>
-	                  <span class="m-3"><a href="list/"+ ${boardType.bindex}>+ 더보기</a></span>
+	                  <span class="m-3"><a href="list.do?bindex=${boardType.bindex}">+ 더보기</a></span>
 	                </div>
 	                <hr class="m-0">
 	                <table class="table">
@@ -51,14 +51,16 @@
 	                  
 	                  <!-- 반복문 -->
 	                  <c:forEach var="board" items="${board}">
+	                  <c:if test="${boardType.bindex eq board.bindex}">
 	                    <tr>
 	                      <td>
-	                          <a href="#?"${board.bno}>
+	                          <a href="list.do?bno=${board.bno}">
 	                            <p class="mini_table_title">${board.btitle}</p>
 	                          </a>
 	                      </td>
 	                      <td class="text-end">${board.bdate}</td>
 	                    </tr>
+	                   </c:if>
 	                   </c:forEach>
 	                  <!-- 반복문 -->
 	                 
