@@ -4,7 +4,14 @@ public class BoardVO2 {
 	private int bno;
 	private String btitle;
 	private String bdate;
+	private int bindex;
 	
+	public int getBindex() {
+		return bindex;
+	}
+	public void setBindex(int bindex) {
+		this.bindex = bindex;
+	}
 	public int getBno() {
 		return bno;
 	}
