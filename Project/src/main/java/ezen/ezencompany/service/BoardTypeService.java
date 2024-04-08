@@ -1,6 +1,14 @@
 package ezen.ezencompany.service;
 
+import java.util.HashMap;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import ezen.ezencompany.dao.BoardTypeDAO;
+import ezen.ezencompany.vo.BoardReaderVO;
+import ezen.ezencompany.vo.BoardVO2;
 
 
 @Service
