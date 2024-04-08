@@ -18,6 +18,8 @@ public class UserLoginFailureHandler implements AuthenticationFailureHandler {
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
 		System.out.println("로그인 실패");
+		
+		//System.out.println(exception.getMessage());
 		response.sendRedirect(request.getContextPath()+"/login");
 	}
 

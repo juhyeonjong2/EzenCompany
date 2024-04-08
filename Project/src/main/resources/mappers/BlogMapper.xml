@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ezen.ezencompany.mapper.blogMapper">
+
+<insert id="postBlog" parameterType="blogVo">
+	INSERT INTO blog( mno, fno, bgtitle, bgcontent, bgrealcontent, blockyn, bghit, bgdate)	 
+	VALUES ( #{mno}, #{fno}, #{bgtitle}, #{bgcontent}, #{bgrealcontent}, #{blockyn}, 0, now());
+</insert>
+	
+<select id="selectLast" parameterType="int" resultType="blogVo">
+	SELECT * FROM ezencompany.blog WHERE mno = #{mno} ORDER BY bgno DESC LIMIT 1;
+</select>
+
+<select id="selectRetireEmployees" resultType="blogUserVO">
+	SELECT * FROM MEMBER WHERE nullif(mid, '') IS NOT NULL AND enabled=0;
+</select>
+
+<select id="selectOptionEmployees" parameterType="employeeOptionVO" resultType="blogUserVO">
+	SELECT * FROM member as M 
+	LEFT JOIN employeeoption as E ON m.mno = e.mno 
+	WHERE E.cidx = #{cidx} AND E.aidx = #{aidx} AND M.enabled = 1;
+</select>
+
+<select id="selectCategorys" resultType="categoryVO">
+	SELECT * FROM category;
+</select>
+
+<select id="selectAttributes" resultType="attributeVO">
+	SELECT * FROM attribute;
+</select>
+
+<select id="selectAdditionalOptions" parameterType="int"  resultType="employeeOptionVO">
+	SELECT * FROM employeeoption WHERE mno=#{value};
+</select>
+
+<insert id="insertFolder" parameterType="folderVO" useGeneratedKeys="true" keyProperty="fno">
+	INSERT INTO folder(pfno, fname, mno) VALUES(#{pfno}, #{fname}, #{mno});
+</insert>
+
+<select id="selectFolders" parameterType="int"  resultType="folderVO">
+	SELECT * FROM folder WHERE mno=#{value};
+</select>
+
+
+
+</mapper>
