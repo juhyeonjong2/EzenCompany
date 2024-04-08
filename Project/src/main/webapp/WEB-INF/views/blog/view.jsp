@@ -40,6 +40,7 @@
 
   <main id="main" class="main">
   	<input type="hidden" id="inputMno" value="${mno}"> 
+  	<input type="hidden" id="inputBno" value="${bno}">
   
 	<div class="pagetitle container-md">
 		<h1 class="mb-3">${blogSubject}</h1>

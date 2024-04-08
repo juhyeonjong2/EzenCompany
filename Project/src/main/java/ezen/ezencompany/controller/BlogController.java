@@ -85,11 +85,7 @@ public class BlogController {
 		// 가장최근에 쓴 블로그
 		BlogVO vo = blogService.getLastOne(user.getMno());
 		model.addAttribute("vo", vo);
-		if(vo!=null) {
-			System.out.println("home vo:");
-			System.out.println(vo.getBgtitle());
-			System.out.println(vo.getBgcontent());
-		}
+		model.addAttribute("bno", vo.getBgno()); // bgno
 		
 		// 첨부 파일들
 		
@@ -288,6 +284,7 @@ public class BlogController {
 		MemberVO user = blogService.getMember(vo.getMno());
 		model.addAttribute("blogSubject", user.getMname() + "'s Blog"); // 블로그 제목
 		model.addAttribute("vo", vo);
+		model.addAttribute("bno", vo.getBgno()); // bgno
 		model.addAttribute("mno", user.getMno()); // mno
 		model.addAttribute("writer", user.getMname()); 		// 작성자 이름 및 프로필 정보
 		String profileSrc = request.getContextPath() + "/resources/icon/user.png"; // 기본 아이콘이고 변경 해야함.
