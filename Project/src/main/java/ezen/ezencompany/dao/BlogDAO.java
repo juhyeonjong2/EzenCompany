@@ -12,6 +12,7 @@ import ezen.ezencompany.vo.BlogVO;
 import ezen.ezencompany.vo.CategoryVO;
 import ezen.ezencompany.vo.EmployeeOptionVO;
 import ezen.ezencompany.vo.FolderVO;
+import ezen.ezencompany.vo.MemberVO;
 
 @Repository
 public class BlogDAO {
@@ -63,6 +64,22 @@ public class BlogDAO {
 		public List<FolderVO> selectFolders(int mno){
 			return sqlSession.selectList(namespace+".selectFolders", mno);
 		}
-
-						
+		
+		public List<BlogVO> selectBlogList(int mno, boolean isAll) {
+			if(isAll) {
+				return sqlSession.selectList(namespace+".selectBlogListAll", mno);
+			}
+			return sqlSession.selectList(namespace+".selectBlogList", mno);
+		}
+		
+		public BlogVO selectOne(int bgno, boolean force) {
+			if(force) {
+				sqlSession.selectOne(namespace+".selectOneForce", bgno);
+			}
+			return sqlSession.selectOne(namespace+".selectOne", bgno);
+		}
+		public MemberVO selectMember(int mno) {
+			return sqlSession.selectOne(namespace+".selectMember", mno);
+		}
+		
 }

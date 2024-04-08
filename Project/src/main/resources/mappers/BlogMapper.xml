@@ -9,7 +9,7 @@
 </insert>
 	
 <select id="selectLast" parameterType="int" resultType="blogVo">
-	SELECT * FROM ezencompany.blog WHERE mno = #{mno} ORDER BY bgno DESC LIMIT 1;
+	SELECT * FROM blog WHERE mno = #{mno} ORDER BY bgno DESC LIMIT 1;
 </select>
 
 <select id="selectRetireEmployees" resultType="blogUserVO">
@@ -42,6 +42,24 @@
 	SELECT * FROM folder WHERE mno=#{value};
 </select>
 
+<select id="selectBlogList" parameterType="int" resultType="blogVo">
+	SELECT * FROM blog WHERE mno = #{mno} AND blockyn='n';
+</select>
 
+<select id="selectBlogListAll" parameterType="int" resultType="blogVo">
+	SELECT * FROM blog WHERE mno = #{mno};
+</select>
+
+<select id="selectOneForce" parameterType="int" resultType="blogVo">
+	SELECT * FROM blog WHERE bgno = #{bgno};
+</select>
+
+<select id="selectOne" parameterType="int" resultType="blogVo">
+	SELECT * FROM blog WHERE bgno = #{bgno} AND blockyn='n';
+</select>
+
+<select id="selectMember" parameterType="int" resultType="memberVO">
+	SELECT * FROM member WHERE mno = #{mno};
+</select>
 
 </mapper>

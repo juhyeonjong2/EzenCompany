@@ -39,6 +39,8 @@
 	<%@ include file="../include/blogSidebar.jsp"%>
 
   <main id="main" class="main">
+  	<input type="hidden" id="inputMno" value="${mno}"> 
+  
 	<div class="pagetitle container-md">
 		<h1 class="mb-3">${blogSubject}</h1>
 	    <div class="accordion" id="accordionExample">

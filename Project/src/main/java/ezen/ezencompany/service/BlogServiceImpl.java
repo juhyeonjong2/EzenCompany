@@ -136,6 +136,20 @@ public class BlogServiceImpl implements BlogService {
 	{
 		return blogDAO.insertFolder(vo);
 	}
-	
-	
+
+	@Override
+	public List<BlogVO> blogList(int mno, boolean isAll) {
+		return blogDAO.selectBlogList(mno, isAll);
+	}
+
+	@Override
+	public BlogVO selectOne(int bgno, boolean force) {
+		return blogDAO.selectOne(bgno,  force);
+	}
+
+	@Override
+	public MemberVO getMember(int mno) {
+		return blogDAO.selectMember(mno);
+	}
+
 }

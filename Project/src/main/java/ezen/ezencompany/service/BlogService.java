@@ -7,6 +7,7 @@ import ezen.ezencompany.vo.BlogUserVO;
 import ezen.ezencompany.vo.BlogVO;
 import ezen.ezencompany.vo.EmployeeOptionVO;
 import ezen.ezencompany.vo.FolderVO;
+import ezen.ezencompany.vo.MemberVO;
 
 public interface BlogService {
 
@@ -20,10 +21,8 @@ public interface BlogService {
 	List<BlogUserVO> blogUserListByRetired();	// 퇴사한 사원 목록
 	List<FolderVO> getFolders(int mno);
 	int makeFolder(FolderVO vo);
-	
-	
-	
-	
-	
+	List<BlogVO> blogList(int mno, boolean isAll); // isAll이 true이면 비공개 블로그도 가지고온다. 
+	BlogVO selectOne(int bgno, boolean force);
+	MemberVO getMember(int mno);
 	
 }
