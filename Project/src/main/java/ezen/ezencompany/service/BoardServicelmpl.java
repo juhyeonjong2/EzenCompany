@@ -44,4 +44,12 @@ public class BoardServicelmpl implements BoardService {
 		return boardDAO.insert(vo);
 	}
 	
+	
+	@Override
+	public int updateBhit(int bno) throws Exception {
+		
+		
+		return boardDAO.updateBhit(bno);
+	}
+	
 }

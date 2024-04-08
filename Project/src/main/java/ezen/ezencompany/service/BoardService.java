@@ -14,6 +14,8 @@ public interface BoardService {
 	int delete(int bno) throws Exception;
 	
 	int insert(BoardVO vo) throws Exception;
+	
+	int updateBhit(int bno) throws Exception;
 }
 
 

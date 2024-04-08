@@ -36,4 +36,9 @@ public class BoardDAO {
 	public int insert(BoardVO vo) {
 		return sqlSession.insert("ezen.ezencompany.mapper.boardmapper.insert", vo);
 	}
+	
+	public int updateBhit(int bno) {
+		// return sqlSession.updateBhit()
+		return 0;
+	}
 }
