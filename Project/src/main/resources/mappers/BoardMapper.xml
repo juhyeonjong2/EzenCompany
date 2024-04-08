@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 이 문서가 xml 이라는 표시 -->
+<!-- mapper tag 시작 -->
+<!-- namespace 의 값은 TestDao 파일에서 호출하는 값과 같아야한다 -->
+<mapper namespace="ezen.ezencompany.mapper.boardmapper"> 
+
+	<select id="list" resultType="boardVO" parameterType="int">
+	SELECT b.bno,b.btitle,b.bcontent, b.mno, b.bindex,b.bhit,date_format(b.bdate, '%Y-%m-%d') as bdate,m.mid from board b
+		Inner JOIN member m
+		ON b.mno = m.mno
+		 where b.bindex=#{bindex}
+	</select>
+	
+	<update id="update" parameterType="boardVO">
+		UPDATE board
+		   SET bcontent = #{bcontent}
+		WHERE bno = #{bno}
+	</update>
+	
+	<select id="selectOneByBno" 
+			resultType="boardVO" 
+			parameterType="int">
+		SELECT b.bno,b.btitle,b.bcontent, b.mno, b.bindex,b.bhit,date_format(b.bdate, '%Y-%m-%d') as bdate,m.mid from board b
+		Inner JOIN member m
+		ON b.mno = m.mno
+		 WHERE b.bno = #{bno}
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		DELETE 
+		  FROM board
+		 WHERE bno = #{bno}
+		 
+	</delete>
+	
+	<insert id="insert" parameterType="boardVO">
+		INSERT INTO board(btitle, bcontent, bhit, bdate,bindex, mno )
+		 VALUES (#{btitle} ,#{bcontent},0,now(),#{bindex},2)
+	</insert>
+	<!-- VALUES (#{btitle} ,#{bcontent},0,now(),#{bindex},#{mno}) security 정상되면 바꾸기 -->
+	
+	<update id="updateReadcnt">
+        UPDATE board
+        SET bhit = bhit + 1
+        WHERE bno = #{bno}
+ </update>
+	
+	
+</mapper>
