@@ -235,8 +235,8 @@ public class BlogController {
 	}
 	
 
-	@GetMapping(value="/page/{pno}")
-	public String view(@PathVariable int pno, Model model, HttpServletRequest request) {
+	@GetMapping(value="/page/{bgno}")
+	public String view(@PathVariable int bgno, Model model, HttpServletRequest request) {
 		// 로그인된 사용자 정보 가져오기.
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserVO myUser = (UserVO) authentication.getPrincipal();
@@ -274,18 +274,19 @@ public class BlogController {
 		// 내용
 		
 		// 블로그 데이터 가져오기.
-		BlogVO vo = blogService.selectOne(pno, true); // 일단 강제로 가져온다.
+		BlogVO vo = blogService.selectOne(bgno, true); // 일단 강제로 가져온다.
 		// 이블로그를 쓴사람이 자신이라면 -> 그냥 보여주기. 
 		if(vo.getMno() != myMno)
 		{
 			// 블로그 주인장이 아니라면 block확인
 			if(vo.getBlockyn().equals("y")) {
 				 // 블럭된 글이라면 홈으로 리다이렉트.
-				return "redirect:home"; // ws comment - 여기 작업중. 타인 블로그 /자신블로그 보기중. 트리에 경로도 넣어야함.
+				return "redirect:/blog/home";
 			}
 		}
 		
 		MemberVO user = blogService.getMember(vo.getMno());
+		model.addAttribute("blogSubject", user.getMname() + "'s Blog"); // 블로그 제목
 		model.addAttribute("vo", vo);
 		model.addAttribute("mno", user.getMno()); // mno
 		model.addAttribute("writer", user.getMname()); 		// 작성자 이름 및 프로필 정보

@@ -74,10 +74,11 @@ public class BlogDAO {
 		
 		public BlogVO selectOne(int bgno, boolean force) {
 			if(force) {
-				sqlSession.selectOne(namespace+".selectOneForce", bgno);
+				return sqlSession.selectOne(namespace+".selectOneForce", bgno);
 			}
 			return sqlSession.selectOne(namespace+".selectOne", bgno);
 		}
+		
 		public MemberVO selectMember(int mno) {
 			return sqlSession.selectOne(namespace+".selectMember", mno);
 		}

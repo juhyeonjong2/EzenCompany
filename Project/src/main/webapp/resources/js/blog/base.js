@@ -21,6 +21,9 @@ var setting = {
     },
     edit: {
         enable: false,
+    },
+    callback : {
+    	onClick:moveBlogPage
     }
 };
 
@@ -33,6 +36,9 @@ $(document).ready(function(){
    
 });
 
+function moveBlogPage(event, treeId, treeNode) {
+    location.href = "/ezencompany/blog/page/" +  treeNode.ename;
+};
 
 function getBlogNodes(){
 

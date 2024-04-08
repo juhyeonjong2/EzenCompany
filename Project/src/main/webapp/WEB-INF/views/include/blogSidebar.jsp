@@ -10,14 +10,14 @@
  <aside id="sidebar" class="sidebar">
    <ul class="sidebar-nav" id="sidebar-nav">
        <li class="nav-item">
-           <a class="nav-link collapsed" href="home">
+           <a class="nav-link collapsed" href="<%=request.getContextPath()%>/blog/home">
                <i class="bi bi-house-door"></i>
                <span>홈 화면</span>
            </a>
        </li><!-- End Employee Page Nav  -->
 
        <li class="nav-item">
-         <a class="nav-link collapsed" href="write">
+         <a class="nav-link collapsed" href="<%=request.getContextPath()%>/blog/write">
            <i class="bi bi-journal-plus"></i>
              <span>블로그 등록</span>
          </a>
