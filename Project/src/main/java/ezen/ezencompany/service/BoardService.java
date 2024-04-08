@@ -16,6 +16,8 @@ public interface BoardService {
 	int insert(BoardVO vo) throws Exception;
 	
 	int updateBhit(int bno) throws Exception;
+	
+	
 }
 
 

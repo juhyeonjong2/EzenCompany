@@ -38,7 +38,10 @@ public class BoardDAO {
 	}
 	
 	public int updateBhit(int bno) {
-		// return sqlSession.updateBhit()
-		return 0;
+		 return sqlSession.update("ezen.ezencompany.mapper.boardmapper.updateBhit", bno); 
+	}
+	
+	public int upload(BoardVO uploadFile) {
+		return sqlSession.insert("ezen.ezencompany.mapper.boardmapper.upload", uploadFile);
 	}
 }

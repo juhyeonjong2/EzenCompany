@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ezen.ezencompany.dao.BoardDAO;
+import ezen.ezencompany.vo.BoardAttachVO;
 import ezen.ezencompany.vo.BoardVO;
+
 
 @Service
 public class BoardServicelmpl implements BoardService {
@@ -48,8 +50,15 @@ public class BoardServicelmpl implements BoardService {
 	@Override
 	public int updateBhit(int bno) throws Exception {
 		
-		
-		return boardDAO.updateBhit(bno);
+		int result = boardDAO.updateBhit(bno);  
+		return result;
 	}
+	
+	@Override
+	public int upload(BoardAttachVO uploadFile) throws Exception {
+		
+		return boardDAO.upload(uploadFile);
+	}
+	
 	
 }

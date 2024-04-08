@@ -180,20 +180,12 @@
              	<c:forEach items="${list }" var="vo">
 	 			<tr>
 	 				<td>${vo.bno}</td>
-	 				<td><a href='view.do?bno=${vo.bno}'>${vo.btitle}</a></td>
+	 				<td><a href='view.do?bno=${vo.bno}&bindex=${param.bindex}'>${vo.btitle}</a></td>
 	 				<td>${vo.bdate}</td>
 	 				<td>${vo.mid}</td>
-	 				<td>${vo.bno}</td>
-	 			 <!--  	<td>${vo.bhit} 몰라 물어봐야딩--> 
+	 	 			<td>${vo.bhit}</td>
 	 			</tr>
 	 			
-	 			<!--  	 <tr>
-                  <td>10</td>
-                  <td><a href="view.html">글제목 입니다.</a></td>
-                  <td>2024.03.29</td>
-                  <td>홍길동</td>
-                  <td>9999</td>
-                </tr>  -->
 	 		</c:forEach>
               </tbody>
             </table>

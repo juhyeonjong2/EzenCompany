@@ -154,7 +154,7 @@
       </div>
   
     </aside><!-- End Sidebar-->
-<form action="write.do" method="post">
+<form action="write.do" method="post"  enctype="multipart/form-data">
 <input type="hidden" name="bindex" value="${param.bindex }">
   <main id="main" class="main">
     <div class="pagetitle container-md">
@@ -166,7 +166,7 @@
       </div>
       <div class="input-group mb-3">
         <label class="input-group-text" for="formFileMultiple" >파일첨부</label>
-        <input type="file" class="form-control"  id="formFileMultiple" multiple>
+        <input type="file" class="form-control" name="uploadFile"  id="formFileMultiple" multiple>
       </div>
       <div class="col-auto mb-3">
         <!--tinymce 영역-->

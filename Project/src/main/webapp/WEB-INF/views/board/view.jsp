@@ -416,7 +416,7 @@
       <div class="blog_buttons mt-3 d-flex justify-content-end">
           <a class="btn btn-primary me-2" role="button" href="modify.do?bno=${vo.bno}">수정</a>
           <button class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#boardRemoveModal">삭제</button>
-          <a class="btn btn-secondary" role="button" href="list.html">목록</a>
+          <a class="btn btn-secondary" role="button" href="list.do?bindex=${param.bindex}">목록</a>
       </div>
       
     </section>

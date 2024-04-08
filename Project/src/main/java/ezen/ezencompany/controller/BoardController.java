@@ -1,5 +1,6 @@
 package ezen.ezencompany.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import ezen.ezencompany.service.BoardService;
+import ezen.ezencompany.vo.BoardAttachVO;
 import ezen.ezencompany.vo.BoardVO;
 import ezen.ezencompany.vo.UserVO;
 
@@ -23,7 +26,7 @@ public class BoardController {
 
 	@Autowired
 	BoardService boardService;
-
+	
 	@RequestMapping(value = "/list.do", method = RequestMethod.GET)
 	public String list(Model model, String bindex) throws Exception {
 		int bindexInt = 1;
@@ -40,9 +43,9 @@ public class BoardController {
 	public String list2(Model model) {
 		
 		List<String> slist = new ArrayList<String>();
-		slist.add("Ã¹¹øÂ° µ¥ÀÌÅÍ");
-		slist.add("µÎ¹øÂ° µ¥ÀÌÅÍ");
-		slist.add("¼¼¹øÂ° µ¥ÀÌÅÍ");
+		slist.add("ì²«ë²ˆì§¸ ë°ì´í„°");
+		slist.add("ë‘ë²ˆì§¸ ë°ì´í„°");
+		slist.add("ì„¸ë²ˆì§¸ ë°ì´í„°");
 
 
 		model.addAttribute("list", slist);
@@ -52,11 +55,16 @@ public class BoardController {
 	@RequestMapping(value="/view.do")
 	public String view(@RequestParam(value="bno") int bno,Model model) throws Exception {
 		
+
+		//ì¡°íšŒìˆ˜ ì¦ê°€ service ì¶”ê°€
+		
+		// ì„œë¹„ìŠ¤íƒœìš°ê³  dao íƒœì›Œì„œ ì¿¼ë¦¬ë¬¸ ì‹¤í–‰ë˜ê²Œ ë§Œë“¤ê¸°
+		int result= boardService.updateBhit(bno);
+		System.out.println("result::"+result);
+		System.out.println("bno::"+bno);
+		
 		BoardVO vo = boardService.selectOneByBno(bno);
 		
-		
-		//Á¶È¸¼ö Áõ°¡ service Ãß°¡
-		// ¼­ºñ½ºÅÂ¿ì°í dao ÅÂ¿ö¼­ Äõ¸®¹® ½ÇÇàµÇ°Ô ¸¸µé±â
 		
 		model.addAttribute("vo",vo);
 		
@@ -67,11 +75,8 @@ public class BoardController {
 	@RequestMapping(value="/modify.do",method=RequestMethod.GET) 
 	public String modify(@RequestParam(value="bno") int bno,Model model) throws Exception {
 		
-		
 		BoardVO vo = boardService.selectOneByBno(bno);
 		model.addAttribute("vo",vo);
-		
-		
 		
 		return "board/modify";
 	}
@@ -79,11 +84,11 @@ public class BoardController {
 	@RequestMapping(value="/modify.do",method=RequestMethod.POST) 
 	public void modify(BoardVO vo, HttpServletResponse res, Authentication authentication) throws Exception {
 		
-		/* security Á¤»óÈ­ µÇ¸é ÁÖ¼® Ç®±â 
+		
 		UserVO loginVO = (UserVO)authentication.getPrincipal();
 		
 		vo.setMno(loginVO.getMno());
-		*/
+	
 		
 		
 		
@@ -95,9 +100,9 @@ public class BoardController {
 		res.setContentType("text/html; charset=utf-8");
 		res.setCharacterEncoding("UTF-8");
 		if(result>0) {
-			res.getWriter().append("<script>alert('¼öÁ¤µÇ¾ú½À´Ï´Ù.');location.href='list.do'</script>");
+			res.getWriter().append("<script>alert('ìˆ˜ì •ë˜ì—ˆìŠµë‹ˆë‹¤.');location.href='list.do'</script>");
 		}else {
-			res.getWriter().append("<script>alert('¼öÁ¤µÇÁö¾Ê¾Ò½À´Ï´Ù.');location.href='list.do'</script>");
+			res.getWriter().append("<script>alert('ìˆ˜ì •ë˜ì§€ì•Šì•˜ìŠµë‹ˆë‹¤.');location.href='list.do'</script>");
 		}
 		res.getWriter().flush();
 		
@@ -115,17 +120,44 @@ public class BoardController {
 	
 	@RequestMapping(value="/write.do",method=RequestMethod.GET)
 	public String write() {
-		System.out.println("Àü¼ÛÇü½ÄÀÌ GETÀÎ write.do");
+		System.out.println("ì „ì†¡í˜•ì‹ì´ GETì¸ write.do");
 		return "board/write";
 	}
 	
 	@RequestMapping(value="/write.do",method=RequestMethod.POST)
-	public String write(BoardVO vo) throws Exception {
+	public String write(BoardVO vo, MultipartFile uploadFile) throws Exception {
+		
+		String path = "D:\\EzenCompany\\Project\\src\\main\\webapp\\resources\\upload\\board";
+		File dir = new File(path);
+		if(!dir.exists()) {
+			dir.mkdirs();
+		}
 		boardService.insert(vo);
 		
-		System.out.println("Àü¼ÛÇü½ÄÀÌ POSTÀÎ write.do");
-
+		if(!uploadFile.getOriginalFilename().isEmpty()) {
+			String fileNM = uploadFile.getOriginalFilename(); 
+			
+			String[] fileNMArr= fileNM.split("\\.");
+			String ext =  fileNMArr[fileNMArr.length-1];
+			
+			String realFileNM = fileNMArr[0]+"001."+ext;
+			
+			uploadFile.transferTo(new File(path,realFileNM));
+			BoardAttachVO baVO = new BoardAttachVO();
+			baVO.setBno(vo.getBno());
+			baVO.setBforeignname(fileNM);
+			baVO.setBfrealname(realFileNM);
+			 // ê²Œì‹œë¬¼ - ì²¨ë¶€íŒŒì¼ ì—°ê²°ê³ ë¦¬
+		}
+		
+		
+		
+		System.out.println("ì „ì†¡í˜•ì‹ì´ POSTì¸ write.do");
+		
 		return "redirect:list.do";
 	}
+	
+	//@RequestMapiing("files")
+	
 	
 }
