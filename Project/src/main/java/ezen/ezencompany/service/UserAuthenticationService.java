@@ -27,15 +27,12 @@ public class UserAuthenticationService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Map<String,Object> user 
-			= sqlSession.selectOne("ezen.ezencompany.mapper.userMapper.selectLogin",username);
-
-		System.out.println(user);
-		System.out.println(user.get("mno"));
+		Map<String,Object> user  = sqlSession.selectOne("ezen.ezencompany.mapper.userMapper.selectLogin",username);
 		if(user == null) {
 			//System.out.println("user::"+user); 로그사용권장함
 			throw new UsernameNotFoundException(username);
 		}
+	System.out.println(user);
 		
 		List<GrantedAuthority> authority = new ArrayList<>();
 		authority.add(new SimpleGrantedAuthority(user.get("authority").toString()));
@@ -51,7 +48,7 @@ public class UserAuthenticationService implements UserDetailsService {
 							   ,user.get("authority").toString()
 							   ,user.get("email").toString()
 							   ,(Integer)Integer.valueOf(user.get("mno").toString())
-							   ,user.get("mphone").toString()
+							   ,user.get("mphone") != null ? user.get("mphone").toString() : ""  // 폰번호가 널인경우 공백처리
 							   ,user.get("mname").toString());
 		//System.out.println(vo);
 		return vo;

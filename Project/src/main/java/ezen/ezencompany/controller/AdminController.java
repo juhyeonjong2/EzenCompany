@@ -143,6 +143,10 @@ public class AdminController {
 
 		//톰캣 상대경로를 사용하려 했지만 스프링은 상대경로 사용시 배포등등 여러문제가 발생해 절대경로를 쓰는게 좋아보인다
 		//정보 출처 : https://stir.tistory.com/147
+		// ws comment : D드라이브가 없는 컴퓨터가 있을 수 있다. 이런경우 절대경로를 사용하려면 xml등과 같은 설정파일로 압부분 경로를 변동 가능하게 해야 한다.
+		//              ex) D:\\EzenCompany\\Project\\src\\main\\webapp 의 경로를 특정 설정파일에서 불러오고
+		//                  불러온 경로 Path + \\resources\\upload" 연결해서 사용하는것이 좋다. (아마 이런식으로 설정할 수있을 것임)
+		//                  설정파일을 쓰기 싫다면 디비에 설정정보(경로)를 저장하고, 서버가 올라갈때 전역 변수로 BasePath를 넣는 방법도 있다.
 		
 		String path = request.getSession().getServletContext().getRealPath("/resources/upload");
 

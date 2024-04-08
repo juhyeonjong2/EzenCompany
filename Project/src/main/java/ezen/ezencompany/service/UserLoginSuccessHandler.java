@@ -33,7 +33,7 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler{
 			if(loginUser.getAuthority().equals("ROLE_ADMIN")) {
 				response.sendRedirect(request.getContextPath()+"/admin/home");
 			}else {
-				response.sendRedirect(request.getContextPath()+"/board/home");
+				response.sendRedirect(request.getContextPath()+"/blog/home");
 			}
 			//System.out.println("로그인 성공");
 			//Logger logger = Logger.getLogger("UserLoginSuccessHandler.java");
