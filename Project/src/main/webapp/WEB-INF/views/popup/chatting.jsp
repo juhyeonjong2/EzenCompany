@@ -3,7 +3,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
- <script src="<%=request.getContextPath()%>/resources/js/jquery-3.7.1.min.js"></script>
 </head>
 <body>
 
