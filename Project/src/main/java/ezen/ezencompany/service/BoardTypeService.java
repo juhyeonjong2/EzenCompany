@@ -1,6 +1,7 @@
 package ezen.ezencompany.service;
 
 import java.util.HashMap;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import ezen.ezencompany.dao.BoardTypeDAO;
 import ezen.ezencompany.vo.AttributeVO;
 import ezen.ezencompany.vo.BoardTypeVO;
-import ezen.ezencompany.vo.BoardVO2;
+import ezen.ezencompany.vo.BoardVO;
 
 
 @Service
@@ -20,7 +21,7 @@ public class BoardTypeService {
 	
 	
 	//게시판의 최신글 5개를 찾음
-	public List<BoardVO2> boardList(int bindex) {
+	public List<BoardVO> boardList(int bindex) {
 		return boardTypeDAO.boardList(bindex);
 	}
 	

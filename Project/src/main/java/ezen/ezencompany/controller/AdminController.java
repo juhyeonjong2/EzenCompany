@@ -31,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ezen.ezencompany.service.AdminService;
 import ezen.ezencompany.service.MemberService;
+import ezen.ezencompany.util.Path;
 import ezen.ezencompany.vo.AttributeVO;
 import ezen.ezencompany.vo.MemberVO;
 
@@ -95,13 +96,10 @@ public class AdminController {
 	@RequestMapping(value = "/getCategory", method = RequestMethod.GET)
 	@ResponseBody //ajax를 사용하는경우 @ResponseBody이걸 사용하지 않으면 리턴값으로 보내지 않고 경로로 인식해서 보내버린다
 	public List<AttributeVO> getCategory(String email) {
-		System.out.println(email);
 		int mno = adminService.getMno(email);
 		
 		List<AttributeVO> option 
 		= sqlSession.selectList("ezen.ezencompany.mapper.memberMapper.getOption", mno);
-		System.out.println(option);
-
 
 		return option;
 	}
@@ -149,9 +147,11 @@ public class AdminController {
 		//                  불러온 경로 Path + \\resources\\upload" 연결해서 사용하는것이 좋다. (아마 이런식으로 설정할 수있을 것임)
 		//                  설정파일을 쓰기 싫다면 디비에 설정정보(경로)를 저장하고, 서버가 올라갈때 전역 변수로 BasePath를 넣는 방법도 있다.
 		
-		String path = request.getSession().getServletContext().getRealPath("/resources/upload");
+		//String path = request.getSession().getServletContext().getRealPath("/resources/upload");
 
-		path = "D:\\EzenCompany\\Project\\src\\main\\webapp\\resources\\upload";
+		 //path = "D:\\EzenCompany\\Project\\src\\main\\webapp\\resources\\upload";
+		
+		String path = Path.getPath()+"\\resources\\upload";
 		
 		if(!profileImg.getOriginalFilename().isEmpty()) { // 파일이 존재하는 경우
 			
@@ -161,22 +161,21 @@ public class AdminController {
 			String[] fileNMArr= fileNM.split("\\.");
 			String ext =  fileNMArr[fileNMArr.length-1];
 			
-			String realFileNM = fileNMArr[0]+ mname +"."+ ext; //실제 파일명
+			String realFileNM = fileNMArr[0]+"."+ ext; //실제 파일명
 			
 			int searchMno = adminService.searchMno(mno);
-			System.out.println(searchMno);
 			if(searchMno == 0) {
 				//정보가 없다면 insert
 				HashMap<String, Object> map = new HashMap<>();
-				map.put("mfrealname", fileNM);
-				map.put("mforeignname", realFileNM);
+				map.put("mfrealname", realFileNM);
+				map.put("mforeignname", fileNM);
 				map.put("mno", mno);
 				adminService.totalInsertImg(map, memberMap, list, mno);
 			}else {
 				//정보가 있다면 update
 				HashMap<String, Object> map = new HashMap<>();
-				map.put("mfrealname", fileNM);
-				map.put("mforeignname", realFileNM);
+				map.put("mfrealname", realFileNM);
+				map.put("mforeignname", fileNM);
 				map.put("mno", mno);
 				adminService.totalUpdateImg(map, memberMap, list, mno);
 			}
@@ -204,8 +203,8 @@ public class AdminController {
 		
 		// 분류<map>들을 담을 리스트 생성
 		List <HashMap<String, Object>> list = new ArrayList<>();
- 		System.out.println(names.nextElement());
-		System.out.println(names.nextElement());
+ 		names.nextElement(); //sysout삭제
+		names.nextElement();
 		while (names.hasMoreElements()) {
 			HashMap<String, Object> map = new HashMap<>();
 			String cidx = (String) names.nextElement();

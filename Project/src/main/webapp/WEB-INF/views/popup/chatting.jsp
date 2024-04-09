@@ -3,7 +3,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
- <script src="<%=request.getContextPath()%>/resources/js/jquery-3.7.1.min.js"></script>
 </head>
 <body>
 
@@ -110,8 +109,9 @@
             $.ajax({
             	url: "<%=request.getContextPath()%>/chatting/chattingList",
             	success:function(list){
-            		console.log(1);
-            		//여기서 1차 반복문
+            		//재생성 방지를 위해 실행될때마다 비워줌	
+			        $('.chatttingList').empty();
+			        //여기서 1차 반복문
 					for(let i = 0; i<list.length; i++){
 						$.ajax({
 							url: "<%=request.getContextPath()%>/chatting/detaleList",
@@ -122,30 +122,35 @@
 									 + list[i].value
 									 + '</button></h2>'
 									 + '<div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">'
-					                 + '<div class="accordion-body html2">'
-				                 	 + '<div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="1">'
-				                 	 + '<div class="d-flex">'
+					                 + '<div class="accordion-body '
+					                 +  list[i].aidx
+					                 +  '">'
 			                         + '</span>'
 			                       	 + '</div>'
 			                     	 + '</div>'
-			                   		 + '</div>'
-			                   		 + '</div>'
-			                   		 + '</div>'
 							$('.chatttingList').append(html);
 			                   		 
 		                     //for문
 		                     for(let j =0; j<detaleList.length; j++){
 		                    	 if(list[i].aidx == detaleList[j].aidx){
-		                    		 let html2 = '<img src="'
-						                  + "<%=request.getContextPath()%>"
-						                  + '/resources/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">'
-						                  + '<div class="d-flex flex-column ms-2">'
-		                    		  	  + '<span class="fw-bold user_name">'
-		                    			  + detaleList[j].mname
-						                  + '</span>'
-					                      + '<span class="user_position">'
-					                      + list[i].value
-					                      $('.html2').append(html2);
+		                    		 let html2 = '<div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal"'
+		                    		 		   + 'data-bs-toggle="modal" data-bs-mno="'
+		                    		 		   + detaleList[j].mno
+		                    		 		   + '">' 
+					                 	 	   + '<div class="d-flex">'
+			                    			   +'<img src="'
+							                   + "<%=request.getContextPath()%>"
+							                   + '/resources/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">'
+							                   + '<div class="d-flex flex-column ms-2">'
+			                    		  	   + '<span class="fw-bold user_name">'
+			                    			   + detaleList[j].mname
+							                   + '</span>'
+						                       + '<span class="user_position">'
+						                       + list[i].value
+						                   	   + '</div>'
+						                   	   + '</div>'
+						                   	   + '</div>'
+						                      $('.'+list[i].aidx).append(html2);
 		                    	 } 
 		                     }
 			                

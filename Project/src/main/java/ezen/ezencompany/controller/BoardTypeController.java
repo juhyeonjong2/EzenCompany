@@ -13,9 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import ezen.ezencompany.service.BoardTypeService;
 import ezen.ezencompany.util.BoardAuthority;
-import ezen.ezencompany.vo.AttributeVO;
 import ezen.ezencompany.vo.BoardTypeVO;
-import ezen.ezencompany.vo.BoardVO2;
+import ezen.ezencompany.vo.BoardVO;
 import ezen.ezencompany.vo.UserVO;
 
 
@@ -43,10 +42,10 @@ public class BoardTypeController {
 
 		model.addAttribute("boardType", acceptedList);
 
-		List<BoardVO2> board = new ArrayList<BoardVO2>();
+		List<BoardVO> board = new ArrayList<BoardVO>();
 		for(int i =0; i<acceptedList.size(); i++) {
 			int bindex = acceptedList.get(i).getBindex();
-			List<BoardVO2> boardList= boardTypeService.boardList(bindex);
+			List<BoardVO> boardList= boardTypeService.boardList(bindex);
 			board.addAll(boardList);
 		};
 		
