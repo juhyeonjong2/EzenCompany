@@ -36,8 +36,6 @@ public class ChattingController {
 	@RequestMapping(value = "/chattingStart", method = RequestMethod.GET)
 	@ResponseBody 
 	public List<ChatVO> chattingStart(int amno) {
-		System.out.println(amno);
-		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserVO user = (UserVO) authentication.getPrincipal();
 		int bmno = user.getMno();
@@ -46,7 +44,7 @@ public class ChattingController {
 		map.put("amno", amno); //상대방의 mno
 		map.put("bmno", bmno); //나의 mno
 		
-		//채팅방 찾기
+		//채팅방 찾기 디비 값이 없어서 null값이 나옴 
 		String chattingroom = chattingService.getRoom(map);
 		
 		System.out.println(chattingroom);
@@ -63,8 +61,6 @@ public class ChattingController {
 		List<MemberVO> detaleList = chattingService.detaleList();
 		return detaleList;
 	}
-	
-	
 	
 	
 	//연습용 채팅방

@@ -168,7 +168,9 @@
     if (attributeAddModal) {
         attributeAddModal.addEventListener('show.bs.modal', event => 
         {
+        	const button = event.relatedTarget;
             const mno = button.getAttribute('data-bs-mno');
+            console.log(mno);
             $.ajax({
             	url: "<%=request.getContextPath()%>/chatting/chattingStart",
             	data: {amno : mno},
