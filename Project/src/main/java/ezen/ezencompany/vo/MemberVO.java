@@ -3,6 +3,10 @@ package ezen.ezencompany.vo;
 //시큐리티가 아닌 다른곳에서 사용할 VO
 public class MemberVO{
 	 
+	
+
+	
+	
 	private int mno;
 	private String mid;
 	private String mpassword;

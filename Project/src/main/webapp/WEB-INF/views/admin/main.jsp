@@ -263,10 +263,11 @@
 						success:function(img){
 							if(img != null && img != ""){
 								//사진이 있는경우만 추가해준다
-								let imgUrl = "<%=request.getContextPath()%>/resources/img/"+ img
+								let imgUrl = "<%=request.getContextPath()%>/resources/upload/"+ img
 							    $('.rounded-circle').attr("src", imgUrl);
 							}else{
-								$('.rounded-circle').attr("src", "");
+								let noneImg = "<%=request.getContextPath()%>/resources/img/MemberIcon.png"
+								$('.rounded-circle').attr("src", noneImg);
 							}
 						}	
 		        	}); //ajax파트

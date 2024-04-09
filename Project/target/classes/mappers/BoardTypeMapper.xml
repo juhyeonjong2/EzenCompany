@@ -4,16 +4,20 @@
 <mapper namespace="ezen.ezencompany.mapper.boardTypeMapper">
 
 	
-	<select id="boardList" parameterType="int" resultType="BoardVO2">
+	<select id="boardList" parameterType="int" resultType="BoardVO">
 		SELECT bno, bindex, btitle, substr(bdate, '1', '10' ) as bdate
   			FROM board where bindex = #{bindex} ORDER BY bno DESC limit 0, 5;
 	</select>
 	
-	<select id="getBoardType" resultType="BoardReaderVO">
+	<select id="getBoardType" resultType="boardTypeVO">
 		SELECT bindex, btname from boardtype;
 	</select>
 	
 	<select id="getReader" parameterType="int" resultType="AttributeVO">
 		SELECT reader as cidx, ridx as aidx from boardreader where bindex = #{index};
+	</select>
+	
+	<select id="getWriter" parameterType="int" resultType="AttributeVO">
+		SELECT writer as cidx, widx as aidx from boardwriter where bindex = #{index};
 	</select>
 </mapper>

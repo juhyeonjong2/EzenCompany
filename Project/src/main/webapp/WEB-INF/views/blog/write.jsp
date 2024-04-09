@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     
 <!DOCTYPE html>
 <html lang="ko">
@@ -38,6 +39,7 @@
 	<%@ include file="../include/blogSidebar.jsp"%>
 
   <main id="main" class="main">
+  	<input type="hidden" id="inputMno" value="${mno}">
   	
 		<section class="section container-md">
 		<form action="writeOk" method="post">
@@ -51,11 +53,17 @@
 	      <div class="col-auto mb-3 d-flex" >
 	        <div class="col d-flex justify-content-start">
 	          <div>
-	            <select class="form-select" aria-label="Default select example">
-	              <option selected value="1">기본</option>
-	              <option value="2">스프링 일지</option>
-	              <option value="3">임시</option>
-	              <option value="4">임시/임시 폴더</option>
+	            <select class="form-select" aria-label="Default select example" name="folder">
+	            	<c:forEach var="folder" items="${folders}" varStatus="i">
+		            	<c:choose>
+		            		<c:when test="${i.first}">
+		            			<option selected value="${folder.fno}">${folder.fname}</option>
+		            		</c:when>
+		            		<c:otherwise>
+		            		 	<option value="${folder.fno}">${folder.fname}</option>
+		            		</c:otherwise>
+						</c:choose>
+					</c:forEach>
 	            </select>
 	          </div>
 	          <div class="m-1">

@@ -10,4 +10,13 @@
 	<select id="detaleList" resultType="MemberVO">
 		select distinct m.mno, aidx, m.mname from member m inner join employeeoption e on m.mno = e.mno where cidx = 1;
 	</select>
+	
+	<select id="getRoom" parameterType="java.util.Map" resultType="String">
+		select distinct b.chattingRoom from chatting a inner join chatting b 
+			on a.chattingRoom = b.chattingRoom where a.mno = #{amno} and b.mno = #{bmno};
+	</select>
+	
+	<select id="chattingStart" parameterType="String" resultType="chatVO">
+		select * from chatting where chattingroom = #{chattingroom};
+	</select>
 </mapper>

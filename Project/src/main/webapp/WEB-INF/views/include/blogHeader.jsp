@@ -76,13 +76,13 @@
       </li><!-- End Messages Icon -->
       
       <li class="nav-item">
-          <a class="nav-link nav-icon search-bar-toggle" href="../board/home.html">
+          <a class="nav-link nav-icon search-bar-toggle" href="<%=request.getContextPath()%>/board/home">
             <i class="bi bi-grid"></i>
           </a>
       </li><!-- End Board Icon-->
 
       <li class="nav-item">
-          <a class="nav-link nav-icon search-bar-toggle" href="../blog/home.html">
+          <a class="nav-link nav-icon search-bar-toggle" href="<%=request.getContextPath()%>/blog/home">
             <i class="bi bi-house-door"></i>
           </a>
       </li><!-- End Home Icon-->

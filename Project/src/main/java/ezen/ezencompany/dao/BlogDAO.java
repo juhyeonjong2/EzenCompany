@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ezen.ezencompany.vo.AttributeVO;
+import ezen.ezencompany.vo.BlogReplyVO;
 import ezen.ezencompany.vo.BlogUserVO;
 import ezen.ezencompany.vo.BlogVO;
 import ezen.ezencompany.vo.CategoryVO;
 import ezen.ezencompany.vo.EmployeeOptionVO;
 import ezen.ezencompany.vo.FolderVO;
+import ezen.ezencompany.vo.MemberVO;
 
 @Repository
 public class BlogDAO {
@@ -63,6 +65,39 @@ public class BlogDAO {
 		public List<FolderVO> selectFolders(int mno){
 			return sqlSession.selectList(namespace+".selectFolders", mno);
 		}
+		
+		public List<BlogVO> selectBlogList(int mno, boolean isAll) {
+			if(isAll) {
+				return sqlSession.selectList(namespace+".selectBlogListAll", mno);
+			}
+			return sqlSession.selectList(namespace+".selectBlogList", mno);
+		}
+		
+		public BlogVO selectOne(int bgno, boolean force) {
+			if(force) {
+				return sqlSession.selectOne(namespace+".selectOneForce", bgno);
+			}
+			return sqlSession.selectOne(namespace+".selectOne", bgno);
+		}
 
-						
+		// 댓글
+		public List<BlogReplyVO> selectReplyList(int bgno) {
+			return sqlSession.selectList(namespace+".selectReplyList", bgno);
+		}
+		
+		public BlogReplyVO selectReply(int bgrno) {
+			return sqlSession.selectOne(namespace+".selectReply", bgrno);
+		}
+		
+		public int insertReply(BlogReplyVO vo){
+			return sqlSession.insert(namespace+".insertReply", vo);
+		}
+		
+		public int removeReply(int bgrno) {
+			return sqlSession.update(namespace+".removeReply", bgrno);
+		}
+		
+		public int modifyReply(BlogReplyVO vo) {
+			return sqlSession.update(namespace+".modifyReply", vo);
+		}
 }
