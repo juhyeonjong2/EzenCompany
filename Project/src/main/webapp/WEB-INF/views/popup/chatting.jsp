@@ -18,10 +18,7 @@
 	       <div class="modal-body">  
 	         <div class="container-fluid chatting_member">
 	           <div class="accordion chatttingList"> 
-	           
-	           
-	             
-	             
+			<!-- 자바스크립트로 그려짐 -->
              </div>
            </div>
          </div>
@@ -36,8 +33,9 @@
             <div class="modal-header d-flex flex-column">
               <div class="align-self-start">
                 <a href="#" class="link-secondary" data-bs-target="#chattingModal" data-bs-toggle="modal">&lt; 뒤로가기</a>  
-                
               </div>
+              
+              
               <div class="align-self-start d-flex mt-2">
                 <img src="<%=request.getContextPath()%>/resources/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
                 <div class="d-flex flex-column ms-2">      
@@ -45,9 +43,13 @@
                   <span class="user_position">사원</span>
                 </div>
               </div>
+              
+              
             </div>
             <div class="modal-body">  
               <div class="container-fluid chatting_room">
+              
+              
                 <div class="chatting_other_msg">
                   <div class="chatting_profile">
                     <img src="<%=request.getContextPath()%>/resources/img/profile-img.jpg" width="30" height="30" alt="Profile" class="rounded-circle">
@@ -58,6 +60,9 @@
                     잘 부탁드려요
                   </div>
                 </div>
+                
+                
+                
                 <div class="chatting_my_msg">
                   <div class="msg">
                     네 안녕하세요 모르는게 있다면 
@@ -67,31 +72,14 @@
                     <img src="<%=request.getContextPath()%>/resources/img/messages-2.jpg" width="30" height="30" alt="Profile" class="rounded-circle">
                   </div>
                 </div>
-                <div class="chatting_other_msg">
-                  <div class="chatting_profile">
-                    <img src="<%=request.getContextPath()%>/resources/img/profile-img.jpg" width="30" height="30" alt="Profile" class="rounded-circle">
-                  </div>
-                  <div class="msg">
-                    명령·규칙 또는 처분이 헌법이나 법률에 위반되는 여부가 재판의 전제가 된 경우에는 대법원은 이를 최종적으로 심사할 권한을 가진다.
-                  </div>
-                </div>
-                <div class="chatting_my_msg">
-                  <div class="msg">
-                    모든 국민은 근로의 의무를 진다. 국가는 근로의 의무의 내용과 조건을 민주주의원칙에 따라 법률로 정한다.
-                  </div>
-                  <div class="chatting_profile">
-                    <img src="<%=request.getContextPath()%>/resources/img/messages-2.jpg" width="30" height="30" alt="Profile" class="rounded-circle">
-                  </div>
-                </div>
+                
+   
                 
 
               </div>
             </div>
             <div class="modal-footer d-flex align-items-center justify-content-center">
-              
                 <input type="text" class="form-control" placeholder="메세지 입력.." id="messageinput">
-                
-              
             </div>
           </div>
         </div>
@@ -109,6 +97,7 @@
             $.ajax({
             	url: "<%=request.getContextPath()%>/chatting/chattingList",
             	success:function(list){
+            		console.log(list);
             		//재생성 방지를 위해 실행될때마다 비워줌	
 			        $('.chatttingList').empty();
 			        //여기서 1차 반복문
@@ -165,6 +154,37 @@
     }
   })();
 
+	
+	
+	
+	
+	
+	
+	//채팅 룸 팝업!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	(function() {
+
+    // 채팅 팝업(대화창) - 대화 상대의 mno or id를 넘겨받음.
+    const attributeAddModal = document.getElementById('chattingRoomModal')
+    if (attributeAddModal) {
+        attributeAddModal.addEventListener('show.bs.modal', event => 
+        {
+            const mno = button.getAttribute('data-bs-mno');
+            $.ajax({
+            	url: "<%=request.getContextPath()%>/chatting/chattingStart",
+            	data: {amno : mno},
+            	success:function(data){
+            		console.log(data);
+            	}//success
+            });// ajax끝
+            
+            
+            
+            
+        });   
+    }
+  })();
+	
+	
 </script>
 </body>
 </html>
