@@ -12,8 +12,15 @@ public class MemberVO{
 	private String mphone;
 	private int enabled;
 	private String joindate;
+	private int aidx;
 	
 
+	public int getAidx() {
+		return aidx;
+	}
+	public void setAidx(int aidx) {
+		this.aidx = aidx;
+	}
 	public String getJoindate() {
 		return joindate;
 	}

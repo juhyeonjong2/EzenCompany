@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ezen.ezencompany.mapper.chattingMapper">
+
+	<select id="chattingList" resultType="attributeVO">
+		select value, aidx from attribute where cidx=1;
+	</select>
+	
+	<select id="detaleList" resultType="MemberVO">
+		select distinct m.mno, aidx, m.mname from member m inner join employeeoption e on m.mno = e.mno where cidx = 1;
+	</select>
+</mapper>

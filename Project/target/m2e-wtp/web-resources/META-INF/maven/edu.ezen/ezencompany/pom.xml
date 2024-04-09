@@ -271,6 +271,22 @@
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.4</version>
 		</dependency>
+		
+		<!-- JSON --><!-- 채팅은json타입으로 주고받아서 필요하지만 위에 이미 디펜던시가 존재함 -->
+		
+		<!-- WebSocket -->
+		<dependency>
+		   	<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.websocket</groupId>
+			<artifactId>javax.websocket-api</artifactId>
+		    <version>1.1</version>
+		</dependency>
+		
 	</dependencies>
     <build>
         <plugins>
