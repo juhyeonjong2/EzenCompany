@@ -10,111 +10,102 @@ function ezReply_onInput(event){
   target.style.height = DEFAULT_HEIGHT + target.scrollHeight + 'px';
 }
 
+// default : Init 함수로 외부에서 지정 가능.
+let ezReplyConfig = {
+	create : "/ezencompany/blog/reply/write",
+	read :   "/ezencompany/blog/reply/list",
+	update : "/ezencompany/blog/reply/modify",
+	delete : "/ezencompany/blog/reply/delete",
+	
+	parser : function (vo) {
+		// 데이터 만들기
+		let data = {
+			rno : vo.bgrno,
+			prno : vo.bgrpno,
+			author: vo.author,
+			content :vo.bgrcontent,
+			date : vo.bgrdate,
+			isEditable : vo.editable,
+			isMaster : vo.master,
+			isDeleted : vo.delyn =='n' ? false : true,
+		};
+		
+		return data;
+	} 
+}
+
+function ezReply_init(config, isRefresh){
+	ezReplyConfig = config;
+	
+	if(isRefresh){
+		ezReply_request_list();
+	}
+}
+
+
+function ezReply_request(data, callback){
+	
+	//  개별로 뺀다. (url이 바뀌어야 한다)
+	$.ajax(
+	{
+		url: ezReplyConfig.create,
+		type: "post",
+		data : {bno:data.bno, prno:data.prno, content:data.content},
+		success: function(resData) {
+			if(resData.result == "SUCCESS")
+			{
+				if(ezPley_isDirty(resData.total, 1)){
+				 	ezReply_request_list(); // 다시그려야하는경우 목록 요청.
+				} else {
+					// 전체 댓글 수 갱신
+					ezReply_setCommentCount(resData.total);
+					
+					let data = ezReplyConfig.parser(resData.data);
+					ezReply_drawReply(data);	
+				}
+			}
+			
+			callback();
+		},
+		error: function(error) {
+      		alert(error);
+      		callback();
+    	}
+	});
+}
+
+
+// 루트 댓글 달기
 function ezReply_rootSubmit(o){
 
 	let rootTextArea = $("#ezReply_root_value");
 	
-	
 	// 요청 데이터 만들기
-	let content = rootTextArea.val();
-    let bno = $("#inputBno").val();
-    let prno = 0;
+    let data = {
+    	content : rootTextArea.val(),
+    	bno : $("#inputBno").val(),
+    	prno: 0
+    };
     
-    $.ajax(
-	{
-		url: "/ezencompany/blog/reply/write",
-		type: "post",
-		data : {bno:bno, prno:prno, content:content},
-		success: function(resData) {
-			console.log(resData);
-		},
-		error: function(error) {
-      		alert(error);
-    	}
-	});
-    
-	
-	
-	
-	let data = {
-		rno : 1,
-		prno : 0,
-		author: "김길동",
-		content : content,
-		date : "2024.04.09",
-		isEditable : false,
-		isMaster : true,
-	}; 
-	
-
-	
-	console.log(data);
-	
-	let html = ezReply_makeChild(data);
-	$("#reply_root").append(html);
-	
-	
-	 
-	rootTextArea.val(''); // 초기화 
+    ezReply_request(data, ()=>{ rootTextArea.val(''); });
 }
 
 function ezReply_childSubmit(o){
 
-	let parent = $(o).closest(".ezReply_node_reply");
-	let childCont = parent.siblings("ul.ezReply_cont");
+	let parent = $(o).closest(".ezReply_node_reply");	
 	let textareaObj = parent.find("textarea");
 	let child = $(o).closest(".ezReply_child");
-	let prnoObj = child.children("input#rno");
+	let prnoObj = child.children("input[name='rno']");
 	
 	 		 
 	// 요청 데이터 만들기
-	let content = textareaObj.val();
-    let bno = $("#inputBno").val();
-    let prno = prnoObj.val();
+     let data = {
+    	content : textareaObj.val(),
+    	bno : $("#inputBno").val(),
+    	prno: prnoObj.val()
+    };
     
-	console.log("print");
-	console.log(bno);
-	console.log(prno);
-	console.log(content);
-	
-	
-	$.ajax(
-	{
-		url: "/ezencompany/blog/reply/write",
-		type: "post",
-		data : {bno:bno, prno:prno, content:content},
-		success: function(resData) {
-			console.log(resData);
-		},
-		error: function(error) {
-      		alert(error);
-    	}
-	});
-    
-    
-    
-			 
-	// 아작스 통신으로 보낸후.
-	let data = {
-		rno : 2,
-		prno : prno,
-		author: "고길동",
-		content : content,
-		date : "2024.04.09",
-		isEditable : true,
-		isMaster : false,
-	}; 
-	 
-	console.log(data);
-	 
-	// 데이터가 오면 추가.
-	let html = ezReply_makeChild(data);
-	childCont.append(html);
-	
-	
-	
-	// 등록후 자신 삭제.
-	parent.remove();
+	ezReply_request(data, ()=>{ parent.remove(); });
 }
 
 function ezReply_activeSubReply(o){
@@ -138,7 +129,7 @@ function ezReply_makeChild(data){
 
 
 	let html = '<li class="ezReply_child">'
-			 + '    <input type="hidden" id="rno" name="rno" value="' + data.rno +'">'
+			 + '    <input type="hidden" name="rno" value="' + data.rno +'">'
 	         + '	<div class="ezReply_node pb-1 d-flex">'
 	    	 + '		<div class="col-1 pt-2">'
 			 + '			<div class="ezReply_author">'
@@ -175,7 +166,7 @@ function ezReply_makeChild(data){
 function ezReply_makeChildReply(data){
 
 	let html = '<div class="ezReply_node_reply">' 
-			 + '	<div class="reply_input ms-3 pb-2">'
+			 + '	<div class="ezReply_input ms-3 pb-2">'
 			 + '		<div class="d-flex">'
 			 + '			<textarea placeholder="댓글을 입력하세요.." onInput="ezReply_onInput(event)"></textarea>'
 			 + ' 			<button class="ms-1 me-1 btn btn-secondary btn-small" onClick="ezReply_childSubmit(this)">댓글 등록</button>'
@@ -187,18 +178,86 @@ function ezReply_makeChildReply(data){
 	return html;
 }
 
+function ezReply_modifyChildReply(data){
+
+	let html = '<div class="ezReply_node_reply">' 
+			 + '	<div class="ezReply_input ms-3 pb-2">'
+			 + '		<div class="d-flex">'
+			 + '			<textarea placeholder="댓글을 입력하세요.." onInput="ezReply_onInput(event)"></textarea>'
+			 + ' 			<button class="ms-1 me-1 btn btn-secondary btn-small" onClick="ezReply_childSubmit(this)">댓글 등록</button>'
+			 + '		</div>'
+			 + '	</div>'
+			 + '</div>';
+			 
+			 
+	return html;
+}
+
+function ezPley_isDirty(serverReplyCnt, addCnt){
+  let curCnt = parseInt(ezReply_getCommentCount());
+  if(curCnt + addCnt != serverReplyCnt){
+  	return true;
+   }
+   return false;
+}
 
 function ezReply_setCommentCount(cnt){
-
+	$("#ezReply_comment_count").text(cnt);
 }
 
 function ezReply_getCommentCount(){
-
+	return $("#ezReply_comment_count").text();
 }
 
-function ezReply_redraw(data){
-	// ws comment - 여기 작업중.
+function ezReply_drawReply(data){
+	if(data != null){
+		let html = ezReply_makeChild(data);
+		
+		if(data.prno == 0){
+			$("#reply_root").append(html);
+		} else {
+			let childCont = ezReply_findContainer(data.prno);
+			if(childCont != null) {
+				childCont.append(html);			
+			}
+		}
+	}
 }
+
+function ezReply_redraw(list){
+
+	// 댓글 수 갱신
+	ezReply_setCommentCount(list.length);
+	
+	
+	// 루트를 찾아서 모든 댓글 제거.
+	$("#reply_root").empty();
+	
+	// 댓글 다시 그리기.
+	for(let i=0;i<list.length;i++)
+	{
+		let data = ezReplyConfig.parser(list[i]);		
+		ezReply_drawReply(data);	
+	}
+}
+
+function ezReply_findContainer(prno){
+
+	let nodes = $("#reply_root").find("input[name='rno']");
+	let findObj = null;
+	if(nodes != null) {
+		for(let i=0; i< nodes.length; i++){
+			let node = nodes[i];
+			if(parseInt(node.value) == prno){
+				findObj = $(node).closest(".ezReply_child").children("ul.ezReply_cont");
+			}
+		}	
+	}
+	
+	return findObj;
+}
+
+
 
 function ezReply_request_list(){
 
@@ -206,12 +265,12 @@ function ezReply_request_list(){
 
 	$.ajax(
 	{
-		url: "/ezencompany/blog/reply/list",
+		url: ezReplyConfig.read,
 		type: "get",
 		data : {bno:bno},
 		success: function(resData) {
-			console.log("11111");
-			console.log(resData);
+			ezReply_setCommentCount(resData.total);
+			ezReply_redraw(resData.list);
 		},
 		error: function(error) {
       		alert(error);
@@ -221,35 +280,9 @@ function ezReply_request_list(){
 }
 
 
+
+// 이건 init으로 대체하고 blog.js로 이동할 것.
 $(document).ready(function(){
     ezReply_request_list();
 });
 
-
-/*
-let reply_data ={
-	total : 5,
-	
-	list : [
-	{ 
-		rno : 1,
-		prno : 0,
-		content: "content",
-		author : "kkk",
-		date : "2024.04.04",
-		isEditable : false,
-		isMaster : true
-	},
-	{
-		rno : 2
-		prno : 1,
-		content: "content",
-		author : "kkk",
-		date : "2024.04.04",
-		isEditable : false,
-		isMaster : true
-	}]
-};
- 
- 
-*/

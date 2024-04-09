@@ -24,7 +24,6 @@ import ezen.ezencompany.service.BlogService;
 import ezen.ezencompany.service.MemberService;
 import ezen.ezencompany.vo.BlogNodeVO;
 import ezen.ezencompany.vo.BlogReplyVO;
-import ezen.ezencompany.vo.BlogReplyViewVO;
 import ezen.ezencompany.vo.BlogUserVO;
 import ezen.ezencompany.vo.BlogVO;
 import ezen.ezencompany.vo.EmployeeOptionVO;
@@ -97,8 +96,7 @@ public class BlogController {
 		// 첨부 파일들
 		
 		
-		// 블로그 댓글.
-		
+		// 댓글은  AJAX로 요청함.
 		return "blog/home";
 	}
 	
@@ -122,7 +120,7 @@ public class BlogController {
 		int mno =  user.getMno();
 		// mno
 		model.addAttribute("mno", mno);
-		
+
 		
 		// write 들어왔는데 폴더가 0개인경우 한개 기본 폴더 생성하기.
 		List<FolderVO> folders = blogService.getFolders(mno);
@@ -177,10 +175,7 @@ public class BlogController {
 		int fno = Integer.parseInt(folder);// 폴더 선택 번호.
 		
 		
-		
-		
 		// 폴더가 없으면 기본 폴더 생성하기.
-		
 		System.out.println("title");
 		System.out.println(title);
 		System.out.println("content");
@@ -298,13 +293,10 @@ public class BlogController {
 		model.addAttribute("profileImage", profileSrc); // 프로필 이미지 
 		
 		
-		
 		// 첨부 파일들
 		
 		
-		// 블로그 댓글.
-			
-		
+		// 댓글은  AJAX로 요청함.
 		return "blog/view";
 	}
 	
@@ -315,7 +307,6 @@ public class BlogController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserVO user = (UserVO) authentication.getPrincipal();
 		
-		System.out.println("mno : " +  mno);
 		
 		boolean isMine = false;
 		if(user.getMno() == mno) {
@@ -324,15 +315,11 @@ public class BlogController {
 		
 		// 블로그 목록
 		List<BlogNodeVO> nodes = new ArrayList<BlogNodeVO>();
-		
-		
 		// 폴더 가져오기.
 		List<FolderVO> folders = blogService.getFolders(mno); // origin
-		System.out.println("folders : " + folders.size());
-		
 		// 블로그 가져오기
 		List<BlogVO> blogs  = blogService.blogList(mno, isMine);
-		System.out.println("blogs : " + blogs.size());
+		
 		
 		// 폴더를 먼저 추가한다.
 		for(FolderVO folder : folders) {
@@ -365,11 +352,6 @@ public class BlogController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserVO user = (UserVO) authentication.getPrincipal();
 		
-		System.out.println("mno : " +  user.getMno());
-		System.out.println("bno : " +  bno);
-		System.out.println("prno : " +  prno);
-		System.out.println("content : " +  content);
-		
 		int mno = user.getMno();
 		BlogReplyVO vo = new BlogReplyVO();
 		vo.setMno(mno);
@@ -378,7 +360,6 @@ public class BlogController {
 		vo.setBgrcontent(content);
 		
 		int result = blogService.insertReply(vo);
-		System.out.println("result :" + result);
 		
 		// 반환값 생성 
 		Map<String,Object> resMap = new HashMap<String,Object>();
@@ -409,12 +390,8 @@ public class BlogController {
 		UserVO user = (UserVO) authentication.getPrincipal();
 		int mno = user.getMno();
 		
-		System.out.println("mno : " +  mno);
-		System.out.println("bno : " +  bno);
-		
 		BlogVO blog = blogService.selectOne(bno, true);
 		int ownerMno = blog.getMno();
-		
 		
 		List<BlogReplyVO> list =   blogService.blogReplyList(bno);
 		for(BlogReplyVO vo : list) {

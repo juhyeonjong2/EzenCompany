@@ -115,11 +115,8 @@ public class BlogServiceImpl implements BlogService {
 	}
 	@Override
 	public String getAttributeName(int attribute_pk) {
-		System.out.println(attribute_pk);
 		List<AttributeVO> attributes = blogDAO.getAttributes();
-		System.out.println("cnt:" + attributes.size());
 		for(AttributeVO vo : attributes) {
-			System.out.println(vo.getAidx());
 			if(vo.getAidx()== attribute_pk) {
 				return vo.getValue();
 			}

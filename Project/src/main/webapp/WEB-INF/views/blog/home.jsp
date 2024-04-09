@@ -138,7 +138,7 @@
 					        </ul>
 				  		</div>
 				  		
-				  		<div class="reply_input ms-3 pb-2">
+				  		<div class="ezReply_input ms-3 pb-2">
 				    		<div class="d-flex">
 				    			<textarea placeholder="댓글을 입력하세요.." onInput="ezReply_onInput(event)" id="ezReply_root_value"></textarea>
 				    			<button class="ms-1 me-1 btn btn-secondary" onClick="ezReply_rootSubmit(this)">댓글 등록</button>
