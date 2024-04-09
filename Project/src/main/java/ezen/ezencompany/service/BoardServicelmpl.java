@@ -54,11 +54,13 @@ public class BoardServicelmpl implements BoardService {
 		return result;
 	}
 	
+	
 	@Override
-	public int upload(BoardAttachVO uploadFile) throws Exception {
+	public int insertfile(BoardAttachVO vo) throws Exception {
 		
-		return boardDAO.upload(uploadFile);
-	}
+		int result = boardDAO.insertfile(vo);
+		return result;
+		
 	
-	
+}
 }

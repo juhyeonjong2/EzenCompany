@@ -2,6 +2,7 @@ package ezen.ezencompany.service;
 
 import java.util.List;
 
+import ezen.ezencompany.vo.BoardAttachVO;
 import ezen.ezencompany.vo.BoardVO;
 
 public interface BoardService {
@@ -17,6 +18,7 @@ public interface BoardService {
 	
 	int updateBhit(int bno) throws Exception;
 	
+	int insertfile(BoardAttachVO vo) throws Exception;
 	
 }
 

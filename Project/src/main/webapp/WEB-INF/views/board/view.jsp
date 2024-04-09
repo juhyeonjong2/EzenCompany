@@ -181,9 +181,9 @@
                     첨부 파일
                   </button>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">첨부파일1.pdf</a></li>
-                    <li><a class="dropdown-item" href="#">첨부파일2.png</a></li>
-                    <li><a class="dropdown-item" href="#">첨부파일3.pptx</a></li>
+                    <li><a class="dropdown-item" href="<%=request.getContextPath()%>/resources/upload/board">첨부파일1</a></li>
+                    <li><a class="dropdown-item" href="<%=request.getContextPath()%>/resources/upload/board">첨부파일2</a></li>
+                    <li><a class="dropdown-item" href="<%=request.getContextPath()%>/resources/upload/board">첨부파일3</a></li>
                   </ul>
                 </div>
             </div>
@@ -219,12 +219,7 @@
                        </div>
                        <div class="col pt-2">
                           <div class="reply_content">
-                            저번 회의에서 저런방식 말고 다른방식으로 하자고 부장님께서 말씀하셨습니다. 그래서 아마 3번줄부터 25번줄은 제거하는게 좋아보여요. <br>
-                            <br>
-                            그리고 Post.VO 에서 8번줄에 있는 pnum 필드는 왜 만든건가요? 어디서 사용하는지 잘 모르겠어요 <br>
-                            점심시간이 되면 제가 찾아갈테니 알려주실 수 있나요? <br>
-                            <br>
-                            @홍길동
+                        
                           </div>
                           <div><span class="fs-6 text-body-tertiary">2024.03.19</span></div>
                           <div class="d-flex">

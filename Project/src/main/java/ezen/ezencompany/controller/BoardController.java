@@ -66,6 +66,9 @@ public class BoardController {
 		BoardVO vo = boardService.selectOneByBno(bno);
 		
 		
+		// 현재 게시글 번호와 일치하는 전체 첨부파일 목록 데이터 화면으로 보내기
+		
+		
 		model.addAttribute("vo",vo);
 		
 		
@@ -125,7 +128,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/write.do",method=RequestMethod.POST)
-	public String write(BoardVO vo, MultipartFile uploadFile) throws Exception {
+	public String write(BoardVO vo, List<MultipartFile> uploadFile) throws Exception {
 		
 		String path = "D:\\EzenCompany\\Project\\src\\main\\webapp\\resources\\upload\\board";
 		File dir = new File(path);
@@ -134,21 +137,26 @@ public class BoardController {
 		}
 		boardService.insert(vo);
 		
-		if(!uploadFile.getOriginalFilename().isEmpty()) {
-			String fileNM = uploadFile.getOriginalFilename(); 
-			
-			String[] fileNMArr= fileNM.split("\\.");
-			String ext =  fileNMArr[fileNMArr.length-1];
-			
-			String realFileNM = fileNMArr[0]+"001."+ext;
-			
-			uploadFile.transferTo(new File(path,realFileNM));
-			BoardAttachVO baVO = new BoardAttachVO();
-			baVO.setBno(vo.getBno());
-			baVO.setBforeignname(fileNM);
-			baVO.setBfrealname(realFileNM);
-			 // 게시물 - 첨부파일 연결고리
+		for (MultipartFile multipartFile : uploadFile) {
+			if(!multipartFile.getOriginalFilename().isEmpty()) {
+				String fileNM = multipartFile.getOriginalFilename(); 
+				
+				String[] fileNMArr= fileNM.split("\\.");
+				String ext =  fileNMArr[fileNMArr.length-1];
+				
+				String realFileNM = fileNMArr[0]+"001."+ext;
+				
+				multipartFile.transferTo(new File(path,realFileNM));
+				BoardAttachVO baVO = new BoardAttachVO();
+				baVO.setBno(vo.getBno());
+				baVO.setBforeignname(fileNM);
+				baVO.setBfrealname(realFileNM);
+				 // 게시물 - 첨부파일 연결고리
+				
+				boardService.insertfile(baVO);
+			}
 		}
+		
 		
 		
 		
@@ -157,7 +165,7 @@ public class BoardController {
 		return "redirect:list.do";
 	}
 	
-	//@RequestMapiing("files")
+	
 	
 	
 }

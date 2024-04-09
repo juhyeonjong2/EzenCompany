@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import ezen.ezencompany.vo.BoardAttachVO;
 import ezen.ezencompany.vo.BoardVO;
 
 @Repository
@@ -41,7 +42,7 @@ public class BoardDAO {
 		 return sqlSession.update("ezen.ezencompany.mapper.boardmapper.updateBhit", bno); 
 	}
 	
-	public int upload(BoardVO uploadFile) {
-		return sqlSession.insert("ezen.ezencompany.mapper.boardmapper.upload", uploadFile);
+	public int insertfile(BoardAttachVO vo) {
+		return sqlSession.insert("ezen.ezencompany.mapper.boardmapper.insertfile", vo);
 	}
 }
