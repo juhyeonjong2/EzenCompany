@@ -12,5 +12,7 @@
 		<typeAlias type="ezen.ezencompany.vo.AttributeVO" alias="attributeVO"/>
 		<typeAlias type="ezen.ezencompany.vo.FolderVO" alias="folderVO"/>
 		<typeAlias type="ezen.ezencompany.vo.BoardTypeVO" alias="boardTypeVO"/>
+		<typeAlias type="ezen.ezencompany.vo.BlogReplyVO" alias="blogReplyVO"/>
+		
 	</typeAliases>
 </configuration>

@@ -84,4 +84,8 @@ public class MemberService {
 	public List<AttributeVO> getOptions(int mno) {
 		return memberDAO.getOption(mno);
 	}
+	
+	public MemberVO getMember(int mno) {
+		return memberDAO.getMember(mno);
+	}
 }

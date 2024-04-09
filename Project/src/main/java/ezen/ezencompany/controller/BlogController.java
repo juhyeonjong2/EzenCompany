@@ -21,7 +21,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ezen.ezencompany.service.BlogService;
+import ezen.ezencompany.service.MemberService;
 import ezen.ezencompany.vo.BlogNodeVO;
+import ezen.ezencompany.vo.BlogReplyVO;
+import ezen.ezencompany.vo.BlogReplyViewVO;
 import ezen.ezencompany.vo.BlogUserVO;
 import ezen.ezencompany.vo.BlogVO;
 import ezen.ezencompany.vo.EmployeeOptionVO;
@@ -36,6 +39,10 @@ public class BlogController {
 	
 	@Autowired
 	BlogService blogService;
+	
+	@Autowired
+	MemberService memberService;
+	
 
 	@RequestMapping(value="/home")
 	public String home(Model model, HttpServletRequest request) {
@@ -281,7 +288,7 @@ public class BlogController {
 			}
 		}
 		
-		MemberVO user = blogService.getMember(vo.getMno());
+		MemberVO user = memberService.getMember(vo.getMno());
 		model.addAttribute("blogSubject", user.getMname() + "'s Blog"); // 블로그 제목
 		model.addAttribute("vo", vo);
 		model.addAttribute("bno", vo.getBgno()); // bgno
@@ -347,6 +354,89 @@ public class BlogController {
 		Map<String,Object> resMap = new HashMap<String,Object>();
 		resMap.put("result", "SUCCESS"); //  결과 추가
 		resMap.put("nodes", nodes); // 노드 리스트 추가
+		
+		return resMap;
+	
+	}
+	
+	@RequestMapping(value="/reply/write", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> replyWriteOk(int bno, int prno, String content) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVO user = (UserVO) authentication.getPrincipal();
+		
+		System.out.println("mno : " +  user.getMno());
+		System.out.println("bno : " +  bno);
+		System.out.println("prno : " +  prno);
+		System.out.println("content : " +  content);
+		
+		int mno = user.getMno();
+		BlogReplyVO vo = new BlogReplyVO();
+		vo.setMno(mno);
+		vo.setBgno(bno);
+		vo.setBgrpno(prno);
+		vo.setBgrcontent(content);
+		
+		int result = blogService.insertReply(vo);
+		System.out.println("result :" + result);
+		
+		// 반환값 생성 
+		Map<String,Object> resMap = new HashMap<String,Object>();
+		if(result > 0 ) {
+			MemberVO member = memberService.getMember(mno);
+			vo = blogService.getReply(vo.getBgrno());
+			vo.setAuthor(member.getMname());	
+			vo.setEditable(true);
+			vo.setMaster(true);
+
+			resMap.put("result", "SUCCESS"); //  성공
+			resMap.put("total", blogService.blogReplyList(bno).size()); //  갯수
+			resMap.put("data", vo); 
+			
+		}
+		else {
+			resMap.put("result", "FAIL"); //  실패
+		}
+		
+		return resMap;
+	
+	}
+	
+	@RequestMapping(value="/reply/list", method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> replyList(int bno) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVO user = (UserVO) authentication.getPrincipal();
+		int mno = user.getMno();
+		
+		System.out.println("mno : " +  mno);
+		System.out.println("bno : " +  bno);
+		
+		BlogVO blog = blogService.selectOne(bno, true);
+		int ownerMno = blog.getMno();
+		
+		
+		List<BlogReplyVO> list =   blogService.blogReplyList(bno);
+		for(BlogReplyVO vo : list) {
+			MemberVO member = memberService.getMember(vo.getMno());
+			vo.setAuthor(member.getMname());
+			
+			// 내가 작성한 댓글.
+			if(vo.getMno() == mno) {
+				vo.setEditable(true);
+			}
+			
+			// 블로그 주인장이 작성한 댓글
+			if(vo.getMno() == ownerMno) {
+				vo.setMaster(true);
+			}
+		}
+		
+		// 반환값 생성 
+		Map<String,Object> resMap = new HashMap<String,Object>();
+		resMap.put("total", list.size()); //  갯수
+		resMap.put("list", list); //  
+		
 		
 		return resMap;
 	

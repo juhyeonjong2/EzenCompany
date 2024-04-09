@@ -3,11 +3,11 @@ package ezen.ezencompany.service;
 
 import java.util.List;
 
+import ezen.ezencompany.vo.BlogReplyVO;
 import ezen.ezencompany.vo.BlogUserVO;
 import ezen.ezencompany.vo.BlogVO;
 import ezen.ezencompany.vo.EmployeeOptionVO;
 import ezen.ezencompany.vo.FolderVO;
-import ezen.ezencompany.vo.MemberVO;
 
 public interface BlogService {
 
@@ -23,6 +23,10 @@ public interface BlogService {
 	int makeFolder(FolderVO vo);
 	List<BlogVO> blogList(int mno, boolean isAll); // isAll이 true이면 비공개 블로그도 가지고온다. 
 	BlogVO selectOne(int bgno, boolean force);
-	MemberVO getMember(int mno);
 	
+	List<BlogReplyVO> blogReplyList(int bgno);
+	BlogReplyVO getReply(int bgrno);
+	int insertReply(BlogReplyVO vo);
+	int removeReply(int bgrno);
+	int modifyReply(BlogReplyVO vo);
 }

@@ -58,8 +58,26 @@
 	SELECT * FROM blog WHERE bgno = #{bgno} AND blockyn='n';
 </select>
 
-<select id="selectMember" parameterType="int" resultType="memberVO">
-	SELECT * FROM member WHERE mno = #{mno};
+<select id="selectReply" parameterType="int" resultType="blogReplyVO" >
+	SELECT * FROM blogreply WHERE bgrno = #{bgrno};
 </select>
+
+<select id="selectReplyList" parameterType="int" resultType="blogReplyVO">
+	SELECT * FROM blogreply WHERE bgno = #{bgno};
+</select>
+
+<insert id="insertReply" parameterType="blogReplyVO" useGeneratedKeys="true" keyProperty="bgrno">
+	INSERT INTO blogreply(bgrpno, bgrcontent, bgrdate, bgno, mno, delyn) VALUES(#{bgrpno},#{bgrcontent}, now(), #{bgno}, #{mno}, 'n');
+</insert>
+
+<update id="removeReply" parameterType="int">
+	UPDATE blogreply SET delyn = 'y' WHERE bgrno = #{bgrno};
+</update>
+
+<update id="modifyReply" parameterType="blogReplyVO">
+	UPDATE blogreply 
+	SET bgrcontent = #{bgrcontent} 
+	WHERE bgrno = #{bgrno};
+</update>
 
 </mapper>

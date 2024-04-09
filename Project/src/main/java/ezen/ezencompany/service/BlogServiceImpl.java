@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import ezen.ezencompany.dao.BlogDAO;
 import ezen.ezencompany.vo.AttributeVO;
+import ezen.ezencompany.vo.BlogReplyVO;
 import ezen.ezencompany.vo.BlogUserVO;
 import ezen.ezencompany.vo.BlogVO;
 import ezen.ezencompany.vo.CategoryVO;
@@ -148,8 +149,28 @@ public class BlogServiceImpl implements BlogService {
 	}
 
 	@Override
-	public MemberVO getMember(int mno) {
-		return blogDAO.selectMember(mno);
+	public List<BlogReplyVO> blogReplyList(int bgno) {
+		return blogDAO.selectReplyList(bgno);
+	}
+
+	@Override
+	public BlogReplyVO getReply(int bgrno) {
+		return blogDAO.selectReply(bgrno);
+	}
+
+	@Override
+	public int insertReply(BlogReplyVO vo) {
+		return blogDAO.insertReply(vo);
+	}
+
+	@Override
+	public int removeReply(int bgrno) {
+		return blogDAO.removeReply(bgrno);
+	}
+
+	@Override
+	public int modifyReply(BlogReplyVO vo) {
+		return blogDAO.modifyReply(vo);
 	}
 
 }
