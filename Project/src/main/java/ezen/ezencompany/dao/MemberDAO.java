@@ -1,13 +1,13 @@
 package ezen.ezencompany.dao;
 
 import java.util.HashMap;
-
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import ezen.ezencompany.vo.AttributeVO;
 import ezen.ezencompany.vo.MemberVO;
 
 @Repository
@@ -90,4 +90,10 @@ public class MemberDAO {
 	public void changePwOk(HashMap<String, Object> map) {
 		sqlSession.update(namespace+".changePwOk", map);
 	}
+	
+	//사원의 옵션을 가져온다.
+	public List<AttributeVO> getOption(int mno) {
+		return sqlSession.selectList(namespace+".getOption", mno);
+	}
+		
 }

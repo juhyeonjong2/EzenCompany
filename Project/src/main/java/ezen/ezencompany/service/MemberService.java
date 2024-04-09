@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ezen.ezencompany.dao.MemberDAO;
+import ezen.ezencompany.vo.AttributeVO;
 import ezen.ezencompany.vo.MemberAttachVO;
 import ezen.ezencompany.vo.MemberVO;
 
@@ -77,5 +78,10 @@ public class MemberService {
 	//비밀번호를 수정한다
 	public void changePwOk(HashMap<String, Object> map) {
 		memberDAO.changePwOk(map);
+	}
+	
+	// 사원의 옵션목록을 반환한다.
+	public List<AttributeVO> getOptions(int mno) {
+		return memberDAO.getOption(mno);
 	}
 }

@@ -9,11 +9,15 @@
   			FROM board where bindex = #{bindex} ORDER BY bno DESC limit 0, 5;
 	</select>
 	
-	<select id="getBoardType" resultType="BoardReaderVO">
+	<select id="getBoardType" resultType="boardTypeVO">
 		SELECT bindex, btname from boardtype;
 	</select>
 	
 	<select id="getReader" parameterType="int" resultType="AttributeVO">
 		SELECT reader as cidx, ridx as aidx from boardreader where bindex = #{index};
+	</select>
+	
+	<select id="getWriter" parameterType="int" resultType="AttributeVO">
+		SELECT writer as cidx, widx as aidx from boardwriter where bindex = #{index};
 	</select>
 </mapper>

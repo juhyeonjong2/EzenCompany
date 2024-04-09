@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import ezen.ezencompany.dao.BoardTypeDAO;
 import ezen.ezencompany.vo.AttributeVO;
-import ezen.ezencompany.vo.BoardReaderVO;
+import ezen.ezencompany.vo.BoardTypeVO;
 import ezen.ezencompany.vo.BoardVO2;
 
 
@@ -25,12 +25,16 @@ public class BoardTypeService {
 	}
 	
 	//모든 게시판을 찾음
-	public List<BoardReaderVO> getBoardType() {
+	public List<BoardTypeVO> getBoardType() {
 		return boardTypeDAO.getBoardType();
 	}
 	
 	//모든 게시판 권한을 찾음
 	public List<AttributeVO> getReader(int index) {
 		return boardTypeDAO.getReader(index);
+	}
+	//해당 되는 게시판의 쓰기 권한을 반환.
+	public List<AttributeVO> getWriter(int index) {
+		return boardTypeDAO.getWriter(index);
 	}
 }
