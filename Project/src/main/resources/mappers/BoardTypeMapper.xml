@@ -4,7 +4,7 @@
 <mapper namespace="ezen.ezencompany.mapper.boardTypeMapper">
 
 	
-	<select id="boardList" parameterType="int" resultType="BoardVO2">
+	<select id="boardList" parameterType="int" resultType="BoardVO">
 		SELECT bno, bindex, btitle, substr(bdate, '1', '10' ) as bdate
   			FROM board where bindex = #{bindex} ORDER BY bno DESC limit 0, 5;
 	</select>
