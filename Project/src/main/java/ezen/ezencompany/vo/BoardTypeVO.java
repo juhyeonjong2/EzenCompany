@@ -1,6 +1,6 @@
 package ezen.ezencompany.vo;
 
-public class BoardReaderVO {
+public class BoardTypeVO {
 	private int bindex;
 	private String btname;
 	
