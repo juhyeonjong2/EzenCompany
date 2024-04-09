@@ -40,12 +40,7 @@ public class BoardTypeController {
 		
 		int mno = user.getMno();
 		List<BoardTypeVO> acceptedList = boardAuthority.getReadableList(mno);
-		System.out.println(acceptedList);
-		for(BoardTypeVO vo : acceptedList) {
-			System.out.println(vo.getBindex());
-			System.out.println(vo.getBtname());
-		}
-		
+
 		model.addAttribute("boardType", acceptedList);
 
 		List<BoardVO2> board = new ArrayList<BoardVO2>();

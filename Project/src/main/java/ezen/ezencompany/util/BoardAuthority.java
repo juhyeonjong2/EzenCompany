@@ -28,13 +28,11 @@ public class BoardAuthority {
 		List<BoardTypeVO> list = boardTypeService.getBoardType(); //모든 보드타입 가져옴
 		List<BoardTypeVO> acceptedList = new ArrayList<BoardTypeVO>(); //사용할 보드타입 넣기용
 		
-		System.out.println("getReadableList");
 		//모든 보드타입만큼 반복하면서 읽기권한이 일치하는경우 break로 그 값만 얻어냄
 		for(int i = 0; i< list.size(); i++)
 		{
 			
 		  int index = list.get(i).getBindex();
-		  System.out.println(index);
 		  boolean isReadable = false; 
 		  List<AttributeVO> rlist = boardTypeService.getReader(index); // 모든 보드타입의 읽기권한을 가져옴
 		  
