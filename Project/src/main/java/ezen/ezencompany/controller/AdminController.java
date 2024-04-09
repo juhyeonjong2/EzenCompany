@@ -96,13 +96,10 @@ public class AdminController {
 	@RequestMapping(value = "/getCategory", method = RequestMethod.GET)
 	@ResponseBody //ajax를 사용하는경우 @ResponseBody이걸 사용하지 않으면 리턴값으로 보내지 않고 경로로 인식해서 보내버린다
 	public List<AttributeVO> getCategory(String email) {
-		System.out.println(email);
 		int mno = adminService.getMno(email);
 		
 		List<AttributeVO> option 
 		= sqlSession.selectList("ezen.ezencompany.mapper.memberMapper.getOption", mno);
-		System.out.println(option);
-
 
 		return option;
 	}
