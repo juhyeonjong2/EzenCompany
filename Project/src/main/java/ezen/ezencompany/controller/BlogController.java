@@ -203,11 +203,8 @@ public class BlogController {
 		vo.setMno(user.getMno());
 		
 		int result = blogService.insert(vo);
-		System.out.println("result :" + result);
-		
 		if(result > 0) {
 			// 파일 저장
-			System.out.println("multifiles : ");
 			
 			for (MultipartFile multipartFile : uploadFile) {
 				if(!multipartFile.getOriginalFilename().isEmpty()) {
