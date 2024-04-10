@@ -74,11 +74,11 @@ $('#btnConnect').click(function() {
 			let user = evt.data.substring(2, index);
 			let txt = evt.data.substring(index + 1);
 			if (no == '1') {
-				print2(user);
+				console.log("접속");
 			} else if (no == '2') {
-				print(user, txt);
+				console.log("메세지");
 			} else if (no == '3') {
-				print3(user);
+				console.log("타인 접속");
 			}
 			$('#list').scrollTop($('#list').prop('scrollHeight'));
 		};
