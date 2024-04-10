@@ -42,6 +42,27 @@ function ezReply_init(config, isRefresh){
 	}
 }
 
+function ezReply_request_list(){
+
+ 	let bno = $("#inputBno").val(); 	
+	if(bno != '')
+	{
+		$.ajax(
+		{
+			url: ezReplyConfig.read,
+			type: "get",
+			data : {bno:bno},
+			success: function(resData) {
+				ezReply_setCommentCount(resData.total);
+				ezReply_redraw(resData.list);
+			},
+			error: function(error) {
+	      		alert(error);
+	    	}
+		});
+	} 
+}
+
 
 function ezReply_request(data, callback){
 	
@@ -439,25 +460,5 @@ function ezReply_findContainer(prno){
 }
 
 
-
-function ezReply_request_list(){
-
- 	let bno = $("#inputBno").val();
-
-	$.ajax(
-	{
-		url: ezReplyConfig.read,
-		type: "get",
-		data : {bno:bno},
-		success: function(resData) {
-			ezReply_setCommentCount(resData.total);
-			ezReply_redraw(resData.list);
-		},
-		error: function(error) {
-      		alert(error);
-    	}
-	});
-    
-}
 
 

@@ -112,12 +112,13 @@ public class BlogController {
 		// 가장최근에 쓴 블로그
 		BlogVO vo = blogService.getLastOne(user.getMno(), true);
 		model.addAttribute("vo", vo);
+		if(vo!=null) {
 		model.addAttribute("bno", vo.getBgno()); // bgno
 		
 		// 첨부 파일들
 		List<BlogAttachVO> files = blogService.getFiles(vo.getBgno());
 		model.addAttribute("files", files);
-		
+		}
 
 		
 		
