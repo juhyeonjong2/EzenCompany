@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 
 import ezen.ezencompany.dao.BlogDAO;
 import ezen.ezencompany.vo.AttributeVO;
+import ezen.ezencompany.vo.BlogAttachVO;
 import ezen.ezencompany.vo.BlogReplyVO;
 import ezen.ezencompany.vo.BlogUserVO;
 import ezen.ezencompany.vo.BlogVO;
 import ezen.ezencompany.vo.CategoryVO;
 import ezen.ezencompany.vo.EmployeeOptionVO;
 import ezen.ezencompany.vo.FolderVO;
-import ezen.ezencompany.vo.MemberVO;
 
 @Service
 public class BlogServiceImpl implements BlogService {
@@ -168,6 +168,23 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	public int modifyReply(BlogReplyVO vo) {
 		return blogDAO.modifyReply(vo);
+	}
+	
+	
+	@Override
+	public int insertfile(BlogAttachVO vo){
+		return blogDAO.insertfile(vo);
+	}
+
+	@Override
+	public List<BlogAttachVO> getFiles(int bgno) {
+ 
+		return blogDAO.selectFiles(bgno);
+	}
+
+	@Override
+	public BlogAttachVO getFile(int bgfno) {
+		return blogDAO.selectFile(bgfno);
 	}
 
 }

@@ -3,6 +3,7 @@ package ezen.ezencompany.service;
 
 import java.util.List;
 
+import ezen.ezencompany.vo.BlogAttachVO;
 import ezen.ezencompany.vo.BlogReplyVO;
 import ezen.ezencompany.vo.BlogUserVO;
 import ezen.ezencompany.vo.BlogVO;
@@ -29,4 +30,8 @@ public interface BlogService {
 	int insertReply(BlogReplyVO vo);
 	int removeReply(int bgrno);
 	int modifyReply(BlogReplyVO vo);
+	int insertfile(BlogAttachVO vo);
+	List<BlogAttachVO> getFiles(int bgno);
+	BlogAttachVO getFile(int bgfno);
+
 }

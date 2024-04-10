@@ -55,7 +55,7 @@
 					<div id="collapseOne" class="accordion-collapse collapse">
 						<div class="accordion-body">
 							 <c:forEach var="vo" items="${retiredEmployees}">
-							 	    <a href="<%=request.getContextPath()%>/blog/${vo.blogHome}">${vo.mname}</a>
+							 	    <a href="<%=request.getContextPath()%>/blog/other/${vo.blogHome}">${vo.mname}</a>
 							 </c:forEach>
 						</div>
 					</div>
@@ -71,7 +71,7 @@
           			<div id="collapseTwo" class="accordion-collapse collapse show">
 			          <div class="accordion-body">
 			          	<c:forEach var="user" items="${entry.value}">
-			          		 <a href="<%=request.getContextPath()%>/blog/${user.blogHome}">${user.mname}</a>
+			          		 <a href="<%=request.getContextPath()%>/blog/other/${vo.blogHome}">${user.mname}</a>
 			          	</c:forEach>
 			          </div>
 		          </div>
@@ -102,16 +102,20 @@
 					<div class="blog_top_sep">
 					  <hr class="mt-0 mb-0 mx-5 w-auto ">
 					  <div class="d-flex justify-content-end">
-					    <div class="dropdown me-5">
-					        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-					          첨부 파일
-					        </button>
-					        <ul class="dropdown-menu">
-					          <li><a class="dropdown-item" href="#">첨부파일1.pdf</a></li>
-					          <li><a class="dropdown-item" href="#">첨부파일2.png</a></li>
-					          <li><a class="dropdown-item" href="#">첨부파일3.pptx</a></li>
-					        </ul>
-					      </div>
+					  	<c:if test="${not empty files}">
+					  		<div class="dropdown me-5">
+					        	<button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">첨부 파일</button>
+						        <ul class="dropdown-menu">
+						        <c:forEach var="file" items="${files}">
+									<li>
+										<a class="dropdown-item" href='<c:url value="/blog/download/${file.bgfno}"/>'>
+										${file.bgforeignname}
+										</a>
+									</li>
+			          			</c:forEach>
+						        </ul>
+					      	</div>
+				      	</c:if>
 					  </div>
 					</div>
 					

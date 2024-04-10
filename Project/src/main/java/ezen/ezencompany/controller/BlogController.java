@@ -1,12 +1,17 @@
 package ezen.ezencompany.controller;
 
+import java.io.File;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +24,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import ezen.ezencompany.service.BlogService;
 import ezen.ezencompany.service.MemberService;
+import ezen.ezencompany.util.Path;
+import ezen.ezencompany.vo.BlogAttachVO;
 import ezen.ezencompany.vo.BlogNodeVO;
 import ezen.ezencompany.vo.BlogReplyVO;
 import ezen.ezencompany.vo.BlogUserVO;
@@ -94,6 +102,10 @@ public class BlogController {
 		model.addAttribute("bno", vo.getBgno()); // bgno
 		
 		// 첨부 파일들
+		List<BlogAttachVO> files = blogService.getFiles(vo.getBgno());
+		model.addAttribute("files", files);
+		
+
 		
 		
 		// 댓글은  AJAX로 요청함.
@@ -155,81 +167,79 @@ public class BlogController {
 	}
 	
 	@RequestMapping(value="/writeOk", method=RequestMethod.POST)
-	public String writeOk(HttpServletRequest request) {
+	public String writeOk(/*HttpServletRequest request,*/ BlogVO vo, List<MultipartFile> uploadFile) throws Exception {
 		
 		// 로그인된 사용자 정보 가져오기.
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserVO user = (UserVO) authentication.getPrincipal();
 		
-		System.out.println("writeOk");
-		
 		// 이건 필터 사용할떄 필터처리후 데이터를 넣어주는 경우.
 		//String title = (String)request.getAttribute("title"); 
 		//String content = (String)request.getAttribute("content"); 
 		
-		String title = (String)request.getParameter("title");
-		String content = (String)request.getParameter("content");
-		String folder = (String)request.getParameter("folder");
-		Document doc = Jsoup.parse(content);
-		String blockyn = "n"; // 블로그 생성시 넘겨받아야할 정보.
-		int fno = Integer.parseInt(folder);// 폴더 선택 번호.
+		// 넘어온 데이터 가공 및 검증
 		
-		
-		// 폴더가 없으면 기본 폴더 생성하기.
-		System.out.println("title");
-		System.out.println(title);
-		System.out.println("content");
-		System.out.println(content);
-		System.out.println("folder");
-		System.out.println(folder);
-		System.out.println("rawContent");
-		System.out.println(doc.text());
-		
-
-		int mno = user.getMno();
-		System.out.println("mno");
-		System.out.println(mno);
-		
-		
-		//폴더 목록 가져오기
-		List<FolderVO> folders = blogService.getFolders(mno);
-		if(folders.isEmpty()) {
-			// 비어 있다면 하나 생성하기.
-			FolderVO vo = new FolderVO();
-			vo.setMno(mno);
-			vo.setFname("기본");
-			vo.setPfno(0);
-			blogService.makeFolder(vo);
-			fno = vo.getFno(); // 생성후 바로 fno 넣기.
-		} else {
-			boolean isFind = false;
-			for(FolderVO vo : folders) 
-			{
-				if(vo.getFno()	== fno) 
-				{
-					isFind= true;
-					break;
-				}
-			}
-			if(!isFind) {
-				fno = folders.get(0).getFno(); // 없으면 가장 위에 있는 데이터(기본) 폴더 선택.
-			}
-		}
-		
-
-		BlogVO vo = new BlogVO();
-		vo.setBgtitle(title);
-		vo.setBgcontent(content);
+		// 태그 제거 데이터 넣기
+		Document doc = Jsoup.parse(vo.getBgcontent());
 		vo.setBgrealcontent(doc.text());
-		vo.setBlockyn(blockyn);
-		vo.setFno(fno);
-		vo.setMno(mno);
 		
-		
+		// 공개/비공개 처리
+		if(vo.getBlockyn() == null) {
+			vo.setBlockyn("n");
+		}
+		vo.setMno(user.getMno());
 		
 		int result = blogService.insert(vo);
 		System.out.println("result :" + result);
+		
+		if(result > 0) {
+			// 파일 저장
+			System.out.println("multifiles : ");
+			
+			for (MultipartFile multipartFile : uploadFile) {
+				if(!multipartFile.getOriginalFilename().isEmpty()) {
+					
+					String originfileName = multipartFile.getOriginalFilename();
+					
+					// 업로드 경로 : basePath + upload/blog/{bgno}
+					String [] subPath =  {"upload", "blog", Integer.toString(vo.getBgno())};
+					
+					String fileName = UUID.randomUUID().toString(); // 중복방지를 위한 랜덤 이름.
+					StringBuffer buffer = new StringBuffer();
+					buffer.append(fileName);
+					buffer.append("_");
+					buffer.append(originfileName); // 확장자까지
+					String realFileName = buffer.toString();
+					
+					String uploadPath = Path.getUploadPath(subPath);
+					multipartFile.transferTo(new File(uploadPath,realFileName)); // 저장
+					
+					BlogAttachVO attach = new BlogAttachVO();
+					attach.setBgno(vo.getBgno());
+					attach.setBgforeignname(originfileName);
+					attach.setBgfrealname(realFileName);
+					
+					blogService.insertfile(attach);
+					
+				}
+			}
+			
+			
+			
+		}
+		
 		return "redirect:home";
+	}
+	
+	@GetMapping(value="/other/{mno}")
+	public String other(@PathVariable int mno) {
+		
+		int bgno = 0;
+		
+		//mno의 최신글을 가져온다.
+		
+		
+		return "redirect:/blog/page/" + Integer.toString(bgno);
 	}
 	
 
@@ -294,7 +304,8 @@ public class BlogController {
 		
 		
 		// 첨부 파일들
-		
+		List<BlogAttachVO> files = blogService.getFiles(bgno);
+		model.addAttribute("files", files);
 		
 		// 댓글은  AJAX로 요청함.
 		return "blog/view";
@@ -532,6 +543,27 @@ public class BlogController {
 		
 		return resMap;
 	
+	}
+	
+	// 파일 다운로드
+	@GetMapping("/download/{bgfno}")
+	public void download(Model model, @PathVariable int bgfno, HttpServletResponse response) throws Exception {
+		
+			 BlogAttachVO vo  = blogService.getFile(bgfno);
+			 
+			 // 실제 파일경로 구하기.
+			 String [] subPath =  {"upload", "blog", Integer.toString(vo.getBgno())};
+			 String uploadPath = Path.getUploadPath(subPath);
+			 
+			 File downloadFile = new File(uploadPath,vo.getBgfrealname());
+			 byte fileByte[] =  FileUtils.readFileToByteArray(downloadFile);
+			 response.setContentType("application/octet-stream");
+			 response.setContentLength(fileByte.length);
+			 response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(vo.getBgforeignname(),"UTF-8") + "\";" );	
+			 response.setHeader("Content-Transfer-Encoding", "binary;");
+			 response.getOutputStream().write(fileByte);
+			 response.getOutputStream().flush();
+			 response.getOutputStream().close();
 	}
 	
 }

@@ -7,13 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ezen.ezencompany.vo.AttributeVO;
+import ezen.ezencompany.vo.BlogAttachVO;
 import ezen.ezencompany.vo.BlogReplyVO;
 import ezen.ezencompany.vo.BlogUserVO;
 import ezen.ezencompany.vo.BlogVO;
 import ezen.ezencompany.vo.CategoryVO;
 import ezen.ezencompany.vo.EmployeeOptionVO;
 import ezen.ezencompany.vo.FolderVO;
-import ezen.ezencompany.vo.MemberVO;
 
 @Repository
 public class BlogDAO {
@@ -100,4 +100,18 @@ public class BlogDAO {
 		public int modifyReply(BlogReplyVO vo) {
 			return sqlSession.update(namespace+".modifyReply", vo);
 		}
+		
+		// 첨부파일
+		public int insertfile(BlogAttachVO vo){
+			return sqlSession.insert(namespace+".insertfile", vo);
+		}
+		
+		public List<BlogAttachVO> selectFiles(int bgno){
+			return sqlSession.selectList(namespace+".selectFiles", bgno);
+		}
+		
+		public BlogAttachVO selectFile(int bgfno){
+			return sqlSession.selectOne(namespace+".selectFile", bgfno);
+		}
+		
 }
