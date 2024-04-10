@@ -41,7 +41,7 @@
 	</update>
 	
 	<update id="employeeUpdate" parameterType="java.util.Map">
-		UPDATE employeeoption SET cidx = #{cidx}, aidx = #{aidx} WHERE mno = #{mno}; 
+		UPDATE employeeoption SET aidx = #{aidx} WHERE mno = #{mno} and cidx = #{cidx}; 
 	</update>
 	
 	<update id="memberUpdate" parameterType="java.util.Map">

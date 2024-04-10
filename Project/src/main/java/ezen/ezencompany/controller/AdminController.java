@@ -89,6 +89,7 @@ public class AdminController {
 	public String getImg(String email) {
 		int mno = adminService.getMno(email);
 		String img = memberService.getImg(mno);
+		System.out.println(img);
 		return img;
 	}
 	
@@ -139,7 +140,7 @@ public class AdminController {
 			map.put(aidx, cidx);
 			list.add(map);
 		}
-
+		System.out.println(list);
 		//톰캣 상대경로를 사용하려 했지만 스프링은 상대경로 사용시 배포등등 여러문제가 발생해 절대경로를 쓰는게 좋아보인다
 		//정보 출처 : https://stir.tistory.com/147
 		// ws comment : D드라이브가 없는 컴퓨터가 있을 수 있다. 이런경우 절대경로를 사용하려면 xml등과 같은 설정파일로 압부분 경로를 변동 가능하게 해야 한다.
