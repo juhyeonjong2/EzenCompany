@@ -30,8 +30,8 @@ $(document).ready(function(){
 		create : "/ezencompany/blog/reply/write",
 		read :   "/ezencompany/blog/reply/list",
 		update : "/ezencompany/blog/reply/modify",
-		delete : "/ezencompany/blog/reply/delete",
-		
+		delete : "/ezencompany/blog/reply/remove",
+		writer : "(블로그 주인)",
 		parser : function (vo) {
 			// 데이터 만들기
 			return {

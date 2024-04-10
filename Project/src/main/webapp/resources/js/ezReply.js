@@ -15,8 +15,8 @@ let ezReplyConfig = {
 	create : "/ezencompany/blog/reply/write",
 	read :   "/ezencompany/blog/reply/list",
 	update : "/ezencompany/blog/reply/modify",
-	delete : "/ezencompany/blog/reply/delete",
-	
+	delete : "/ezencompany/blog/reply/remove",
+	writer : "(블로그 주인)",
 	parser : function (vo) {
 		// 데이터 만들기
 		let data = {
@@ -45,7 +45,6 @@ function ezReply_init(config, isRefresh){
 
 function ezReply_request(data, callback){
 	
-	//  개별로 뺀다. (url이 바뀌어야 한다)
 	$.ajax(
 	{
 		url: ezReplyConfig.create,
@@ -54,7 +53,7 @@ function ezReply_request(data, callback){
 		success: function(resData) {
 			if(resData.result == "SUCCESS")
 			{
-				if(ezPley_isDirty(resData.total, 1)){
+				if(ezReply_isDirty(resData.total, 1)){
 				 	ezReply_request_list(); // 다시그려야하는경우 목록 요청.
 				} else {
 					// 전체 댓글 수 갱신
@@ -74,6 +73,67 @@ function ezReply_request(data, callback){
 	});
 }
 
+function ezReply_requestModify(o, data, callback){
+	
+	$.ajax(
+	{
+		url: ezReplyConfig.update,
+		type: "post",
+		data : {rno:data.rno, content:data.content},
+		success: function(resData) {
+			if(resData.result == "SUCCESS")
+			{
+				if(ezReply_isDirty(resData.total, 0)){
+				 	ezReply_request_list(); // 다시그려야하는경우 목록 요청.
+				} else {
+					// 전체 댓글 수 갱신
+					ezReply_setCommentCount(resData.total);
+					
+					let data = ezReplyConfig.parser(resData.data);
+					ezReply_drawModifyReply(o, data);	
+				}
+			}
+			
+			callback();
+		},
+		error: function(error) {
+      		alert(error);
+      		callback();
+    	}
+	});
+	
+}
+
+function ezReply_requestRemove(o, data, callback){
+
+	$.ajax(
+	{
+		url: ezReplyConfig.delete,
+		type: "post",
+		data : {rno:data.rno},
+		success: function(resData) {
+			if(resData.result == "SUCCESS")
+			{
+				if(ezReply_isDirty(resData.total, 0)){
+				 	ezReply_request_list(); // 다시그려야하는경우 목록 요청.
+				} else {
+					// 전체 댓글 수 갱신
+					ezReply_setCommentCount(resData.total);
+					
+					let data = ezReplyConfig.parser(resData.data);
+					ezReply_drawModifyReply(o, data);	
+				}
+			}
+			
+			callback();
+		},
+		error: function(error) {
+      		alert(error);
+      		callback();
+    	}
+	});
+	
+}
 
 // 루트 댓글 달기
 function ezReply_rootSubmit(o){
@@ -108,6 +168,20 @@ function ezReply_childSubmit(o){
 	ezReply_request(data, ()=>{ parent.remove(); });
 }
 
+
+function ezReply_remove(o){
+	let child = $(o).closest(".ezReply_child");
+	let rnoObj = child.children("input[name='rno']");
+	
+	// 요청 데이터 만들기
+	 let data = {
+		rno: rnoObj.val()
+	};
+
+	 ezReply_requestRemove(child, data, ()=>{  });
+}
+
+
 function ezReply_activeSubReply(o){
 
 	let parent = $(o).closest(".ezReply_node");
@@ -115,6 +189,66 @@ function ezReply_activeSubReply(o){
 	parent.after(html);
 	
 }
+
+function ezReply_activeModifyReply(o){
+	let parent = $(o).closest(".ezReply_node");
+	
+	// 1. 원래글을 가져옴.
+	let originText =  parent.find(".ezReply_content").first().text();
+	
+	// 2. ezReply_node를 숨김처리. (부트스트랩으로 되어있어서 css로는 처리안됨)
+	parent.addClass('d-none');
+	
+	// 3. ezReply_node 형제로 수정 요소 추가
+	let html = ezReply_makeModifyReply(originText);
+	parent.after(html);
+	
+	// 4. 추가 한뒤에 바로 이벤트리스너 등록
+	let insertedObj = parent.next();
+	// 4-1) 수정 버튼 이벤트
+	let modifyBtn = insertedObj.find(".ezReply_modify_ok");
+	modifyBtn.on("click", function (event) {
+		let textareaObj = insertedObj.find("textarea");
+		let child = parent.closest(".ezReply_child");
+		let rnoObj = child.children("input[name='rno']");
+	
+		// 요청 데이터 만들기
+	     let data = {
+	    	content : textareaObj.val(),
+	    	rno: rnoObj.val()
+	    };
+	    
+	    // 요청을 보낸다. (객체 수정을위해 ezReply_child 요소 넘김)
+		ezReply_requestModify(child, data, ()=>{
+			// 수정 요소 (ezReply_node_edit) 를 삭제하고,
+			insertedObj.remove();
+			
+			// 숨겨둔 데이터를 다시 나타나게한다
+			parent.removeClass('d-none');
+		});
+	});
+	
+	// 4-2) 취소 버튼 이벤트.
+	let cancelBtn = insertedObj.find(".ezReply_modify_cancel");
+	cancelBtn.on("click", function (event) {
+		// 수정 요소 (ezReply_node_edit) 를 삭제하고,
+		insertedObj.remove();
+		// 숨겨둔 데이터를 다시 나타나게한다.
+		parent.removeClass('d-none');
+		
+	});
+	
+}
+
+function ezReply_activeRemoveReply(o){
+
+	// 정말 삭제하시겠습니까? 팝업 또는 confirm()
+	let isYes = confirm("정말 삭제 하시겠습니까?")
+	if(isYes){
+		ezReply_remove(o);
+	}
+}
+
 
 function ezReply_makeChild(data){
 
@@ -137,7 +271,7 @@ function ezReply_makeChild(data){
 			 + '			</div>'
 			 + '			<div class="ezReply_author_me">';
 		if(data.isMaster){
-		html+= '				<p class="text-center m-0 t-0">(블로그 주인)</p>';
+		html+= '				<p class="text-center m-0 t-0">' + ezReplyConfig.writer +'</p>';
 		}
 		html+= '			</div>'
 			 + '		</div>'
@@ -150,8 +284,8 @@ function ezReply_makeChild(data){
 			 + '				</div>'
 			 + '				<div class="col d-flex justify-content-end">';
 			 if(data.isEditable){
-		html+= '						<button class="btn btn-warning btn-sm me-2">수정</button>'
-			 + '						<button class="btn btn-danger btn-sm me-2">삭제</button>';
+		html+= '						<button class="btn btn-warning btn-sm me-2" onClick="ezReply_activeModifyReply(this)">수정</button>'
+			 + '						<button class="btn btn-danger btn-sm me-2" onClick="ezReply_activeRemoveReply(this)">삭제</button>';
 			}
 		html+= '				</div>'
 			 + '			</div>'
@@ -160,6 +294,39 @@ function ezReply_makeChild(data){
 	         + '	<ul class="ezReply_cont"></ul>'
 	         + '</li>';
 	         
+	return html;
+}
+
+function ezReply_makeChildModify(data){
+
+	let html = '	<div class="ezReply_node pb-1 d-flex">'
+	    	 + '		<div class="col-1 pt-2">'
+			 + '			<div class="ezReply_author">'
+			 + '				<p class="text-center m-0 t-0">' + data.author + ' :</p>'
+			 + '			</div>'
+			 + '			<div class="ezReply_author_me">';
+		if(data.isMaster){
+		html+= '				<p class="text-center m-0 t-0">' + ezReplyConfig.writer +'</p>';
+		}
+		html+= '			</div>'
+			 + '		</div>'
+			 + '		<div class="col pt-2">'
+			 + '			<div class="ezReply_content">'+ data.content + '</div>'
+			 + '			<div><span class="fs-6 text-body-tertiary">' + data.date + '</span></div>'
+			 + '			<div class="d-flex">'
+			 + '				<div class="col">'
+			 + '					<button class="btn btn-secondary btn-sm ms-1" onClick="ezReply_activeSubReply(this)">답글</button>'
+			 + '				</div>'
+			 + '				<div class="col d-flex justify-content-end">';
+			 if(data.isEditable){
+		html+= '						<button class="btn btn-warning btn-sm me-2" onClick="ezReply_activeModifyReply(this)">수정</button>'
+			 + '						<button class="btn btn-danger btn-sm me-2" onClick="ezReply_activeRemoveReply(this)">삭제</button>';
+			}
+		html+= '				</div>'
+			 + '			</div>'
+			 + '		</div>'
+	    	 + '	</div>';
+	    	 
 	return html;
 }
 
@@ -178,13 +345,14 @@ function ezReply_makeChildReply(data){
 	return html;
 }
 
-function ezReply_modifyChildReply(data){
+function ezReply_makeModifyReply(originText){
 
-	let html = '<div class="ezReply_node_reply">' 
+	let html = '<div class="ezReply_node_edit">' 
 			 + '	<div class="ezReply_input ms-3 pb-2">'
 			 + '		<div class="d-flex">'
-			 + '			<textarea placeholder="댓글을 입력하세요.." onInput="ezReply_onInput(event)"></textarea>'
-			 + ' 			<button class="ms-1 me-1 btn btn-secondary btn-small" onClick="ezReply_childSubmit(this)">댓글 등록</button>'
+			 + '			<textarea onInput="ezReply_onInput(event)">' + originText +'</textarea>'
+			 + ' 			<button class="ezReply_modify_ok ms-1 me-1 btn btn-secondary btn-small">등록</button>'
+			 + ' 			<button class="ezReply_modify_cancel ms-1 me-1 btn btn-secondary btn-small">취소</button>'
 			 + '		</div>'
 			 + '	</div>'
 			 + '</div>';
@@ -193,7 +361,7 @@ function ezReply_modifyChildReply(data){
 	return html;
 }
 
-function ezPley_isDirty(serverReplyCnt, addCnt){
+function ezReply_isDirty(serverReplyCnt, addCnt){
   let curCnt = parseInt(ezReply_getCommentCount());
   if(curCnt + addCnt != serverReplyCnt){
   	return true;
@@ -223,6 +391,19 @@ function ezReply_drawReply(data){
 		}
 	}
 }
+
+function ezReply_drawModifyReply(o, data){
+	if(data != null){
+		let html = ezReply_makeChildModify(data);
+		
+		// rno input을 찾고 바로 다음에 추가 및 기존 데이터 제거.
+		let rnoObj = o.children("input[name='rno']");
+		let node = rnoObj.next(".ezReply_node");
+		node.after(html);
+		node.remove();
+	}
+}
+
 
 function ezReply_redraw(list){
 
@@ -279,10 +460,4 @@ function ezReply_request_list(){
     
 }
 
-
-
-// 이건 init으로 대체하고 blog.js로 이동할 것.
-$(document).ready(function(){
-    ezReply_request_list();
-});
 

@@ -351,8 +351,12 @@ public class BlogController {
 	public Map<String,Object> replyWriteOk(int bno, int prno, String content) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserVO user = (UserVO) authentication.getPrincipal();
-		
 		int mno = user.getMno();
+		
+		BlogVO blog = blogService.selectOne(bno, true);
+		int ownerMno = blog.getMno();
+		
+		
 		BlogReplyVO vo = new BlogReplyVO();
 		vo.setMno(mno);
 		vo.setBgno(bno);
@@ -368,7 +372,11 @@ public class BlogController {
 			vo = blogService.getReply(vo.getBgrno());
 			vo.setAuthor(member.getMname());	
 			vo.setEditable(true);
-			vo.setMaster(true);
+			
+			// 블로그 주인장이 작성한 댓글
+			if(mno == ownerMno) {
+				vo.setMaster(true);
+			}
 
 			resMap.put("result", "SUCCESS"); //  성공
 			resMap.put("total", blogService.blogReplyList(bno).size()); //  갯수
@@ -407,6 +415,12 @@ public class BlogController {
 			if(vo.getMno() == ownerMno) {
 				vo.setMaster(true);
 			}
+			
+			// 삭제된 댓글 확인.
+			if(vo.getDelyn().equals("y")) {
+				vo.setBgrcontent("삭제된 글입니다.");
+				vo.setEditable(false);
+			}
 		}
 		
 		// 반환값 생성 
@@ -414,6 +428,107 @@ public class BlogController {
 		resMap.put("total", list.size()); //  갯수
 		resMap.put("list", list); //  
 		
+		
+		return resMap;
+	
+	}
+	
+	@RequestMapping(value="/reply/modify", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> replyModifyOk(int rno, String content) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVO user = (UserVO) authentication.getPrincipal();
+		int mno = user.getMno();
+		
+		Map<String,Object> resMap = new HashMap<String,Object>();
+		
+		/// 내가 쓴 reply인지 확인.
+		BlogReplyVO vo = blogService.getReply(rno);
+		if(vo.getMno() != mno) {
+			
+			// 타인이 작성한 댓글인데 수정이 들어옴 : 오류 처리
+			resMap.put("result", "FAIL"); //  실패
+		} else {
+			
+			// 내가 작성한 글이 맞음.
+			vo.setBgrcontent(content);
+			
+			// 수정
+			int result = blogService.modifyReply(vo);
+			if(result > 0 ) {
+				vo = blogService.getReply(vo.getBgrno());
+				
+				BlogVO blog = blogService.selectOne(vo.getBgno(), true);
+				int ownerMno = blog.getMno();
+				MemberVO member = memberService.getMember(mno);
+				vo.setAuthor(member.getMname());
+				vo.setEditable(true);
+				// 블로그 주인장이 작성한 댓글
+				if(mno == ownerMno) {
+					vo.setMaster(true);
+				}
+				
+				
+				resMap.put("result", "SUCCESS"); //  성공
+				resMap.put("total", blogService.blogReplyList(vo.getBgno()).size()); //  갯수
+				resMap.put("data", vo); 
+			}
+			else {
+				resMap.put("result", "FAIL"); //  실패
+			}
+		}
+		
+		return resMap;
+	
+	}
+	
+	@RequestMapping(value="/reply/remove", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> replyRemoveOk(int rno) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVO user = (UserVO) authentication.getPrincipal();
+		int mno = user.getMno();
+		
+		System.out.println("replyRemoveOk");
+		Map<String,Object> resMap = new HashMap<String,Object>();
+		
+		/// 내가 쓴 reply인지 확인.
+		BlogReplyVO vo = blogService.getReply(rno);
+		if(vo.getMno() != mno) {
+			
+			// 타인이 작성한 댓글인데 수정이 들어옴 : 오류 처리
+			resMap.put("result", "FAIL"); //  실패
+		} else {
+			
+			int result = blogService.removeReply(vo.getBgrno());
+			if(result > 0 ) {
+				vo = blogService.getReply(vo.getBgrno());
+				
+				BlogVO blog = blogService.selectOne(vo.getBgno(), true);
+				int ownerMno = blog.getMno();
+				MemberVO member = memberService.getMember(mno);
+				vo.setAuthor(member.getMname());
+				vo.setEditable(false); // 이미 삭제된 댓글이므로 수정/삭제 버튼 x
+				
+				// 블로그 주인장이 작성한 댓글
+				if(mno == ownerMno) {
+					vo.setMaster(true);
+				}
+				
+
+				// 삭제된 댓글 확인.
+				if(vo.getDelyn().equals("y")) {
+					vo.setBgrcontent("삭제된 글입니다.");
+				}
+				
+				resMap.put("result", "SUCCESS"); //  성공
+				resMap.put("total", blogService.blogReplyList(vo.getBgno()).size()); //  갯수
+				resMap.put("data", vo); 
+			}
+			else {
+				resMap.put("result", "FAIL"); //  실패
+			}
+		}
 		
 		return resMap;
 	
