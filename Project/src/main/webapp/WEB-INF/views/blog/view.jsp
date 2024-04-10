@@ -54,8 +54,8 @@
 			      </h2>
 					<div id="collapseOne" class="accordion-collapse collapse">
 						<div class="accordion-body">
-							 <c:forEach var="vo" items="${retiredEmployees}">
-							 	    <a href="<%=request.getContextPath()%>/blog/other/${vo.blogHome}">${vo.mname}</a>
+							 <c:forEach var="user" items="${retiredEmployees}">
+							 	    <a href="<%=request.getContextPath()%>/blog/other/${user.mno}">${user.mname}</a>
 							 </c:forEach>
 						</div>
 					</div>
@@ -71,7 +71,7 @@
           			<div id="collapseTwo" class="accordion-collapse collapse show">
 			          <div class="accordion-body">
 			          	<c:forEach var="user" items="${entry.value}">
-			          		 <a href="<%=request.getContextPath()%>/blog/other/${vo.blogHome}">${user.mname}</a>
+			          		 <a href="<%=request.getContextPath()%>/blog/other/${user.mno}">${user.mname}</a>
 			          	</c:forEach>
 			          </div>
 		          </div>

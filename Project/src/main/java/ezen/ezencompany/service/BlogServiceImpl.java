@@ -11,11 +11,11 @@ import ezen.ezencompany.dao.BlogDAO;
 import ezen.ezencompany.vo.AttributeVO;
 import ezen.ezencompany.vo.BlogAttachVO;
 import ezen.ezencompany.vo.BlogReplyVO;
-import ezen.ezencompany.vo.BlogUserVO;
 import ezen.ezencompany.vo.BlogVO;
 import ezen.ezencompany.vo.CategoryVO;
 import ezen.ezencompany.vo.EmployeeOptionVO;
 import ezen.ezencompany.vo.FolderVO;
+import ezen.ezencompany.vo.MemberVO;
 
 @Service
 public class BlogServiceImpl implements BlogService {
@@ -29,18 +29,21 @@ public class BlogServiceImpl implements BlogService {
 	}
 
 	@Override
-	public BlogVO getLastOne(int mno) {
+	public BlogVO getLastOne(int mno, boolean force) {
+		if(force) {
+			return blogDAO.selectLastForce(mno);
+		}
 		return blogDAO.selectLast(mno);
 	}
 
 	// 
 	@Override
-	public List<BlogUserVO> blogUserListByRetired() {
+	public List<MemberVO> blogUserListByRetired() {
 			return blogDAO.selectRetirEmployees();
 	}
 	
 	@Override
-	public List<BlogUserVO> blogUserListByOption(int category, int attribute) {
+	public List<MemberVO> blogUserListByOption(int category, int attribute) {
 		return blogDAO.selectOptionEmployees(category, attribute);
 	}
 	

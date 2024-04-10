@@ -9,14 +9,18 @@
 </insert>
 	
 <select id="selectLast" parameterType="int" resultType="blogVo">
+	SELECT * FROM blog WHERE mno = #{mno} AND blockyn='n' ORDER BY bgno DESC LIMIT 1;
+</select>
+
+<select id="selectLastForce" parameterType="int" resultType="blogVo">
 	SELECT * FROM blog WHERE mno = #{mno} ORDER BY bgno DESC LIMIT 1;
 </select>
 
-<select id="selectRetireEmployees" resultType="blogUserVO">
+<select id="selectRetireEmployees" resultType="memberVO">
 	SELECT * FROM MEMBER WHERE nullif(mid, '') IS NOT NULL AND enabled=0;
 </select>
 
-<select id="selectOptionEmployees" parameterType="employeeOptionVO" resultType="blogUserVO">
+<select id="selectOptionEmployees" parameterType="employeeOptionVO" resultType="memberVO">
 	SELECT * FROM member as M 
 	LEFT JOIN employeeoption as E ON m.mno = e.mno 
 	WHERE E.cidx = #{cidx} AND E.aidx = #{aidx} AND M.enabled = 1;

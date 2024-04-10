@@ -9,11 +9,11 @@ import org.springframework.stereotype.Repository;
 import ezen.ezencompany.vo.AttributeVO;
 import ezen.ezencompany.vo.BlogAttachVO;
 import ezen.ezencompany.vo.BlogReplyVO;
-import ezen.ezencompany.vo.BlogUserVO;
 import ezen.ezencompany.vo.BlogVO;
 import ezen.ezencompany.vo.CategoryVO;
 import ezen.ezencompany.vo.EmployeeOptionVO;
 import ezen.ezencompany.vo.FolderVO;
+import ezen.ezencompany.vo.MemberVO;
 
 @Repository
 public class BlogDAO {
@@ -33,11 +33,15 @@ public class BlogDAO {
 			return sqlSession.selectOne(namespace+".selectLast", mno);
 		}
 		
-		public List<BlogUserVO> selectRetirEmployees(){
+		public BlogVO selectLastForce(int mno) {
+			return sqlSession.selectOne(namespace+".selectLastForce", mno);
+		}
+		
+		public List<MemberVO> selectRetirEmployees(){
 			return sqlSession.selectList(namespace+".selectRetireEmployees");
 		}
 		
-		public List<BlogUserVO> selectOptionEmployees(int cidx, int aidx){
+		public List<MemberVO> selectOptionEmployees(int cidx, int aidx){
 			EmployeeOptionVO paramVO = new EmployeeOptionVO();
 			paramVO.setCidx(cidx);
 			paramVO.setAidx(aidx);

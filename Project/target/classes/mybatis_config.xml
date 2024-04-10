@@ -5,7 +5,6 @@
 	<typeAliases>
 		<typeAlias type="ezen.ezencompany.vo.MemberVO" alias="memberVO"/>
 		<typeAlias type="ezen.ezencompany.vo.BoardVO" alias="boardVO"/>
-		<typeAlias type="ezen.ezencompany.vo.BlogUserVO" alias="blogUserVO"/>
 		<typeAlias type="ezen.ezencompany.vo.BlogVO" alias="blogVO"/>
 		<typeAlias type="ezen.ezencompany.vo.EmployeeOptionVO" alias="employeeOptionVO"/>
 		<typeAlias type="ezen.ezencompany.vo.CategoryVO" alias="categoryVO"/>

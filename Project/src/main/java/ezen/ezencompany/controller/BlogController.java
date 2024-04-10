@@ -32,7 +32,6 @@ import ezen.ezencompany.util.Path;
 import ezen.ezencompany.vo.BlogAttachVO;
 import ezen.ezencompany.vo.BlogNodeVO;
 import ezen.ezencompany.vo.BlogReplyVO;
-import ezen.ezencompany.vo.BlogUserVO;
 import ezen.ezencompany.vo.BlogVO;
 import ezen.ezencompany.vo.EmployeeOptionVO;
 import ezen.ezencompany.vo.FolderVO;
@@ -64,9 +63,9 @@ public class BlogController {
 
 		// 블로그 네비게이션
 		// 1. 퇴사자
-		List<BlogUserVO> retiredEmployees = blogService.blogUserListByRetired(); // 탈퇴한 사람목록
+		List<MemberVO> retiredEmployees = blogService.blogUserListByRetired(); // 탈퇴한 사람목록
 		// 2. blogView 정보.
-		HashMap<String, List<BlogUserVO>> blogUsers = new HashMap<String, List<BlogUserVO>>();
+		HashMap<String, List<MemberVO>> blogUsers = new HashMap<String, List<MemberVO>>();
 		// 내 옵션정보 가져옴
 		List<EmployeeOptionVO> myOptions = blogService.getAdditionalOptions(user.getMno());
 		HashMap<Integer, Integer> myOptionMap = new HashMap<Integer, Integer>();
@@ -81,7 +80,21 @@ public class BlogController {
 			if(myOptionMap.containsKey(category)) {
 				Integer attribute = myOptionMap.get(category);
 				String attributeName = blogService.getAttributeName(attribute);
-				List<BlogUserVO> blogUserList = blogService.blogUserListByOption(category, attribute);
+				List<MemberVO> blogUserList = blogService.blogUserListByOption(category, attribute);
+				
+				MemberVO myMember = null;
+				// 자신은 제외
+				for(MemberVO member : blogUserList) {
+					if(member.getMno() == user.getMno()) {
+						myMember = member;
+						break;
+					}
+				}
+				if(myMember != null) {
+					blogUserList.remove(myMember);
+				}
+				
+				
 				if(blogUserList.size() >0 ) {
 					blogUsers.put(attributeName, blogUserList);
 				}
@@ -97,7 +110,7 @@ public class BlogController {
 		model.addAttribute("profileImage", profileSrc);
 		
 		// 가장최근에 쓴 블로그
-		BlogVO vo = blogService.getLastOne(user.getMno());
+		BlogVO vo = blogService.getLastOne(user.getMno(), true);
 		model.addAttribute("vo", vo);
 		model.addAttribute("bno", vo.getBgno()); // bgno
 		
@@ -234,12 +247,15 @@ public class BlogController {
 	@GetMapping(value="/other/{mno}")
 	public String other(@PathVariable int mno) {
 		
-		int bgno = 0;
+		// 가장최근에 쓴 블로그
+		BlogVO vo = blogService.getLastOne(mno, false);
+		if(vo == null) {
+			return "redirect:/blog/home";
+		}
 		
-		//mno의 최신글을 가져온다.
+		//가장 최근에쓴 블로그로 리다이렉트시킴.
 		
-		
-		return "redirect:/blog/page/" + Integer.toString(bgno);
+		return "redirect:/blog/page/" + Integer.toString(vo.getBgno());
 	}
 	
 
@@ -252,9 +268,9 @@ public class BlogController {
 		// 상단 정보 ( 내정보기반)
 		// 블로그 네비게이션
 		// 1. 퇴사자
-		List<BlogUserVO> retiredEmployees = blogService.blogUserListByRetired(); // 탈퇴한 사람목록
+		List<MemberVO> retiredEmployees = blogService.blogUserListByRetired(); // 탈퇴한 사람목록
 		// 2. blogView 정보.
-		HashMap<String, List<BlogUserVO>> blogUsers = new HashMap<String, List<BlogUserVO>>();
+		HashMap<String, List<MemberVO>> blogUsers = new HashMap<String, List<MemberVO>>();
 		// 내 옵션정보 가져옴
 		List<EmployeeOptionVO> myOptions = blogService.getAdditionalOptions(myUser.getMno());
 		HashMap<Integer, Integer> myOptionMap = new HashMap<Integer, Integer>();
@@ -269,7 +285,21 @@ public class BlogController {
 			if(myOptionMap.containsKey(category)) {
 				Integer attribute = myOptionMap.get(category);
 				String attributeName = blogService.getAttributeName(attribute);
-				List<BlogUserVO> blogUserList = blogService.blogUserListByOption(category, attribute);
+				List<MemberVO> blogUserList = blogService.blogUserListByOption(category, attribute);
+				
+				MemberVO myMember = null;
+				// 자신은 제외
+				for(MemberVO member : blogUserList) {
+					if(member.getMno() == myMno) {
+						myMember = member;
+						break;
+					}
+				}
+				if(myMember != null) {
+					blogUserList.remove(myMember);
+				}
+				
+				
 				if(blogUserList.size() >0 ) {
 					blogUsers.put(attributeName, blogUserList);
 				}
