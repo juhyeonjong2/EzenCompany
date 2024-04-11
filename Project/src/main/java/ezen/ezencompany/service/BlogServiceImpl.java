@@ -82,7 +82,7 @@ public class BlogServiceImpl implements BlogService {
 			if(attributeMap.containsKey(aidx))
 			{
 				AttributeVO aVo = attributeMap.get(aidx);
-				vo.setAttributeKey(aVo.getKey());
+				vo.setAttributeKey(aVo.getOtkey());
 				vo.setAttributeValue(aVo.getValue());
 			}
 		}

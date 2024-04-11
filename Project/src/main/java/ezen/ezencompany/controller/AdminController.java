@@ -1,19 +1,15 @@
 package ezen.ezencompany.controller;
 
 import java.io.File;
-
 import java.io.IOException;
 import java.net.InetAddress;
-
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
@@ -22,18 +18,27 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import ezen.ezencompany.service.AdminService;
+import ezen.ezencompany.service.ManagementService;
 import ezen.ezencompany.service.MemberService;
 import ezen.ezencompany.util.Path;
 import ezen.ezencompany.vo.AttributeVO;
+import ezen.ezencompany.vo.BlogReplyVO;
+import ezen.ezencompany.vo.BlogVO;
+import ezen.ezencompany.vo.CategoryVO;
 import ezen.ezencompany.vo.MemberVO;
+import ezen.ezencompany.vo.UserVO;
 
 @RequestMapping(value="/admin")
 @Controller
@@ -44,6 +49,9 @@ public class AdminController {
 	
 	@Autowired
 	AdminService adminService;
+	
+	@Autowired
+	ManagementService managementService;
 	
 	//이메일 보내는 객체
 	@Autowired
@@ -322,4 +330,121 @@ public class AdminController {
 		return "true";
 		
 	}
+	
+	
+	
+	////// board /////////
+	@RequestMapping(value="/board")
+	public String board(Model model) {
+		
+		
+		return "admin/board";
+	}
+	
+	///// category //////////
+	@RequestMapping(value="/category")
+	public String category(Model model) {
+		List<CategoryVO> list = managementService.getCategorys();
+		
+		model.addAttribute("categorys",list);
+		
+		return "admin/category";
+	}
+	
+	@RequestMapping(value="/category/info", method=RequestMethod.GET)
+	@ResponseBody
+	public CategoryVO categoryInfo(int cidx) {
+		
+		return managementService.getCategory(cidx);
+	}
+	
+	
+	@RequestMapping(value = "/category/write", method = RequestMethod.POST)
+	public String categoryWriteOk(CategoryVO vo) {
+		
+		int result = managementService.addCategory(vo);
+		
+		// write완료후 리로드하도록 category로 보냄.
+		return "redirect:/admin/category"; 
+	}
+	
+	@RequestMapping(value = "/category/modify", method = RequestMethod.POST)
+	public String categoryModifyOk(CategoryVO vo) {
+	
+		int result = managementService.modifyCategory(vo);
+		
+		// write완료후 리로드하도록 category로 보냄.
+		return "redirect:/admin/category"; 
+	}
+	
+	@RequestMapping(value = "/category/remove", method = RequestMethod.POST)
+	public String categoryRemoveOk(int cidx) {
+		
+		int result = managementService.removeCategory(cidx);
+		
+		// write완료후 리로드하도록 category로 보냄.
+		return "redirect:/admin/category"; 
+	}
+	
+
+	//// attribute ///////
+	@RequestMapping(value="/attribute")
+	public String attribute(Model model) {
+		
+		List<CategoryVO> list = managementService.getCategorys();
+		model.addAttribute("categorys",list);
+		
+		return "admin/attribute";
+	}
+	
+	@GetMapping(value="/attributes/{cidx}")
+	public String attributeList(Model model, @PathVariable int cidx) {
+		List<AttributeVO> list = managementService.getAttributes(cidx);
+		model.addAttribute("attributes",list);
+		
+		CategoryVO category = managementService.getCategory(cidx);
+		model.addAttribute("category",category);
+		
+		return "admin/attributeList";
+	}
+	
+	@RequestMapping(value="/attribute/info", method=RequestMethod.GET)
+	@ResponseBody
+	public AttributeVO attributeInfo(int aidx) {
+		return managementService.getAttribute(aidx);
+	}
+	
+
+	@RequestMapping(value = "/attribute/write", method = RequestMethod.POST)
+	public String attributeWriteOk(AttributeVO vo) {
+		
+		int result = managementService.addAttribute(vo);
+		return "redirect:/admin/attributes/" + vo.getCidx(); 
+	}
+	
+	@RequestMapping(value = "/attribute/modify", method = RequestMethod.POST)
+	public String attributeModifyOk(AttributeVO vo) {
+	
+		System.out.println(vo);
+		System.out.println(vo.getCidx());
+		System.out.println(vo.getAidx());
+		System.out.println(vo.getOtkey());
+		System.out.println(vo.getValue());
+		
+		
+		
+		int result = managementService.modifyAttribute(vo);
+		return "redirect:/admin/attributes/" + vo.getCidx();
+	}
+	
+	@RequestMapping(value = "/attribute/remove", method = RequestMethod.POST)
+	public String attributeRemoveOk(int aidx) {
+		AttributeVO vo = managementService.getAttribute(aidx);
+		int cidx = vo.getCidx();
+		
+		int result = managementService.removeAttribute(aidx);
+		return "redirect:/admin/attributes/" + cidx;
+	}
+	
+	
 }

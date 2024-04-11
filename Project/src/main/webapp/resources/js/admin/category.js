@@ -26,73 +26,61 @@
     /**
      * Initiate Datatables
      */
-    const datatables = select('.datatable', true);
-    datatables.forEach(datatable => {
-    new simpleDatatables.DataTable(datatable, {
-        perPageSelect: [5, 10, 15, ["All", -1]],
-        /*
-        labels:{
-        info: "총 {rows}개"
-        },*/
-
-        /*
-        columns: [{
-            select: 2,
-            sortSequence: ["desc", "asc"]
-        },
-        {
-            select: 3,
-            sortSequence: ["desc"]
-        },
-        {
-            select: 4,
-            cellClass: "green",
-            headerClass: "red"
-        }
-        ]*/
-    });
-    })
-
+     const datatables = select('.datatable', true);
+     datatables.forEach(datatable => {new simpleDatatables.DataTable(datatable, { perPageSelect: [5, 10, 15, ["All", -1]], });})
+    
 
     /**
      * Initiate Modals
      */
-    const DetailModal = document.getElementById('employeeDetailModal')
-    if (employeeDetailModal) {
-        employeeDetailModal.addEventListener('show.bs.modal', event => 
+	  // 분류 수정 팝업 (category 넘겨받기)
+     const categoryDetailModal = document.getElementById('categoryDetailModal')
+     if (categoryDetailModal) 
+     {
+        categoryDetailModal.addEventListener('show.bs.modal', event => 
         {
-            // Button that triggered the modal
-            const button = event.relatedTarget;
-            // Extract info from data-bs-* attributes
-            const mno = button.getAttribute('data-bs-mno');
-            console.log(mno);
-            // If necessary, you could initiate an Ajax request here
-            // and then do the updating in a callback.
-            // Update the modal's content.
-           
-           // const modalTitle = exampleModal.querySelector('.modal-title')
-            //const modalBodyInput = exampleModal.querySelector('.modal-body input')
-
-            //modalTitle.textContent = `New message to ${recipient}`
-            //modalBodyInput.value = recipient
-        });
-        
-    }
-
-
-
-
-
-     // 분류 수정 팝업 (category 넘겨받기)
-     const categoryEditModal = document.getElementById('categoryEditModal')
-     if (categoryEditModal) {
-        categoryEditModal.addEventListener('show.bs.modal', event => 
-         {
              const button = event.relatedTarget;             
              const category = button.getAttribute('data-bs-category');
-             console.log(category);
- 
-             // to do
-         });   
-     }
+             
+             $("#categoryDetail_cidx").val(category);
+             
+             $.ajax(
+			{
+				url: "/ezencompany/admin/category/info",
+				type: "get",
+				async:false,
+				data : {cidx:category},
+				success: function(resData) {
+					if(resData != null)
+					{
+						$("#categoryDetail_cidx").val(resData.cidx);
+						$("#categoryDetail_code").val(resData.code);
+						$("#categoryDetail_value").val(resData.value);
+						$("#categoryDetail_blogView").val(resData.blogView);
+					}
+				},
+				error: function(error) {
+		      		alert(error);
+		    	}
+			});
+		
+    	});
+	 }
+	 
+	  // 분류 삭제 팝업 (category 찾기)
+     const categoryRemoveModal = document.getElementById('categoryRemoveModal')
+     if (categoryRemoveModal) 
+     {
+        categoryRemoveModal.addEventListener('show.bs.modal', event => 
+        { 
+             // 상위 팝업에 있는 데이터 들고오기.
+             let category = $("#categoryDetail_cidx").val();
+             $("#categoryRemoveModal_cidx").val(category);
+		
+    	});
+	 }
+
+     
   })();
+  
+  

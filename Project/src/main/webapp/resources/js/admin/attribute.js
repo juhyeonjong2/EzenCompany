@@ -57,43 +57,69 @@
     /**
      * Initiate Modals
      */
-
-    // 속성 추가 팝업 (category 넘겨받기)
-    const attributeAddModal = document.getElementById('attributeAddModal')
-    if (attributeAddModal) {
+     // 속성 추가 팝업 (category 넘겨받기)
+     
+     const attributeAddModal = document.getElementById('attributeAddModal')
+     if (attributeAddModal) 
+     {
         attributeAddModal.addEventListener('show.bs.modal', event => 
         {
-            // Button that triggered the modal
-            const button = event.relatedTarget;
-            // Extract info from data-bs-* attributes
-            const category = button.getAttribute('data-bs-category');
-            console.log(category);
-            // If necessary, you could initiate an Ajax request here
-            // and then do the updating in a callback.
-            // Update the modal's content.
-           
-           // const modalTitle = exampleModal.querySelector('.modal-title')
-            //const modalBodyInput = exampleModal.querySelector('.modal-body input')
-
-            //modalTitle.textContent = `New message to ${recipient}`
-            //modalBodyInput.value = recipient
-        });
-        
-    }
-
-     // 속성 수정 팝업 (category, attribute key 넘겨받기)
-     const attributeEditModal = document.getElementById('attributeEditModal')
-     if (attributeEditModal) {
-        attributeEditModal.addEventListener('show.bs.modal', event => 
-         {
+             let cidx = $("#attributeList_cidx").val();
+             $("#attributeAdd_cidx").val(cidx);
+    	});
+	 }
+     
+      // 속성 수정 팝업 (category/ attribute 넘겨받기)
+     const attributeDetailModal = document.getElementById('attributeDetailModal')
+     if (attributeDetailModal) 
+     {
+        attributeDetailModal.addEventListener('show.bs.modal', event => 
+        {
              const button = event.relatedTarget;             
              const category = button.getAttribute('data-bs-category');
              console.log(category);
 
-             const attribute = button.getAttribute('data-bs-attribute');
+             let attribute = button.getAttribute('data-bs-attribute');
              console.log(attribute);
              
-             // to do
-         });   
-     }
+             $("#attributeDetail_cidx").val(category);
+             $("#attributeDetail_aidx").val(attribute);
+             
+             $.ajax(
+			{
+				url: "/ezencompany/admin/attribute/info",
+				type: "get",
+				async:false,
+				data : {aidx:attribute},
+				success: function(resData) {
+					if(resData != null)
+					{
+						$("#attributeDetail_cidx").val(resData.cidx);
+						$("#attributeDetail_aidx").val(resData.aidx);
+						$("#attributeDetail_key").val(resData.otkey);
+						$("#attributeDetail_value").val(resData.value);
+					}
+				},
+				error: function(error) {
+		      		alert(error);
+		    	}
+			});
+		
+    	});
+	 }
+	 
+	  // 분류 삭제 팝업 
+     const attributeRemoveModal = document.getElementById('attributeRemoveModal')
+     if (attributeRemoveModal) 
+     {
+        attributeRemoveModal.addEventListener('show.bs.modal', event => 
+        { 
+             // 상위 팝업에 있는 데이터 들고오기.
+             let aidx = $("#attributeDetail_aidx").val();
+             $("#attributeRemove_aidx").val(aidx);
+		
+    	});
+	 }
+     
+     
   })();
