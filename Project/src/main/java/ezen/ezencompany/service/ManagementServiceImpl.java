@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import ezen.ezencompany.dao.ManagementDAO;
 import ezen.ezencompany.vo.AttributeVO;
+import ezen.ezencompany.vo.BoardTypeVO;
 import ezen.ezencompany.vo.CategoryVO;
 
 @Service
@@ -68,6 +69,11 @@ public class ManagementServiceImpl implements ManagementService {
 	@Override
 	public int removeAttribute(int aidx) {
 		return managementDAO.deleteAttribute(aidx);
+	}
+
+	@Override
+	public List<BoardTypeVO> getBoardTypeList() {
+		return managementDAO.selectAllBoardType();
 	}
 
 	

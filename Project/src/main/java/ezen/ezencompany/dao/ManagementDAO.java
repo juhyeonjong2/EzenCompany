@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ezen.ezencompany.vo.AttributeVO;
+import ezen.ezencompany.vo.BoardTypeVO;
 import ezen.ezencompany.vo.CategoryVO;
 
 @Repository
@@ -62,6 +63,11 @@ public class ManagementDAO {
 	
 	public int deleteAttribute(int aidx) {
 		return sqlSession.delete(namespace+".deleteAttribute", aidx);
+	}
+	
+	// 게시판 관리
+	public List<BoardTypeVO> selectAllBoardType(){
+		return sqlSession.selectList(namespace+".selectAllBoardType");
 	}
 	
 }

@@ -3,6 +3,7 @@ package ezen.ezencompany.service;
 import java.util.List;
 
 import ezen.ezencompany.vo.AttributeVO;
+import ezen.ezencompany.vo.BoardTypeVO;
 import ezen.ezencompany.vo.CategoryVO;
 
 public interface ManagementService {
@@ -18,5 +19,10 @@ public interface ManagementService {
 	int addAttribute(AttributeVO vo);
 	int modifyAttribute(AttributeVO vo);
 	int removeAttribute(int aidx);
+	
+	
+	List<BoardTypeVO> getBoardTypeList();
+	
+	
 	
 }

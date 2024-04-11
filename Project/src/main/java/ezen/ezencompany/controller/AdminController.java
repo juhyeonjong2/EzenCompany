@@ -18,8 +18,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,16 +27,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import ezen.ezencompany.dto.BoardTypeViewDTO;
 import ezen.ezencompany.service.AdminService;
 import ezen.ezencompany.service.ManagementService;
 import ezen.ezencompany.service.MemberService;
 import ezen.ezencompany.util.Path;
 import ezen.ezencompany.vo.AttributeVO;
-import ezen.ezencompany.vo.BlogReplyVO;
-import ezen.ezencompany.vo.BlogVO;
+import ezen.ezencompany.vo.BoardTypeVO;
 import ezen.ezencompany.vo.CategoryVO;
 import ezen.ezencompany.vo.MemberVO;
-import ezen.ezencompany.vo.UserVO;
 
 @RequestMapping(value="/admin")
 @Controller
@@ -331,11 +328,26 @@ public class AdminController {
 		
 	}
 	
-	
-	
 	////// board /////////
 	@RequestMapping(value="/board")
 	public String board(Model model) {
+		//1. boardType 목록을 가져옴
+		List<BoardTypeVO> boardList = managementService.getBoardTypeList();
+		
+		
+		List<BoardTypeViewDTO> boardViewList = new ArrayList<BoardTypeViewDTO>();
+		for(BoardTypeVO vo : boardList) {
+			
+			BoardTypeViewDTO dto = new BoardTypeViewDTO();
+			dto.setBindex(vo.getBindex());
+			dto.setBtname(vo.getBtname());
+			
+			// read 권한 읽기 -> ws comment -  여기 작업중.
+			//managementService.getReader(dto.getBindex());
+			
+			
+			
+		}
 		
 		
 		return "admin/board";
@@ -424,14 +436,6 @@ public class AdminController {
 	
 	@RequestMapping(value = "/attribute/modify", method = RequestMethod.POST)
 	public String attributeModifyOk(AttributeVO vo) {
-	
-		System.out.println(vo);
-		System.out.println(vo.getCidx());
-		System.out.println(vo.getAidx());
-		System.out.println(vo.getOtkey());
-		System.out.println(vo.getValue());
-		
-		
 		
 		int result = managementService.modifyAttribute(vo);
 		return "redirect:/admin/attributes/" + vo.getCidx();

@@ -47,4 +47,11 @@
 		DELETE FROM attribute WHERE aidx = #{aidx};
 	</delete>
 	
+	
+	<select id="selectAllBoardType"  resultType="boardTypeVO">
+		SELECT * FROM boardtype;
+	</select>
+	
+	
+	
 </mapper>
