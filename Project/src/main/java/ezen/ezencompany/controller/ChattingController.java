@@ -111,4 +111,10 @@ public class ChattingController {
 	public String aa() {
 		return "admin/chattingEx";
 	}
+	
+	//연습용 채팅방2
+	@RequestMapping(value = "/chat2")
+	public String aaa() {
+		return "admin/aaaaa";
+	}
 }

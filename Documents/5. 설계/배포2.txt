@@ -1,0 +1,57 @@
+배포 할 때 디비에서 뭐 해야함 
+
+크리에이티브 데이터베이스
+use 데이터베이스
+테이블  생성 + 데이터 집어넣고 배포
+
+배포할때는 경로 수정해야함(mysql) 공유폴더의 참고자료 참고
+ip/스키마/유저네임/비번(@rootAWSdb)
+
+
+
+
+
+
+
+파일질라 -> 새사이트 -> 프로토콜을 sftp로 수정 -> 호스트는 퍼블릭ip주소 -> 포트는 22 -> 로그온 유형은 키파일 -> ec2-user(홈페이지 연결-> ec2인스턴스연결의 사용자 이름)
+-> 연결
+
+최상위폴더에서 -> usr / local / 그 안에다가 배포파일을 집어넣는다
+
+-> ec2에서 도커작업 -> 키페어가 있는 위치에서 -> cmd -> ssh클라이언트 주소로 접속 -> 도커 cp .... 해서 
+
+
+
+
+
+
+인스턴스 만듬 -> 키파일에서 cmd 열어서 mysql다운받음 -> 설정도 같이함 -> 그 정보대로 워크벤치에 만들어주고 데이터 집어넣음 -> 
+배포파일을 만듬(루트에서 mysql경로 수정해서(ip,스키마,아디,비번)) -> 파일질라 쓰기권한 주는 cmd작성 ->파일질라 작업 -> 그 후 배포파일 찾아서 usr/local에서 더블클릭해서 집어넣고 -> 도커 작업 들어가면 된다
+
+
+도커 작업(이전에 도커 만들고 톰캣 다운로드 해야함)
+[ec2-user@ip-172-31-40-58 ~]$ docker run –it –d --name ezen –p 80:8080 tomcat:9.0 //띄어쓰기 때문에 안됨
+docker: invalid reference format.
+See 'docker run --help'.
+[ec2-user@ip-172-31-40-58 ~]$ docker run -it -d --name ezne -p 80:8080 tomcat:9.0
+c2ac46f41491bddb4bc289f4f2a7e6d520812fae324dfe2d26aedff47727f548
+[ec2-user@ip-172-31-40-58 ~]$ docker rm --force ezne
+ezne
+[ec2-user@ip-172-31-40-58 ~]$ docker run -it -d --name ezen -p 80:8080 tomcat:9.0
+be568b76048fb6a311b811fb08bf124cb4561aaf2f519b7c6087c63923e1fec7
+[ec2-user@ip-172-31-40-58 ~]$ docker ps
+CONTAINER ID   IMAGE        COMMAND             CREATED          STATUS          PORTS                                   NAMES
+be568b76048f   tomcat:9.0   "catalina.sh run"   17 seconds ago   Up 15 seconds   0.0.0.0:80->8080/tcp, :::80->8080/tcp   ezen
+[ec2-user@ip-172-31-40-58 ~]$ docker exec -it ezen bash
+root@be568b76048f:/usr/local/tomcat# ls
+bin           conf             lib      logs            NOTICE     RELEASE-NOTES  temp     webapps.dist
+BUILDING.txt  CONTRIBUTING.md  LICENSE  native-jni-lib  README.md  RUNNING.txt    webapps  work
+root@be568b76048f:/usr/local/tomcat# cp -r webapps.dist/* webapps
+root@be568b76048f:/usr/local/tomcat# exit
+exit
+[ec2-user@ip-172-31-40-58 ~]$ cd /usr/local/
+[ec2-user@ip-172-31-40-58 local]$ ls
+Project.war  bin  etc  games  include  lib  lib64  libexec  sbin  share  src
+[ec2-user@ip-172-31-40-58 local]$ docker cp Project.war ezen:/usr/local/tomcat/webapps
+Successfully copied 25.9MB to ezen:/usr/local/tomcat/webapps
+[ec2-user@ip-172-31-40-58 local]$

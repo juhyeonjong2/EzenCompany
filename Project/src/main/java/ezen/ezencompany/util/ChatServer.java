@@ -1,10 +1,12 @@
-package ezen.ezencompany.Server;
+package ezen.ezencompany.util;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -16,6 +18,7 @@ import javax.websocket.server.ServerEndpoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.socket.WebSocketSession;
 
 import ezen.ezencompany.service.ChattingService;
 import ezen.ezencompany.vo.UserVO;
@@ -31,6 +34,20 @@ public class ChatServer {
 	
 	// 현재 채팅 서버에 접속한 클라이언트(WebSocket Session) 목록
 	// static 반드시 붙여야 작동한다
+	
+	//로그인 한 전체 session 리스트
+	List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
+	// 현재 로그인 중인 개별 유저
+	Map<String, WebSocketSession> users = new ConcurrentHashMap<String, WebSocketSession>();
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//여기서 Session은 기존 세션과 다르게 클라이언트 정보를 가지고 있다(인터페이스)
 	private static List<Session> list = new ArrayList<Session>();
@@ -78,30 +95,30 @@ public class ChatServer {
 			System.out.println("메세지 전송");
 			
 			//메세지를 db에 기록해줌
-			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			UserVO user2 = (UserVO) authentication.getPrincipal();
-			int myMno = user2.getMno();
+			//Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			//UserVO user2 = (UserVO) authentication.getPrincipal();
+			//int myMno = user2.getMno();
 			
-			HashMap<String, Object> map = new HashMap<>();
-			map.put("anotherMno", anotherMno); //상대방의 mno
-			map.put("myMno", 2); //나의 mno
+			//HashMap<String, Object> map = new HashMap<>();
+			//map.put("anotherMno", anotherMno); //상대방의 mno
+		//	map.put("myMno", 2); //나의 mno
 			
 			//채팅방 찾기
-			String chattingroom = chattingService.getRoom(map);
+			//String chattingroom = chattingService.getRoom(map);
 			
-			HashMap<String, Object> chatting = new HashMap<>();
-			map.put("chattingroom", chattingroom); //채팅방 주소
-			map.put("myMno", myMno); //나의 mno
-			map.put("chat", chat);
+			//HashMap<String, Object> chatting = new HashMap<>();
+			//map.put("chattingroom", chattingroom); //채팅방 주소
+			//map.put("myMno", myMno); //나의 mno
+			//map.put("chat", chat);
 			
 			//db저장
-			chattingService.chatting(chatting);
+			//chattingService.chatting(chatting);
 			
 			// 누군가 메세지를 전송
 			for (Session s : list) {
 				if (s != session) { // 현재 접속자가 아닌 나머지 사람들
 					try {
-						s.getBasicRemote().sendText("2#" + myMno + ":" + chat);
+						s.getBasicRemote().sendText("2#" + anotherMno + ":" + chat);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
