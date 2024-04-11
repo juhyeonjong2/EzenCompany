@@ -15,5 +15,6 @@
 		<typeAlias type="ezen.ezencompany.vo.ChatVO" alias="chatVO"/>
 		<typeAlias type="ezen.ezencompany.vo.BoardAttachVO" alias="boardAttachVO"/>
 		<typeAlias type="ezen.ezencompany.vo.BlogAttachVO" alias="blogAttachVO"/>
+		<typeAlias type="ezen.ezencompany.vo.BoardReplyVO" alias="boardReplyVO"/>
 	</typeAliases>
 </configuration>

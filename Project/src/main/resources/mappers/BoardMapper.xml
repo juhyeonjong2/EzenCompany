@@ -57,13 +57,47 @@
  		 VALUES ( #{bfrealname}, #{bforeignname}, #{bno})
  	</insert> 
 	
-	<select id="downloadfile" parameterType="boardAttachVO">
-	SELECT 
-		STORED_FILE_NAME,
-		ORG_FILE_NAME
-	FROM MP_FILE
-	WHERE FILE_NO = #{FILE_NO}
-</select>
-		
+	<select id="selectFiles" parameterType="int" resultType="boardAttachVO">
+	SELECT * FROM boardattach WHERE bno=#{bno}
+	</select>
+
+	<select id="selectFile" parameterType="int" resultType="boardAttachVO">
+	SELECT * FROM boardattach WHERE bfno=#{bfno}
+	</select>
+	
+	
+	
+	
+	
+	
+
+	<select id="selectReply" parameterType="int" resultType="boardReplyVO" >
+		SELECT * FROM boardreply WHERE rno = #{rno};
+	</select>
+	
+	<select id="selectReplyList" parameterType="int" resultType="boardReplyVO">
+		SELECT * FROM blogreply WHERE bno = #{bno};
+	</select>
+	
+	<insert id="insertReply" parameterType="boardReplyVO" useGeneratedKeys="true" keyProperty="rno">
+		INSERT INTO boardreply(rpno, rcontent, rdate, bno, mno, delyn) VALUES(#{rpno},#{rcontent}, now(), #{bno}, #{mno}, 'n');
+	</insert>
+	
+	<update id="removeReply" parameterType="int">
+		UPDATE boardreply SET delyn = 'y' WHERE rno = #{rno};
+	</update>
+	
+	<update id="modifyReply" parameterType="boardReplyVO">
+		UPDATE boredreply 
+		SET rcontent = #{rcontent} 
+		WHERE rno = #{rno};
+	</update>
+	
+	
+	
+	
+	
+	
+	
 	
 </mapper>
