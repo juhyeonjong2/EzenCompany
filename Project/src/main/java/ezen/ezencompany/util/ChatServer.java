@@ -95,24 +95,24 @@ public class ChatServer {
 			System.out.println("메세지 전송");
 			
 			//메세지를 db에 기록해줌
-			//Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			//UserVO user2 = (UserVO) authentication.getPrincipal();
-			//int myMno = user2.getMno();
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			UserVO user2 = (UserVO) authentication.getPrincipal();
+			int myMno = user2.getMno();
 			
-			//HashMap<String, Object> map = new HashMap<>();
-			//map.put("anotherMno", anotherMno); //상대방의 mno
-		//	map.put("myMno", 2); //나의 mno
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("anotherMno", anotherMno); //상대방의 mno
+			map.put("myMno", 2); //나의 mno
 			
 			//채팅방 찾기
-			//String chattingroom = chattingService.getRoom(map);
+			String chattingroom = chattingService.getRoom(map);
 			
-			//HashMap<String, Object> chatting = new HashMap<>();
-			//map.put("chattingroom", chattingroom); //채팅방 주소
-			//map.put("myMno", myMno); //나의 mno
-			//map.put("chat", chat);
+			HashMap<String, Object> chatting = new HashMap<>();
+			map.put("chattingroom", chattingroom); //채팅방 주소
+			map.put("myMno", myMno); //나의 mno
+			map.put("chat", chat);
 			
 			//db저장
-			//chattingService.chatting(chatting);
+			chattingService.chatting(chatting);
 			
 			// 누군가 메세지를 전송
 			for (Session s : list) {

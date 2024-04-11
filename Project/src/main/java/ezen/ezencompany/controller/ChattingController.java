@@ -64,11 +64,6 @@ public class ChattingController {
 		return profile;
 	}
 	
-	
-	
-	
-	
-	
 	//채팅팝업 사원 디테일 리스트(모든 사원)
 	@RequestMapping(value = "/chattingStart", method = RequestMethod.GET)
 	@ResponseBody 
@@ -105,6 +100,33 @@ public class ChattingController {
 		}
 	}
 	
+	//채팅을 친 경우
+	@RequestMapping(value = "/sendChat", method = RequestMethod.GET)
+	@ResponseBody 
+	public String sendChat(int anotherMno, String chat) {
+		
+		//메세지를 db에 기록해줌
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVO user = (UserVO) authentication.getPrincipal();
+		int myMno = user.getMno();
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("anotherMno", anotherMno); //상대방의 mno
+		map.put("myMno", myMno); //나의 mno
+		
+		//채팅방 찾기
+		String chattingroom = chattingService.getRoom(map);
+		
+		HashMap<String, Object> chatting = new HashMap<>();
+		chatting.put("chattingRoom", chattingroom); //채팅방 주소
+		chatting.put("myMno", myMno); //나의 mno
+		chatting.put("chat", chat);
+		
+		//db저장
+		chattingService.chatting(chatting);
+		
+		return "true";
+	}
 	
 	//연습용 채팅방
 	@RequestMapping(value = "/chat")

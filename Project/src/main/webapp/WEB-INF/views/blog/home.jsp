@@ -33,6 +33,8 @@
 	
 </head>
 <body>
+	<!-- 소켓 -->
+	<%@ include file="../include/socketHeader.jsp"%>
 	<!-- header -->
 	<%@ include file="../include/blogHeader.jsp"%>
 	<!-- sidebar -->

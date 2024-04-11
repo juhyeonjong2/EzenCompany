@@ -15,27 +15,37 @@ $(document).ready(function(){
     socket = sock;
 
     // 데이터를 전달 받았을때 
-    sock.onmessage = onMessage; // toast 생성
+    sock.onmessage = onMessage;
+    
+	//채팅창이 열렸을 때 나에게 메세지가 온 경우
+	function onMessage(evt){
+	    var evt = evt.data;
+	    let data = evt.split(',');
+	    profile = "<%=request.getContextPath()%>/resources/img/MemberIcon.png"
+	    let type = data[0]; //채팅,댓글
+	    let target = data[1]; //받은 사람 사용할지는 모름
+	    let content = data[2];//내용
+	    let url = data[3]; //사용할지는 모름
+		console.log(type);
+		if(type == "채팅"){
+			let html = '<div class="chatting_other_msg">'
+         		 + '<div class="chatting_profile">'
+         		 + '<img src="'
+         		 +  profile
+         		 + '" width="30" height="30" alt="Profile" class="rounded-circle">'
+         		 + '</div> <div class="msg">'
+         		 + content
+         		 + '</div> </div>'
+        	$('.chatting_room').append(html);	
+		}
+	    
+	}//메세지가 온 경우
 
 });
 
-// toast생성 및 추가
-function onMessage(evt){
-    var data = evt.data;
-    // toast
-    let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
-    toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";
-    toast += "<small class='text-muted'>just now</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>";
-    toast += "<span aria-hidden='true'>&times;</span></button>";
-    toast += "</div> <div class='toast-body'>" + data + "</div></div>";
-    $("#msgStack").append(toast);   // msgStack div에 생성한 toast 추가
-    $(".toast").toast({"animation": true, "autohide": false});
-    $('.toast').toast('show');
-};	
 </script>
 </head>
 <body>
-	<div id="msgStack"></div>
-	11
+	<div id="msgStack">웹소켓연결</div>
 </body>
 </html>

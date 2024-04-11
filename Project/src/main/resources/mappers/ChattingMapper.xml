@@ -8,7 +8,7 @@
 	</select>
 	
 	<select id="detaleList" resultType="MemberVO">
-		select distinct m.mno, aidx, m.mname from member m inner join employeeoption e on m.mno = e.mno where cidx = 1;
+		select distinct m.mno, aidx, m.mname, m.mid from member m inner join employeeoption e on m.mno = e.mno where cidx = 1;
 	</select>
 	
 	<select id="getRoom" parameterType="java.util.Map" resultType="String">
@@ -34,6 +34,6 @@
 	
 	<insert id="chatting" parameterType="java.util.Map">
 		INSERT INTO chatting (chattingRoom, cdate, mno, chat) VALUES
-		    (#{chattingroom}, now(), #{myMno}, #{chat});
+		    (#{chattingRoom}, now(), #{myMno}, #{chat});
 	</insert>
 </mapper>

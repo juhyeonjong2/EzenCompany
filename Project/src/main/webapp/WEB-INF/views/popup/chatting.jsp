@@ -90,10 +90,10 @@
     	//채팅 팝업을 연 경우
     	chattingPopup.addEventListener('show.bs.modal', event => 
         {
-        	
             $.ajax({
             	url: "<%=request.getContextPath()%>/chatting/chattingList",
             	success:function(list){
+            		console.log(111);
             		//재생성 방지를 위해 실행될때마다 비워줌	
 			        $('.chatttingList').empty();
 			        //여기서 1차 반복문
@@ -124,6 +124,8 @@
 		                    		 		   + detaleList[j].mno
 		                    		 		   + '" data-bs-value="'
 		                    		 		   + list[i].value
+		                    		 		   + '" data-bs-mid="'
+		                    		 		   + detaleList[j].mid
 		                    		 		   + '" data-bs-img="MemberIcon.png" data-bs-name="'
 		                    		 		   + detaleList[j].mname
 		                    		 		   + '">' 
@@ -188,6 +190,7 @@
             const value = button.getAttribute('data-bs-value');
             const name = button.getAttribute('data-bs-name');
             const img = button.getAttribute('data-bs-img');
+            const mid = button.getAttribute('data-bs-mid');
             $(".cName").text(name);
             $(".cOption").text(value);
             
@@ -235,72 +238,55 @@
             	}//success
             });// ajax끝
             
-            
-            
-            
-            //웹소켓 작업
-            //채팅 서버 주소
-            let url = "ws://localhost:8080/ezencompany/chatserver";
-            //웹 소켓
-            let ws;
-                 
-     		// 연결
-    	   	ws = new WebSocket(url);
-    	   	// 소켓 이벤트 매핑
-    	   	ws.onopen = function (evt) {
-    	   		console.log('서버 연결 성공');	   				
-    	   		// 현재 사용자가 입장했다고 서버에게 통지(유저명 전달)
-    	   		// -> 1#유저명
-    			ws.send('1#' + name + '#'); //이건 서버 이벤트가 아닌 메소드이다(send는)
-    		};
-            
-            //메세지를 보낸경우
-    		ws.onmessage = function (evt) {
-    			let index = evt.data.indexOf("#", 2);
-    			let no = evt.data.substring(0, 1); 
-    			let user = evt.data.substring(2, index);
-    			let txt = evt.data.substring(index + 1);
-    			if (no == '1') {
-    				console.log("접속");
-    			} else if (no == '2') {
-    				console.log("메세지");
-    			} else if (no == '3') {
-    				console.log("타인 접속");
-    			}
-    			//$('#list').scrollTop($('#list').prop('scrollHeight'));
-    		};
-    		
-    		ws.onclose = function (evt) {
-    			console.log('소켓이 닫힙니다.');
-    		};
-
-    		ws.onerror = function (evt) {
-    			console.log(evt.data);
-    		};
-    		
-    		
-    		
+    		//엔터키를 누르면 db저장 후 웹소켓으로 데이터를 보낸다(수정필요)
     		$('#messageinput').on('keydown', function(key) {
     			if (key.keyCode == 13) {
     				let chat = $(this).val();
-    				ws.send('2#' + mno + '#' + chat); //서버에게
-    				//내가 채팅을 친 경우
-					let html = '<div class="chatting_my_msg">'
-   	                  		 + '<div class="msg">'
-   	                  		 + chat
-   	                  		 + '</div> </div>'
-               		$('.chatting_room').append(html);
-					$('#messageinput').val('');
+    				$.ajax({
+    	            	url: "<%=request.getContextPath()%>/chatting/sendChat",
+    	            	data: {anotherMno : mno, chat : chat},
+    	            	success:function(data){
+    	            		if(data == "true"){
+    	            			console.log("db연결 성공");
+    	            			socket.send("채팅,"+mid+","+chat+","+"url");
+    	            			//나의 채팅 그려주기
+    	    					let html = '<div class="chatting_my_msg">'
+    	       	                  		 + '<div class="msg">'
+    	       	                  		 + chat
+    	       	                  		 + '</div> </div>'
+    	                   		$('.chatting_room').append(html);
+    	    					$('#messageinput').val('');
+    	            		}
+    	            	}
+    	            }); //ajax
     			}
-    		});
+    		}); //엔터키
     		
-    		//모달창이 닫히는 경우 소켓을 끊어줌
-    		$('#chattingRoomModal').on('hidden.bs.modal', function (e) { 
-    			console.log("eee");
-    			ws.close();
-    		});
- 
-        });   
+    		//채팅창이 열렸을 때 나에게 메세지가 온 경우
+    		function onMessage(evt){
+    		    var evt = evt.data;
+    		    let data = data.split(',');
+    		    
+    		    let type = data[0]; //채팅,댓글
+    		    let target = data[1]; //받은 사람 사용할지는 모름
+    		    let content = data[2];//내용
+    		    let url = data[3]; //사용할지는 모름
+				console.log(type);
+				if(type == "채팅"){
+					let html = '<div class="chatting_other_msg">'
+	             		 + '<div class="chatting_profile">'
+	             		 + '<img src="'
+	             		 +  profile
+	             		 + '" width="30" height="30" alt="Profile" class="rounded-circle">'
+	             		 + '</div> <div class="msg">'
+	             		 + content
+	             		 + '</div> </div>'
+	            	$('.chatting_room').append(html);	
+				}
+    		    
+    		}//메세지가 온 경우
+    		
+        }); //채팅창팝업 닫기  
     }
   })();
 		
