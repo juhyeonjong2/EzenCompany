@@ -7,8 +7,10 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.mail.internet.MimeMessage;
@@ -27,13 +29,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import ezen.ezencompany.dto.BoardPermissionDTO;
 import ezen.ezencompany.dto.BoardTypeViewDTO;
 import ezen.ezencompany.service.AdminService;
 import ezen.ezencompany.service.ManagementService;
 import ezen.ezencompany.service.MemberService;
 import ezen.ezencompany.util.Path;
 import ezen.ezencompany.vo.AttributeVO;
+import ezen.ezencompany.vo.BoardReaderVO;
 import ezen.ezencompany.vo.BoardTypeVO;
+import ezen.ezencompany.vo.BoardWriterVO;
 import ezen.ezencompany.vo.CategoryVO;
 import ezen.ezencompany.vo.MemberVO;
 
@@ -327,26 +332,131 @@ public class AdminController {
 		return "true";
 		
 	}
-	
 	////// board /////////
+	
+	private CategoryVO findCategory(int findCidx ,List<CategoryVO> categoroyList) {
+		if(categoroyList == null)
+			return null;
+		
+		Iterator<CategoryVO> it = categoroyList.iterator();
+		while(it.hasNext()) {
+			CategoryVO category = it.next();
+			if(category.getCidx() == findCidx) {
+				return category;
+			}
+		}
+		return null;
+		
+	}
+	
+	private AttributeVO findAttribute(int findAidx ,List<AttributeVO> attributeList) {
+		if(attributeList == null)
+			return null;
+		
+		Iterator<AttributeVO> it = attributeList.iterator();
+		while(it.hasNext()) {
+			AttributeVO attribute = it.next();
+			if(attribute.getAidx() == findAidx) {
+				return attribute;
+			}
+		}
+		return null;
+		
+	}
+	
+	private List<BoardPermissionDTO> getPermissionList(
+			HashMap<Integer, ArrayList<Integer>> permissionMap, 
+			List<CategoryVO> categoroyList, 
+			List<AttributeVO> attributeList)
+	{
+		
+		List<BoardPermissionDTO> permissions = new ArrayList<BoardPermissionDTO>();
+		Set<Integer> categoryKeySet = permissionMap.keySet();
+		for( Integer cidx : categoryKeySet) {
+			BoardPermissionDTO permission = new BoardPermissionDTO();
+			permission.setCategory(findCategory(cidx, categoroyList));
+			
+			List<AttributeVO> attributes = new ArrayList<AttributeVO>();
+			ArrayList<Integer> attributeKeys = permissionMap.get(cidx);
+			for(Integer aidx : attributeKeys) {
+				attributes.add(findAttribute(aidx, attributeList));
+			}
+			permission.setAttributes(attributes);
+			
+			permissions.add(permission);
+		}
+		
+		return permissions;
+	}
+	
+	private HashMap<Integer, ArrayList<Integer>> getReaderMap(int bindex){
+		
+		HashMap<Integer, ArrayList<Integer>> permissionMap = new HashMap<Integer, ArrayList<Integer>>();
+		List<BoardReaderVO> boardReaders = managementService.getBoardReaderList(bindex);
+		for(BoardReaderVO br : boardReaders)
+		{
+			int cidx = br.getCidx();
+			int aidx = br.getAidx();
+			if(permissionMap.containsKey(cidx)) {
+				permissionMap.get(cidx).add(aidx);
+			} else {
+				permissionMap.put(cidx, new ArrayList<Integer>());
+				permissionMap.get(cidx).add(aidx);
+			}
+		}
+		
+		return permissionMap;
+	}
+	
+
+	private HashMap<Integer, ArrayList<Integer>> getWriterMap(int bindex){
+		
+		HashMap<Integer, ArrayList<Integer>> permissionMap = new HashMap<Integer, ArrayList<Integer>>();
+		List<BoardWriterVO> boardWriters = managementService.getBoardWriterList(bindex);
+		for(BoardWriterVO bw : boardWriters)
+		{
+			int cidx = bw.getCidx();
+			int aidx = bw.getAidx();
+			if(permissionMap.containsKey(cidx)) {
+				permissionMap.get(cidx).add(aidx);
+			} else {
+				permissionMap.put(cidx, new ArrayList<Integer>());
+				permissionMap.get(cidx).add(aidx);
+			}
+		}
+		
+		return permissionMap;
+	}
+
 	@RequestMapping(value="/board")
 	public String board(Model model) {
 		//1. boardType 목록을 가져옴
 		List<BoardTypeVO> boardList = managementService.getBoardTypeList();
-		
+		List<AttributeVO> attributeList = managementService.getAttributes();
+		List<CategoryVO> categoroyList = managementService.getCategorys();
 		
 		List<BoardTypeViewDTO> boardViewList = new ArrayList<BoardTypeViewDTO>();
 		for(BoardTypeVO vo : boardList) {
+			// 한개의 게시판 정보.
 			
 			BoardTypeViewDTO dto = new BoardTypeViewDTO();
 			dto.setBindex(vo.getBindex());
 			dto.setBtname(vo.getBtname());
 			
-			// read 권한 읽기 -> ws comment -  여기 작업중.
-			//managementService.getReader(dto.getBindex());
+			int bindex = vo.getBindex(); // 성능향상을 위한 캐싱
 			
+			//reader
+			HashMap<Integer, ArrayList<Integer>> readerPermissionMap = getReaderMap(bindex);
+			List<BoardPermissionDTO> readers = getPermissionList(readerPermissionMap,categoroyList, attributeList );
+			dto.setReaders(readers);
 			
+			//writer
+			HashMap<Integer, ArrayList<Integer>> writerPermissionMap = getWriterMap(bindex);
+			List<BoardPermissionDTO> writers = getPermissionList(writerPermissionMap,categoroyList, attributeList );
+			dto.setWriters(writers);
 			
+			// 1차 작업완료 확인 필요
+			boardViewList.add(dto);
 		}
 		
 		

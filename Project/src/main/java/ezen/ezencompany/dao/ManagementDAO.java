@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ezen.ezencompany.vo.AttributeVO;
+import ezen.ezencompany.vo.BoardReaderVO;
 import ezen.ezencompany.vo.BoardTypeVO;
+import ezen.ezencompany.vo.BoardWriterVO;
 import ezen.ezencompany.vo.CategoryVO;
 
 @Repository
@@ -69,5 +71,22 @@ public class ManagementDAO {
 	public List<BoardTypeVO> selectAllBoardType(){
 		return sqlSession.selectList(namespace+".selectAllBoardType");
 	}
+	
+	public List<BoardReaderVO> selectAllBoardReader(){
+		return sqlSession.selectList(namespace+".selectAllBoardReader");
+	}
+	
+	public List<BoardReaderVO> selectBoardReaders(int bindex){
+		return sqlSession.selectList(namespace+".selectBoardReaders", bindex);
+	}
+	
+	public List<BoardWriterVO> selectAllBoardWriter(){
+		return sqlSession.selectList(namespace+".selectAllBoardWriter");
+	}
+	
+	public List<BoardWriterVO> selectBoardWriters(int bindex){
+		return sqlSession.selectList(namespace+".selectBoardWriters", bindex);
+	}
+	
 	
 }

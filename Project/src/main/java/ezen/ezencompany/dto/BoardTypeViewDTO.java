@@ -1,10 +1,15 @@
 package ezen.ezencompany.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BoardTypeViewDTO {
 	private int bindex;
 	private String btname;
-	BoardPermissionDTO reader = new BoardPermissionDTO();
-	BoardPermissionDTO writer =  new BoardPermissionDTO();
+	
+	List<BoardPermissionDTO> readers = new ArrayList<BoardPermissionDTO>();
+	List<BoardPermissionDTO> writers = new ArrayList<BoardPermissionDTO>();
+	
 	public int getBindex() {
 		return bindex;
 	}
@@ -17,19 +22,20 @@ public class BoardTypeViewDTO {
 	public void setBtname(String btname) {
 		this.btname = btname;
 	}
-	public BoardPermissionDTO getReader() {
-		return reader;
+	public List<BoardPermissionDTO> getReaders() {
+		return readers;
 	}
-	public void setReader(BoardPermissionDTO reader) {
-		this.reader = reader;
+	public void setReaders(List<BoardPermissionDTO> readers) {
+		this.readers = readers;
 	}
-	public BoardPermissionDTO getWriter() {
-		return writer;
+	public List<BoardPermissionDTO> getWriters() {
+		return writers;
 	}
-	public void setWriter(BoardPermissionDTO writer) {
-		this.writer = writer;
+	public void setWriters(List<BoardPermissionDTO> writers) {
+		this.writers = writers;
 	}
 	
+
 	
 	
 }

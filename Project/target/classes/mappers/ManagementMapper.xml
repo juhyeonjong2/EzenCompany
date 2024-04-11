@@ -52,6 +52,21 @@
 		SELECT * FROM boardtype;
 	</select>
 	
+	<select id="selectAllBoardReader" resultType="boardReaderVO">
+		SELECT * from boardreader;
+	</select>
+	
+	<select id="selectBoardReaders" parameterType="int" resultType="boardReaderVO">
+		SELECT * from boardreader WHERE bindex = #{bindex} ;
+	</select>
+	
+	<select id="selectAllBoardWriter" resultType="boardWriterVO">
+		SELECT * from boardwriter;
+	</select>
+	
+	<select id="selectBoardWriters" parameterType="int" resultType="boardWriterVO">
+		SELECT * from boardwriter WHERE bindex = #{bindex} ;
+	</select>
 	
 	
 </mapper>

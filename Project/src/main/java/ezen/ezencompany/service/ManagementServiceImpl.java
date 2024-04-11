@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import ezen.ezencompany.dao.ManagementDAO;
 import ezen.ezencompany.vo.AttributeVO;
+import ezen.ezencompany.vo.BoardReaderVO;
 import ezen.ezencompany.vo.BoardTypeVO;
+import ezen.ezencompany.vo.BoardWriterVO;
 import ezen.ezencompany.vo.CategoryVO;
 
 @Service
@@ -76,8 +78,25 @@ public class ManagementServiceImpl implements ManagementService {
 		return managementDAO.selectAllBoardType();
 	}
 
-	
-	
+	@Override
+	public List<BoardReaderVO> getBoardReaderList() {
+		return managementDAO.selectAllBoardReader();
+	}
+
+	@Override
+	public List<BoardWriterVO> getBoardWriterList() {
+		return managementDAO.selectAllBoardWriter();
+	}
+
+	@Override
+	public List<BoardReaderVO> getBoardReaderList(int bindex) {
+		return managementDAO.selectBoardReaders(bindex);
+	}
+
+	@Override
+	public List<BoardWriterVO> getBoardWriterList(int bindex) {
+		return managementDAO.selectBoardWriters(bindex);
+	}
 	
 
 }

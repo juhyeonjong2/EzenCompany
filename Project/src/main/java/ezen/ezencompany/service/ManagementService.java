@@ -3,7 +3,9 @@ package ezen.ezencompany.service;
 import java.util.List;
 
 import ezen.ezencompany.vo.AttributeVO;
+import ezen.ezencompany.vo.BoardReaderVO;
 import ezen.ezencompany.vo.BoardTypeVO;
+import ezen.ezencompany.vo.BoardWriterVO;
 import ezen.ezencompany.vo.CategoryVO;
 
 public interface ManagementService {
@@ -22,7 +24,11 @@ public interface ManagementService {
 	
 	
 	List<BoardTypeVO> getBoardTypeList();
+	List<BoardReaderVO> getBoardReaderList();
+	List<BoardReaderVO> getBoardReaderList(int bindex);
 	
+	List<BoardWriterVO> getBoardWriterList();
+	List<BoardWriterVO> getBoardWriterList(int bindex);
 	
-	
+
 }
