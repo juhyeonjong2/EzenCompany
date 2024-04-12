@@ -156,9 +156,7 @@
 				                             			$('.mdata').attr("data-bs-img", profile);
 				                             		}
 				                             	 }
-				                              });//프로필 사진 ajax 
-						                   	   
-						                   	   
+				                              });//프로필 사진 ajax       	   
 		                    	 } 
 		                     }
 			                
@@ -167,8 +165,7 @@
 				}
            	} //success
            });// 1번째 ajax
-            
-            
+   
         });// 채팅팝업 마무리
     }
   })();
@@ -183,93 +180,116 @@
     const attributeAddModal = document.getElementById('chattingRoomModal')
     if (attributeAddModal) {
     	
-        attributeAddModal.addEventListener('show.bs.modal', event => 
-        {
-        	const button = event.relatedTarget;
-            const mno = button.getAttribute('data-bs-mno');
-            const value = button.getAttribute('data-bs-value');
-            const name = button.getAttribute('data-bs-name');
-            const img = button.getAttribute('data-bs-img');
-            const mid = button.getAttribute('data-bs-mid');
-            $(".cName").text(name);
-            $(".cOption").text(value);
-            
-            //이미지가 없는 경우
-            let profile ="";
-            if(img == "MemberIcon.png"){
-            	profile = "<%=request.getContextPath()%>/resources/img/"+img
-            }else{
-            	profile = "<%=request.getContextPath()%>/resources/upload/"+img
-            }
-            $('.cImg').attr("src", profile);
-            
-            $.ajax({
-            	url: "<%=request.getContextPath()%>/chatting/chattingStart",
-            	data: {anotherMno : mno},
-            	success:function(data){
-            		$('.chatting_room').empty();
-            		for(let i =0; i<data.length; i++){
-            			//전체 반복하면서 채팅이 null이거나 빈문자열이 아닌경우
-            			if(data[i].chat != null && data[i].chat != ""){
-            				if(data[i].mno == mno){
-            					
-            					//내가 아닌 다른사람이 채팅을 친 경우
-            					let html = '<div class="chatting_other_msg">'
-            	                  		 + '<div class="chatting_profile">'
-            	                  		 + '<img src="'
-            	                  		 +  profile
-            	                  		 + '" width="30" height="30" alt="Profile" class="rounded-circle">'
-            	                  		 + '</div> <div class="msg">'
-            	                  		 + data[i].chat
-            	                  		 + '</div> </div>'
-            	                 $('.chatting_room').append(html);		 
-            				}else{
-            					
-            					//내가 채팅을 친 경우
-            					let html = '<div class="chatting_my_msg">'
-		       	                  		 + '<div class="msg">'
-		       	                  		 + data[i].chat
-		       	                  		 + '</div> </div>'
-       	                		 $('.chatting_room').append(html);
-            				}
-            				
-            			}
-            		} //전체 데이터 반복문	
-            		$('#chatBox').scrollTop($("#chatBox")[0].scrollHeight);
-            	}//success
-            });// ajax끝
-            
-    		//엔터키를 누르면 db저장 후 웹소켓으로 데이터를 보낸다(수정필요)
-    		$('#messageinput').on('keyup', function(key) {
-    			if (key.keyCode == 13) {
-    				let chat = $(this).val();
-    				$.ajax({
-    	            	url: "<%=request.getContextPath()%>/chatting/sendChat",
-    	            	data: {anotherMno : mno, chat : chat},
-    	            	success:function(data){
-    	            		if(data == "true"){
-    	            			console.log("db연결 성공");
-    	            			socket.send("채팅,"+mid+","+chat+","+"url");
-    	            			//나의 채팅 그려주기
-    	    					let html = '<div class="chatting_my_msg">'
-    	       	                  		 + '<div class="msg">'
-    	       	                  		 + chat
-    	       	                  		 + '</div> </div>'
-    	                   		$('.chatting_room').append(html);
-    	    					$('#messageinput').val('');
-    	    					$('#chatBox').scrollTop($("#chatBox")[0].scrollHeight);
-    	            		}
-    	            	}
-    	            }); //ajax
-    			}
-    		}); //엔터키
-    		
-
-    		
-        }, { once : true }); //채팅창팝업 닫기  
+        attributeAddModal.addEventListener('show.bs.modal', openChat); 
+        
+        	function openChat(){
+        		const button = event.relatedTarget;
+                const mno = button.getAttribute('data-bs-mno');
+                const value = button.getAttribute('data-bs-value');
+                const name = button.getAttribute('data-bs-name');
+                const img = button.getAttribute('data-bs-img');
+                const mid = button.getAttribute('data-bs-mid');
+                $(".cName").text(name);
+                $(".cOption").text(value);
+                //디비에 link 업데이트
+                $.ajax({
+                	url: "<%=request.getContextPath()%>/chatting/linkStart",
+                	success:function(data){
+                		if(data == "true"){
+                			console.log("연결됨");
+                		}
+                	}
+                });// ajax끝
+                
+                //이미지가 없는 경우
+                let profile ="";
+                if(img == "MemberIcon.png"){
+                	profile = "<%=request.getContextPath()%>/resources/img/"+img
+                }else{
+                	profile = "<%=request.getContextPath()%>/resources/upload/"+img
+                }
+                $('.cImg').attr("src", profile);
+                
+                $.ajax({
+                	url: "<%=request.getContextPath()%>/chatting/chattingStart",
+                	data: {anotherMno : mno},
+                	success:function(data){
+                		$('.chatting_room').empty();
+                		for(let i =0; i<data.length; i++){
+                			//전체 반복하면서 채팅이 null이거나 빈문자열이 아닌경우
+                			if(data[i].chat != null && data[i].chat != ""){
+                				if(data[i].mno == mno){
+                					
+                					//내가 아닌 다른사람이 채팅을 친 경우
+                					let html = '<div class="chatting_other_msg">'
+                	                  		 + '<div class="chatting_profile">'
+                	                  		 + '<img src="'
+                	                  		 +  profile
+                	                  		 + '" width="30" height="30" alt="Profile" class="rounded-circle">'
+                	                  		 + '</div> <div class="msg">'
+                	                  		 + data[i].chat
+                	                  		 + '</div> </div>'
+                	                 $('.chatting_room').append(html);		 
+                				}else{
+                					
+                					//내가 채팅을 친 경우
+                					let html = '<div class="chatting_my_msg">'
+    		       	                  		 + '<div class="msg">'
+    		       	                  		 + data[i].chat
+    		       	                  		 + '</div> </div>'
+           	                		 $('.chatting_room').append(html);
+                				}
+                				
+                			}
+                		} //전체 데이터 반복문	
+                		$('#chatBox').scrollTop($("#chatBox")[0].scrollHeight);
+                	}//success
+                });// ajax끝
+                
+        		//엔터키를 누르면 db저장 후 웹소켓으로 데이터를 보낸다(수정필요)
+        		$('#messageinput').on('keyup', function(key) {
+        			if (key.keyCode == 13) {
+        				let chat = $(this).val();
+        				$.ajax({
+        	            	url: "<%=request.getContextPath()%>/chatting/sendChat",
+        	            	data: {anotherMno : mno, chat : chat},
+        	            	success:function(data){
+        	            		if(data == "true"){
+        	            			socket.send("채팅,"+mid+","+chat+","+"url");
+        	            			//나의 채팅 그려주기
+        	    					let html = '<div class="chatting_my_msg">'
+        	       	                  		 + '<div class="msg">'
+        	       	                  		 + chat
+        	       	                  		 + '</div> </div>'
+        	                   		$('.chatting_room').append(html);
+        	    					$('#messageinput').val('');
+        	    					$('#chatBox').scrollTop($("#chatBox")[0].scrollHeight);
+        	            		}
+        	            	}
+        	            }); //ajax
+        			}
+        		}); //엔터키
+        	} //openChat
     }
-  })();
+    
+    //모달이 닫힐때마다 이벤트를 삭제시키고 다시생성해서 여러번 반복되는걸 막음
+    attributeAddModal.addEventListener('hidden.bs.modal', endChat); 
+	function endChat(){
+		//ajax에서 연결을 업데이트
+		$.ajax({
+            url: "<%=request.getContextPath()%>/chatting/linkEnd",
+            success:function(data){
+	               	if(data == "true"){
+	               		console.log("연결끊김");
+	               	}
+                }
+            });// ajax끝
 		
+		attributeAddModal.removeEventListener('show.bs.modal', openChat);
+		attributeAddModal.addEventListener('show.bs.modal', openChat); 
+	}
+	
+  })();
 	
 </script>
 </body>

@@ -51,4 +51,14 @@ public class ChattingService {
 	public void chatting(HashMap<String, Object> chatting){
 		chattingDAO.chatting(chatting);
 	}
+	
+	//채팅 연결
+	public void linkStart(int mno){
+		chattingDAO.linkStart(mno);
+	}
+	
+	//채팅 끊기
+	public void linkEnd(int mno){
+		chattingDAO.linkEnd(mno);
+	}
 }

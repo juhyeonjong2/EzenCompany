@@ -36,4 +36,12 @@
 		INSERT INTO chatting (chattingroom, cdate, mno, chat) VALUES
 		    (#{chattingRoom}, now(), #{myMno}, #{chat});
 	</insert>
+	
+	<update id="linkStart" parameterType="int">
+		UPDATE member SET link = 2 WHERE mno = #{mno};
+	</update>
+	
+	<update id="linkEnd" parameterType="int">
+		UPDATE member SET link = 1 WHERE mno = #{mno};
+	</update>
 </mapper>

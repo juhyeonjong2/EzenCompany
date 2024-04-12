@@ -66,7 +66,6 @@
 	    	data : {email : email},
 	    	async: false,
 	    	success : function(result) {
-	    		console.log(result);
 	    		if(result == "true"){
 	    			alert("메일을 재발송 했습니다.");
 	    		}else{
@@ -228,14 +227,14 @@
 		            const button = event.relatedTarget;
 		            //클릭한 사람의 이메일을 가져옴
 		            const email = button.getAttribute('data-bs-email');
-		            
+		            let mid = "";
 		            //vo안에 이사람의 정보를 전부 가져와서 뿌려준다
 		            $.ajax({
 		            	url:"<%=request.getContextPath()%>/admin/getMember",
 		            	data:{email : email},
 		            	async: false,
 						success:function(member){
-							console.log(member);
+						mid = member.mid;
 						 //attr("value",ss)이렇게 넣으면 수정 안하고 닫으면 잘 읽어오지 못한다 val()로 작업해야함
 						 $("#info_inputId").val(member.mid);
 						 $("#info_inputName").val(member.mname);
@@ -264,8 +263,8 @@
 						success:function(img){
 							if(img != null && img != ""){
 								//사진이 있는경우만 추가해준다
-								let imgUrl = "<%=request.getContextPath()%>/resources/upload/"+ img
-								console.log(img); //한글이름은 여기로 넘어올때 ??로 나옴 이름을 바꾸던지 대처방안을 찾아야함
+								let imgUrl = "<%=request.getContextPath()%>/resources/upload/"+ mid +"/"+ img;
+								console.log(imgUrl);
 							    $('.rounded-circle').attr("src", imgUrl);
 							}else{
 								let noneImg = "<%=request.getContextPath()%>/resources/img/MemberIcon.png"

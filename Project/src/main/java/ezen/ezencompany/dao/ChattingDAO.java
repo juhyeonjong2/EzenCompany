@@ -51,8 +51,18 @@ public class ChattingDAO {
 		return sqlSession.selectOne(namespace+".getProfile", anotherMno);
 	};
 	
-	//채팅방 만들기
+	//채팅하기
 	public void chatting(HashMap<String, Object> chatting){
 		sqlSession.insert(namespace+".chatting", chatting);
+	};
+	
+	//채팅 연결
+	public void linkStart(int mno){
+		sqlSession.update(namespace+".linkStart", mno);
+	};
+	
+	//채팅 끊기
+	public void linkEnd(int mno){
+		sqlSession.update(namespace+".linkEnd", mno);
 	};
 }

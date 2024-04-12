@@ -128,15 +128,30 @@ public class ChattingController {
 		return "true";
 	}
 	
-	//연습용 채팅방
-	@RequestMapping(value = "/chat")
-	public String aa() {
-		return "admin/chattingEx";
+
+	//채팅창에 온 경우
+	@RequestMapping(value = "/linkStart", method = RequestMethod.GET)
+	@ResponseBody 
+	public String linkStart() {
+		//메세지를 db에 기록해줌
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVO user = (UserVO) authentication.getPrincipal();
+		int mno = user.getMno();
+		
+		chattingService.linkStart(mno);
+		return "true";
 	}
 	
-	//연습용 채팅방2
-	@RequestMapping(value = "/chat2")
-	public String aaa() {
-		return "admin/aaaaa";
+	//채팅창을 나간 경우
+	@RequestMapping(value = "/linkEnd", method = RequestMethod.GET)
+	@ResponseBody 
+	public String linkEnd() {
+		//메세지를 db에 기록해줌
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVO user = (UserVO) authentication.getPrincipal();
+		int mno = user.getMno();
+		
+		chattingService.linkEnd(mno);
+		return "true";
 	}
 }

@@ -27,8 +27,13 @@
 	    let target = data[1]; //받은 사람 사용할지는 모름
 	    let content = data[2];//내용
 	    let url = data[3]; //사용할지는 모름
-	    let profile = "제이쿼리로 프사 가져옴";
+	    let profile = $('.cImg').attr("src");
 	    if(type == "채팅"){
+	    	//에이작스 통신으로 채팅방 안이면 아래실행 아니면 토스트 넣기
+	    	
+	    	
+	    	
+	    	
 	    	let html = '<div class="chatting_other_msg">'
 	        		 + '<div class="chatting_profile">'
 	        		 + '<img src="'
