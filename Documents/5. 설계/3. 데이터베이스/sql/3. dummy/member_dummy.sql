@@ -1,13 +1,13 @@
 use EzenCompany;
 # 더미 사원 추가 (완전한 버전)
 INSERT INTO member (mid, mpassword, mname, email, authority, joindate, enabled, mphone) VALUES 
-('adqs124', '$2a$10$BO8HGFguQDhvUN8N8W7kE.GQJ.1U9XJk9L7SqsKCUHkgEEw6ELo1m', '이수현', 'sdfw@gmail.com', 'ROLE_USER', now(), 1, 010-5546-7784),
-('sfggw15', '$2a$10$BO8HGFguQDhvUN8N8W7kE.GQJ.1U9XJk9L7SqsKCUHkgEEw6ELo1m', '이현우', 'sd14fw@gmail.com', 'ROLE_USER', now(), 1, '010-9916-7624'),
-('vashqw', '$2a$10$BO8HGFguQDhvUN8N8W7kE.GQJ.1U9XJk9L7SqsKCUHkgEEw6ELo1m', '김진우', 's14dfw@gmail.com', 'ROLE_USER', now(), 1, '010-1146-7424'),
-('vashasdqw', '$2a$10$BO8HGFguQDhvUN8N8W7kE.GQJ.1U9XJk9L7SqsKCUHkgEEw6ELo1m', '박신영', 'fqwqw@gmail.com', 'ROLE_USER', now(), 1, '010-4236-7684');
+('test1', '$2a$10$BO8HGFguQDhvUN8N8W7kE.GQJ.1U9XJk9L7SqsKCUHkgEEw6ELo1m', '이수현', 'sdfw@gmail.com', 'ROLE_USER', now(), 1, 010-5546-7784),
+('test2', '$2a$10$BO8HGFguQDhvUN8N8W7kE.GQJ.1U9XJk9L7SqsKCUHkgEEw6ELo1m', '이현우', 'sd14fw@gmail.com', 'ROLE_USER', now(), 1, '010-9916-7624'),
+('test3', '$2a$10$BO8HGFguQDhvUN8N8W7kE.GQJ.1U9XJk9L7SqsKCUHkgEEw6ELo1m', '김진우', 's14dfw@gmail.com', 'ROLE_USER', now(), 1, '010-1146-7424'),
+('test4', '$2a$10$BO8HGFguQDhvUN8N8W7kE.GQJ.1U9XJk9L7SqsKCUHkgEEw6ELo1m', '박신영', 'fqwqw@gmail.com', 'ROLE_USER', now(), 1, '010-4236-7684');
 
 #이사람들 사원정보 등록해줘야함
-INSERT INTO employeeoption (mno, cidx, aidx) VALUES
+INSERT INTO employeeOption (mno, cidx, aidx) VALUES
 (2, 1, 1),
 (2, 2, 5),
 (2, 3, 19),

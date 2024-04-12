@@ -17,11 +17,11 @@
 </select>
 
 <select id="selectRetireEmployees" resultType="memberVO">
-	SELECT * FROM MEMBER WHERE nullif(mid, '') IS NOT NULL AND enabled=0;
+	SELECT * FROM member WHERE nullif(mid, '') IS NOT NULL AND enabled=0;
 </select>
 
 <select id="selectActiveEmployees" resultType="memberVO">
-	SELECT * FROM MEMBER WHERE nullif(mid, '') IS NOT NULL AND enabled=1;
+	SELECT * FROM member WHERE nullif(mid, '') IS NOT NULL AND enabled=1;
 </select>
 
 
