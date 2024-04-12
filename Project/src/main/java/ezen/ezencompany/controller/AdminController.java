@@ -102,13 +102,7 @@ public class AdminController {
 	public String getImg(String email) {
 		int mno = adminService.getMno(email);
 		String img = memberService.getImg(mno);
-		String mid = memberService.getId(mno);
-		String img2 = "null";
-		System.out.println(img+"sdadsfwsedf");
-		if(!img.equals("") && img != null) {
-			img2 = mid+"/"+img; 
-		}
-		return img2;
+		return img;
 	}
 	
 	//상세보기에서 분류 파트
@@ -172,7 +166,7 @@ public class AdminController {
 		
 		String [] subPath =  {"upload", mid};
 		String uploadPath = Path.getUploadPath(subPath);
-		
+		System.out.println(uploadPath);
 		if(!profileImg.getOriginalFilename().isEmpty()) { // 파일이 존재하는 경우
 			
 			//uuid 생성
