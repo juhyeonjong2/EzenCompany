@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,9 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ezen.ezencompany.service.BoardService;
 import ezen.ezencompany.service.MemberService;
+import ezen.ezencompany.util.BoardAuthority;
 import ezen.ezencompany.util.Path;
-import ezen.ezencompany.vo.BlogAttachVO;
-import ezen.ezencompany.vo.BlogVO;
 import ezen.ezencompany.vo.BoardAttachVO;
 import ezen.ezencompany.vo.BoardReplyVO;
 import ezen.ezencompany.vo.BoardVO;
@@ -37,43 +37,35 @@ import ezen.ezencompany.vo.UserVO;
 @RequestMapping(value = "/board")
 @Controller
 public class BoardController {
-
+	
 	@Autowired
 	BoardService boardService;
 	
 	@Autowired
 	MemberService memberService;
+	@Autowired
+	BoardAuthority boardAuthority;
 	
 	@RequestMapping(value = "/list.do", method = RequestMethod.GET)
 	public String list(Model model, String bindex) throws Exception {
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVO user = (UserVO) authentication.getPrincipal();
+		int mno = user.getMno();
+		
 		int bindexInt = 1;
 		if(bindex != null) {
 			bindexInt = Integer.parseInt(bindex);
 		}
-		 
 		
+		boolean isWritable = boardAuthority.isWritable(bindexInt, mno);
+		model.addAttribute("isWritable", isWritable);
 		
 		List<BoardVO> list = boardService.list(bindexInt);
 		model.addAttribute("list", list);
 		return "board/list";
 		
-		model.addAttribute("retiredEmployees",retiredEmployees);
-		model.addAttribute("blogUsers", blogUsers);
-				
-		// 작성자 이름 및 프로필 정보
-		model.addAttribute("writer", user.getMname());
-		String profileSrc = request.getContextPath() + "/resources/icon/user.png"; // 기본 아이콘이고 변경 해야함.
-		model.addAttribute("profileImage", profileSrc);
-		
-		// 가장최근에 쓴 블로그
-		BlogVO vo = blogService.getLastOne(user.getMno(), true);
-		model.addAttribute("vo", vo);
-		if(vo!=null) {
-		model.addAttribute("bno", vo.getBgno()); // bgno
-		
-		// 첨부 파일들
-		List<BlogAttachVO> files = blogService.getFiles(vo.getBgno());
-		model.addAttribute("files", files);
+	
 	}
 	
 
@@ -110,6 +102,9 @@ public class BoardController {
 		model.addAttribute("vo",vo);
 		
 		
+		List<BoardAttachVO> files = boardService.getFiles(bno);
+		model.addAttribute("files", files);
+		
 		return "board/view";
 		
 	}
@@ -118,6 +113,8 @@ public class BoardController {
 		
 		BoardVO vo = boardService.selectOneByBno(bno);
 		model.addAttribute("vo",vo);
+		
+		//2개 값받았을때 비교해서 맞으면 트루 아니면 폴스로 권한 설정
 		
 		return "board/modify";
 	}
@@ -160,39 +157,53 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/write.do",method=RequestMethod.GET)
-	public String write() {
-		System.out.println("전송형식이 GET인 write.do");
+	public String write(@RequestParam(value="bindex") int btno ) {
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVO user = (UserVO) authentication.getPrincipal();
+		int mno = user.getMno();
+		
+		boolean isWritable = boardAuthority.isWritable(btno, mno);
+		if(isWritable == false) {
+			return "redirect:list.do";
+		}
+		
+		
 		return "board/write";
 	}
 	
 	@RequestMapping(value="/write.do",method=RequestMethod.POST)
 	public String write(BoardVO vo, List<MultipartFile> uploadFile) throws Exception {
 		
-		String path = "D:\\EzenCompany\\Project\\src\\main\\webapp\\resources\\upload\\board";
-		File dir = new File(path);
-		if(!dir.exists()) {
-			dir.mkdirs();
-		}
-		boardService.insert(vo);
 		
+		int result = boardService.insert(vo);
+		if(result > 0) {
 		for (MultipartFile multipartFile : uploadFile) {
 			if(!multipartFile.getOriginalFilename().isEmpty()) {
-				String fileNM = multipartFile.getOriginalFilename(); 
 				
-				String[] fileNMArr= fileNM.split("\\.");
-				String ext =  fileNMArr[fileNMArr.length-1];
+				String originfileName = multipartFile.getOriginalFilename();
 				
-				String realNM = fileNMArr[0]+"001."+ext;
+				// 업로드 경로 : basePath + upload/blog/{bgno}
+				String [] subPath =  {"upload", "board", Integer.toString(vo.getBno())};
 				
-				multipartFile.transferTo(new File(path,realNM));
-				BoardAttachVO baVO = new BoardAttachVO();
-				baVO.setBno(vo.getBno());
-				baVO.setBforeignname(fileNM);
-				baVO.setBfrealname(realNM);
-				 // 게시물 - 첨부파일 연결고리
+				String fileName = UUID.randomUUID().toString(); // 중복방지를 위한 랜덤 이름.
+				StringBuffer buffer = new StringBuffer();
+				buffer.append(fileName);
+				buffer.append("_");
+				buffer.append(originfileName); // 확장자까지
+				String realFileName = buffer.toString();
 				
-				boardService.insertfile(baVO);
+				String uploadPath = Path.getUploadPath(subPath);
+				multipartFile.transferTo(new File(uploadPath,realFileName)); // 저장
+				
+				BoardAttachVO attach = new BoardAttachVO();
+				attach.setBno(vo.getBno());
+				attach.setBforeignname(originfileName);
+				attach.setBfrealname(realFileName);
+				
+				boardService.insertfile(attach);
 			}
+		}
 		}
 		return "redirect:list.do?bindex="+vo.getBindex();
 	}

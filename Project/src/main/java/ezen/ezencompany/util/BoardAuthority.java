@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ezen.ezencompany.service.BoardTypeService;
+import ezen.ezencompany.service.ManagementService;
 import ezen.ezencompany.service.MemberService;
 import ezen.ezencompany.vo.AttributeVO;
 import ezen.ezencompany.vo.BoardTypeVO;
@@ -19,6 +20,8 @@ public class BoardAuthority {
 	
 	@Autowired
 	MemberService memberService;
+	
+	
 	
 	// 넘어온 mno에 해당하는 사원이 읽을수 있는 게시판 목록을 가져온다.
 	public List<BoardTypeVO> getReadableList(int mno) {
@@ -77,6 +80,10 @@ public class BoardAuthority {
 		 List<AttributeVO> option = memberService.getOptions(mno);
 		 boolean isReadable = false;
 		 
+		 //list 가 null인경우 모두 읽기 가능.
+		 if(list == null)
+			 return true; 
+		 
 		 for(AttributeVO attr : list) 
 		 {
 			 // category(cidx)가 0인경우 "모두" 처리한다.
@@ -112,6 +119,10 @@ public class BoardAuthority {
 		 List<AttributeVO> option = memberService.getOptions(mno);
 		 boolean isWritable = false;
 		 int acceptedCnt = 0;
+		 
+		//list 가 null인경우 쓰기 불가능(관리자만)
+		 if(list == null)
+			 return true; 
 		 
 		 for(AttributeVO attr : list) 
 		 {

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ezen.ezencompany.mapper.managementMapper">
+
+	<select id="selectAllCategory"  resultType="categoryVO">
+		SELECT * FROM category;
+	</select>
+	
+	<select id="selectCategory"  resultType="categoryVO">
+		SELECT * FROM category WHERE cidx = #{cidx};
+	</select>
+	
+	<select id="selectCategoryByCode"  resultType="categoryVO">
+		SELECT * FROM category WHERE code = #{code.value};
+	</select>
+	
+	<insert id="insertCategory"  parameterType="categoryVO" useGeneratedKeys="true" keyProperty="cidx">
+		INSERT INTO category(code, value, blogview) VALUES(#{code}, #{value}, #{blogView});
+	</insert>
+	
+	<update id="updateCategory"  parameterType="categoryVO">
+		UPDATE category SET code=#{code}, value=#{value}, blogview=#{blogView} WHERE cidx = #{cidx};
+	</update>
+	
+	<delete id="deleteCategory"  parameterType="int">
+		DELETE FROM category WHERE cidx = #{cidx};
+	</delete>
+
+	<select id="selectAllAttribute"  resultType="attributeVO">
+		SELECT * FROM attribute;
+	</select>
+	
+	<select id="selectAttributes" parameterType="int" resultType="attributeVO">
+		SELECT * FROM attribute WHERE cidx =#{cidx} ;
+	</select>
+	
+	<select id="selectAttribute"  resultType="attributeVO">
+		SELECT * FROM attribute WHERE aidx =#{aidx}
+	</select>
+	
+	<insert id="insertAttribute"  parameterType="attributeVO" useGeneratedKeys="true" keyProperty="aidx">
+		INSERT INTO attribute(cidx, value, otkey) VALUES(#{cidx}, #{value}, #{otkey});
+	</insert>
+	
+	<update id="updateAttribute"  parameterType="categoryVO">
+		UPDATE attribute SET cidx=#{cidx}, value=#{value}, otkey=#{otkey} WHERE aidx = #{aidx};
+	</update>
+	
+	<delete id="deleteAttribute"  parameterType="int">
+		DELETE FROM attribute WHERE aidx = #{aidx};
+	</delete>
+	
+	
+	<select id="selectAllBoardType"  resultType="boardTypeVO">
+		SELECT * FROM boardtype;
+	</select>
+	
+	<select id="selectAllBoardReader" resultType="boardReaderVO">
+		SELECT * from boardreader;
+	</select>
+	
+	<select id="selectBoardReaders" parameterType="int" resultType="boardReaderVO">
+		SELECT * from boardreader WHERE bindex = #{bindex} ;
+	</select>
+	
+	<select id="selectAllBoardWriter" resultType="boardWriterVO">
+		SELECT * from boardwriter;
+	</select>
+	
+	<select id="selectBoardWriters" parameterType="int" resultType="boardWriterVO">
+		SELECT * from boardwriter WHERE bindex = #{bindex} ;
+	</select>
+	
+	
+</mapper>

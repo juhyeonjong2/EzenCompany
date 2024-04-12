@@ -10,11 +10,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ezen.ezencompany.service.BoardTypeService;
+import ezen.ezencompany.service.ManagementService;
 import ezen.ezencompany.util.BoardAuthority;
+import ezen.ezencompany.vo.AttributeVO;
 import ezen.ezencompany.vo.BoardTypeVO;
 import ezen.ezencompany.vo.BoardVO;
+import ezen.ezencompany.vo.CategoryVO;
 import ezen.ezencompany.vo.UserVO;
 
 
@@ -27,6 +32,9 @@ public class BoardTypeController {
 	
 	@Autowired
 	BoardTypeService boardTypeService;
+	
+	@Autowired
+	ManagementService managementService;
 	
 	@Autowired
 	SqlSession sqlSession;
@@ -51,5 +59,23 @@ public class BoardTypeController {
 		
 		model.addAttribute("board", board);	
 		return "board/main";
+	}
+	
+	@RequestMapping(value="/category/list", method=RequestMethod.GET)
+	@ResponseBody
+	public List<CategoryVO> getCategorys() {
+		return managementService.getCategorys();
+	}
+	
+	@RequestMapping(value="/attribute/list", method=RequestMethod.GET)
+	@ResponseBody
+	public List<AttributeVO> getAttributes(String code) {
+		
+		CategoryVO category = managementService.getCategory(code);
+		
+		if(category == null)
+			return null;
+		
+		return managementService.getAttributes(category.getCidx());
 	}
 }

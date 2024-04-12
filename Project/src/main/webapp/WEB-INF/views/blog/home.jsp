@@ -61,6 +61,22 @@
 					</div>
 				</div>
 	    	</c:if>
+	    	<c:if test="${not empty employees}">
+			    <div class="accordion-item">
+			      <h2 class="accordion-header">
+			        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+			         	전체 사원
+			        </button>
+			      </h2>
+					<div id="collapseOne" class="accordion-collapse collapse">
+						<div class="accordion-body">
+							 <c:forEach var="user" items="${employees}">
+							 	    <a href="<%=request.getContextPath()%>/blog/other/${user.mno}">${user.mname}</a>
+							 </c:forEach>
+						</div>
+					</div>
+				</div>
+	    	</c:if>
 			<c:forEach var="entry" items="${blogUsers}">
 				<div class="accordion-item">
 	        		<h2 class="accordion-header">

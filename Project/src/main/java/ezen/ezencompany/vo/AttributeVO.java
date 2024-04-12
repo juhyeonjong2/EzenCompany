@@ -4,7 +4,7 @@ public class AttributeVO {
 	private int aidx;
 	private int cidx; // parent
 	private String value;
-	private String key;
+	private String otkey;
 	
 	public int getAidx() {
 		return aidx;
@@ -24,12 +24,13 @@ public class AttributeVO {
 	public void setValue(String value) {
 		this.value = value;
 	}
-	public String getKey() {
-		return key;
+	public String getOtkey() {
+		return otkey;
 	}
-	public void setKey(String key) {
-		this.key = key;
+	public void setOtkey(String otkey) {
+		this.otkey = otkey;
 	}
+	
 	
 	
 }
