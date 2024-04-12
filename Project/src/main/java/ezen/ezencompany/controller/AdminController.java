@@ -22,6 +22,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +36,7 @@ import ezen.ezencompany.service.MemberService;
 import ezen.ezencompany.util.Path;
 import ezen.ezencompany.vo.AttributeVO;
 import ezen.ezencompany.vo.MemberVO;
+import ezen.ezencompany.vo.UserVO;
 
 @RequestMapping(value="/admin")
 @Controller
@@ -89,8 +92,13 @@ public class AdminController {
 	public String getImg(String email) {
 		int mno = adminService.getMno(email);
 		String img = memberService.getImg(mno);
-		System.out.println(img);
-		return img;
+		String mid = memberService.getId(mno);
+		String img2 = "null";
+		System.out.println(img+"sdadsfwsedf");
+		if(!img.equals("") && img != null) {
+			img2 = mid+"/"+img; 
+		}
+		return img2;
 	}
 	
 	//상세보기에서 분류 파트
@@ -140,21 +148,25 @@ public class AdminController {
 			map.put(aidx, cidx);
 			list.add(map);
 		}
-		System.out.println(list);
+		
 		//톰캣 상대경로를 사용하려 했지만 스프링은 상대경로 사용시 배포등등 여러문제가 발생해 절대경로를 쓰는게 좋아보인다
 		//정보 출처 : https://stir.tistory.com/147
 		// ws comment : D드라이브가 없는 컴퓨터가 있을 수 있다. 이런경우 절대경로를 사용하려면 xml등과 같은 설정파일로 압부분 경로를 변동 가능하게 해야 한다.
 		//              ex) D:\\EzenCompany\\Project\\src\\main\\webapp 의 경로를 특정 설정파일에서 불러오고
 		//                  불러온 경로 Path + \\resources\\upload" 연결해서 사용하는것이 좋다. (아마 이런식으로 설정할 수있을 것임)
 		//                  설정파일을 쓰기 싫다면 디비에 설정정보(경로)를 저장하고, 서버가 올라갈때 전역 변수로 BasePath를 넣는 방법도 있다.
-		
-		//String path = request.getSession().getServletContext().getRealPath("/resources/upload");
 
-		 //path = "D:\\EzenCompany\\Project\\src\\main\\webapp\\resources\\upload";
+		// 업로드 경로 : basePath + upload/아이디}	
+		//경로에 사용할 아이디
+		String mid = memberService.getId(mno);
 		
-		String path = Path.getPath()+"\\resources\\upload";
+		String [] subPath =  {"upload", mid};
+		String uploadPath = Path.getUploadPath(subPath);
 		
 		if(!profileImg.getOriginalFilename().isEmpty()) { // 파일이 존재하는 경우
+			
+			//uuid 생성
+			String url = UUID.randomUUID().toString();
 			
 			String fileNM = profileImg.getOriginalFilename(); //원본 파일명
 			
@@ -162,7 +174,7 @@ public class AdminController {
 			String[] fileNMArr= fileNM.split("\\.");
 			String ext =  fileNMArr[fileNMArr.length-1];
 			
-			String realFileNM = fileNMArr[0]+"."+ ext; //실제 파일명
+			String realFileNM = url +"."+ ext; //실제 파일명
 			///블록 ㅡ컨트롤러 패스보고 그대로 사용하기 - 사용자 아이디(사원 수정에 사진 가져오는것도 아이디 추가한 경로로 수정해야함+uuid)
 			
 			int searchMno = adminService.searchMno(mno);
@@ -182,7 +194,7 @@ public class AdminController {
 				adminService.totalUpdateImg(map, memberMap, list, mno);
 			}
 			//파일 업로드
-			profileImg.transferTo(new File(path,realFileNM));
+			profileImg.transferTo(new File(uploadPath,realFileNM));
 		}else {
 			//프로필이미지를 변경하지 않은 경우
 			adminService.totalUpdate(memberMap, list, mno);
