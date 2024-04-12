@@ -46,7 +46,7 @@
               
               
             </div>
-            <div class="modal-body">  
+            <div class="modal-body" id="chatBox">  
               <div class="container-fluid chatting_room">
               
               
@@ -83,7 +83,7 @@
       </div>
 </section>
 <script>
-	// 채팅팝업 연 경우 기본 데이터 주입
+//채팅팝업 연 경우 기본 데이터 주입
 (function() {
     const chattingPopup = document.getElementById('chattingPopup')
     if (chattingPopup) {
@@ -93,7 +93,6 @@
             $.ajax({
             	url: "<%=request.getContextPath()%>/chatting/chattingList",
             	success:function(list){
-            		console.log(111);
             		//재생성 방지를 위해 실행될때마다 비워줌	
 			        $('.chatttingList').empty();
 			        //여기서 1차 반복문
@@ -183,6 +182,7 @@
     // 채팅 팝업(대화창) - 대화 상대의 mno or id를 넘겨받음.
     const attributeAddModal = document.getElementById('chattingRoomModal')
     if (attributeAddModal) {
+    	
         attributeAddModal.addEventListener('show.bs.modal', event => 
         {
         	const button = event.relatedTarget;
@@ -235,11 +235,12 @@
             				
             			}
             		} //전체 데이터 반복문	
+            		$('#chatBox').scrollTop($("#chatBox")[0].scrollHeight);
             	}//success
             });// ajax끝
             
     		//엔터키를 누르면 db저장 후 웹소켓으로 데이터를 보낸다(수정필요)
-    		$('#messageinput').on('keydown', function(key) {
+    		$('#messageinput').on('keyup', function(key) {
     			if (key.keyCode == 13) {
     				let chat = $(this).val();
     				$.ajax({
@@ -256,37 +257,16 @@
     	       	                  		 + '</div> </div>'
     	                   		$('.chatting_room').append(html);
     	    					$('#messageinput').val('');
+    	    					$('#chatBox').scrollTop($("#chatBox")[0].scrollHeight);
     	            		}
     	            	}
     	            }); //ajax
     			}
     		}); //엔터키
     		
-    		//채팅창이 열렸을 때 나에게 메세지가 온 경우
-    		function onMessage(evt){
-    		    var evt = evt.data;
-    		    let data = data.split(',');
-    		    
-    		    let type = data[0]; //채팅,댓글
-    		    let target = data[1]; //받은 사람 사용할지는 모름
-    		    let content = data[2];//내용
-    		    let url = data[3]; //사용할지는 모름
-				console.log(type);
-				if(type == "채팅"){
-					let html = '<div class="chatting_other_msg">'
-	             		 + '<div class="chatting_profile">'
-	             		 + '<img src="'
-	             		 +  profile
-	             		 + '" width="30" height="30" alt="Profile" class="rounded-circle">'
-	             		 + '</div> <div class="msg">'
-	             		 + content
-	             		 + '</div> </div>'
-	            	$('.chatting_room').append(html);	
-				}
-    		    
-    		}//메세지가 온 경우
+
     		
-        }); //채팅창팝업 닫기  
+        }, { once : true }); //채팅창팝업 닫기  
     }
   })();
 		

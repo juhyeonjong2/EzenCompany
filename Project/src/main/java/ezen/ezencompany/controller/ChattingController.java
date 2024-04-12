@@ -79,6 +79,7 @@ public class ChattingController {
 		//채팅방 찾기
 		String chattingroom = chattingService.getRoom(map);
 		
+		System.out.println(chattingroom);
 		//만약 채팅방이 null(채팅방이 없는경우)이라면 채팅방을 만들어준다
 		if(chattingroom == null) {
 			

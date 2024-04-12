@@ -52,8 +52,6 @@ public class EchoHandler extends TextWebSocketHandler {
 				
 				// 실시간 접속시
 				if(targetSession!=null) {
-					System.out.println("발송");
-					System.out.println(targetSession+"동일해?");
 					TextMessage tmpMsg = new TextMessage(msg);
 					targetSession.sendMessage(tmpMsg);
 				}

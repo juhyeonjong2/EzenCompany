@@ -33,8 +33,6 @@
 	
 </head>
 <body>
-	<!-- 소켓 -->
-	<%@ include file="../include/socketHeader.jsp"%>
 	<!-- header -->
 	<%@ include file="../include/blogHeader.jsp"%>
 	<!-- sidebar -->
@@ -361,6 +359,8 @@
 	<%@ include file="../popup/blog.jsp"%>
 	
 	<!-- catting popup -->
+	<!--<script src="<%=request.getContextPath()%>/resources/js/socket.js"></script>-->
+	<%@ include file="../include/socketHeader.jsp"%>
 	<%@ include file="../popup/chatting.jsp"%>
   </main><!-- End #main -->
   
