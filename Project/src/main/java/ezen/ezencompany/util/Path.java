@@ -4,22 +4,15 @@ import java.io.File;
 
 public class Path {
 	// 최종경로는 D:\\EzenCompany\\Project\\src\\main\\webapp\\resources 리소스까지로 하는게 좋을듯함.
-	static String Path ="D:\\EzenCompany\\Project\\src\\main\\webapp";	
-	
+	static String Path ="D:\\EzenCompany\\resources";	
+	static String LinuxPath ="/usr/home";
 	public static String getPath() {
 		
 		String osName = System.getProperty("os.name").toLowerCase();
-		
-		//System.out.println("os.name property: " + osName);
-		
-		if (osName.contains("win")) {
-			Path = Path.replace("//", "/");
-		} else if (osName.contains("nix") || osName.contains("nux") || osName.contains("aix")) {
-		    System.out.println("This is Unix or Linux");
-		}else {
-		    System.out.println("오류");
+		if (osName.contains("nix") || osName.contains("nux") || osName.contains("aix")) {
+		    //System.out.println("This is Unix or Linux");
+			return LinuxPath;
 		}
-        
 		return Path;
 	}
 	
