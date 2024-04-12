@@ -496,6 +496,15 @@ public class AdminController {
 		
 		return "admin/board";
 	}
+	@RequestMapping(value="/board/write", method=RequestMethod.POST)
+	@ResponseBody
+	public int boardWrite(String name, Object reader, Object writer) {
+		System.out.println(name);
+		System.out.println(reader.toString());
+		System.out.println(writer.toString());
+		
+		return 0;
+	}
 	
 	///// category //////////
 	@RequestMapping(value="/category")

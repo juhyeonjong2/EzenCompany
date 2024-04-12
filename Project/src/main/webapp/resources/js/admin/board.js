@@ -296,6 +296,8 @@ function addCategory(treeName, categoryName, categoryCode){
 
 let attributeIdCount = 1;
 function addAttribute(treeName, parentTreeId, attributeName, attributeKey){
+
+
   let attributeId = 0;
   const zTree = $.fn.zTree.getZTreeObj(treeName);
   if(zTree != null){
@@ -386,7 +388,7 @@ function fetchAttributes(categoryCode){
 				let attribute = attributes[i];
 				dbAttributes.push(
 				{
-					'code' : attribute.otkey,
+					'key' : attribute.otkey,
 					'value' :attribute.value,
 					'cidx' : attribute.cidx,
 					'aidx' : attribute.aidx
@@ -548,6 +550,7 @@ function insertCategory(o) {
   // 어트리뷰트가 선택아님이 아니라면 추가한다.
   let attributeKey = body.find('.attribute select option:selected').val();
   let attributeValue= body.find('.attribute select option:selected').text();
+
   if(attributeKey!='NONE'){
     addAttribute(treeName, categoryId, attributeValue, attributeKey);
   }
@@ -562,6 +565,7 @@ function insertAttribute(o){
   let body = root.find(".modal-body .container-fluid");
   let attributeKey = body.find('.attribute select option:selected').val();
   let attributeValue= body.find('.attribute select option:selected').text();
+
   addAttribute(treeName, parentTreeId, attributeValue, attributeKey);
 }
 
@@ -575,11 +579,28 @@ function insertBoard(){
   console.log(reader);
   console.log(writer);
   
+  for(let i =0 ;i <reader.length;i++)
+  {
+  	let permission = reader[i];
+  	consloe.log(permission.categoryCode);
+  	consloe.log(permission.categoryValue);
+  	
+  	for(let j=0;j<permission.attributes.length;j++){
+  		let attribute = permission.attributes[j];
+  		
+  	
+  	}
+ 
+
+  	
+  }
+  
+  
   $.ajax(
 	{
 		url: "/ezencompany/admin/board/write",
 		type: "post",
-		data: {name:boardName, reader:reader, },
+		data: {name:boardName, reader:reader, writer:writer},
 		success: function(res) {
 			console.log("111");
 		},
