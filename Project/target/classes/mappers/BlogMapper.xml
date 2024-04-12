@@ -20,6 +20,11 @@
 	SELECT * FROM MEMBER WHERE nullif(mid, '') IS NOT NULL AND enabled=0;
 </select>
 
+<select id="selectActiveEmployees" resultType="memberVO">
+	SELECT * FROM MEMBER WHERE nullif(mid, '') IS NOT NULL AND enabled=1;
+</select>
+
+
 <select id="selectOptionEmployees" parameterType="employeeOptionVO" resultType="memberVO">
 	SELECT * FROM member as M 
 	LEFT JOIN employeeoption as E ON m.mno = e.mno 

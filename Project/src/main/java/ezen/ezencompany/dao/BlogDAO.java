@@ -41,6 +41,10 @@ public class BlogDAO {
 			return sqlSession.selectList(namespace+".selectRetireEmployees");
 		}
 		
+		public List<MemberVO> selectActiveEmployees(){
+			return sqlSession.selectList(namespace+".selectActiveEmployees");
+		}
+		
 		public List<MemberVO> selectOptionEmployees(int cidx, int aidx){
 			EmployeeOptionVO paramVO = new EmployeeOptionVO();
 			paramVO.setCidx(cidx);
