@@ -24,11 +24,7 @@ public interface BoardService {
 	
 	BoardVO selectOne(int bgno, boolean force);
 	
-	List<BoardReplyVO> boardReplyList(int bno);
-	BoardReplyVO getReply(int rno);
-	int insertReply(BoardReplyVO vo);
-	int removeReply(int bno);
-	int modifyReply(BoardReplyVO vo);
+	
 	List<BoardAttachVO> getFiles(int bgno);
 	BoardAttachVO getFile(int bgfno);
 	BoardVO getLastOne(int mno, boolean force);

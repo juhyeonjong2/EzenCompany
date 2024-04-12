@@ -71,24 +71,4 @@ public class BoardDAO {
 	
 	
 	
-	public List<BoardReplyVO> selectReplyList(int bno) {
-		return sqlSession.selectList("ezen.ezencompany.mapper.boardmapper.selectReplyList", bno);
-	}
-	
-	public BoardReplyVO selectReply(int rno) {
-		return sqlSession.selectOne("ezen.ezencompany.mapper.boardmapper.selectReply", rno);
-	}
-	
-	public int insertReply(BoardReplyVO vo){
-		return sqlSession.insert("ezen.ezencompany.mapper.boardmapper.insertReply", vo);
-	}
-	
-	public int removeReply(int rno) {
-		return sqlSession.update("ezen.ezencompany.mapper.boardmapper.removeReply", rno);
-	}
-	
-	public int modifyReply(BoardReplyVO vo) {
-		return sqlSession.update("ezen.ezencompany.mapper.boardmapper.modifyReply", vo);
-	}
-	
 }

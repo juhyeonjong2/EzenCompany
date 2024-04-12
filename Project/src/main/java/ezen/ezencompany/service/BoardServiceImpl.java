@@ -82,35 +82,7 @@ public class BoardServiceImpl implements BoardService {
 		return null;
 	}
 
-	@Override
-	public List<BoardReplyVO> boardReplyList(int bno) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public BoardReplyVO getReply(int rno) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int insertReply(BoardReplyVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int removeReply(int bno) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int modifyReply(BoardReplyVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
 	
 	@Override
 	public BoardVO getLastOne(int mno, boolean force) {

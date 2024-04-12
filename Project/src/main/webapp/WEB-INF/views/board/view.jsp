@@ -87,26 +87,7 @@
             <hr class="mt-2 mx-1 w-auto ">
           </div>
 
-          <div class="blog_reply reply d-flex flex-column">
-              <div class="reply_top">
-                <div class="ms-3">
-                  전체 댓글 <span>4개</span>
-                </div>
-                <hr class="ms-3 me-1 w-auto border border-secondary border-2 opacity-30">
-              </div>
-              <div class="reply_body ms-3 me-3">
-                <ul class="ezReply" id="reply_root">
-                
-                </ul>
-                </div>
-					<div class="ezReply_input ms-3 pb-2">
-						<div class="d-flex">
-					  		<textarea placeholder="댓글을 입력하세요.." onInput="ezReply_onInput(event)" id="ezReply_root_value"></textarea>
-					  		<button class="ms-1 me-1 btn btn-secondary" onClick="ezReply_rootSubmit(this)">댓글 등록</button>
-						</div>
-					</div>
-
-				   </div>
+         
                 
       <div class="blog_buttons mt-3 d-flex justify-content-end">
           <a class="btn btn-primary me-2" role="button" href="modify.do?bno=${vo.bno}">수정</a>
