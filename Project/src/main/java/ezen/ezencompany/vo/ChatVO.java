@@ -4,7 +4,21 @@ public class ChatVO {
 	private String chattingRoom; // uuid
 	private String chat; //채팅내역
 	private String cdate;
+	private int mno;
+	private int cindex;
 	
+	public int getMno() {
+		return mno;
+	}
+	public void setMno(int mno) {
+		this.mno = mno;
+	}
+	public int getCindex() {
+		return cindex;
+	}
+	public void setCindex(int cindex) {
+		this.cindex = cindex;
+	}
 	public String getChattingRoom() {
 		return chattingRoom;
 	}

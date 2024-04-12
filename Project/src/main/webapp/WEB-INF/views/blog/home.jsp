@@ -193,6 +193,8 @@
 	<%@ include file="../popup/blog.jsp"%>
 	
 	<!-- catting popup -->
+	<!--<script src="<%=request.getContextPath()%>/resources/js/socket.js"></script>-->
+	<%@ include file="../include/socketHeader.jsp"%>
 	<%@ include file="../popup/chatting.jsp"%>
   </main><!-- End #main -->
   
@@ -213,7 +215,7 @@
   <script src="<%=request.getContextPath()%>/resources/js/blog/blog.js"></script>
 
   <!-- Last JS-->
-  <script src="<%=request.getContextPath()%>/resources/js/chatting.js"></script>
+  <!--<script src="<%=request.getContextPath()%>/resources/js/chatting.js"></script>-->
   <script src="<%=request.getContextPath()%>/resources/js/tooltips.js"></script>
 
 </body>

@@ -4,7 +4,7 @@ import java.io.File;
 
 public class Path {
 	// 최종경로는 D:\\EzenCompany\\Project\\src\\main\\webapp\\resources 리소스까지로 하는게 좋을듯함.
-	static String Path ="D:\\EzenCompany\\resources";	
+	static String Path ="D:\\EzenCompany\\Project\\src\\main\\webapp\\resources";	
 	static String LinuxPath ="/usr/home";
 	public static String getPath() {
 		

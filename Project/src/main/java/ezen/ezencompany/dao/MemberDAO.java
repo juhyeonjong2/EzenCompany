@@ -101,4 +101,8 @@ public class MemberDAO {
 		return sqlSession.selectOne(namespace+".getMemberByID", mno);
 	}
 		
+	//mno로 아이디를 반환
+	public String getId(int mno) {
+		return sqlSession.selectOne(namespace+".getId", mno);
+	}
 }

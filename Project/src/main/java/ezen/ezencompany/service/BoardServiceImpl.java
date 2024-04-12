@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ezen.ezencompany.dao.BoardDAO;
+import ezen.ezencompany.vo.BlogVO;
 import ezen.ezencompany.vo.BoardAttachVO;
 import ezen.ezencompany.vo.BoardReplyVO;
 import ezen.ezencompany.vo.BoardVO;
@@ -109,5 +110,13 @@ public class BoardServiceImpl implements BoardService {
 	public int modifyReply(BoardReplyVO vo) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	@Override
+	public BoardVO getLastOne(int mno, boolean force) {
+		if(force) {
+			return boardDAO.selectLastForce(mno);
+		}
+		return boardDAO.selectLast(mno);
 	}
 }

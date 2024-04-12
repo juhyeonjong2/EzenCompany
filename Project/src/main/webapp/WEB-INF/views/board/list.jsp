@@ -35,43 +35,6 @@
 	<%@ include file="../include/boardSidebar.jsp"%>
  	
 
-  <!-- ======= Sidebar - Board======= -->
-    <aside id="sidebar" class="sidebar">
-      <div class="board_tree_frame mt-5 ms-4 w-75 rounded overflow-y-auto">
-        <div class="list-group">
-          <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-            <i class="bi bi-file-text"></i>
-            <span>게시판 1</span>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action">
-            <i class="bi bi-file-text"></i>
-            <span>게시판 2</span>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action">
-            <i class="bi bi-file-text"></i>
-            <span>게시판 3</span>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action">
-            <i class="bi bi-file-text"></i>
-            <span>게시판 4</span>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action">
-            <i class="bi bi-file-text"></i>
-            <span>게시판 5</span>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action">
-            <i class="bi bi-file-text"></i>
-            <span>게시판 6</span>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action">
-            <i class="bi bi-file-text"></i>
-            <span>게시판 7</span>
-          </a>
-          
-        </div>
-      </div>
-  
-    </aside><!-- End Sidebar-->
 
   <main id="main" class="main">
     <div class="row">
@@ -80,7 +43,10 @@
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-center">
                 <h5 class="card-title"><b>게시판 1</b></h5>  <!-- 여기부분도 DB 받아야됨 -->
-                <a class="btn btn-primary h-50" href="write.do?bindex=${param.bindex}" role="button">+ 글쓰기</a>
+                <c:if test="${isWritable eq true}">
+                	
+                	<a class="btn btn-primary h-50" href="write.do?bindex=${param.bindex}" role="button">+ 글쓰기</a>
+                </c:if>
                 
             </div>
 

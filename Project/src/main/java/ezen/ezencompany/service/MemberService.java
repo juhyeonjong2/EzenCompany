@@ -85,7 +85,13 @@ public class MemberService {
 		return memberDAO.getOption(mno);
 	}
 	
+	//사원을 가져온다
 	public MemberVO getMember(int mno) {
 		return memberDAO.getMember(mno);
+	}
+	
+	//mno로 아이디를 반환한다
+	public String getId(int mno) {
+		return memberDAO.getId(mno);
 	}
 }
