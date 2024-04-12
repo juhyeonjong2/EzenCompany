@@ -30,130 +30,15 @@
 </head>
 <body>
     
-    <!-- ======= Header - Board ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
-    <div class="d-flex align-items-center justify-content-between">
-      <a href="home.html" class="logo d-flex align-items-center">
-        <i class="bx bx-world"></i> <!-- boxicons-->
-        <span class="d-none d-lg-block">EzenCompany</span>
-      </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
-    </div><!-- End Logo -->
+   		<!-- header -->
+	<%@ include file="../include/boardHeader.jsp"%>
+	<!-- sidebar -->
+	<%@ include file="../include/boardSidebar.jsp"%>
+      
 
-    <nav class="header-nav ms-auto">
-      <ul class="d-flex align-items-center">
+ 
 
-        <!-- 관리자가 아니라면 보이지 않음.-->
-        <li class="nav-item">
-            <a class="nav-link nav-icon" href="../admin/home.html">
-              <i class="bi bi-key"></i>
-            </a>
-        </li><!-- End Admin Icon-->
-
-        <li class="nav-item dropdown">
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-bell"></i>
-            <span class="badge bg-primary badge-number">3</span>
-          </a><!-- End Notification Icon -->
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-            <li class="dropdown-header" style="width: 200px;">
-              알림
-            </li>
-
-            <li><hr class="dropdown-divider"></li>
-
-            <li class="notification-item">
-              <i class="bi bi-exclamation-circle text-warning"></i>
-              <div>
-                <p><a href='#'>이길동</a>님이 블로그에 댓글을 남기셧습니다.</p>
-              </div>
-            </li>
-
-            <li><hr class="dropdown-divider"></li>
-
-            <li class="notification-item">
-              <i class="bi bi-exclamation-circle text-warning"></i>
-              <div>
-                <p><a href='#'>박길동</a>님이 게시글에 댓글을 남기셧습니다.</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-exclamation-circle text-warning"></i>
-              <div>
-                <p><a href='#'>박길동</a>님이 회원님을 언급하셨습니다.</p>
-              </div>
-            </li>
-
-          </ul><!-- End Notification Dropdown Items -->
-        </li><!-- End Notification Nav -->
-
-        <li class="nav-item">
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="modal" data-bs-target="#chattingModal">
-            <i class="bi bi-chat-left-text"></i>
-            <span class="badge bg-success badge-number">3</span>
-          </a>
-        </li><!-- End Messages Icon -->
-        
-        <li class="nav-item">
-            <a class="nav-link nav-icon search-bar-toggle" href="../board/home.html">
-              <i class="bi bi-grid"></i>
-            </a>
-        </li><!-- End Board Icon-->
-
-        <li class="nav-item">
-            <a class="nav-link nav-icon search-bar-toggle" href="../blog/home.html">
-              <i class="bi bi-house-door"></i>
-            </a>
-        </li><!-- End Home Icon-->
-
-      </ul>
-    </nav><!-- End Icons Navigation -->
-
-  </header><!-- End Header -->
-
-  <!-- ======= Sidebar - Board======= -->
-    <aside id="sidebar" class="sidebar">
-      <div class="board_tree_frame mt-5 ms-4 w-75 rounded overflow-y-auto">
-        <div class="list-group">
-          <a href="list.html" class="list-group-item list-group-item-action active" aria-current="true">
-            <i class="bi bi-file-text"></i>
-            <span>게시판 1</span>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action">
-            <i class="bi bi-file-text"></i>
-            <span>게시판 2</span>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action">
-            <i class="bi bi-file-text"></i>
-            <span>게시판 3</span>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action">
-            <i class="bi bi-file-text"></i>
-            <span>게시판 4</span>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action">
-            <i class="bi bi-file-text"></i>
-            <span>게시판 5</span>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action">
-            <i class="bi bi-file-text"></i>
-            <span>게시판 6</span>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action">
-            <i class="bi bi-file-text"></i>
-            <span>게시판 7</span>
-          </a>
-          
-        </div>
-      </div>
-  
-    </aside><!-- End Sidebar-->
+ 
 
   <main id="main" class="main">
     <div class="pagetitle container-md mb-3">
@@ -176,18 +61,22 @@
           <div class="blog_top_sep">
             <hr class="mt-0 mb-0 mx-5 w-auto ">
             <div class="d-flex justify-content-end">
-              <div class="dropdown me-5">
-                  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    첨부 파일
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="<%=request.getContextPath()%>/resources/upload/board">첨부파일1</a></li>
-                    <li><a class="dropdown-item" href="<%=request.getContextPath()%>/resources/upload/board">첨부파일2</a></li>
-                    <li><a class="dropdown-item" href="<%=request.getContextPath()%>/resources/upload/board">첨부파일3</a></li>
-                  </ul>
+             <c:if test="${not empty files}">
+					  		<div class="dropdown me-5">
+					        	<button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">첨부 파일</button>
+						        <ul class="dropdown-menu">
+						        <c:forEach var="file" items="${files}">
+									<li>
+										<a class="dropdown-item" href='<c:url value="/board/download/${file.bfno}"/>'>
+										${file.bforeignname}
+										</a>
+									</li>
+			          			</c:forEach>
+			          				        </ul>
+					      	</div>
+				      	</c:if>
                 </div>
             </div>
-          </div>
 
           <div class="blog_content mt-2 mx-5 w-auto">
           	<p>${vo.bcontent}</p>
@@ -206,208 +95,19 @@
                 <hr class="ms-3 me-1 w-auto border border-secondary border-2 opacity-30">
               </div>
               <div class="reply_body ms-3 me-3">
-                <ul class="ezReply" id="blog_reply">
-                  <li>
-                    <div class="reply_node pb-1 d-flex">
-                       <div class="col-1 pt-2">
-                          <div class="reply_author">
-                            <p class="text-center m-0 t-0">고길동 :</p>
-                          </div>
-                          <div class="reply_author_me">
-                            <!--<p class="text-center m-0 t-0">(작성자)</p>-->
-                          </div>
-                       </div>
-                       <div class="col pt-2">
-                          <div class="reply_content">
-                        
-                          </div>
-                          <div><span class="fs-6 text-body-tertiary">2024.03.19</span></div>
-                          <div class="d-flex">
-                            <div class="col">
-                                <!-- 답장 버튼-->
-                                <button class="btn btn-secondary btn-sm ms-1">답글</button>
-                            </div>
-                            <div class="col d-flex justify-content-end ">
-                              <!-- 삭제/수정 버튼-->
-                              <!--<button class="btn btn-warning btn-sm me-2">수정</button>
-                              <button class="btn btn-danger btn-sm me-2">삭제</button>-->
-                            </div>
-                            
-                          </div>
-                       </div>
-                    </div>
-                    <ul>
-                        <li>
-                          <div class="reply_node pb-1 d-flex">
-                            <div class="col-1 pt-2">
-                               <div class="reply_author">
-                                 <p class="text-center m-0 t-0">홍길동 :</p>
-                               </div>
-                               <div class="reply_author_me">
-                                 <p class="text-center m-0 t-0 text-info-emphasis">(작성자)</p>
-                               </div>
-                            </div>
-                            <div class="col pt-2">
-                               <div class="reply_content">
-                                 네 알겠습니다.
-                               </div>
-                               <div><span class="fs-6 text-body-tertiary">2024.03.19</span></div>
-                               <div class="d-flex">
-                                 <div class="col">
-                                     <!-- 답장 버튼-->
-                                     <button class="btn btn-secondary btn-sm ms-1">답글</button>
-                                 </div>
-                                 <div class="col d-flex justify-content-end ">
-                                   <!-- 삭제/수정 버튼-->
-                                   <button class="btn btn-warning btn-sm me-2">수정</button>
-                                   <button class="btn btn-danger btn-sm me-2">삭제</button>
-                                 </div>
-                                 
-                               </div>
-                            </div>
-                         </div>
-                          <ul>
-                            <li>
-                              <div class="reply_node pb-1 d-flex">
-                                <div class="col-1 pt-2">
-                                   <div class="reply_author">
-                                     <p class="text-center m-0 t-0">고길동 :</p>
-                                   </div>
-                                   <div class="reply_author_me">
-                                     <!--<p class="text-center m-0 t-0 text-info-emphasis">(작성자)</p>-->
-                                   </div>
-                                </div>
-                                <div class="col pt-2">
-                                   <div class="reply_content">
-                                     지금 갑니다.
-                                   </div>
-                                   <div><span class="fs-6 text-body-tertiary">2024.03.19</span></div>
-                                   <div class="d-flex">
-                                     <div class="col">
-                                         <!-- 답장 버튼-->
-                                         <button class="btn btn-secondary btn-sm ms-1">답글</button>
-                                     </div>
-                                     <div class="col d-flex justify-content-end ">
-                                       <!-- 삭제/수정 버튼-->
-                                       <!--<button class="btn btn-warning btn-sm me-2">수정</button>
-                                       <button class="btn btn-danger btn-sm me-2">삭제</button>-->
-                                     </div>
-                                     
-                                   </div>
-                                </div>
-                             </div>
-                              <ul>
-                              </ul>
-                          </li>
-                        </ul>
-                        </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <div class="reply_node pb-1 d-flex">
-                      <div class="col-1 pt-2">
-                         <div class="reply_author">
-                           <p class="text-center m-0 t-0">김길동 :</p>
-                         </div>
-                         <div class="reply_author_me">
-                           <!--<p class="text-center m-0 t-0">(작성자)</p>-->
-                         </div>
-                      </div>
-                      <div class="col pt-2">
-                         <div class="reply_content">
-                          고생하셨습니다.
-                         </div>
-                         <div><span class="fs-6 text-body-tertiary">2024.03.19</span></div>
-                         <div class="d-flex">
-                           <div class="col">
-                               <!-- 답장 버튼-->
-                               <button class="btn btn-secondary btn-sm ms-1">답글</button>
-                           </div>
-                           <div class="col d-flex justify-content-end ">
-                             <!-- 삭제/수정 버튼-->
-                             <!--<button class="btn btn-warning btn-sm me-2">수정</button>
-                             <button class="btn btn-danger btn-sm me-2">삭제</button>-->
-                           </div>
-                           
-                         </div>
-                      </div>
-                    </div>
-                    <ul>
-                      <li>
-                        <div class="reply_node pb-1 d-flex">
-                          <div class="col-1 pt-2">
-                             <div class="reply_author">
-                               <p class="text-center m-0 t-0">홍길동 :</p>
-                             </div>
-                             <div class="reply_author_me">
-                               <p class="text-center m-0 t-0">(작성자)</p>
-                             </div>
-                          </div>
-                          <div class="col pt-2">
-                             <div class="reply_content">
-                              감사합니다.
-                             </div>
-                             <div><span class="fs-6 text-body-tertiary">2024.03.19</span></div>
-                             <div class="d-flex">
-                               <div class="col">
-                                   <!-- 답장 버튼-->
-                                   <button class="btn btn-secondary btn-sm ms-1">답글</button>
-                               </div>
-                               <div class="col d-flex justify-content-end ">
-                                 <!-- 삭제/수정 버튼-->
-                                 <button class="btn btn-warning btn-sm me-2">수정</button>
-                                 <button class="btn btn-danger btn-sm me-2">삭제</button>
-                               </div> 
-                             </div>
-                          </div>
-                        </div>
-                        <ul>
-                        </ul>
-                      </li>
-                      <li>
-                        <div class="reply_node pb-1 d-flex">
-                          <div class="col-1 pt-2">
-                             <div class="reply_author">
-                               <p class="text-center m-0 t-0">한만석 :</p>
-                             </div>
-                             <div class="reply_author_me">
-                               <!--<p class="text-center m-0 t-0">(작성자)</p>-->
-                             </div>
-                          </div>
-                          <div class="col pt-2">
-                             <div class="reply_content">
-                              고생하셨습니다.
-                             </div>
-                             <div><span class="fs-6 text-body-tertiary">2024.03.19</span></div>
-                             <div class="d-flex">
-                               <div class="col">
-                                   <!-- 답장 버튼-->
-                                   <button class="btn btn-secondary btn-sm ms-1">답글</button>
-                               </div>
-                               <div class="col d-flex justify-content-end ">
-                                 <!-- 삭제/수정 버튼-->
-                                 <!--<button class="btn btn-warning btn-sm me-2">수정</button>
-                                 <button class="btn btn-danger btn-sm me-2">삭제</button>-->
-                               </div> 
-                             </div>
-                          </div>
-                        </div>
-                        <ul>
-                        </ul>
-                      </li>
-                    </ul>
-                  </li>
+                <ul class="ezReply" id="reply_root">
+                
                 </ul>
-              </div>
-              <div class="reply_input ms-3">
-                <div class="form-floating">
-                  <input type="text" class="form-control" placeholder="Leave a comment here" id="replyinput" style="width:98%;">
-                  <label for="replyinput">댓글을 입력하세요</label>
                 </div>
-              </div>
+					<div class="ezReply_input ms-3 pb-2">
+						<div class="d-flex">
+					  		<textarea placeholder="댓글을 입력하세요.." onInput="ezReply_onInput(event)" id="ezReply_root_value"></textarea>
+					  		<button class="ms-1 me-1 btn btn-secondary" onClick="ezReply_rootSubmit(this)">댓글 등록</button>
+						</div>
+					</div>
 
-          </div>
-      </div>
+				   </div>
+                
       <div class="blog_buttons mt-3 d-flex justify-content-end">
           <a class="btn btn-primary me-2" role="button" href="modify.do?bno=${vo.bno}">수정</a>
           <button class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#boardRemoveModal">삭제</button>
@@ -445,22 +145,19 @@
     </section>
   </main><!-- End #main -->
 
-  <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>EzenCompany</span></strong>. All Rights Reserved
-    </div>
-    <div class="credits">
-      <!-- All the links in the footer should remain intact. -->
-      <!-- You can delete the links only if you purchased the pro version. -->
-      <!-- Licensing information: https://bootstrapmade.com/license/ -->
-      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      <!-- Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> -->
-    </div>
-  </footer><!-- End Footer -->
-
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
+	 <!-- popup -->
+		<%@ include file="../popup/blog.jsp"%>
+		
+		<!-- catting popup -->
+		<%@ include file="../popup/chatting.jsp"%>
+	  </main><!-- End #main -->
+	  
+	  <!-- footer -->
+	  <%@ include file="../include/footer.jsp"%>
+	
+	  <!-- Last -->
+	  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+ 
 
     <!-- Vendor JS Files -->
     <script src="<%=request.getContextPath()%>/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

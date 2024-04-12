@@ -7,11 +7,12 @@ import org.springframework.stereotype.Service;
 
 import ezen.ezencompany.dao.BoardDAO;
 import ezen.ezencompany.vo.BoardAttachVO;
+import ezen.ezencompany.vo.BoardReplyVO;
 import ezen.ezencompany.vo.BoardVO;
 
 
 @Service
-public class BoardServicelmpl implements BoardService {
+public class BoardServiceImpl implements BoardService {
 
 	@Autowired
 	BoardDAO boardDAO;
@@ -62,5 +63,51 @@ public class BoardServicelmpl implements BoardService {
 		return result;
 		
 	
-}
+	}
+	@Override
+	public List<BoardAttachVO> getFiles(int bno) {
+ 
+		return boardDAO.selectFiles(bno);
+	}
+
+	@Override
+	public BoardAttachVO getFile(int bfno) {
+		return boardDAO.selectFile(bfno);
+	}
+
+	@Override
+	public BoardVO selectOne(int bgno, boolean force) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<BoardReplyVO> boardReplyList(int bno) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BoardReplyVO getReply(int rno) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insertReply(BoardReplyVO vo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int removeReply(int bno) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int modifyReply(BoardReplyVO vo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

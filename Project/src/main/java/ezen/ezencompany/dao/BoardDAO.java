@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ezen.ezencompany.vo.BoardAttachVO;
+import ezen.ezencompany.vo.BoardReplyVO;
 import ezen.ezencompany.vo.BoardVO;
 
 @Repository
@@ -45,4 +46,37 @@ public class BoardDAO {
 	public int insertfile(BoardAttachVO vo) {
 		return sqlSession.insert("ezen.ezencompany.mapper.boardmapper.insertfile", vo);
 	}
+
+	public List<BoardAttachVO> selectFiles(int bno){
+		return sqlSession.selectList("ezen.ezencompany.mapper.boardmapper.selectFiles", bno);
+	}
+	
+	public BoardAttachVO selectFile(int bfno){
+		return sqlSession.selectOne("ezen.ezencompany.mapper.boardmapper.selectFile", bfno);
+	}
+	
+	
+	
+	
+	
+	public List<BoardReplyVO> selectReplyList(int bno) {
+		return sqlSession.selectList("ezen.ezencompany.mapper.boardmapper.selectReplyList", bno);
+	}
+	
+	public BoardReplyVO selectReply(int rno) {
+		return sqlSession.selectOne("ezen.ezencompany.mapper.boardmapper.selectReply", rno);
+	}
+	
+	public int insertReply(BoardReplyVO vo){
+		return sqlSession.insert("ezen.ezencompany.mapper.boardmapper.insertReply", vo);
+	}
+	
+	public int removeReply(int rno) {
+		return sqlSession.update("ezen.ezencompany.mapper.boardmapper.removeReply", rno);
+	}
+	
+	public int modifyReply(BoardReplyVO vo) {
+		return sqlSession.update("ezen.ezencompany.mapper.boardmapper.modifyReply", vo);
+	}
+	
 }
