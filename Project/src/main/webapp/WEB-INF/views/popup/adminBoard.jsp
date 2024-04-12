@@ -57,6 +57,7 @@
 	         </div>
 	       </div>
 	       <div class="modal-footer d-flex align-items-center justify-content-center">
+	       	 <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">취소</button>
 	         <button type="button" class="btn btn-warning btn-lg" data-bs-dismiss="modal" onclick="insertBoard()">추가</button>
 	       </div>
 	     </div>

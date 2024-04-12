@@ -447,6 +447,11 @@ function addBoard(name, read_permission, write_permission){
 
   if(write_permission == null )
     return '';
+    
+    
+    
+    
+    
 
   let html= '<tr>'
           + '  <td>'+ name +'</td>'
@@ -565,7 +570,28 @@ function insertBoard(){
   let boardName = $("#board_inputName").val();
   let reader = getTreeData('tree_reader');
   let writer = getTreeData('tree_writer');
+  
+  console.log(boardName);
+  console.log(reader);
+  console.log(writer);
+  
+  $.ajax(
+	{
+		url: "/ezencompany/admin/board/write",
+		type: "post",
+		data: {name:boardName, reader:reader, },
+		success: function(res) {
+			console.log("111");
+		},
+		error: function(error) {
+      		alert(error);
+    	}
+	});
+  
+  
+  /*
   let html = addBoard(boardName,reader,writer);
+  
   if(html == ''){
     alert("게시판 추가 실패");
     return;
@@ -579,7 +605,7 @@ function insertBoard(){
   //console.log(datatable);
  // datatable.refresh();
 
- 
+ */
   initTooltips();
 }
 
