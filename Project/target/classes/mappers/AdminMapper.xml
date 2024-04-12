@@ -13,12 +13,12 @@
 	</select>
 	
 	<insert id="employeeRegistration" parameterType="java.util.Map">
-		INSERT INTO employeeOption (mno, cidx, aidx) VALUES
+		INSERT INTO employeeoption (mno, cidx, aidx) VALUES
 		    (#{mno}, #{cidx}, #{aidx});
 	</insert>
 	
 	<insert id="insertShortUrl" parameterType="java.util.Map">
-		INSERT INTO joinMail (mno, shortUrl) VALUES
+		INSERT INTO joinmail (mno, shortUrl) VALUES
 		    (#{mno}, #{url});
 	</insert>
 	
