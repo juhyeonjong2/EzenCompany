@@ -48,6 +48,12 @@ public class BlogServiceImpl implements BlogService {
 	}
 	
 	@Override
+	public List<MemberVO> blogUserListByActive() {
+		return blogDAO.selectActiveEmployees();
+	}
+	
+	
+	@Override
 	public List<EmployeeOptionVO> getAdditionalOptions(int mno) {
 		// mno에 해당하는 옵션 목록을 받고
 		// 해시맵으로 변경해서 돌려줌.
@@ -82,7 +88,7 @@ public class BlogServiceImpl implements BlogService {
 			if(attributeMap.containsKey(aidx))
 			{
 				AttributeVO aVo = attributeMap.get(aidx);
-				vo.setAttributeKey(aVo.getKey());
+				vo.setAttributeKey(aVo.getOtkey());
 				vo.setAttributeValue(aVo.getValue());
 			}
 		}
@@ -189,5 +195,7 @@ public class BlogServiceImpl implements BlogService {
 	public BlogAttachVO getFile(int bgfno) {
 		return blogDAO.selectFile(bgfno);
 	}
+
+	
 
 }

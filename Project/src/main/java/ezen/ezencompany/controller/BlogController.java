@@ -64,7 +64,9 @@ public class BlogController {
 		// 블로그 네비게이션
 		// 1. 퇴사자
 		List<MemberVO> retiredEmployees = blogService.blogUserListByRetired(); // 탈퇴한 사람목록
-		// 2. blogView 정보.
+		// 2. 전체 사원
+		List<MemberVO> employees = blogService.blogUserListByActive();
+		// 3. blogView 정보.
 		HashMap<String, List<MemberVO>> blogUsers = new HashMap<String, List<MemberVO>>();
 		// 내 옵션정보 가져옴
 		List<EmployeeOptionVO> myOptions = blogService.getAdditionalOptions(user.getMno());
@@ -102,6 +104,7 @@ public class BlogController {
 		}
 		
 		model.addAttribute("retiredEmployees",retiredEmployees);
+		model.addAttribute("employees", employees);
 		model.addAttribute("blogUsers", blogUsers);
 				
 		// 작성자 이름 및 프로필 정보
@@ -267,7 +270,9 @@ public class BlogController {
 		// 블로그 네비게이션
 		// 1. 퇴사자
 		List<MemberVO> retiredEmployees = blogService.blogUserListByRetired(); // 탈퇴한 사람목록
-		// 2. blogView 정보.
+		// 2. 전체 직원
+		List<MemberVO> employees = blogService.blogUserListByActive();
+		// 3. blogView 정보.
 		HashMap<String, List<MemberVO>> blogUsers = new HashMap<String, List<MemberVO>>();
 		// 내 옵션정보 가져옴
 		List<EmployeeOptionVO> myOptions = blogService.getAdditionalOptions(myUser.getMno());
@@ -305,6 +310,7 @@ public class BlogController {
 		}
 		
 		model.addAttribute("retiredEmployees",retiredEmployees);
+		model.addAttribute("employees", employees);
 		model.addAttribute("blogUsers", blogUsers);
 		
 		// 내용

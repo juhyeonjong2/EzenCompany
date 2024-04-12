@@ -1,19 +1,17 @@
 package ezen.ezencompany.controller;
 
 import java.io.File;
-
 import java.io.IOException;
 import java.net.InetAddress;
-
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
@@ -24,15 +22,24 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import ezen.ezencompany.dto.BoardPermissionDTO;
+import ezen.ezencompany.dto.BoardTypeViewDTO;
 import ezen.ezencompany.service.AdminService;
+import ezen.ezencompany.service.ManagementService;
 import ezen.ezencompany.service.MemberService;
 import ezen.ezencompany.util.Path;
 import ezen.ezencompany.vo.AttributeVO;
+import ezen.ezencompany.vo.BoardReaderVO;
+import ezen.ezencompany.vo.BoardTypeVO;
+import ezen.ezencompany.vo.BoardWriterVO;
+import ezen.ezencompany.vo.CategoryVO;
 import ezen.ezencompany.vo.MemberVO;
 
 @RequestMapping(value="/admin")
@@ -44,6 +51,9 @@ public class AdminController {
 	
 	@Autowired
 	AdminService adminService;
+	
+	@Autowired
+	ManagementService managementService;
 	
 	//이메일 보내는 객체
 	@Autowired
@@ -322,4 +332,253 @@ public class AdminController {
 		return "true";
 		
 	}
+	////// board /////////
+	
+	private CategoryVO findCategory(int findCidx ,List<CategoryVO> categoroyList) {
+		if(categoroyList == null)
+			return null;
+		
+		// 0인경우 : 모두
+		if(findCidx == 0) {
+			CategoryVO allCategory = new  CategoryVO(); // 메모리 낭비라 캐싱하면 좋음.
+			allCategory.setCidx(0);
+			allCategory.setCode("ALL");
+			allCategory.setValue("모두");
+			return allCategory;
+		}
+		
+		Iterator<CategoryVO> it = categoroyList.iterator();
+		while(it.hasNext()) {
+			CategoryVO category = it.next();
+			if(category.getCidx() == findCidx) {
+				return category;
+			}
+		}
+		return null;
+		
+	}
+	
+	private AttributeVO findAttribute(int findAidx ,List<AttributeVO> attributeList) {
+		if(attributeList == null)
+			return null;
+		
+		// 0인경우 : 모두
+		if(findAidx == 0) {
+			AttributeVO allAttribute = new  AttributeVO(); // 메모리 낭비라 캐싱하면 좋음.
+			allAttribute.setAidx(0);
+			allAttribute.setCidx(0);
+			allAttribute.setOtkey("ALL");
+			allAttribute.setValue("모두");
+			return allAttribute;
+		}
+		
+		Iterator<AttributeVO> it = attributeList.iterator();
+		while(it.hasNext()) {
+			AttributeVO attribute = it.next();
+			if(attribute.getAidx() == findAidx) {
+				return attribute;
+			}
+		}
+		return null;
+		
+	}
+	
+	private List<BoardPermissionDTO> getPermissionList(
+			HashMap<Integer, ArrayList<Integer>> permissionMap, 
+			List<CategoryVO> categoroyList, 
+			List<AttributeVO> attributeList)
+	{
+		
+		List<BoardPermissionDTO> permissions = new ArrayList<BoardPermissionDTO>();
+		Set<Integer> categoryKeySet = permissionMap.keySet();
+		for( Integer cidx : categoryKeySet) {
+			BoardPermissionDTO permission = new BoardPermissionDTO();
+			permission.setCategory(findCategory(cidx, categoroyList));
+			
+			List<AttributeVO> attributes = new ArrayList<AttributeVO>();
+			ArrayList<Integer> attributeKeys = permissionMap.get(cidx);
+			for(Integer aidx : attributeKeys) {
+				attributes.add(findAttribute(aidx, attributeList));
+			}
+			permission.setAttributes(attributes);
+			
+			permissions.add(permission);
+		}
+		
+		return permissions;
+	}
+	
+	private HashMap<Integer, ArrayList<Integer>> getReaderMap(int bindex){
+		
+		HashMap<Integer, ArrayList<Integer>> permissionMap = new HashMap<Integer, ArrayList<Integer>>();
+		List<BoardReaderVO> boardReaders = managementService.getBoardReaderList(bindex);
+		for(BoardReaderVO br : boardReaders)
+		{
+			int cidx = br.getCidx();
+			int aidx = br.getAidx();
+			if(permissionMap.containsKey(cidx)) {
+				permissionMap.get(cidx).add(aidx);
+			} else {
+				permissionMap.put(cidx, new ArrayList<Integer>());
+				permissionMap.get(cidx).add(aidx);
+			}
+		}
+		
+		return permissionMap;
+	}
+	
+
+	private HashMap<Integer, ArrayList<Integer>> getWriterMap(int bindex){
+		
+		HashMap<Integer, ArrayList<Integer>> permissionMap = new HashMap<Integer, ArrayList<Integer>>();
+		List<BoardWriterVO> boardWriters = managementService.getBoardWriterList(bindex);
+		for(BoardWriterVO bw : boardWriters)
+		{
+			int cidx = bw.getCidx();
+			int aidx = bw.getAidx();
+			if(permissionMap.containsKey(cidx)) {
+				permissionMap.get(cidx).add(aidx);
+			} else {
+				permissionMap.put(cidx, new ArrayList<Integer>());
+				permissionMap.get(cidx).add(aidx);
+			}
+		}
+		
+		return permissionMap;
+	}
+
+	@RequestMapping(value="/board")
+	public String board(Model model) {
+		//1. boardType 목록을 가져옴
+		List<BoardTypeVO> boardList = managementService.getBoardTypeList();
+		List<AttributeVO> attributeList = managementService.getAttributes();
+		List<CategoryVO> categoroyList = managementService.getCategorys();
+		
+		List<BoardTypeViewDTO> boardViewList = new ArrayList<BoardTypeViewDTO>();
+		for(BoardTypeVO vo : boardList) {
+			// 한개의 게시판 정보.
+			
+			BoardTypeViewDTO dto = new BoardTypeViewDTO();
+			dto.setBindex(vo.getBindex());
+			dto.setBtname(vo.getBtname());
+			
+			int bindex = vo.getBindex(); // 성능향상을 위한 캐싱
+			
+			//reader
+			HashMap<Integer, ArrayList<Integer>> readerPermissionMap = getReaderMap(bindex);
+			List<BoardPermissionDTO> readers = getPermissionList(readerPermissionMap,categoroyList, attributeList );
+			dto.setReaders(readers);
+			
+			//writer
+			HashMap<Integer, ArrayList<Integer>> writerPermissionMap = getWriterMap(bindex);
+			List<BoardPermissionDTO> writers = getPermissionList(writerPermissionMap,categoroyList, attributeList );
+			dto.setWriters(writers);
+			
+			boardViewList.add(dto);
+		}
+		
+		model.addAttribute("boardtype",boardViewList );
+		
+		
+		return "admin/board";
+	}
+	
+	///// category //////////
+	@RequestMapping(value="/category")
+	public String category(Model model) {
+		List<CategoryVO> list = managementService.getCategorys();
+		
+		model.addAttribute("categorys",list);
+		
+		return "admin/category";
+	}
+	
+	@RequestMapping(value="/category/info", method=RequestMethod.GET)
+	@ResponseBody
+	public CategoryVO categoryInfo(int cidx) {
+		
+		return managementService.getCategory(cidx);
+	}
+	
+	
+	@RequestMapping(value = "/category/write", method = RequestMethod.POST)
+	public String categoryWriteOk(CategoryVO vo) {
+		
+		int result = managementService.addCategory(vo);
+		
+		// write완료후 리로드하도록 category로 보냄.
+		return "redirect:/admin/category"; 
+	}
+	
+	@RequestMapping(value = "/category/modify", method = RequestMethod.POST)
+	public String categoryModifyOk(CategoryVO vo) {
+	
+		int result = managementService.modifyCategory(vo);
+		
+		// write완료후 리로드하도록 category로 보냄.
+		return "redirect:/admin/category"; 
+	}
+	
+	@RequestMapping(value = "/category/remove", method = RequestMethod.POST)
+	public String categoryRemoveOk(int cidx) {
+		
+		int result = managementService.removeCategory(cidx);
+		
+		// write완료후 리로드하도록 category로 보냄.
+		return "redirect:/admin/category"; 
+	}
+	
+
+	//// attribute ///////
+	@RequestMapping(value="/attribute")
+	public String attribute(Model model) {
+		
+		List<CategoryVO> list = managementService.getCategorys();
+		model.addAttribute("categorys",list);
+		
+		return "admin/attribute";
+	}
+	
+	@GetMapping(value="/attributes/{cidx}")
+	public String attributeList(Model model, @PathVariable int cidx) {
+		List<AttributeVO> list = managementService.getAttributes(cidx);
+		model.addAttribute("attributes",list);
+		
+		CategoryVO category = managementService.getCategory(cidx);
+		model.addAttribute("category",category);
+		
+		return "admin/attributeList";
+	}
+	
+	@RequestMapping(value="/attribute/info", method=RequestMethod.GET)
+	@ResponseBody
+	public AttributeVO attributeInfo(int aidx) {
+		return managementService.getAttribute(aidx);
+	}
+	
+
+	@RequestMapping(value = "/attribute/write", method = RequestMethod.POST)
+	public String attributeWriteOk(AttributeVO vo) {
+		
+		int result = managementService.addAttribute(vo);
+		return "redirect:/admin/attributes/" + vo.getCidx(); 
+	}
+	
+	@RequestMapping(value = "/attribute/modify", method = RequestMethod.POST)
+	public String attributeModifyOk(AttributeVO vo) {
+		
+		int result = managementService.modifyAttribute(vo);
+		return "redirect:/admin/attributes/" + vo.getCidx();
+	}
+	
+	@RequestMapping(value = "/attribute/remove", method = RequestMethod.POST)
+	public String attributeRemoveOk(int aidx) {
+		AttributeVO vo = managementService.getAttribute(aidx);
+		int cidx = vo.getCidx();
+		
+		int result = managementService.removeAttribute(aidx);
+		return "redirect:/admin/attributes/" + cidx;
+	}
+	
+	
 }

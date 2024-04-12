@@ -37,7 +37,7 @@ import ezen.ezencompany.vo.UserVO;
 @RequestMapping(value = "/board")
 @Controller
 public class BoardController {
-
+	
 	@Autowired
 	BoardService boardService;
 	
