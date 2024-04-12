@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import ezen.ezencompany.vo.BlogVO;
 import ezen.ezencompany.vo.BoardAttachVO;
 import ezen.ezencompany.vo.BoardReplyVO;
 import ezen.ezencompany.vo.BoardVO;
@@ -21,6 +22,17 @@ public class BoardDAO {
 	public List<BoardVO> list(int bindex){
 		return sqlSession.selectList("ezen.ezencompany.mapper.boardmapper.list",bindex); 
 	}
+	
+	
+	public BoardVO selectLast(int mno) {
+		return sqlSession.selectOne(namespace+".selectLast", mno);
+	}
+	
+	public BoardVO selectLastForce(int mno) {
+		return sqlSession.selectOne(namespace+".selectLastForce", mno);
+	}
+	
+	
 	
 	public BoardVO selectOneByBno(int bno) {
 		return sqlSession.selectOne("ezen.ezencompany.mapper.boardmapper.selectOneByBno", bno);
