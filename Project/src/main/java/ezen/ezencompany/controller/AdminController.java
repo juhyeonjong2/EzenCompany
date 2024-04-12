@@ -163,6 +163,7 @@ public class AdminController {
 			String ext =  fileNMArr[fileNMArr.length-1];
 			
 			String realFileNM = fileNMArr[0]+"."+ ext; //실제 파일명
+			///블록 ㅡ컨트롤러 패스보고 그대로 사용하기 - 사용자 아이디(사원 수정에 사진 가져오는것도 아이디 추가한 경로로 수정해야함+uuid)
 			
 			int searchMno = adminService.searchMno(mno);
 			if(searchMno == 0) {
