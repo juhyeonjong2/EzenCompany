@@ -69,6 +69,10 @@
 		enabled, mphone from member WHERE mno = #{mno}; 
 	</select>
 	
+	<select id="getId" parameterType="int" resultType="String" >
+		SELECT mid FROM member WHERE mno = #{mno};
+	</select>
+	
 </mapper>
 
 
