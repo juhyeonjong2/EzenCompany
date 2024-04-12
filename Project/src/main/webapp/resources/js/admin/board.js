@@ -84,11 +84,11 @@
      if (boardAddCategoryModal) {
       boardAddCategoryModal.addEventListener('show.bs.modal', event => 
          {
-          //console.log(event);   
+          console.log(event);   
           const target = event.relatedTarget;             
-          //console.log(target);
+          console.log(target);
           // 옵션으로 넘기면 이렇게 가져올수 있다.
-          //console.log(target._config['data-bs-tree']);
+          console.log(target._config['data-bs-tree']);
           let hiddenInput = $(boardAddCategoryModal).find('.modal-body .tree_name_input');
           hiddenInput.val(target._config['data-bs-tree']);
 
@@ -207,9 +207,9 @@ var setting = {
 
   }
 };
-const categoryOpenIconPath = "../assets/icon/layers.svg";
-const categoryCloseIconPath ="../assets/icon/layers-fill.svg";
-const attributeIconPath ="../assets/icon/puzzle.svg";
+const categoryOpenIconPath = "/ezencompany/resources/icon/layers.svg";
+const categoryCloseIconPath ="/ezencompany/resources/icon/layers-fill.svg";
+const attributeIconPath ="/ezencompany/resources/assets/icon/puzzle.svg";
 
 // zTree data attributes, refer to the API documentation (treeNode data details)
 
@@ -339,101 +339,66 @@ $(document).ready(function(){
  *  모달 제어
  ************************************/
 function fetchCategorys(){
-  let dbCategorys = [
-    {'code' : 'POSITION' ,'value' : '직위'},
-    {'code' : 'RESPONSIBILITY' ,'value' : '직책'},
-    {'code' : 'DUTY' ,'value' : '직무'},
-    {'code' : 'OCCUPATION' ,'value' : '직종'},
-    {'code' : 'DEPARTMENT' ,'value' : '부서'}];
+
+	let dbCategorys =[];
+	
+	$.ajax(
+	{
+		url: "/ezencompany/board/category/list",
+		type: "get",
+		async : false,
+		success: function(categorys) {
+			
+			for(let i=0;i<categorys.length; i++)
+			{
+				let category = categorys[i];
+				dbCategorys.push(
+				{
+					'code' : category.code,
+					'value' :category.value,
+					'cidx' : category.cidx
+				});
+			}
+		},
+		error: function(error) {
+      		alert(error);
+    	}
+	});
+	
 
     return dbCategorys;
 }
 
 function fetchAttributes(categoryCode){
-// 디비에서 가져오는 로직 샘플 (ajax로 불러올것)
+
   let dbAttributes =[];
-
-  if(categoryCode=='POSITION') 
-  {
-    // 직위
-    dbAttributes = [
-      {'key' : 'Intern'                 ,'value' : '인턴'},
-      {'key' : 'Staff'                  ,'value' : '사원'},
-      {'key' : 'Associate'              ,'value' : '주임'},
-      {'key' : 'Associate Manager'      ,'value' : '대리'},
-      {'key' : 'General Manager'        ,'value' : '과장'},
-      {'key' : 'Deputy General Manager' ,'value' : '차장'},
-      {'key' : 'General Manager'        ,'value' : '부장'},
-      {'key' : 'Director'               ,'value' : '이사'},
-      {'key' : 'Managing Director'      ,'value' : '상무'},
-      {'key' : 'Deputy Vice President'  ,'value' : '전무'},
-      {'key' : 'Vice President'         ,'value' : '부사장'},
-      {'key' : 'President'              ,'value' : '사장'},
-      {'key' : 'Vice Chairman'          ,'value' : '부회장'},
-      {'key' : 'Chairman'               ,'value' : '회장'}
-    ];
-  }else if(categoryCode=='RESPONSIBILITY'){
-    //직책
-    dbAttributes = [
-      {'key' : 'Staff'                      ,'value' : '사원'},
-      {'key' : 'Part Leader'                ,'value' : '파트장'},
-      {'key' : 'Branch Manager'             ,'value' : '지점장'},
-      {'key' : 'Headquarter Manager'        ,'value' : '본부장'},
-      {'key' : 'Group Leader'               ,'value' : '그룹장'},
-      {'key' : 'Head of Department'         ,'value' : '부서장'},
-      {'key' : 'Team Leader'                ,'value' : '팀장'},
-      {'key' : 'Head of Corporate Business' ,'value' : '사업부장'},
-      {'key' : 'Head of Division'           ,'value' : '부문장'},
-      {'key' : 'Center Leader'              ,'value' : '센터장'},
-      {'key' : 'General Manager'            ,'value' : '실장'},
-      {'key' : 'Executive'                  ,'value' : '임원'},
-      {'key' : 'Residing Advisor'           ,'value' : '상근고문'},
-      {'key' : 'Advisor'                    ,'value' : '고문'},
-      {'key' : 'CIO'                        ,'value' : '최고정보책임자'}, // [Chief Information Officer]
-      {'key' : 'COO'                        ,'value' : '최고운영책임자'}, // [Chief Operating Officer]
-      {'key' : 'CMO'                        ,'value' : '최고마케팅책임자'}, // [Chief Marketing Officer]
-      {'key' : 'CFO'                        ,'value' : '최고재무책임자'}, // [Chief Financial Officer]
-      {'key' : 'CTO'                        ,'value' : '최고기술책임자'},    // [Chief Technology Officer]
-      {'key' : 'CEO'                        ,'value' : '대표이사'}       // [Chief Executive Officer]
-    ];
-
-  }else if(categoryCode=='DUTY'){
-    // 직무
-    dbAttributes = [
-      {'key' : 'Development'        ,'value' : '개발'},
-      {'key' : 'Management Support' ,'value' : '경영지원'},
-      {'key' : 'Service'            ,'value' : '서비스'},
-      {'key' : 'Business'           ,'value' : '사업'}
-    ];
-  }else if(categoryCode=='DEPARTMENT'){
-    //부서
-    dbAttributes = [
-      {'key' : 'Management Support' ,'value' : '경영지원'},
-      {'key' : 'Technical Support'  ,'value' : '기술지원'},
-      {'key' : 'Technical Research Center'  ,'value' : '기술연구소'},
-      {'key' : 'DevelopmentA'        ,'value' : '개발1팀'},
-      {'key' : 'DevelopmentB'        ,'value' : '개발2팀'}
-    ];
-
-  }else if(categoryCode=='OCCUPATION'){
-    // 직종
-    dbAttributes = [
-      {'key' : 'System Design'      ,'value' : '시스템 기획'},
-      {'key' : 'Level Design'       ,'value' : '레벨 기획'},
-      {'key' : 'Screenwriter'       ,'value' : '시나리오 작가'},
-      {'key' : 'Client Programmer'  ,'value' : '클라이언트 프로그래머'},
-      {'key' : 'Server Programmer'  ,'value' : '서버 프로그래머'},
-      {'key' : 'Concept Art'        ,'value' : '콘셉 그래픽 디자이너'},
-      {'key' : '3D Modeler'         ,'value' : '3D 모델러'},
-      {'key' : 'Animator'           ,'value' : '에니메이터'},
-      {'key' : 'Effecter'           ,'value' : '비주얼 이펙터'},
-      {'key' : 'Sound'              ,'value' : '사운드 제작'},
-      {'key' : 'Business'           ,'value' : '영업'},
-      {'key' : 'Technical Support'  ,'value' : '기술지원'},
-      {'key' : 'Management Support' ,'value' : '경영지원'}
-    ];
-  }
-
+  
+  $.ajax(
+	{
+		url: "/ezencompany/board/attribute/list",
+		type: "get",
+		data: {code:categoryCode},
+		async : false,
+		success: function(attributes) {
+			if(attributes != null){
+			for(let i=0;i<attributes.length; i++)
+			{
+				let attribute = attributes[i];
+				dbAttributes.push(
+				{
+					'code' : attribute.otkey,
+					'value' :attribute.value,
+					'cidx' : attribute.cidx,
+					'aidx' : attribute.aidx
+				});
+			}
+			}
+		},
+		error: function(error) {
+      		alert(error);
+    	}
+	});
+  
   return dbAttributes;
 }
 
@@ -533,6 +498,7 @@ function addBoard(name, read_permission, write_permission){
 function changePopupCategory(modal, val){
   if(modal == null)
     return;
+	console.log("changePopupCategory");
 
   // val 정보를 가지고 디비에서 속성값을 가져온다.
   let dbAttributes =fetchAttributes(val);

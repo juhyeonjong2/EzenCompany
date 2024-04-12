@@ -11,6 +11,7 @@ import ezen.ezencompany.vo.CategoryVO;
 public interface ManagementService {
 	List<CategoryVO> getCategorys(); // 모든 카테고리 목록 반환.
 	CategoryVO getCategory(int cidx);
+	CategoryVO getCategory(String code);
 	int addCategory(CategoryVO vo);
 	int modifyCategory(CategoryVO vo);
 	int removeCategory(int cidx);

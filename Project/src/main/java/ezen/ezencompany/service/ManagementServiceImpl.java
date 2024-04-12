@@ -27,6 +27,12 @@ public class ManagementServiceImpl implements ManagementService {
 	public CategoryVO getCategory(int cidx) {
 		return managementDAO.selectCategory(cidx);
 	}
+	
+	@Override
+	public CategoryVO getCategory(String code) {
+		return managementDAO.selectCategoryByCode(code);
+	}
+	
 
 	@Override
 	public int addCategory(CategoryVO vo) {

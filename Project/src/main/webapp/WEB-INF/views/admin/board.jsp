@@ -26,7 +26,7 @@
   	<!-- Predefined Script -->
 	<script src="<%=request.getContextPath()%>/resources/js/jquery-3.7.1.min.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/vendor/zTree/js/jquery.ztree.all.js"></script>
-
+	
 </head>
 <body>
 	<%@ include file="../include/adminHeader.jsp"%>
@@ -54,53 +54,80 @@
 		              </tr>
 		            </thead>
 		            <tbody>
-		            <tr>
-		              <td>공지사항</td>
-		              <td>
-		                  <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="All">모두</button>
-		              </td>
-		              <td>
-		                  <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Admin Only">없음</button>
-		              </td>
-		              <td>
-		                <a class="link-dark" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#boardEditModal" data-bs-no="1">
-		                  <i class="bi bi-three-dots-vertical"></i>
-		                </a>
-		              </td>
-		            </tr>
-		
-		            <tr>
-		                <td>자유 게시판</td>
-		                <td>
-		                    <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="All">모두</button>
-		                </td>
-		                <td>
-		                    <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top"  title="All">모두</button>
-		                </td>
-		                <td>
-		                  <a class="link-dark" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#boardEditModal" data-bs-no="2">
-		                    <i class="bi bi-three-dots-vertical"></i>
-		                  </a>
-		                </td>
-		            </tr>
-		              
-		            <tr>
-		              <td>아트팀 게시판</td>
-		              <td>
-		                  <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top"  title="2D그래픽, 3D그래픽, 배경">직무</button>
-		                  <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top"  title="그래픽 디자이너">직군</button>
-		                  <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top"  title="대표이사, 상무, 이사, 부장, 과장, 대리, 사원">직위</button>
-		              </td>
-		              <td>
-		                  <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top"  title="2D그래픽, 3D그래픽, 배경">직무</button>
-		              </td>
-		              <td>
-		                <a class="link-dark" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#boardEditModal" data-bs-no="3">
-		                  <i class="bi bi-three-dots-vertical"></i>
-		                </a>
-		              </td>
-		            </tr>
-		
+						<c:forEach var="board" items="${boardtype}">
+							<tr>
+			              		<td>${board.btname}</td>
+			              		<td>
+			              			<c:choose>
+			              				<c:when test="${empty board.readers}">
+			              					<button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="모두">모두</button>
+			              				</c:when>
+			              				<c:otherwise>
+											<c:forEach var="reader" items="${board.readers}">
+												<c:choose>
+													<c:when test="${empty reader}">
+														<!-- reader가 nul인경우 관리자 온리.  -->
+														<button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="관리자">없음</button>	
+													</c:when>
+													<c:when test="${reader.category.cidx eq 0}">
+														<!-- reader의 category cidx가 0인경우 모두 -->
+														<button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="모두">모두</button>
+													</c:when>
+													<c:otherwise>
+														<c:set var="attributesKor" value="" />
+														<c:forEach var="attribute" items="${reader.attributes}" varStatus="status">
+															<c:if test="${status.index > 0}">
+																<c:set var="attributesKor" value="${attributesKor}, " />
+															</c:if>
+															<c:set var="attributesKor" value="${attributesKor}${attribute.value}" />
+														</c:forEach>
+														<button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="${attributesKor}">${reader.category.value}</button>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+			              				</c:otherwise>
+			              			</c:choose>
+			              		</td>
+			              		
+			              		<td>
+			              		<c:choose>
+			              				<c:when test="${empty board.writers}">
+			              					<button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="관리자">없음</button>
+			              				</c:when>
+			              				<c:otherwise>
+					              			<c:forEach var="writer" items="${board.writers}">
+					              				<c:out value="${writer}"/>
+						              			<c:choose>
+													<c:when test="${empty writer}">
+														<!-- reader가 nul인경우 관리자 온리.  -->
+														<button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="관리자">없음</button>	
+													</c:when>
+													<c:when test="${writer.category.cidx eq 0}">
+														<!-- reader의 category cidx가 0인경우 모두 -->
+														<button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="모두">모두</button>
+													</c:when>
+				    								<c:otherwise>
+				    									<c:set var="attributesKor" value="" />
+				    									<c:forEach var="attribute" items="${writer.attributes}" varStatus="status">
+				    										<c:if test="${status.index > 0}">
+				    											<c:set var="attributesKor" value="${attributesKor}, " />
+				    										</c:if>
+															<c:set var="attributesKor" value="${attributesKor}${attribute.value}" />
+				    									</c:forEach>
+				    									<button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="${attributesKor}">${writer.category.value}</button>
+				    								</c:otherwise>
+				    							</c:choose>
+											</c:forEach>
+									</c:otherwise>
+								</c:choose>
+							</td>
+							<td>
+							  <a class="link-dark" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#boardEditModal" data-bs-no="${board.bindex}">
+							    <i class="bi bi-three-dots-vertical"></i>
+							  </a>
+							</td>
+						</tr>
+					</c:forEach>
 		            </tbody>
 		          </table>
 		          <!-- End Table with stripped rows -->

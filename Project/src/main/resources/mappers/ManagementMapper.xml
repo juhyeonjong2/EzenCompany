@@ -11,6 +11,10 @@
 		SELECT * FROM category WHERE cidx = #{cidx};
 	</select>
 	
+	<select id="selectCategoryByCode"  resultType="categoryVO">
+		SELECT * FROM category WHERE code = #{code.value};
+	</select>
+	
 	<insert id="insertCategory"  parameterType="categoryVO" useGeneratedKeys="true" keyProperty="cidx">
 		INSERT INTO category(code, value, blogview) VALUES(#{code}, #{value}, #{blogView});
 	</insert>

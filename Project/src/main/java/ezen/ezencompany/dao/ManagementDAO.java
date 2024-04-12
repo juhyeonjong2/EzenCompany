@@ -29,6 +29,12 @@ public class ManagementDAO {
 		return sqlSession.selectOne(namespace+".selectCategory", cidx);
 	}
 	
+	public CategoryVO selectCategoryByCode(String code){
+		return sqlSession.selectOne(namespace+".selectCategoryByCode", code);
+	}
+	
+	
+	
 	public int insertCategory(CategoryVO vo){
 		return sqlSession.insert(namespace+".insertCategory", vo);
 	}

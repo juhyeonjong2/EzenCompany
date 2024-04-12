@@ -338,6 +338,15 @@ public class AdminController {
 		if(categoroyList == null)
 			return null;
 		
+		// 0인경우 : 모두
+		if(findCidx == 0) {
+			CategoryVO allCategory = new  CategoryVO(); // 메모리 낭비라 캐싱하면 좋음.
+			allCategory.setCidx(0);
+			allCategory.setCode("ALL");
+			allCategory.setValue("모두");
+			return allCategory;
+		}
+		
 		Iterator<CategoryVO> it = categoroyList.iterator();
 		while(it.hasNext()) {
 			CategoryVO category = it.next();
@@ -352,6 +361,16 @@ public class AdminController {
 	private AttributeVO findAttribute(int findAidx ,List<AttributeVO> attributeList) {
 		if(attributeList == null)
 			return null;
+		
+		// 0인경우 : 모두
+		if(findAidx == 0) {
+			AttributeVO allAttribute = new  AttributeVO(); // 메모리 낭비라 캐싱하면 좋음.
+			allAttribute.setAidx(0);
+			allAttribute.setCidx(0);
+			allAttribute.setOtkey("ALL");
+			allAttribute.setValue("모두");
+			return allAttribute;
+		}
 		
 		Iterator<AttributeVO> it = attributeList.iterator();
 		while(it.hasNext()) {
@@ -455,9 +474,10 @@ public class AdminController {
 			List<BoardPermissionDTO> writers = getPermissionList(writerPermissionMap,categoroyList, attributeList );
 			dto.setWriters(writers);
 			
-			// 1차 작업완료 확인 필요
 			boardViewList.add(dto);
 		}
+		
+		model.addAttribute("boardtype",boardViewList );
 		
 		
 		return "admin/board";
