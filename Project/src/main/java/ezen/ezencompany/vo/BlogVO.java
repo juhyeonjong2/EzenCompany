@@ -1,6 +1,6 @@
 package ezen.ezencompany.vo;
 
-public class BlogVO {
+public class BlogVO{
 
 	private int bgno;
 	private String blockyn;
@@ -67,6 +67,17 @@ public class BlogVO {
 		this.fno = fno;
 	}
 	
-	
-	
+
+	@Override
+	public String toString() {
+        return "bgno:" + bgno + ", " +
+        		"blockyn:" + blockyn + ", " +
+        		"bghit:" + bghit + ", " +
+        		"bgdate:" + bgdate + ", " +
+        		"bgcontent:" + bgcontent + ", " +
+        		"bgrealcontent:" + bgrealcontent + ", " +
+        		"bgtitle:" + bgtitle + ", " +
+        		"mno:" + mno + ", " +
+        		"fno:" + fno ;
+	}
 }

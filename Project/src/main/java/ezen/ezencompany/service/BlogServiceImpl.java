@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 
 import ezen.ezencompany.dao.BlogDAO;
 import ezen.ezencompany.vo.AttributeVO;
-import ezen.ezencompany.vo.BlogUserVO;
+import ezen.ezencompany.vo.BlogAttachVO;
+import ezen.ezencompany.vo.BlogReplyVO;
 import ezen.ezencompany.vo.BlogVO;
 import ezen.ezencompany.vo.CategoryVO;
 import ezen.ezencompany.vo.EmployeeOptionVO;
@@ -28,18 +29,21 @@ public class BlogServiceImpl implements BlogService {
 	}
 
 	@Override
-	public BlogVO getLastOne(int mno) {
+	public BlogVO getLastOne(int mno, boolean force) {
+		if(force) {
+			return blogDAO.selectLastForce(mno);
+		}
 		return blogDAO.selectLast(mno);
 	}
 
 	// 
 	@Override
-	public List<BlogUserVO> blogUserListByRetired() {
+	public List<MemberVO> blogUserListByRetired() {
 			return blogDAO.selectRetirEmployees();
 	}
 	
 	@Override
-	public List<BlogUserVO> blogUserListByOption(int category, int attribute) {
+	public List<MemberVO> blogUserListByOption(int category, int attribute) {
 		return blogDAO.selectOptionEmployees(category, attribute);
 	}
 	
@@ -114,11 +118,8 @@ public class BlogServiceImpl implements BlogService {
 	}
 	@Override
 	public String getAttributeName(int attribute_pk) {
-		System.out.println(attribute_pk);
 		List<AttributeVO> attributes = blogDAO.getAttributes();
-		System.out.println("cnt:" + attributes.size());
 		for(AttributeVO vo : attributes) {
-			System.out.println(vo.getAidx());
 			if(vo.getAidx()== attribute_pk) {
 				return vo.getValue();
 			}
@@ -136,6 +137,57 @@ public class BlogServiceImpl implements BlogService {
 	{
 		return blogDAO.insertFolder(vo);
 	}
+
+	@Override
+	public List<BlogVO> blogList(int mno, boolean isAll) {
+		return blogDAO.selectBlogList(mno, isAll);
+	}
+
+	@Override
+	public BlogVO selectOne(int bgno, boolean force) {
+		return blogDAO.selectOne(bgno,  force);
+	}
+
+	@Override
+	public List<BlogReplyVO> blogReplyList(int bgno) {
+		return blogDAO.selectReplyList(bgno);
+	}
+
+	@Override
+	public BlogReplyVO getReply(int bgrno) {
+		return blogDAO.selectReply(bgrno);
+	}
+
+	@Override
+	public int insertReply(BlogReplyVO vo) {
+		return blogDAO.insertReply(vo);
+	}
+
+	@Override
+	public int removeReply(int bgrno) {
+		return blogDAO.removeReply(bgrno);
+	}
+
+	@Override
+	public int modifyReply(BlogReplyVO vo) {
+		return blogDAO.modifyReply(vo);
+	}
 	
 	
+	@Override
+	public int insertfile(BlogAttachVO vo){
+		return blogDAO.insertfile(vo);
+	}
+
+	@Override
+	public List<BlogAttachVO> getFiles(int bgno) {
+ 
+		return blogDAO.selectFiles(bgno);
+	}
+
+	@Override
+	public BlogAttachVO getFile(int bgfno) {
+		return blogDAO.selectFile(bgfno);
+	}
+
 }

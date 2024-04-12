@@ -63,6 +63,12 @@
 	<update id="changePwOk" parameterType="java.util.Map">
 		UPDATE member SET mpassword = #{rePassword} WHERE mno = #{mno};
 	</update>
+	
+	<select id="getMemberByID" parameterType="int" resultType="MemberVO" >
+		SELECT mno, mid, mname, email, authority, substr(joindate, '1', '10' ) as joindate, 
+		enabled, mphone from member WHERE mno = #{mno}; 
+	</select>
+	
 </mapper>
 
 

@@ -95,5 +95,10 @@ public class MemberDAO {
 	public List<AttributeVO> getOption(int mno) {
 		return sqlSession.selectList(namespace+".getOption", mno);
 	}
+	
+	//사원을 가져온다.
+	public MemberVO getMember(int mno){
+		return sqlSession.selectOne(namespace+".getMemberByID", mno);
+	}
 		
 }

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     
 <!DOCTYPE html>
 <html lang="ko">
@@ -38,24 +39,31 @@
 	<%@ include file="../include/blogSidebar.jsp"%>
 
   <main id="main" class="main">
+  	<input type="hidden" id="inputMno" value="${mno}">
   	
 		<section class="section container-md">
-		<form action="writeOk" method="post">
+		<form action="writeOk" method="post" enctype="multipart/form-data">
 	      <div class="input-group mb-3">
-	        <input type="text" class="form-control"  placeholder="제목을 입력하세요.." name="title">
+	        <input type="text" class="form-control"  placeholder="제목을 입력하세요.." name="bgtitle">
 	      </div>
 	      <div class="input-group mb-3">
 	        <label class="input-group-text" for="formFileMultiple" >파일첨부</label>
-	        <input type="file" class="form-control"  id="formFileMultiple" multiple>
+	        <input type="file" class="form-control"  name="uploadFile" id="formFileMultiple" multiple>
 	      </div>
 	      <div class="col-auto mb-3 d-flex" >
 	        <div class="col d-flex justify-content-start">
 	          <div>
-	            <select class="form-select" aria-label="Default select example">
-	              <option selected value="1">기본</option>
-	              <option value="2">스프링 일지</option>
-	              <option value="3">임시</option>
-	              <option value="4">임시/임시 폴더</option>
+	            <select class="form-select" aria-label="Default select example" name="fno">
+	            	<c:forEach var="folder" items="${folders}" varStatus="i">
+		            	<c:choose>
+		            		<c:when test="${i.first}">
+		            			<option selected value="${folder.fno}">${folder.fname}</option>
+		            		</c:when>
+		            		<c:otherwise>
+		            		 	<option value="${folder.fno}">${folder.fname}</option>
+		            		</c:otherwise>
+						</c:choose>
+					</c:forEach>
 	            </select>
 	          </div>
 	          <div class="m-1">
@@ -68,15 +76,15 @@
 	          </div>
 	        </div>
 	        <div class="col d-flex justify-content-end">
-	          <div class="form-check form-switch form-check-reverse">
-	            <label class="form-check-label" for="flexSwitchCheckDefault">비공개</label>
-	            <button class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"></button>
-	          </div>
+	          	<div class="form-check form-switch form-check-reverse">
+	  				<input class="form-check-input" type="checkbox" value="y" id="reverseCheck1" name="blockyn">
+	  				<label class="form-check-label" for="reverseCheck1">비공개 </label>
+				</div>
 	        </div>
 	      </div>
 	      <div class="col-auto mb-3">
 	        <!--tinymce 영역-->
-	        <textarea id="editor_blog_content" name="content"></textarea>
+	        <textarea id="editor_blog_content" name="bgcontent"></textarea>
 	      </div>
 	      <div class="blog_buttons mt-3 d-flex justify-content-end">
 	        <button class="btn btn-primary me-2">등록</button>

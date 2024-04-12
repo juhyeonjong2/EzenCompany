@@ -5,13 +5,16 @@
 	<typeAliases>
 		<typeAlias type="ezen.ezencompany.vo.MemberVO" alias="memberVO"/>
 		<typeAlias type="ezen.ezencompany.vo.BoardVO" alias="boardVO"/>
-		<typeAlias type="ezen.ezencompany.vo.BlogUserVO" alias="blogUserVO"/>
 		<typeAlias type="ezen.ezencompany.vo.BlogVO" alias="blogVO"/>
 		<typeAlias type="ezen.ezencompany.vo.EmployeeOptionVO" alias="employeeOptionVO"/>
 		<typeAlias type="ezen.ezencompany.vo.CategoryVO" alias="categoryVO"/>
 		<typeAlias type="ezen.ezencompany.vo.AttributeVO" alias="attributeVO"/>
 		<typeAlias type="ezen.ezencompany.vo.FolderVO" alias="folderVO"/>
 		<typeAlias type="ezen.ezencompany.vo.BoardTypeVO" alias="boardTypeVO"/>
+		<typeAlias type="ezen.ezencompany.vo.BlogReplyVO" alias="blogReplyVO"/>
 		<typeAlias type="ezen.ezencompany.vo.ChatVO" alias="chatVO"/>
+		<typeAlias type="ezen.ezencompany.vo.BoardAttachVO" alias="boardAttachVO"/>
+		<typeAlias type="ezen.ezencompany.vo.BlogAttachVO" alias="blogAttachVO"/>
+		<typeAlias type="ezen.ezencompany.vo.BoardReplyVO" alias="boardReplyVO"/>
 	</typeAliases>
 </configuration>
