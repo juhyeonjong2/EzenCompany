@@ -22,7 +22,6 @@ public class BoardAuthority {
 	MemberService memberService;
 	
 	
-	
 	// 넘어온 mno에 해당하는 사원이 읽을수 있는 게시판 목록을 가져온다.
 	public List<BoardTypeVO> getReadableList(int mno) {
 		
@@ -80,8 +79,8 @@ public class BoardAuthority {
 		 List<AttributeVO> option = memberService.getOptions(mno);
 		 boolean isReadable = false;
 		 
-		 //list 가 null인경우 모두 읽기 가능.
-		 if(list == null)
+		 //list 가 null인경우 또는 아무것도 없는경우 모두 읽기 가능.
+		 if(list == null || list.size() == 0)
 			 return true; 
 		 
 		 for(AttributeVO attr : list) 
@@ -121,8 +120,8 @@ public class BoardAuthority {
 		 int acceptedCnt = 0;
 		 
 		//list 가 null인경우 쓰기 불가능(관리자만)
-		 if(list == null)
-			 return true; 
+		 if(list == null || list.size() == 0)
+			 return false; 
 		 
 		 for(AttributeVO attr : list) 
 		 {

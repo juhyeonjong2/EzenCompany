@@ -25,11 +25,24 @@ public interface ManagementService {
 	
 	
 	List<BoardTypeVO> getBoardTypeList();
+	BoardTypeVO getBoardType(int btno);
+	
 	List<BoardReaderVO> getBoardReaderList();
 	List<BoardReaderVO> getBoardReaderList(int bindex);
 	
 	List<BoardWriterVO> getBoardWriterList();
 	List<BoardWriterVO> getBoardWriterList(int bindex);
 	
+	int addBoardType(BoardTypeVO vo);
+	int modifyBoardType(BoardTypeVO vo);
+	int removeBoardType(int bindex);
+	
+	int addBoardReader(BoardReaderVO vo);
+	int addBoardReaders(List<BoardReaderVO> list);
+	int removeBoardReader(int bindex);
+	
+	int addBoardWriter(BoardWriterVO vo);
+	int addBoardWriters(List<BoardWriterVO> list);
+	int removeBoardWriter(int bindex);
 
 }

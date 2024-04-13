@@ -2,7 +2,7 @@ package ezen.ezencompany.vo;
 
 public class BoardWriterVO {
 	private int bindex;
-	private int wirter; // cidx;
+	private int writer; // cidx;
 	private int widx; // aidx;
 	public int getBindex() {
 		return bindex;
@@ -10,12 +10,7 @@ public class BoardWriterVO {
 	public void setBindex(int bindex) {
 		this.bindex = bindex;
 	}
-	public int getWirter() {
-		return wirter;
-	}
-	public void setWirter(int wirter) {
-		this.wirter = wirter;
-	}
+	
 	public int getWidx() {
 		return widx;
 	}
@@ -23,12 +18,18 @@ public class BoardWriterVO {
 		this.widx = widx;
 	}
 	
+	public int getWriter() {
+		return writer;
+	}
+	public void setWriter(int writer) {
+		this.writer = writer;
+	}
 	// custom
 	public void setCidx(int cidx) {
-		this.wirter = cidx;
+		this.writer = cidx;
 	}
 	public int getCidx() {
-		return wirter;
+		return writer;
 	}
 	public int getAidx() {
 		return widx;
