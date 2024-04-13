@@ -64,11 +64,11 @@
 	    	<c:if test="${not empty employees}">
 			    <div class="accordion-item">
 			      <h2 class="accordion-header">
-			        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+			        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
 			         	전체 사원
 			        </button>
 			      </h2>
-					<div id="collapseOne" class="accordion-collapse collapse">
+					<div id="collapseTwo" class="accordion-collapse collapse">
 						<div class="accordion-body">
 							 <c:forEach var="user" items="${employees}">
 							 	    <a href="<%=request.getContextPath()%>/blog/other/${user.mno}">${user.mname}</a>
@@ -77,14 +77,23 @@
 					</div>
 				</div>
 	    	</c:if>
-			<c:forEach var="entry" items="${blogUsers}">
+			<c:forEach var="entry" items="${blogUsers}" varStatus="status">
 				<div class="accordion-item">
 	        		<h2 class="accordion-header">
-	          			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-							${entry.key} 블로그
-	          			</button>
+	        		<c:choose>
+						<c:when test="${status.last}">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_${status}" aria-expanded="true" aria-controls="collapse_${status}">
+								${entry.key} 블로그
+		          			</button>
+						</c:when>
+	    				<c:otherwise>
+		          			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_${status}" aria-expanded="false" aria-controls="collapse_${status}">
+								${entry.key} 블로그
+		          			</button>
+	          			</c:otherwise>
+					</c:choose>
           			</h2>
-          			<div id="collapseTwo" class="accordion-collapse collapse show">
+          			<div id="collapse_${status}" class="accordion-collapse collapse show">
 			          <div class="accordion-body">
 			          	<c:forEach var="user" items="${entry.value}">
 			          		 <a href="<%=request.getContextPath()%>/blog/other/${user.mno}">${user.mname}</a>
