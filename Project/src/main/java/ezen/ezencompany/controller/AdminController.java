@@ -444,7 +444,6 @@ public class AdminController {
 		
 		return permissionMap;
 	}
-	
 
 	private HashMap<Integer, ArrayList<Integer>> getWriterMap(int bindex){
 		
@@ -752,7 +751,15 @@ public class AdminController {
 		return resMap;
 	}
 	
-	
+	@RequestMapping(value = "/board/remove", method = RequestMethod.POST)
+	public String boardRemoveOk(int btno) {
+		
+		int res = managementService.removeBoardReader(btno);
+		res =managementService.removeBoardWriter(btno);
+		res = managementService.removeBoardType(btno);
+		
+		return "redirect:/admin/board";
+	}
 	
 	
 	///// category //////////

@@ -125,17 +125,20 @@
 	<div class="modal fade" id="boardRemoveModal" tabindex="-1" data-bs-backdrop="false">
 	  <div class="modal-dialog modal-dialog-bottom">
 	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title">삭제 확인</h5>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	        정말 삭제 하시겠습니까?
-	      </div>
-	      <div class="modal-footer d-flex align-items-center justify-content-center">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-	        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="closeMultiModal(()=>{},'boardEditModal')">삭제</button>
-	      </div>
+			<div class="modal-header">
+			  <h5 class="modal-title">삭제 확인</h5>
+			  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<form action="<%=request.getContextPath()%>/admin/board/remove" method="post">
+				<input type="hidden" id="boardRemove_btno" name="btno" value="">
+				<div class="modal-body">
+					정말 삭제 하시겠습니까?
+				</div>
+				<div class="modal-footer d-flex align-items-center justify-content-center">
+				  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+				  <button type="submit" class="btn btn-danger" data-bs-dismiss="modal" onclick="closeMultiModal(()=>{},'boardEditModal')">삭제</button>
+				</div>
+			</form>
 	    </div>
 	  </div>
 	</div>

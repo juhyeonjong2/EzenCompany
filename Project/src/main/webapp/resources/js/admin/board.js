@@ -83,6 +83,20 @@
 			$('#boardEdit_btno').val(boardInfo.no);
          });   
      }
+     
+     // 게시판 삭제 팝업 
+     const boardRemoveModal = document.getElementById('boardRemoveModal')
+     if (boardRemoveModal) 
+     {
+        boardRemoveModal.addEventListener('show.bs.modal', event => 
+        { 
+             // 상위 팝업에 있는 데이터 들고오기.
+             let bindex = $("#boardEdit_btno").val();
+             $("#boardRemove_btno").val(bindex);
+		
+    	});
+	 }
+     
 
      // 분류 수정 팝업 (treename 넘겨받기)
      const boardAddCategoryModal = document.getElementById('boardAddCategoryModal')
@@ -178,7 +192,8 @@
           body.append(html);
          });   
      }
-
+     
+	
   })();
 
 
