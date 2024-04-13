@@ -60,8 +60,7 @@
      // 게시판 추가 모달
      const boardAddModal = document.getElementById('boardAddModal')
      if (boardAddModal) {
-      boardAddModal.addEventListener('show.bs.modal', event => 
-         {
+      boardAddModal.addEventListener('show.bs.modal', event => {
             $.fn.zTree.init($("#tree_reader"), setting, zNodes);
             $.fn.zTree.init($("#tree_writer"), setting, zNodes);
             $('#board_inputName').val('');
@@ -71,11 +70,17 @@
      // 게시판 정보 모달
      const boardEditModal = document.getElementById('boardEditModal')
      if (boardEditModal) {
-      boardEditModal.addEventListener('show.bs.modal', event => 
-         {
-            $.fn.zTree.init($("#tree_edit_writer"), setting, zEditNodes);
-            $.fn.zTree.init($("#tree_edit_reader"), setting, zEditNodes);
-            $('#board_inputEditName').val('샘플 게시판');
+      boardEditModal.addEventListener('show.bs.modal', event => {
+         	
+         	const target = event.relatedTarget;
+			const btno = target.getAttribute('data-bs-no');
+			
+            let boardInfo = requestBoardInfo(btno);
+         
+         	$.fn.zTree.init($("#tree_edit_reader"), setting, boardInfo.readers);
+            $.fn.zTree.init($("#tree_edit_writer"), setting, boardInfo.writers);
+            $('#board_inputEditName').val(boardInfo.title);
+			$('#boardEdit_btno').val(boardInfo.no);
          });   
      }
 
@@ -207,50 +212,9 @@ var setting = {
 };
 const categoryOpenIconPath = "/ezencompany/resources/icon/layers.svg";
 const categoryCloseIconPath ="/ezencompany/resources/icon/layers-fill.svg";
-const attributeIconPath ="/ezencompany/resources/assets/icon/puzzle.svg";
+const attributeIconPath ="/ezencompany/resources/icon/puzzle.svg";
 
 // zTree data attributes, refer to the API documentation (treeNode data details)
-
-var zEditNodes =[
-
-  { id:1, pId:0, name:'직위', ename:'POSITION', isParent:true, open:true, iconOpen:categoryOpenIconPath, iconClose:categoryCloseIconPath},
-  { id:11, pId:1, name:'사원', ename:'Associate', icon:attributeIconPath},
-  { id:12, pId:1, name:'주임', ename:'Associate Manager', icon:attributeIconPath},
-  { id:13, pId:1, name:'대리', ename:'General Manager', icon:attributeIconPath},
-  { id:14, pId:1, name:'과장', ename:'Deputy General Manager', icon:attributeIconPath},
-
-  { id:2, pId:0, name:'직무', ename:'DUTY', isParent:true, open:true, iconOpen:categoryOpenIconPath, iconClose:categoryCloseIconPath},
-  { id:21, pId:2, name:'개발', ename:'Development', icon:attributeIconPath},
-  { id:22, pId:2, name:'경영지원', ename:'anagement Support', icon:attributeIconPath},
-  { id:23, pId:2, name:'사업', ename:'Business', icon:attributeIconPath},
-
-  { id:3, pId:0, name:'부서', ename:'DEPARTMENT', isParent:true, open:true, iconOpen:categoryOpenIconPath, iconClose:categoryCloseIconPath},
-  { id:31, pId:3, name:'경영지원', ename:'Management Support', icon:attributeIconPath},
-  { id:32, pId:3, name:'개발1팀', ename:'DevelopmentA', icon:attributeIconPath},
-
-  { id:4, pId:0, name:'직책', ename:'RESPONSIBILITY', isParent:true, open:true, iconOpen:categoryOpenIconPath, iconClose:categoryCloseIconPath},
-  { id:41, pId:4, name:'파트장', ename:'Part Leader', icon:attributeIconPath},
-  { id:42, pId:4, name:'임원', ename:'Executive', icon:attributeIconPath},
-  { id:43, pId:4, name:'최고기술책임자', ename:'CTO', icon:attributeIconPath},
-  { id:44, pId:4, name:'대표이사', ename:'CEO', icon:attributeIconPath},
-
-
-  /*
-  { id:1, pId:0, name:"카테고리1", isParent:true, open:true, iconOpen:categoryOpenIconPath, iconClose:categoryCloseIconPath},
-  { id:11, pId:1, name:"속성1" , icon:attributeIconPath},
-  { id:12, pId:1, name:"속성2" , icon:attributeIconPath},
-  { id:13, pId:1, name:"속성3" , icon:attributeIconPath},
-  { id:14, pId:1, name:"속성4" , icon:attributeIconPath},
-  { id:2, pId:0, name:"카테고리2", isParent:true, open:true, iconOpen:categoryOpenIconPath, iconClose:categoryCloseIconPath},
-  { id:21, pId:2, name:"속성1" , icon:attributeIconPath},
-  { id:22, pId:2, name:"속성1" , icon:attributeIconPath},
-  { id:23, pId:2, name:"속성1" , icon:attributeIconPath},
-  { id:24, pId:2, name:"속성1" , icon:attributeIconPath},
-  { id:3, pId:0, name:"카테고리3", isParent:true, open:true, iconOpen:categoryOpenIconPath, iconClose:categoryCloseIconPath},
-  { id:4, pId:0, name:"카테고리4", isParent:true, open:true, iconOpen:categoryOpenIconPath, iconClose:categoryCloseIconPath},
-  */
-];
-
 var zNodes =[];
 
 function addHoverDom(treeId, treeNode) {
@@ -406,7 +370,7 @@ function fetchAttributes(categoryCode){
 function changePopupCategory(modal, val){
   if(modal == null)
     return;
-	console.log("changePopupCategory");
+	
 
   // val 정보를 가지고 디비에서 속성값을 가져온다.
   let dbAttributes =fetchAttributes(val);
@@ -535,7 +499,102 @@ function getTreeData(treeName){
   return permissions;
 }
 
+function requestBoardInfo(btno){
+
+	console.log("requestBoardInfo");
+
+  let boardInfo = {
+    no : 0,
+  	title : "임시테이블",
+  	readers : [],
+  	writers : []
+  } ;
+         
+   $.ajax(
+	{
+		url: "/ezencompany/admin/board/info",
+		type: "get",
+		async: false,
+		data: {btno : btno},
+		success: function(res) {
+			if(res.result="SUCCESS"){
+				boardInfo.no = res.data.bindex;
+				boardInfo.title = res.data.btname;
+				boardInfo.readers =parseNodes(res.data.readers);
+				boardInfo.writers =parseNodes(res.data.writers);
+			}
+		},
+		error: function(error) {
+      		alert(error);
+    	}
+	});
+	
+            
+            
+   return boardInfo;
+}
+
+function parseNodes(boardPermissions){
+	let nodes =[];
+	
+	for(let i=0; i<boardPermissions.length; i++){
+		let dto = boardPermissions[i];
+		let category = dto.category;
+		
+		let categoryNode = { 
+			id:category.cidx, 
+			pId:0, 
+			name:category.value, 
+			ename:category.code, 
+			isParent:true, 
+			open:true, 
+			iconOpen:categoryOpenIconPath, 
+			iconClose:categoryCloseIconPath
+		};
+		
+		nodes.push(categoryNode);
+		
+		for(let j=0; j<dto.attributes.length; j++){
+			let attribute = dto.attributes[j];
+			let attributeNode = { 
+				id:attribute.adix, 
+				pId:attribute.cidx, 
+				name:attribute.value, 
+				ename:attribute.otkey, 
+				icon:attributeIconPath
+			};
+			
+			nodes.push(attributeNode);
+		}
+	}
+	
+	return nodes;
+}
+
 
 function editBoard(){
-  // 더미
+
+  let btno = $('#boardEdit_btno').val();
+  let boardName = $("#board_inputEditName").val();
+  let reader = getTreeData('tree_edit_reader');
+  let writer = getTreeData('tree_edit_writer');
+  
+  let readerJson = JSON.stringify(reader);
+  let wirterJson = JSON.stringify(writer);
+  
+  $.ajax(
+	{
+		url: "/ezencompany/admin/board/modify",
+		type: "post",
+		data: {btno:btno, name:boardName, reader:readerJson, writer:wirterJson},
+		success: function(res) {
+			if(res.result="SUCCESS"){
+				location.replace("/ezencompany/admin/board");
+			}
+		},
+		error: function(error) {
+      		alert(error);
+    	}
+	});
+
 }

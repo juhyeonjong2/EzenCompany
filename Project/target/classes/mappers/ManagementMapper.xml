@@ -56,6 +56,10 @@
 		SELECT * FROM boardtype;
 	</select>
 	
+	<select id="selectBoardType" parameterType="int" resultType="boardTypeVO">
+		SELECT * FROM boardtype WHERE bindex=#{bindex};
+	</select>
+	
 	<select id="selectAllBoardReader" resultType="boardReaderVO">
 		SELECT * from boardreader;
 	</select>

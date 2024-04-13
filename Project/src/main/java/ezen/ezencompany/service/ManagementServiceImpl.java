@@ -83,6 +83,11 @@ public class ManagementServiceImpl implements ManagementService {
 	public List<BoardTypeVO> getBoardTypeList() {
 		return managementDAO.selectAllBoardType();
 	}
+	
+	@Override
+	public BoardTypeVO getBoardType(int btno) {
+		return managementDAO.selectBoardType(btno);
+	}
 
 	@Override
 	public List<BoardReaderVO> getBoardReaderList() {

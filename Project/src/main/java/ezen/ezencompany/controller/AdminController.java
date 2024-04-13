@@ -640,7 +640,9 @@ public class AdminController {
 		List<BoardPermissionDTO> writePermissions = parsePermissions(writer);
 		fillPermissionData(readPermissions, categoryList, attributeList);
 		fillPermissionData(writePermissions, categoryList, attributeList);
-
+		// 디버그용 프린트
+		//printPermissions(readPermissions);
+		//printPermissions(writePermissions);
 		
 		// 2. 보드를 한개 인서트하고 해당 키를 받는다.
 		BoardTypeVO vo = new BoardTypeVO();
@@ -662,12 +664,6 @@ public class AdminController {
 			}
 		}
 		
-		// 디버그용 프린트
-		//printPermissions(readPermissions);
-		//printPermissions(writePermissions);
-		
-		
-		
 		// return
 		Map<String,Object> resMap = new HashMap<String,Object>();
 		resMap.put("result", "SUCCESS"); //  성공
@@ -675,6 +671,89 @@ public class AdminController {
 		
 		return resMap;
 	}
+	
+	@RequestMapping(value="/board/info", method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> boardInfo(int btno){
+		
+		Map<String,Object> resMap = new HashMap<String,Object>();
+		BoardTypeVO vo = managementService.getBoardType(btno);
+		if(vo != null) {
+			List<AttributeVO> attributeList = managementService.getAttributes();
+			List<CategoryVO> categoryList = managementService.getCategorys();
+
+			int bindex = vo.getBindex();
+			
+			BoardTypeViewDTO dto = new BoardTypeViewDTO();
+			dto.setBindex(bindex);
+			dto.setBtname(vo.getBtname());
+			
+			//reader
+			HashMap<Integer, ArrayList<Integer>> readerPermissionMap = getReaderMap(bindex);
+			List<BoardPermissionDTO> readers = getPermissionList(readerPermissionMap,categoryList, attributeList );
+			dto.setReaders(readers);
+			
+			//writer
+			HashMap<Integer, ArrayList<Integer>> writerPermissionMap = getWriterMap(bindex);
+			List<BoardPermissionDTO> writers = getPermissionList(writerPermissionMap,categoryList, attributeList );
+			dto.setWriters(writers);
+			
+			resMap.put("data", dto);
+		}
+		else {
+			resMap.put("result", "FAIL"); //  성공
+			
+		}
+		return resMap;
+	}
+	
+	@RequestMapping(value="/board/modify", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> boardModify(int btno, String name, String reader, String writer ) throws JsonParseException, JsonMappingException, IOException{
+		
+		// 1. 퍼미션 데이터들을 채운다. 
+		List<AttributeVO> attributeList = managementService.getAttributes();
+		List<CategoryVO> categoryList = managementService.getCategorys();
+		List<BoardPermissionDTO> readPermissions = parsePermissions(reader);
+		List<BoardPermissionDTO> writePermissions = parsePermissions(writer);
+		fillPermissionData(readPermissions, categoryList, attributeList);
+		fillPermissionData(writePermissions, categoryList, attributeList);
+		// 디버그용 프린트
+		//printPermissions(readPermissions);
+		//printPermissions(writePermissions);
+		
+		Map<String,Object> resMap = new HashMap<String,Object>();
+		BoardTypeVO vo = managementService.getBoardType(btno);
+		if(vo != null) {
+			int res = 0;
+			vo.setBindex(btno);
+			vo.setBtname(name);
+			res = managementService.modifyBoardType(vo); // 게시판 이름 변경.
+			System.out.println(res);
+			
+			// 읽기 권한 업데이트 (삭제후 다시 추가)			
+			List<BoardReaderVO> readers = toBoardReader(btno, readPermissions);
+			if(readers.size() > 0 ) {
+				res = managementService.removeBoardReader(btno);
+				System.out.println(res);
+				res = managementService.addBoardReaders(readers);
+			}
+			// 쓰기 권한 업데이트 (삭제후 다시 추가)
+			List<BoardWriterVO> writers = toBoardWriter(btno, writePermissions);
+			if(writers.size() > 0) {
+				res = managementService.removeBoardWriter(btno);
+				res = managementService.addBoardWriters(writers);
+			}
+			resMap.put("result", "SUCCESS"); //  성공
+		} else {
+			resMap.put("result", "FAIL"); //  성공
+		}
+		
+		return resMap;
+	}
+	
+	
+	
 	
 	///// category //////////
 	@RequestMapping(value="/category")

@@ -78,6 +78,10 @@ public class ManagementDAO {
 		return sqlSession.selectList(namespace+".selectAllBoardType");
 	}
 	
+	public BoardTypeVO selectBoardType(int btno) {
+		return sqlSession.selectOne(namespace+".selectBoardType", btno);
+	}
+	
 	public List<BoardReaderVO> selectAllBoardReader(){
 		return sqlSession.selectList(namespace+".selectAllBoardReader");
 	}

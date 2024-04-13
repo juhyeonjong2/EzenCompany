@@ -25,6 +25,8 @@ public interface ManagementService {
 	
 	
 	List<BoardTypeVO> getBoardTypeList();
+	BoardTypeVO getBoardType(int btno);
+	
 	List<BoardReaderVO> getBoardReaderList();
 	List<BoardReaderVO> getBoardReaderList(int bindex);
 	

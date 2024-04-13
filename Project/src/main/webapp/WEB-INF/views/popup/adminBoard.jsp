@@ -74,6 +74,7 @@
 	      </div>
 	
 	      <div class="modal-body">
+	      	<input type="hidden" id="boardEdit_btno" name="btno" value="">
 	          <div class="container-fluid">
 	            <div class="row mb-1">
 	              <div>
