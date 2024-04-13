@@ -44,4 +44,12 @@
 	<update id="linkEnd" parameterType="int">
 		UPDATE member SET link = 1 WHERE mno = #{mno};
 	</update>
+	
+	<select id="checkLink" parameterType="int" resultType="int">
+		select link from member where mno = #{mno};
+	</select>
+	
+	<select id="getName" parameterType="int" resultType="String">
+		select mname from member where mno = #{mno};
+	</select>
 </mapper>

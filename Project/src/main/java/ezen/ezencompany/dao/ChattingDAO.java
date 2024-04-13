@@ -65,4 +65,14 @@ public class ChattingDAO {
 	public void linkEnd(int mno){
 		sqlSession.update(namespace+".linkEnd", mno);
 	};
+	
+	//링크 확인
+	public int checkLink(int mno){
+		return sqlSession.selectOne(namespace+".checkLink", mno);
+	};
+	
+	//채팅방 찾기
+	public String getName(int mno){
+		return sqlSession.selectOne(namespace+".getName", mno);
+	};
 }

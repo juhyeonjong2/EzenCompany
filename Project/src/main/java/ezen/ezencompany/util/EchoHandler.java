@@ -24,8 +24,6 @@ public class EchoHandler extends TextWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
       String senderId = getMemberId(session); // 접속한 유저의 http세션을 조회하여 id를 얻는 함수
 		if(senderId!=null) {	// 로그인 값이 있는 경우만
-			System.out.println(senderId+"키값");
-			System.out.println(session+"벨류값");
 			log(senderId + " 연결 됨");
 			//map타입 users에 아이디를 키로 세션데이터를 집어넣는다
 			users.put(senderId, session);   // 로그인중 개별유저 저장
@@ -46,7 +44,7 @@ public class EchoHandler extends TextWebSocketHandler {
 				String type = strs[0];
 				String target = strs[1]; // mid 저장
 				String content = strs[2];
-				String url = strs[3];
+				String myName = strs[3];
 				//users에 키값을 넣어서 해당사람의 세션을 찾아 그 사람에게 보내준다
 				WebSocketSession targetSession = users.get(target);  // 메시지를 받을 세션 조회
 				

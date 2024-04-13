@@ -37,6 +37,9 @@
 	<%@ include file="../include/blogHeader.jsp"%>
 	<!-- sidebar -->
 	<%@ include file="../include/blogSidebar.jsp"%>
+	<!-- catting popup -->
+	<%@ include file="../include/socketHeader.jsp"%>
+	<%@ include file="../popup/chatting.jsp"%>
 
   <main id="main" class="main">
   	<input type="hidden" id="inputMno" value="${mno}"> 
@@ -191,11 +194,6 @@
 
 	<!-- popup -->
 	<%@ include file="../popup/blog.jsp"%>
-	
-	<!-- catting popup -->
-	<!--<script src="<%=request.getContextPath()%>/resources/js/socket.js"></script>-->
-	<%@ include file="../include/socketHeader.jsp"%>
-	<%@ include file="../popup/chatting.jsp"%>
   </main><!-- End #main -->
   
   <!-- footer -->

@@ -154,4 +154,38 @@ public class ChattingController {
 		chattingService.linkEnd(mno);
 		return "true";
 	}
+	
+	//채팅창안에 있는지 확인
+	@RequestMapping(value = "/checkLink", method = RequestMethod.GET)
+	@ResponseBody 
+	public String checkLink() {
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVO user = (UserVO) authentication.getPrincipal();
+		int mno = user.getMno();
+		
+		int link = chattingService.checkLink(mno);
+		if(link == 2) {
+			//연결상태라면
+			return "true";
+		}else {
+			//비 연결상태라면
+			return "false";
+		}
+	}
+	
+	//번호로 이름을 얻음
+	@RequestMapping(value = "/get", method = RequestMethod.GET, produces = "application/string; charset=utf8" )
+	@ResponseBody 
+	public String get() {
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVO user = (UserVO) authentication.getPrincipal();
+		int mno = user.getMno();
+		
+		String name = chattingService.getName(mno);
+
+		return name;
+	}
+	
 }

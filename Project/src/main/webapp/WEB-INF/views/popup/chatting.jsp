@@ -90,6 +90,8 @@
     	//채팅 팝업을 연 경우
     	chattingPopup.addEventListener('show.bs.modal', event => 
         {
+        	$("#chatBt").remove();
+        	$("#toast").remove();
             $.ajax({
             	url: "<%=request.getContextPath()%>/chatting/chattingList",
             	success:function(list){
@@ -117,7 +119,7 @@
 			                   		 
 		                     //2차 반복문
 		                     for(let j =0; j<detaleList.length; j++){
-		                    	 if(list[i].aidx == detaleList[j].aidx){
+		                    	 if(list[i].aidx == detaleList[j].aidx && detaleList[j].mid != null){
 		                    		 let html2 = '<div class="chatting_user d-flex m-2 t-1 mdata" data-bs-target="#chattingRoomModal"'
 		                    		 		   + 'data-bs-toggle="modal" data-bs-mno="'
 		                    		 		   + detaleList[j].mno
@@ -189,6 +191,7 @@
                 const name = button.getAttribute('data-bs-name');
                 const img = button.getAttribute('data-bs-img');
                 const mid = button.getAttribute('data-bs-mid');
+                let myName = "";
                 $(".cName").text(name);
                 $(".cOption").text(value);
                 //디비에 link 업데이트
@@ -201,6 +204,14 @@
                 	}
                 });// ajax끝
                 
+                //나의 이름 구하기
+                $.ajax({
+                	url: "<%=request.getContextPath()%>/chatting/get",
+                	async: false,
+                	success:function(name){
+                		myName = name;
+                	}
+                });// ajax끝
                 //이미지가 없는 경우
                 let profile ="";
                 if(img == "MemberIcon.png"){
@@ -253,9 +264,11 @@
         				$.ajax({
         	            	url: "<%=request.getContextPath()%>/chatting/sendChat",
         	            	data: {anotherMno : mno, chat : chat},
+        	            	async: false,
         	            	success:function(data){
         	            		if(data == "true"){
-        	            			socket.send("채팅,"+mid+","+chat+","+"url");
+        	            			console.log(myName);
+        	            			socket.send("채팅,"+mid+","+chat+","+myName);
         	            			//나의 채팅 그려주기
         	    					let html = '<div class="chatting_my_msg">'
         	       	                  		 + '<div class="msg">'

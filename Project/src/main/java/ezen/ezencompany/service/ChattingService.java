@@ -61,4 +61,14 @@ public class ChattingService {
 	public void linkEnd(int mno){
 		chattingDAO.linkEnd(mno);
 	}
+	
+	//링크확인
+	public int checkLink(int mno){
+		return chattingDAO.checkLink(mno);
+	}
+	
+	//이름 찾기
+	public String getName(int mno){
+		return chattingDAO.getName(mno);
+	}
 }
