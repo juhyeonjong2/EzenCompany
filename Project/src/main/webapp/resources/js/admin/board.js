@@ -82,13 +82,11 @@
      // 분류 수정 팝업 (treename 넘겨받기)
      const boardAddCategoryModal = document.getElementById('boardAddCategoryModal')
      if (boardAddCategoryModal) {
-      boardAddCategoryModal.addEventListener('show.bs.modal', event => 
-         {
-          console.log(event);   
+      boardAddCategoryModal.addEventListener('show.bs.modal', event => {
           const target = event.relatedTarget;             
-          console.log(target);
+          //console.log(target);
           // 옵션으로 넘기면 이렇게 가져올수 있다.
-          console.log(target._config['data-bs-tree']);
+          //console.log(target._config['data-bs-tree']);
           let hiddenInput = $(boardAddCategoryModal).find('.modal-body .tree_name_input');
           hiddenInput.val(target._config['data-bs-tree']);
 
@@ -404,103 +402,6 @@ function fetchAttributes(categoryCode){
   return dbAttributes;
 }
 
-function parsePermission(category){
-  // 읽기 권한에 아무것도 없으면 '없음' 처리(관리자만)
-  let result = {
-    categoryKor : "없음",
-    attributesKor : "관리자"
-  };
-
-  // 없음 처리
-  if(category == null)
-    return result;
-
-  // 카테고리만 있고 속성이 빈경우에는 오류다. (모든 사원은 분류에 해당하는 데이터를 가지고있음.)
-  let _attributesKor ="Unknown";
-  if(category.categoryCode == 'ALL'){
-    _attributesKor ="모두";
-  }
- 
-  if(category.attributes != null && category.attributes.length >0 ){
-    _attributesKor ="";
-    for(let i=0;i<category.attributes.length;i++){
-      let attribute = category.attributes[i];
-      if(i==0){
-        _attributesKor += attribute.attributeValue;
-      }else {
-        _attributesKor += ", " + attribute.attributeValue;
-      }
-    }
-  }
-
-  result.categoryKor = category.categoryValue;
-  result.attributesKor = _attributesKor;
-  return result;
-}
-
-let boardNo = 4; // 임시데이터 (디비에 있어야하는 값임)
-function addBoard(name, read_permission, write_permission){
-
-  if(name == null || name == '')
-    return '';
-
-  if(read_permission == null )
-    return '';
-
-  if(write_permission == null )
-    return '';
-    
-    
-    
-    
-    
-
-  let html= '<tr>'
-          + '  <td>'+ name +'</td>'
-          + '  <td>';
-
-  if(read_permission.length == 0){
-    let result = parsePermission(null);
-    html += '      <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="'
-        + result.attributesKor +'">'+  result.categoryKor 
-        +'</button>';
-  }else {
-    // 카테고리반복 
-    for(let i=0;i<read_permission.length;i++){
-      let result = parsePermission(read_permission[i]);
-      html += '      <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="'
-          + result.attributesKor +'">'+  result.categoryKor 
-          +'</button>';
-    }
-  }
-  html += '  </td>'
-        + '  <td>';
-  if(write_permission.length == 0){
-    let result = parsePermission(null);
-      html += '      <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="'
-          + result.attributesKor +'">'+  result.categoryKor 
-          +'</button>';
-  }else {
-    for(let i=0;i<write_permission.length;i++){
-      let result = parsePermission(write_permission[i]);
-      html += '      <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="'
-          + result.attributesKor +'">'+  result.categoryKor 
-          +'</button>';
-    }
-  }
-  html += '  </td>'
-      + '  <td>'
-      + '   <a class="link-dark" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#boardEditModal" data-bs-no="'+ boardNo +'">'
-      + '     <i class="bi bi-three-dots-vertical"></i>'
-      + '   </a>'
-      + '  </td>'
-      + '</tr>';
-
-    
-  boardNo++;
-  return html;
-}
-
 
 function changePopupCategory(modal, val){
   if(modal == null)
@@ -512,7 +413,7 @@ function changePopupCategory(modal, val){
   let body = $(modal).find('.modal-body .container-fluid');
   let aleadyAttr = body.find('.attribute');
   if(aleadyAttr != null){
-    aleadyAttr.remove();
+  	aleadyAttr.remove();
   }
 
 
@@ -575,91 +476,63 @@ function insertBoard(){
   let reader = getTreeData('tree_reader');
   let writer = getTreeData('tree_writer');
   
-  console.log(boardName);
-  console.log(reader);
-  console.log(writer);
-  
-  for(let i =0 ;i <reader.length;i++)
-  {
-  	let permission = reader[i];
-  	consloe.log(permission.categoryCode);
-  	consloe.log(permission.categoryValue);
-  	
-  	for(let j=0;j<permission.attributes.length;j++){
-  		let attribute = permission.attributes[j];
-  		
-  	
-  	}
- 
-
-  	
-  }
-  
+  let readerJson = JSON.stringify(reader);
+  let wirterJson = JSON.stringify(writer);
   
   $.ajax(
 	{
 		url: "/ezencompany/admin/board/write",
 		type: "post",
-		data: {name:boardName, reader:reader, writer:writer},
+		//traditional : true,
+		data: {name:boardName, reader:readerJson, writer:wirterJson},
 		success: function(res) {
-			console.log("111");
+			if(res.result="SUCCESS"){
+				location.replace("/ezencompany/admin/board");
+			}
 		},
 		error: function(error) {
       		alert(error);
     	}
 	});
-  
-  
-  /*
-  let html = addBoard(boardName,reader,writer);
-  
-  if(html == ''){
-    alert("게시판 추가 실패");
-    return;
-  }
 
-  let table = document.querySelector('.datatable ');
-  let root =$(table).find('tbody');
-  root.append(html);
-
-  //let datatable = new simpleDatatables.DataTable(table);
-  //console.log(datatable);
- // datatable.refresh();
-
- */
-  initTooltips();
+  // initTooltips();
 }
 
 function getTreeData(treeName){
+// 여기서 data를 BoardPermissionDTO 형태로 만들어서 반환하자.
+
   const zTree = $.fn.zTree.getZTreeObj(treeName);
   let nodes = zTree.getNodes();
 
-  let categorys=[];
+  let permissions= [];
   for(let i=0;i<nodes.length;i++){
     let node = nodes[i];
   
-    let category = 
-    {
-      categoryCode : node.ename,
-      categoryValue : node.name
-    }
+  
+    let permission = {
+    	category :  {
+	      code : node.ename,
+	      value : node.name
+    	},
+  	}; 
+    
     let attributes = [];
     if(node.children != null){
       for(let j=0;j<node.children.length;j++){
         let children = node.children[j];
         let attribute ={
-          attributeKey : children.ename,
-          attributeValue : children.name
+          otkey : children.ename,
+          value : children.name
         };
         attributes.push(attribute);
       }
     }
-    category['attributes'] = attributes;
+    permission['attributes'] = attributes;
     
-    categorys.push(category);
+    permissions.push(permission);
   }
   
-  return categorys;
+  return permissions;
 }
 
 

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -20,8 +21,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +30,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ezen.ezencompany.dto.BoardPermissionDTO;
 import ezen.ezencompany.dto.BoardTypeViewDTO;
 import ezen.ezencompany.service.AdminService;
@@ -38,12 +41,13 @@ import ezen.ezencompany.service.ManagementService;
 import ezen.ezencompany.service.MemberService;
 import ezen.ezencompany.util.Path;
 import ezen.ezencompany.vo.AttributeVO;
+import ezen.ezencompany.vo.BlogReplyVO;
+import ezen.ezencompany.vo.BlogVO;
 import ezen.ezencompany.vo.BoardReaderVO;
 import ezen.ezencompany.vo.BoardTypeVO;
 import ezen.ezencompany.vo.BoardWriterVO;
 import ezen.ezencompany.vo.CategoryVO;
 import ezen.ezencompany.vo.MemberVO;
-import ezen.ezencompany.vo.UserVO;
 
 @RequestMapping(value="/admin")
 @Controller
@@ -466,7 +470,7 @@ public class AdminController {
 		//1. boardType 목록을 가져옴
 		List<BoardTypeVO> boardList = managementService.getBoardTypeList();
 		List<AttributeVO> attributeList = managementService.getAttributes();
-		List<CategoryVO> categoroyList = managementService.getCategorys();
+		List<CategoryVO> categoryList = managementService.getCategorys();
 		
 		List<BoardTypeViewDTO> boardViewList = new ArrayList<BoardTypeViewDTO>();
 		for(BoardTypeVO vo : boardList) {
@@ -480,12 +484,12 @@ public class AdminController {
 			
 			//reader
 			HashMap<Integer, ArrayList<Integer>> readerPermissionMap = getReaderMap(bindex);
-			List<BoardPermissionDTO> readers = getPermissionList(readerPermissionMap,categoroyList, attributeList );
+			List<BoardPermissionDTO> readers = getPermissionList(readerPermissionMap,categoryList, attributeList );
 			dto.setReaders(readers);
 			
 			//writer
 			HashMap<Integer, ArrayList<Integer>> writerPermissionMap = getWriterMap(bindex);
-			List<BoardPermissionDTO> writers = getPermissionList(writerPermissionMap,categoroyList, attributeList );
+			List<BoardPermissionDTO> writers = getPermissionList(writerPermissionMap,categoryList, attributeList );
 			dto.setWriters(writers);
 			
 			boardViewList.add(dto);
@@ -496,14 +500,180 @@ public class AdminController {
 		
 		return "admin/board";
 	}
+	
+	private List<BoardPermissionDTO> parsePermissions(String json) throws JsonParseException, JsonMappingException, IOException {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		//BoardPermissionDTO[] permissions = objectMapper.readValue(reader, BoardPermissionDTO[].class);
+		return Arrays.asList(mapper.readValue(json, BoardPermissionDTO[].class));
+	}
+	
+	private void printPermissions(List<BoardPermissionDTO> permissions) {
+		for(BoardPermissionDTO p : permissions) {
+			CategoryVO cate = p.getCategory();
+			System.out.println("Category : (" + cate.getCode() +"/" + cate.getValue() +"/" + cate.getCidx() +"/" + cate.getBlogView() +")");
+			
+			for(AttributeVO attr : p.getAttributes()) {
+				System.out.println("  Attribute : (" + attr.getOtkey() + "/" + attr.getValue() + "/" + attr.getAidx() + "/" + attr.getCidx() +")");
+			}
+			
+		}
+	}
+	
+	private CategoryVO findCategory(String code ,List<CategoryVO> categoroyList) {
+		if(categoroyList == null)
+			return null;
+		
+		// 0인경우 : 모두
+		if(code.toLowerCase() == "all") {
+			CategoryVO allCategory = new  CategoryVO(); // 메모리 낭비라 캐싱하면 좋음.
+			allCategory.setCidx(0);
+			allCategory.setCode("ALL");
+			allCategory.setValue("모두");
+			return allCategory;
+		}
+		
+		Iterator<CategoryVO> it = categoroyList.iterator();
+		while(it.hasNext()) {
+			CategoryVO category = it.next();
+			if(category.getCode().equals(code)) {
+				return category;
+			}
+		}
+		return null;
+		
+	}
+	
+	private AttributeVO findAttribute(int cidx, String otkey ,List<AttributeVO> attributeList) {
+		if(attributeList == null)
+			return null;
+		
+		// 0인경우 : 모두
+		if(otkey.toLowerCase() == "all" ) {
+			AttributeVO allAttribute = new  AttributeVO(); // 메모리 낭비라 캐싱하면 좋음.
+			allAttribute.setAidx(0);
+			allAttribute.setCidx(0);
+			allAttribute.setOtkey("ALL");
+			allAttribute.setValue("모두");
+			return allAttribute;
+		}
+		
+		Iterator<AttributeVO> it = attributeList.iterator();
+		while(it.hasNext()) {
+			AttributeVO attribute = it.next();
+			if(attribute.getCidx() == cidx && attribute.getOtkey().equals(otkey)) {
+				return attribute;
+			}
+		}
+		return null;
+		
+	}
+	
+	private void fillPermissionData(List<BoardPermissionDTO> permissions, List<CategoryVO> categoryList ,List<AttributeVO> attributeList) {
+		for(BoardPermissionDTO p : permissions) {
+			CategoryVO cate = p.getCategory();
+			CategoryVO findCate = findCategory(cate.getCode(), categoryList);
+			if(findCate != null) {
+				cate.setCidx(findCate.getCidx());
+				cate.setCode(findCate.getCode());
+				cate.setValue(findCate.getValue());
+				cate.setBlogView(findCate.getBlogView());
+			}
+			
+			int cidx =cate.getCidx();
+			for(AttributeVO attr : p.getAttributes()) {
+				AttributeVO findAttr = findAttribute(cidx, attr.getOtkey(), attributeList);
+				if(findAttr != null) {
+					attr.setAidx(findAttr.getAidx());
+					attr.setCidx(findAttr.getCidx());
+					attr.setOtkey(findAttr.getOtkey());
+					attr.setValue(findAttr.getValue());
+				}
+			}
+			
+		}
+	}
+	
+	private List<BoardReaderVO> toBoardReader(int bindex, List<BoardPermissionDTO> permissions){
+		List<BoardReaderVO> list = new ArrayList<BoardReaderVO>();
+		for(BoardPermissionDTO p : permissions) 
+		{
+			for(AttributeVO attr : p.getAttributes()) 
+			{
+				BoardReaderVO vo = new BoardReaderVO();
+				vo.setAidx(attr.getAidx());
+				vo.setCidx(attr.getCidx());
+				vo.setBindex(bindex);
+				list.add(vo);
+			}
+			
+		}
+		return list;
+	}
+	
+	private List<BoardWriterVO> toBoardWriter(int bindex, List<BoardPermissionDTO> permissions){
+		List<BoardWriterVO> list = new ArrayList<BoardWriterVO>();
+		for(BoardPermissionDTO p : permissions) 
+		{
+			for(AttributeVO attr : p.getAttributes()) 
+			{
+				BoardWriterVO vo = new BoardWriterVO();
+				vo.setAidx(attr.getAidx());
+				vo.setCidx(attr.getCidx());
+				vo.setBindex(bindex);
+				list.add(vo);
+			}
+			
+		}
+		return list;
+	}
+	
 	@RequestMapping(value="/board/write", method=RequestMethod.POST)
 	@ResponseBody
-	public int boardWrite(String name, Object reader, Object writer) {
-		System.out.println(name);
-		System.out.println(reader.toString());
-		System.out.println(writer.toString());
+	public Map<String,Object> boardWrite(String name, String reader, String writer) throws JsonParseException, JsonMappingException, IOException {
 		
-		return 0;
+		
+		// 1. 퍼미션 데이터들을 채운다. 
+		List<AttributeVO> attributeList = managementService.getAttributes();
+		List<CategoryVO> categoryList = managementService.getCategorys();
+		List<BoardPermissionDTO> readPermissions = parsePermissions(reader);
+		List<BoardPermissionDTO> writePermissions = parsePermissions(writer);
+		fillPermissionData(readPermissions, categoryList, attributeList);
+		fillPermissionData(writePermissions, categoryList, attributeList);
+
+		
+		// 2. 보드를 한개 인서트하고 해당 키를 받는다.
+		BoardTypeVO vo = new BoardTypeVO();
+		vo.setBtname(name);
+		int res = managementService.addBoardType(vo); // 완료후 키들어있음.
+		if(res > 0) {
+			int bindex = vo.getBindex();
+			
+			// 3. 읽기 권한을 설정한다.
+			List<BoardReaderVO> readers = toBoardReader(bindex, readPermissions);
+			if(readers.size() > 0 ) {
+				int readerRes = managementService.addBoardReaders(readers);
+			}
+			
+			// 4. 쓰기 권한을 설정한다.
+			List<BoardWriterVO> writers = toBoardWriter(bindex, writePermissions);
+			if(writers.size() > 0) {
+				int writerRes = managementService.addBoardWriters(writers);
+			}
+		}
+		
+		// 디버그용 프린트
+		//printPermissions(readPermissions);
+		//printPermissions(writePermissions);
+		
+		
+		
+		// return
+		Map<String,Object> resMap = new HashMap<String,Object>();
+		resMap.put("result", "SUCCESS"); //  성공
+		
+		
+		return resMap;
 	}
 	
 	///// category //////////
