@@ -131,7 +131,7 @@ CREATE TABLE notification (
 	mno int unsigned not null comment '회원번호',
 	foreign key(mno) references member(mno),
     code char(2) not null comment '알림코드',
-    targetmno int not null comment '대상회원 번호',
+    targetname int not null comment '대상이름',
     nconfirm char(1) not null comment '알림 확인'
 );
 
