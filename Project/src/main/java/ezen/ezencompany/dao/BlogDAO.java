@@ -25,7 +25,7 @@ public class BlogDAO {
 		private final String namespace = "ezen.ezencompany.mapper.blogMapper";
 		
 		// 블로그 포스트
-		public int insert(ezen.ezencompany.vo.BlogVO vo){
+		public int insert(BlogVO vo){
 			return sqlSession.insert(namespace+".postBlog", vo);
 		}
 		
@@ -41,7 +41,10 @@ public class BlogDAO {
 			return sqlSession.selectList(namespace+".selectRetireEmployees");
 		}
 		
-		public List<MemberVO> selectActiveEmployees(){
+		public List<MemberVO> selectActiveEmployees(int excludeMno){
+			if(excludeMno != 0) {
+				return sqlSession.selectList(namespace+".selectActiveEmployeesExcludeMember", excludeMno);
+			}
 			return sqlSession.selectList(namespace+".selectActiveEmployees");
 		}
 		
@@ -87,6 +90,15 @@ public class BlogDAO {
 			}
 			return sqlSession.selectOne(namespace+".selectOne", bgno);
 		}
+		
+		public int modifyOne(BlogVO vo) {
+			return sqlSession.update(namespace+".modifyOne", vo);
+		}
+		
+		public int removeOne(int bgno) {
+			return sqlSession.delete(namespace+".removeOne", bgno);
+		}
+		
 
 		// 댓글
 		public List<BlogReplyVO> selectReplyList(int bgno) {
@@ -121,5 +133,15 @@ public class BlogDAO {
 		public BlogAttachVO selectFile(int bgfno){
 			return sqlSession.selectOne(namespace+".selectFile", bgfno);
 		}
+		
+		public int deleteFile(int bgfno ){
+			return sqlSession.delete(namespace+".removeFile", bgfno);
+		}
+		
+		public int deleteFiles(int bgno ){
+			return sqlSession.delete(namespace+".removeFiles", bgno);
+		}
+		
+		
 		
 }

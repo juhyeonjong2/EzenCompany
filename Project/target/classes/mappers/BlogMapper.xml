@@ -20,10 +20,15 @@
 	SELECT * FROM member WHERE nullif(mid, '') IS NOT NULL AND enabled=0;
 </select>
 
-<select id="selectActiveEmployees" resultType="memberVO">
+<select id="selectActiveEmployees"  resultType="memberVO">
 	SELECT * FROM member WHERE nullif(mid, '') IS NOT NULL AND enabled=1;
 </select>
 
+<select id="selectActiveEmployeesExcludeMember" parameterType="int" resultType="memberVO">
+	 <![CDATA[ 
+	 	SELECT * FROM member WHERE nullif(mid, '') IS NOT NULL AND enabled=1 AND mno <> #{value};
+	 ]]>
+</select>
 
 <select id="selectOptionEmployees" parameterType="employeeOptionVO" resultType="memberVO">
 	SELECT * FROM member as M 
@@ -67,6 +72,21 @@
 	SELECT * FROM blog WHERE bgno = #{bgno} AND blockyn='n';
 </select>
 
+<update id="modifyOne" parameterType="blogVO">
+	UPDATE blog 
+	SET fno=#{fno}, 
+		blockyn=#{blockyn}, 
+		bgcontent=#{bgcontent}, 
+		bgtitle=#{bgtitle}, 
+		bgrealcontent=#{bgrealcontent} 
+	WHERE bgno=#{bgno};
+	
+</update>
+
+<update id="removeOne" parameterType="int">
+	DELETE FROM blog WHERE bgno=#{bgno};
+</update>
+
 <select id="selectReply" parameterType="int" resultType="blogReplyVO" >
 	SELECT * FROM blogreply WHERE bgrno = #{bgrno};
 </select>
@@ -102,5 +122,16 @@
 <select id="selectFile" parameterType="int" resultType="blogAttachVO">
 	SELECT * FROM blogattach WHERE bgfno=#{bgfno}
 </select>
+
+<delete id="removeFile" parameterType="int">
+	DELETE FROM blogattach WHERE bgfno = #{bgfno};
+</delete>
+
+<delete id="removeFiles" parameterType="int">
+	DELETE FROM blogattach WHERE bgno = #{bgno};
+</delete>
+
+
+
 
 </mapper>
