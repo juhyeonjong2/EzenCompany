@@ -41,7 +41,7 @@
 	              <div class="d-flex justify-content-between align-items-center">
 	                  <h5 class="card-title"><b><span class="category">${category.value}</span> 속성 목록</b></h5>
 	                  <!-- data-bs-category 에 카테고리 코드를 넘겨야함.-->
-	                  <button type="button" class="btn btn-primary h-50" data-bs-toggle="modal" data-bs-target="#attributeAddModal" data-bs-category="job">+ 속성 추가</button>
+	                  <button type="button" class="btn btn-primary h-50" data-bs-toggle="modal" data-bs-target="#attributeAddModal" data-bs-category="${attribute.cidx}">+ 속성 추가</button>
 	              </div>
 	
 	              <!-- Table with stripped rows -->

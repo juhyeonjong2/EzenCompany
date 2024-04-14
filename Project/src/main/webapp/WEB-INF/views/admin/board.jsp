@@ -60,19 +60,18 @@
 			              		<td>
 			              			<c:choose>
 			              				<c:when test="${empty board.readers}">
-			              					<button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="모두">모두</button>
+			              					<button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="관리자">없음</button>
 			              				</c:when>
 			              				<c:otherwise>
 											<c:forEach var="reader" items="${board.readers}">
 												<c:choose>
 													<c:when test="${empty reader}">
-														<!-- reader가 nul인경우 관리자 온리.  -->
 														<button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="관리자">없음</button>	
 													</c:when>
 													<c:when test="${reader.category.cidx eq 0}">
-														<!-- reader의 category cidx가 0인경우 모두 -->
 														<button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="모두">모두</button>
 													</c:when>
+													
 													<c:otherwise>
 														<c:set var="attributesKor" value="" />
 														<c:forEach var="attribute" items="${reader.attributes}" varStatus="status">
@@ -96,7 +95,6 @@
 			              				</c:when>
 			              				<c:otherwise>
 					              			<c:forEach var="writer" items="${board.writers}">
-					              				<c:out value="${writer}"/>
 						              			<c:choose>
 													<c:when test="${empty writer}">
 														<!-- reader가 nul인경우 관리자 온리.  -->

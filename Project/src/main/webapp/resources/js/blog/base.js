@@ -37,7 +37,9 @@ $(document).ready(function(){
 });
 
 function moveBlogPage(event, treeId, treeNode) {
-    location.href = "/ezencompany/blog/page/" +  treeNode.ename;
+	if(!treeNode.isParent){
+    	location.href = "/ezencompany/blog/page/" +  treeNode.ename;
+    }
 };
 
 function getBlogNodes(){
@@ -82,5 +84,17 @@ function getBlogNodes(){
 	});
 	
    return zNodes;
+}
+
+function makeFolderOption(fno, title,  isSelected ){
+
+	let html = '<option ';
+	if(isSelected){
+		html += 'selected ';
+	} 
+		html += 'value="' + fno  +'">' 
+		      + title + '</option>';
+		      
+	return html;
 }
 

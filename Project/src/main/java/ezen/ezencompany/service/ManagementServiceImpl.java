@@ -83,6 +83,11 @@ public class ManagementServiceImpl implements ManagementService {
 	public List<BoardTypeVO> getBoardTypeList() {
 		return managementDAO.selectAllBoardType();
 	}
+	
+	@Override
+	public BoardTypeVO getBoardType(int btno) {
+		return managementDAO.selectBoardType(btno);
+	}
 
 	@Override
 	public List<BoardReaderVO> getBoardReaderList() {
@@ -102,6 +107,51 @@ public class ManagementServiceImpl implements ManagementService {
 	@Override
 	public List<BoardWriterVO> getBoardWriterList(int bindex) {
 		return managementDAO.selectBoardWriters(bindex);
+	}
+
+	@Override
+	public int addBoardType(BoardTypeVO vo) {
+		return managementDAO.insertBoardType(vo);
+	}
+
+	@Override
+	public int modifyBoardType(BoardTypeVO vo) {
+		return managementDAO.updateBoardType(vo);
+	}
+
+	@Override
+	public int removeBoardType(int bindex) {
+		return managementDAO.deleteBoardType(bindex);
+	}
+
+	@Override
+	public int addBoardReader(BoardReaderVO vo) {
+		return managementDAO.insertBoardReader(vo);
+	}
+	
+	@Override
+	public int addBoardReaders(List<BoardReaderVO> list) {
+		return managementDAO.insertBoardReaders(list);
+	}
+
+	@Override
+	public int removeBoardReader(int bindex) {
+		return managementDAO.deleteBoardReader(bindex);
+	}
+
+	@Override
+	public int addBoardWriter(BoardWriterVO vo) {
+		return managementDAO.insertBoardWriter(vo);
+	}
+
+	@Override
+	public int removeBoardWriter(int bindex) {
+		return managementDAO.deleteBoardWriter(bindex);
+	}
+	
+	@Override
+	public int addBoardWriters(List<BoardWriterVO> list) {
+		return managementDAO.insertBoardWriters(list);
 	}
 	
 

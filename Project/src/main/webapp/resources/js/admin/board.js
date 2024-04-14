@@ -60,8 +60,7 @@
      // 게시판 추가 모달
      const boardAddModal = document.getElementById('boardAddModal')
      if (boardAddModal) {
-      boardAddModal.addEventListener('show.bs.modal', event => 
-         {
+      boardAddModal.addEventListener('show.bs.modal', event => {
             $.fn.zTree.init($("#tree_reader"), setting, zNodes);
             $.fn.zTree.init($("#tree_writer"), setting, zNodes);
             $('#board_inputName').val('');
@@ -71,24 +70,42 @@
      // 게시판 정보 모달
      const boardEditModal = document.getElementById('boardEditModal')
      if (boardEditModal) {
-      boardEditModal.addEventListener('show.bs.modal', event => 
-         {
-            $.fn.zTree.init($("#tree_edit_writer"), setting, zEditNodes);
-            $.fn.zTree.init($("#tree_edit_reader"), setting, zEditNodes);
-            $('#board_inputEditName').val('샘플 게시판');
+      boardEditModal.addEventListener('show.bs.modal', event => {
+         	
+         	const target = event.relatedTarget;
+			const btno = target.getAttribute('data-bs-no');
+			
+            let boardInfo = requestBoardInfo(btno);
+         
+         	$.fn.zTree.init($("#tree_edit_reader"), setting, boardInfo.readers);
+            $.fn.zTree.init($("#tree_edit_writer"), setting, boardInfo.writers);
+            $('#board_inputEditName').val(boardInfo.title);
+			$('#boardEdit_btno').val(boardInfo.no);
          });   
      }
+     
+     // 게시판 삭제 팝업 
+     const boardRemoveModal = document.getElementById('boardRemoveModal')
+     if (boardRemoveModal) 
+     {
+        boardRemoveModal.addEventListener('show.bs.modal', event => 
+        { 
+             // 상위 팝업에 있는 데이터 들고오기.
+             let bindex = $("#boardEdit_btno").val();
+             $("#boardRemove_btno").val(bindex);
+		
+    	});
+	 }
+     
 
      // 분류 수정 팝업 (treename 넘겨받기)
      const boardAddCategoryModal = document.getElementById('boardAddCategoryModal')
      if (boardAddCategoryModal) {
-      boardAddCategoryModal.addEventListener('show.bs.modal', event => 
-         {
-          console.log(event);   
+      boardAddCategoryModal.addEventListener('show.bs.modal', event => {
           const target = event.relatedTarget;             
-          console.log(target);
+          //console.log(target);
           // 옵션으로 넘기면 이렇게 가져올수 있다.
-          console.log(target._config['data-bs-tree']);
+          //console.log(target._config['data-bs-tree']);
           let hiddenInput = $(boardAddCategoryModal).find('.modal-body .tree_name_input');
           hiddenInput.val(target._config['data-bs-tree']);
 
@@ -175,7 +192,8 @@
           body.append(html);
          });   
      }
-
+     
+	
   })();
 
 
@@ -209,50 +227,9 @@ var setting = {
 };
 const categoryOpenIconPath = "/ezencompany/resources/icon/layers.svg";
 const categoryCloseIconPath ="/ezencompany/resources/icon/layers-fill.svg";
-const attributeIconPath ="/ezencompany/resources/assets/icon/puzzle.svg";
+const attributeIconPath ="/ezencompany/resources/icon/puzzle.svg";
 
 // zTree data attributes, refer to the API documentation (treeNode data details)
-
-var zEditNodes =[
-
-  { id:1, pId:0, name:'직위', ename:'POSITION', isParent:true, open:true, iconOpen:categoryOpenIconPath, iconClose:categoryCloseIconPath},
-  { id:11, pId:1, name:'사원', ename:'Associate', icon:attributeIconPath},
-  { id:12, pId:1, name:'주임', ename:'Associate Manager', icon:attributeIconPath},
-  { id:13, pId:1, name:'대리', ename:'General Manager', icon:attributeIconPath},
-  { id:14, pId:1, name:'과장', ename:'Deputy General Manager', icon:attributeIconPath},
-
-  { id:2, pId:0, name:'직무', ename:'DUTY', isParent:true, open:true, iconOpen:categoryOpenIconPath, iconClose:categoryCloseIconPath},
-  { id:21, pId:2, name:'개발', ename:'Development', icon:attributeIconPath},
-  { id:22, pId:2, name:'경영지원', ename:'anagement Support', icon:attributeIconPath},
-  { id:23, pId:2, name:'사업', ename:'Business', icon:attributeIconPath},
-
-  { id:3, pId:0, name:'부서', ename:'DEPARTMENT', isParent:true, open:true, iconOpen:categoryOpenIconPath, iconClose:categoryCloseIconPath},
-  { id:31, pId:3, name:'경영지원', ename:'Management Support', icon:attributeIconPath},
-  { id:32, pId:3, name:'개발1팀', ename:'DevelopmentA', icon:attributeIconPath},
-
-  { id:4, pId:0, name:'직책', ename:'RESPONSIBILITY', isParent:true, open:true, iconOpen:categoryOpenIconPath, iconClose:categoryCloseIconPath},
-  { id:41, pId:4, name:'파트장', ename:'Part Leader', icon:attributeIconPath},
-  { id:42, pId:4, name:'임원', ename:'Executive', icon:attributeIconPath},
-  { id:43, pId:4, name:'최고기술책임자', ename:'CTO', icon:attributeIconPath},
-  { id:44, pId:4, name:'대표이사', ename:'CEO', icon:attributeIconPath},
-
-
-  /*
-  { id:1, pId:0, name:"카테고리1", isParent:true, open:true, iconOpen:categoryOpenIconPath, iconClose:categoryCloseIconPath},
-  { id:11, pId:1, name:"속성1" , icon:attributeIconPath},
-  { id:12, pId:1, name:"속성2" , icon:attributeIconPath},
-  { id:13, pId:1, name:"속성3" , icon:attributeIconPath},
-  { id:14, pId:1, name:"속성4" , icon:attributeIconPath},
-  { id:2, pId:0, name:"카테고리2", isParent:true, open:true, iconOpen:categoryOpenIconPath, iconClose:categoryCloseIconPath},
-  { id:21, pId:2, name:"속성1" , icon:attributeIconPath},
-  { id:22, pId:2, name:"속성1" , icon:attributeIconPath},
-  { id:23, pId:2, name:"속성1" , icon:attributeIconPath},
-  { id:24, pId:2, name:"속성1" , icon:attributeIconPath},
-  { id:3, pId:0, name:"카테고리3", isParent:true, open:true, iconOpen:categoryOpenIconPath, iconClose:categoryCloseIconPath},
-  { id:4, pId:0, name:"카테고리4", isParent:true, open:true, iconOpen:categoryOpenIconPath, iconClose:categoryCloseIconPath},
-  */
-];
-
 var zNodes =[];
 
 function addHoverDom(treeId, treeNode) {
@@ -296,6 +273,8 @@ function addCategory(treeName, categoryName, categoryCode){
 
 let attributeIdCount = 1;
 function addAttribute(treeName, parentTreeId, attributeName, attributeKey){
+
+
   let attributeId = 0;
   const zTree = $.fn.zTree.getZTreeObj(treeName);
   if(zTree != null){
@@ -386,7 +365,7 @@ function fetchAttributes(categoryCode){
 				let attribute = attributes[i];
 				dbAttributes.push(
 				{
-					'code' : attribute.otkey,
+					'key' : attribute.otkey,
 					'value' :attribute.value,
 					'cidx' : attribute.cidx,
 					'aidx' : attribute.aidx
@@ -402,115 +381,18 @@ function fetchAttributes(categoryCode){
   return dbAttributes;
 }
 
-function parsePermission(category){
-  // 읽기 권한에 아무것도 없으면 '없음' 처리(관리자만)
-  let result = {
-    categoryKor : "없음",
-    attributesKor : "관리자"
-  };
-
-  // 없음 처리
-  if(category == null)
-    return result;
-
-  // 카테고리만 있고 속성이 빈경우에는 오류다. (모든 사원은 분류에 해당하는 데이터를 가지고있음.)
-  let _attributesKor ="Unknown";
-  if(category.categoryCode == 'ALL'){
-    _attributesKor ="모두";
-  }
- 
-  if(category.attributes != null && category.attributes.length >0 ){
-    _attributesKor ="";
-    for(let i=0;i<category.attributes.length;i++){
-      let attribute = category.attributes[i];
-      if(i==0){
-        _attributesKor += attribute.attributeValue;
-      }else {
-        _attributesKor += ", " + attribute.attributeValue;
-      }
-    }
-  }
-
-  result.categoryKor = category.categoryValue;
-  result.attributesKor = _attributesKor;
-  return result;
-}
-
-let boardNo = 4; // 임시데이터 (디비에 있어야하는 값임)
-function addBoard(name, read_permission, write_permission){
-
-  if(name == null || name == '')
-    return '';
-
-  if(read_permission == null )
-    return '';
-
-  if(write_permission == null )
-    return '';
-    
-    
-    
-    
-    
-
-  let html= '<tr>'
-          + '  <td>'+ name +'</td>'
-          + '  <td>';
-
-  if(read_permission.length == 0){
-    let result = parsePermission(null);
-    html += '      <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="'
-        + result.attributesKor +'">'+  result.categoryKor 
-        +'</button>';
-  }else {
-    // 카테고리반복 
-    for(let i=0;i<read_permission.length;i++){
-      let result = parsePermission(read_permission[i]);
-      html += '      <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="'
-          + result.attributesKor +'">'+  result.categoryKor 
-          +'</button>';
-    }
-  }
-  html += '  </td>'
-        + '  <td>';
-  if(write_permission.length == 0){
-    let result = parsePermission(null);
-      html += '      <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="'
-          + result.attributesKor +'">'+  result.categoryKor 
-          +'</button>';
-  }else {
-    for(let i=0;i<write_permission.length;i++){
-      let result = parsePermission(write_permission[i]);
-      html += '      <button type="button" class="btn btn-secondary rounded-pill ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="'
-          + result.attributesKor +'">'+  result.categoryKor 
-          +'</button>';
-    }
-  }
-  html += '  </td>'
-      + '  <td>'
-      + '   <a class="link-dark" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#boardEditModal" data-bs-no="'+ boardNo +'">'
-      + '     <i class="bi bi-three-dots-vertical"></i>'
-      + '   </a>'
-      + '  </td>'
-      + '</tr>';
-
-    
-  boardNo++;
-  return html;
-}
-
 
 function changePopupCategory(modal, val){
   if(modal == null)
     return;
-	console.log("changePopupCategory");
+	
 
   // val 정보를 가지고 디비에서 속성값을 가져온다.
   let dbAttributes =fetchAttributes(val);
   let body = $(modal).find('.modal-body .container-fluid');
   let aleadyAttr = body.find('.attribute');
   if(aleadyAttr != null){
-    aleadyAttr.remove();
+  	aleadyAttr.remove();
   }
 
 
@@ -548,6 +430,7 @@ function insertCategory(o) {
   // 어트리뷰트가 선택아님이 아니라면 추가한다.
   let attributeKey = body.find('.attribute select option:selected').val();
   let attributeValue= body.find('.attribute select option:selected').text();
+
   if(attributeKey!='NONE'){
     addAttribute(treeName, categoryId, attributeValue, attributeKey);
   }
@@ -562,6 +445,7 @@ function insertAttribute(o){
   let body = root.find(".modal-body .container-fluid");
   let attributeKey = body.find('.attribute select option:selected').val();
   let attributeValue= body.find('.attribute select option:selected').text();
+
   addAttribute(treeName, parentTreeId, attributeValue, attributeKey);
 }
 
@@ -571,77 +455,161 @@ function insertBoard(){
   let reader = getTreeData('tree_reader');
   let writer = getTreeData('tree_writer');
   
-  console.log(boardName);
-  console.log(reader);
-  console.log(writer);
+  let readerJson = JSON.stringify(reader);
+  let wirterJson = JSON.stringify(writer);
   
   $.ajax(
 	{
 		url: "/ezencompany/admin/board/write",
 		type: "post",
-		data: {name:boardName, reader:reader, },
+		//traditional : true,
+		data: {name:boardName, reader:readerJson, writer:wirterJson},
 		success: function(res) {
-			console.log("111");
+			if(res.result="SUCCESS"){
+				location.replace("/ezencompany/admin/board");
+			}
 		},
 		error: function(error) {
       		alert(error);
     	}
 	});
-  
-  
-  /*
-  let html = addBoard(boardName,reader,writer);
-  
-  if(html == ''){
-    alert("게시판 추가 실패");
-    return;
-  }
 
-  let table = document.querySelector('.datatable ');
-  let root =$(table).find('tbody');
-  root.append(html);
-
-  //let datatable = new simpleDatatables.DataTable(table);
-  //console.log(datatable);
- // datatable.refresh();
-
- */
-  initTooltips();
+  // initTooltips();
 }
 
 function getTreeData(treeName){
+// 여기서 data를 BoardPermissionDTO 형태로 만들어서 반환하자.
+
   const zTree = $.fn.zTree.getZTreeObj(treeName);
   let nodes = zTree.getNodes();
 
-  let categorys=[];
+  let permissions= [];
   for(let i=0;i<nodes.length;i++){
     let node = nodes[i];
   
-    let category = 
-    {
-      categoryCode : node.ename,
-      categoryValue : node.name
-    }
+  
+    let permission = {
+    	category :  {
+	      code : node.ename,
+	      value : node.name
+    	},
+  	}; 
+    
     let attributes = [];
     if(node.children != null){
       for(let j=0;j<node.children.length;j++){
         let children = node.children[j];
         let attribute ={
-          attributeKey : children.ename,
-          attributeValue : children.name
+          otkey : children.ename,
+          value : children.name
         };
         attributes.push(attribute);
       }
     }
-    category['attributes'] = attributes;
+    permission['attributes'] = attributes;
     
-    categorys.push(category);
+    permissions.push(permission);
   }
   
-  return categorys;
+  return permissions;
+}
+
+function requestBoardInfo(btno){
+
+	console.log("requestBoardInfo");
+
+  let boardInfo = {
+    no : 0,
+  	title : "임시테이블",
+  	readers : [],
+  	writers : []
+  } ;
+         
+   $.ajax(
+	{
+		url: "/ezencompany/admin/board/info",
+		type: "get",
+		async: false,
+		data: {btno : btno},
+		success: function(res) {
+			if(res.result="SUCCESS"){
+				boardInfo.no = res.data.bindex;
+				boardInfo.title = res.data.btname;
+				boardInfo.readers =parseNodes(res.data.readers);
+				boardInfo.writers =parseNodes(res.data.writers);
+			}
+		},
+		error: function(error) {
+      		alert(error);
+    	}
+	});
+	
+            
+            
+   return boardInfo;
+}
+
+function parseNodes(boardPermissions){
+	let nodes =[];
+	
+	for(let i=0; i<boardPermissions.length; i++){
+		let dto = boardPermissions[i];
+		let category = dto.category;
+		
+		let categoryNode = { 
+			id:category.cidx, 
+			pId:0, 
+			name:category.value, 
+			ename:category.code, 
+			isParent:true, 
+			open:true, 
+			iconOpen:categoryOpenIconPath, 
+			iconClose:categoryCloseIconPath
+		};
+		
+		nodes.push(categoryNode);
+		
+		for(let j=0; j<dto.attributes.length; j++){
+			let attribute = dto.attributes[j];
+			let attributeNode = { 
+				id:attribute.adix, 
+				pId:attribute.cidx, 
+				name:attribute.value, 
+				ename:attribute.otkey, 
+				icon:attributeIconPath
+			};
+			
+			nodes.push(attributeNode);
+		}
+	}
+	
+	return nodes;
 }
 
 
 function editBoard(){
-  // 더미
+
+  let btno = $('#boardEdit_btno').val();
+  let boardName = $("#board_inputEditName").val();
+  let reader = getTreeData('tree_edit_reader');
+  let writer = getTreeData('tree_edit_writer');
+  
+  let readerJson = JSON.stringify(reader);
+  let wirterJson = JSON.stringify(writer);
+  
+  $.ajax(
+	{
+		url: "/ezencompany/admin/board/modify",
+		type: "post",
+		data: {btno:btno, name:boardName, reader:readerJson, writer:wirterJson},
+		success: function(res) {
+			if(res.result="SUCCESS"){
+				location.replace("/ezencompany/admin/board");
+			}
+		},
+		error: function(error) {
+      		alert(error);
+    	}
+	});
+
 }

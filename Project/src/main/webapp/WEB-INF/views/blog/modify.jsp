@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Modify</title>
 
 	<!-- Google Fonts -->
 	<link href="https://fonts.gstatic.com" rel="preconnect">
@@ -39,25 +39,45 @@
 	<%@ include file="../include/blogSidebar.jsp"%>
 
   <main id="main" class="main">
-  	<input type="hidden" id="inputMno" value="${mno}">
-  	<input type="hidden" id="folderFno" value="${-1}">
-  	
+  <input type="hidden" id="inputMno" value="${mno}"> 
+  <input type="hidden" id="folderFno" value="${vo.fno}">
+  
 		<section class="section container-md">
-		<form action="writeOk" method="post" enctype="multipart/form-data">
+		<form action="modify" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="bgno" value="${vo.bgno}"> 
 	      <div class="input-group mb-3">
-	        <input type="text" class="form-control"  placeholder="제목을 입력하세요.." name="bgtitle">
+	        <input type="text" class="form-control" value="${vo.bgtitle}" name="bgtitle">
 	      </div>
 	      <div class="input-group mb-3">
+	      	<input type="hidden" name="uploadedFiles" value="-1">
 	        <label class="input-group-text" for="formFileMultiple" >파일첨부</label>
 	        <input type="file" class="form-control"  name="uploadFile" id="formFileMultiple" multiple>
+	        	<div class="d-flex justify-content-end">
+				  	<c:if test="${not empty files}">
+				  		<div class="dropdown me-5">
+				        	<button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">첨부 파일</button>
+					        <ul class="dropdown-menu">
+					        <c:forEach var="file" items="${files}">
+								<li class="uploaded_file">
+									<div class="d-flex justify-content-between">
+										<input type="hidden" name="uploadedFiles" value="${file.bgfno}">
+										<a class="dropdown-item" href='<c:url value="/blog/download/${file.bgfno}"/>'>${file.bgforeignname}</a>
+										<i class="bi bi-dash-circle mt-2 me-3 file_remove_icon" onClick="removeUploadedFile(this);"></i>
+									</div>
+								</li>
+		          			</c:forEach>
+					        </ul>
+				      	</div>
+			      	</c:if>
+			  </div>
 	      </div>
 	      <div class="col-auto mb-3 d-flex" >
 	        <div class="col d-flex justify-content-start">
-	          <div id="select_folder">
+	          <div>
 	            <select class="form-select" aria-label="Default select example" id="folrder_list" name="fno">
 	            	<c:forEach var="folder" items="${folders}" varStatus="i">
 		            	<c:choose>
-		            		<c:when test="${i.first}">
+		            		<c:when test="${vo.fno eq folder.fno}">
 		            			<option selected value="${folder.fno}">${folder.fname}</option>
 		            		</c:when>
 		            		<c:otherwise>
@@ -78,17 +98,26 @@
 	        </div>
 	        <div class="col d-flex justify-content-end">
 	          	<div class="form-check form-switch form-check-reverse">
-	  				<input class="form-check-input" type="checkbox" value="y" id="reverseCheck1" name="blockyn">
-	  				<label class="form-check-label" for="reverseCheck1">비공개 </label>
+	          		<c:choose>
+	            		<c:when test="${vo.blockyn eq 'y'}">
+	            			
+			  				<input class="form-check-input" type="checkbox" value="${vo.blockyn}" id="reverseCheck1" name="blockyn" checked>
+			  				<label class="form-check-label" for="reverseCheck1">비공개 </label>
+	            		</c:when>
+	            		<c:otherwise>
+			  				<input class="form-check-input" type="checkbox" value="${vo.blockyn}" id="reverseCheck1" name="blockyn">
+			  				<label class="form-check-label" for="reverseCheck1">비공개 </label>
+	            		</c:otherwise>
+						</c:choose>
 				</div>
 	        </div>
 	      </div>
 	      <div class="col-auto mb-3">
 	        <!--tinymce 영역-->
-	        <textarea id="editor_blog_content" name="bgcontent"></textarea>
+	        <textarea id="editor_blog_content" name="bgcontent">${vo.bgcontent}</textarea>
 	      </div>
 	      <div class="blog_buttons mt-3 d-flex justify-content-end">
-	        <button class="btn btn-primary me-2">등록</button>
+	        <button class="btn btn-primary me-2">수정</button>
 	      </div>
 	      </form>
 	    </section>
@@ -113,7 +142,7 @@
   <!-- Template Main JS File -->
   <script src="<%=request.getContextPath()%>/resources/js/main.js"></script>
   <script src="<%=request.getContextPath()%>/resources/js/blog/base.js"></script>
-  <script src="<%=request.getContextPath()%>/resources/js/blog/write.js"></script>
+  <script src="<%=request.getContextPath()%>/resources/js/blog/modify.js"></script>
   <script src="<%=request.getContextPath()%>/resources/js/blog/folder.js"></script>
 
   <!-- Last JS-->

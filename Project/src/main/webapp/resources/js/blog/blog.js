@@ -14,6 +14,21 @@
       return document.querySelector(el)
     }
     }
+    
+     /**
+     * Initiate Modals
+     */
+	  // 삭제 팝업
+     const blogRemoveModal = document.getElementById('blogRemoveModal')
+     if (blogRemoveModal) 
+     {
+        blogRemoveModal.addEventListener('show.bs.modal', event => 
+        {
+             let button = event.relatedTarget;             
+             let bgno = button.getAttribute('data-bs-bgno');
+             $("#blogRemove_bgno").val(bgno);
+    	});
+	 }
 
 
   })();
