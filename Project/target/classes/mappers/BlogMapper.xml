@@ -83,6 +83,10 @@
 	
 </update>
 
+<update id="removeOne" parameterType="int">
+	DELETE FROM blog WHERE bgno=#{bgno};
+</update>
+
 <select id="selectReply" parameterType="int" resultType="blogReplyVO" >
 	SELECT * FROM blogreply WHERE bgrno = #{bgrno};
 </select>
@@ -121,6 +125,10 @@
 
 <delete id="removeFile" parameterType="int">
 	DELETE FROM blogattach WHERE bgfno = #{bgfno};
+</delete>
+
+<delete id="removeFiles" parameterType="int">
+	DELETE FROM blogattach WHERE bgno = #{bgno};
 </delete>
 
 

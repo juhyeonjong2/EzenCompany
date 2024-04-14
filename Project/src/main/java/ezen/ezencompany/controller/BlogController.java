@@ -408,6 +408,46 @@ public class BlogController {
 		return "redirect:/blog/page/" + Integer.toString(originalBlogVO.getBgno());
 	}
 	
+	@RequestMapping(value="/remove", method=RequestMethod.POST)
+	public String removeOk(/*HttpServletRequest request,*/ int bgno){
+		// 로그인된 사용자 정보 가져오기.
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVO user = (UserVO) authentication.getPrincipal();
+		
+		int mno =  user.getMno();
+		// 블로그 데이터 가져오기.
+		BlogVO vo = blogService.selectOne(bgno, true); // 일단 강제로 가져온다.
+		// 이블로그를 쓴사람이 자신이라면 -> 그냥 보여주기. 
+		if(vo == null || vo.getMno() != mno)
+		{
+			// 블로그 주인장이 아니라면 수정권한이 없음.
+			return "redirect:/blog/home";
+		}
+		
+		//1. 해당 블로그가 가지고있는 모든 파일 삭제.
+		List<BlogAttachVO> originalFiles = blogService.getFiles(bgno);
+		for(BlogAttachVO fileVo : originalFiles) {
+		
+			//1. 웹서버 드라이브에서 실제 파일 삭제
+			// 1-1. 저장된 파일 경로 - 업로드 경로 : basePath + upload/blog/{bgno}
+			String [] subPath =  {"upload", "blog", Integer.toString(fileVo.getBgno())};
+			String uploadPath = Path.getUploadPath(subPath);
+			// 1-2. 파일 삭제.
+			File file = new File(uploadPath, fileVo.getBgfrealname());
+			if( file.exists()) {
+	    		file.delete();
+			}
+		}
+		// 2. 디비에서 파일 정보 일괄 삭제.
+		blogService.removeFiles(bgno);
+		
+		//3. 블로그 삭제
+		blogService.removeOne(bgno);
+		
+		// 삭제 뒤에도 홈으로.
+		return "redirect:/blog/home";
+	}
+	
 	
 	@GetMapping(value="/other/{mno}")
 	public String other(@PathVariable int mno) {

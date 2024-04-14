@@ -27,6 +27,7 @@ public interface BlogService {
 	List<BlogVO> blogList(int mno, boolean isAll); // isAll이 true이면 비공개 블로그도 가지고온다. 
 	BlogVO selectOne(int bgno, boolean force);
 	int modifyOne(BlogVO vo);
+	int removeOne(int bgno);
 	
 	
 	List<BlogReplyVO> blogReplyList(int bgno);
@@ -38,5 +39,6 @@ public interface BlogService {
 	List<BlogAttachVO> getFiles(int bgno);
 	BlogAttachVO getFile(int bgfno);
 	int removeFile(int bgfno);
+	int removeFiles(int bgno);
 
 }

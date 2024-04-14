@@ -180,7 +180,8 @@
 				<div class="blog_buttons mt-3 d-flex justify-content-end">
 					<c:if test="${isEditable eq true}">
 						<a class="btn btn-primary me-2" role="button" href="<%=request.getContextPath()%>/blog/modify?bgno=${vo.bgno}">수정</a>
-						<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#blogRemoveModal">삭제</button>
+						<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#blogRemoveModal" data-bs-bgno="${vo.bgno}">삭제</button>
+				
 					</c:if>
 				</div>
 				

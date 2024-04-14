@@ -207,6 +207,16 @@ public class BlogServiceImpl implements BlogService {
 		return blogDAO.deleteFile(bgfno);
 	}
 
+	@Override
+	public int removeOne(int bgno) {
+		return blogDAO.removeOne(bgno);
+	}
+
+	@Override
+	public int removeFiles(int bgno) {
+		return blogDAO.deleteFiles(bgno);
+	}
+
 	
 
 }

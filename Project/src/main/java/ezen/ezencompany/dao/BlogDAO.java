@@ -95,6 +95,10 @@ public class BlogDAO {
 			return sqlSession.update(namespace+".modifyOne", vo);
 		}
 		
+		public int removeOne(int bgno) {
+			return sqlSession.delete(namespace+".removeOne", bgno);
+		}
+		
 
 		// 댓글
 		public List<BlogReplyVO> selectReplyList(int bgno) {
@@ -133,7 +137,10 @@ public class BlogDAO {
 		public int deleteFile(int bgfno ){
 			return sqlSession.delete(namespace+".removeFile", bgfno);
 		}
-
+		
+		public int deleteFiles(int bgno ){
+			return sqlSession.delete(namespace+".removeFiles", bgno);
+		}
 		
 		
 		

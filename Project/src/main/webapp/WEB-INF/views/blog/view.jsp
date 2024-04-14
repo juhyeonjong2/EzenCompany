@@ -156,7 +156,7 @@
 					<div class="blog_reply reply d-flex flex-column">
 				    <div class="reply_top">
 				      <div class="ms-3">
-				        전체 댓글 <span id="ezReply_comment_count">4</span>개
+				        전체 댓글 <span id="ezReply_comment_count">0</span>개
 				      </div>
 				      <hr class="ms-3 me-1 w-auto border border-secondary border-2 opacity-30">
 				    </div>
@@ -177,7 +177,7 @@
 				<div class="blog_buttons mt-3 d-flex justify-content-end">
 					<c:if test="${isEditable eq true}">
 						<a class="btn btn-primary me-2" role="button" href="<%=request.getContextPath()%>/blog/modify?bgno=${vo.bgno}">수정</a>
-						<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#blogRemoveModal">삭제</button>
+						<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#blogRemoveModal" data-bs-bgno="${vo.bgno}">삭제</button>
 					</c:if>
 				</div>
 				<div clsas="blog_search mt-5">
@@ -199,6 +199,8 @@
 	<%@ include file="../popup/blog.jsp"%>
 	
 	<!-- catting popup -->
+	<!--<script src="<%=request.getContextPath()%>/resources/js/socket.js"></script>-->
+	<%@ include file="../include/socketHeader.jsp"%>
 	<%@ include file="../popup/chatting.jsp"%>
   </main><!-- End #main -->
   
@@ -219,7 +221,7 @@
   <script src="<%=request.getContextPath()%>/resources/js/blog/blog.js"></script>
 
   <!-- Last JS-->
-  <script src="<%=request.getContextPath()%>/resources/js/chatting.js"></script>
+  <!--<script src="<%=request.getContextPath()%>/resources/js/chatting.js"></script>-->
   <script src="<%=request.getContextPath()%>/resources/js/tooltips.js"></script>
 
 </body>
