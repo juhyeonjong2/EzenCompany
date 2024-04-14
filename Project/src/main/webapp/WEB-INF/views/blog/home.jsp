@@ -156,7 +156,7 @@
 					<div class="blog_reply reply d-flex flex-column">
 					    <div class="reply_top">
 							<div class="ms-3">
-							   	전체 댓글 <span id="ezReply_comment_count">4</span>개
+							   	전체 댓글 <span id="ezReply_comment_count">0</span>개
 							</div>
 							<hr class="ms-3 me-1 w-auto border border-secondary border-2 opacity-30">
 					    </div>
