@@ -175,8 +175,10 @@
 				   </div>
 				</div>
 				<div class="blog_buttons mt-3 d-flex justify-content-end">
-					<a class="btn btn-primary me-2" role="button" href="modify.html">수정</a>
-					<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#blogRemoveModal">삭제</button>
+					<c:if test="${isEditable eq true}">
+						<a class="btn btn-primary me-2" role="button" href="<%=request.getContextPath()%>/blog/modify?bgno=${vo.bgno}">수정</a>
+						<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#blogRemoveModal">삭제</button>
+					</c:if>
 				</div>
 				<div clsas="blog_search mt-5">
 					<div class="input-group mb-3 mt-3 w-25 mx-auto">

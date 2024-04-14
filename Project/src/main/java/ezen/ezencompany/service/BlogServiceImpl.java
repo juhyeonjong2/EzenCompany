@@ -48,8 +48,8 @@ public class BlogServiceImpl implements BlogService {
 	}
 	
 	@Override
-	public List<MemberVO> blogUserListByActive() {
-		return blogDAO.selectActiveEmployees();
+	public List<MemberVO> blogUserListByActive(int excludeMno) {
+		return blogDAO.selectActiveEmployees(excludeMno);
 	}
 	
 	
@@ -181,7 +181,7 @@ public class BlogServiceImpl implements BlogService {
 	
 	
 	@Override
-	public int insertfile(BlogAttachVO vo){
+	public int insertFile(BlogAttachVO vo){
 		return blogDAO.insertfile(vo);
 	}
 
@@ -194,6 +194,17 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	public BlogAttachVO getFile(int bgfno) {
 		return blogDAO.selectFile(bgfno);
+	}
+
+	@Override
+	public int modifyOne(BlogVO vo) {
+		return blogDAO.modifyOne(vo);
+	}
+
+	@Override
+	public int removeFile(int bgfno) {
+
+		return blogDAO.deleteFile(bgfno);
 	}
 
 	

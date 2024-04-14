@@ -22,6 +22,14 @@
     tinymce.init({
       selector: '#editor_blog_content'
     });
+    
+    
 
   })();
 
+
+
+function removeUploadedFile(o){
+	let parent = $(o).closest("li.uploaded_file");
+	parent.remove();
+}

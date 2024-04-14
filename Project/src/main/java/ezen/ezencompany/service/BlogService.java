@@ -20,20 +20,23 @@ public interface BlogService {
 	String getAttributeName(int attribute_pk); // 속성의 이름을 반환.
 	List<MemberVO> blogUserListByOption(int categoroy, int attribute); // 특정 분류중 속성이 같은 유저를 모두 반환(ex 직군-프로그래밍)
 	List<MemberVO> blogUserListByRetired();	// 퇴사한 사원 목록
-	List<MemberVO> blogUserListByActive();
+	List<MemberVO> blogUserListByActive(int excludeMno);
 
 	List<FolderVO> getFolders(int mno);
 	int makeFolder(FolderVO vo);
 	List<BlogVO> blogList(int mno, boolean isAll); // isAll이 true이면 비공개 블로그도 가지고온다. 
 	BlogVO selectOne(int bgno, boolean force);
+	int modifyOne(BlogVO vo);
+	
 	
 	List<BlogReplyVO> blogReplyList(int bgno);
 	BlogReplyVO getReply(int bgrno);
 	int insertReply(BlogReplyVO vo);
 	int removeReply(int bgrno);
 	int modifyReply(BlogReplyVO vo);
-	int insertfile(BlogAttachVO vo);
+	int insertFile(BlogAttachVO vo);
 	List<BlogAttachVO> getFiles(int bgno);
 	BlogAttachVO getFile(int bgfno);
+	int removeFile(int bgfno);
 
 }
