@@ -27,18 +27,31 @@ public class NotificationController {
 	@Autowired
 	ChattingService chattingService;
 	
-	
-	//알림 가져오기
-	@RequestMapping(value = "/getNoti", method = RequestMethod.GET)
+	//시작하자마자 알림 가져오기
+	@RequestMapping(value = "/firstNoti", method = RequestMethod.GET)
 	@ResponseBody 
-	public List<NotificationVO> chattingList() {
+	public List<NotificationVO> firstNoti() {
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserVO user = (UserVO) authentication.getPrincipal();
 		int mno = user.getMno();
 		//번호로 이름 찾기
 		String targetName = chattingService.getName(mno);
+		List<NotificationVO> list = notificationService.getNoti(targetName);
+
+		return list;
+	}
+	
+	//알림 가져오기
+	@RequestMapping(value = "/getNoti", method = RequestMethod.GET)
+	@ResponseBody 
+	public List<NotificationVO> getNoti() {
 		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVO user = (UserVO) authentication.getPrincipal();
+		int mno = user.getMno();
+		//번호로 이름 찾기
+		String targetName = chattingService.getName(mno);
 		List<NotificationVO> list = notificationService.getNoti(targetName);
 		for(int i=0; i<list.size(); i++) {
 			notificationService.checkNoti(list.get(i).getNno());

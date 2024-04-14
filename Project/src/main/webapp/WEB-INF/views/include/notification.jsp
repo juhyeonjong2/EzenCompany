@@ -25,11 +25,27 @@
         </li><!-- End Notification Nav -->
         
 <script>
+	//화면 열리자 마자 알림이 존재하는지 확인
+	$(document).ready(function(){
+		$.ajax({
+         	url: "<%=request.getContextPath()%>/notification/firstNoti",
+         	success:function(list){	
+			        $("#replyBt").empty();
+         			if(list != null && list.length != 0){
+	            		let noti = "<span class='badge bg-primary badge-number' id='replyBt'>!</span>";
+	            		$(".notiNoti").append(noti);
+         			}
+         	}
+		});//ajax
+	});
+
+
 	const myDropdown = document.getElementById('notifications')
 	myDropdown.addEventListener('show.bs.dropdown', function () {
 		
 		 $.ajax({
          	url: "<%=request.getContextPath()%>/notification/getNoti",
+         	async: false,
          	success:function(list){
          		//재생성 방지를 위해 실행될때마다 비워줌	
 			        $('#notiBox').empty();
@@ -58,7 +74,6 @@
 								 + '</div></li>'
 								 $('#notiBox').append(html);
 						}else{
-							console.log(1111111);
 							let html = '<li><hr class="dropdown-divider"></li>'
 								 + '<li class="notification-item">'
 								 + '<i class="bi bi-exclamation-circle text-warning"></i>'
@@ -71,6 +86,20 @@
 					}
          	} //success
 		 }) //ajax
+		 
+		//닫기 전 한번 더 확인해서 알림이 존재하는지 확인
+		$.ajax({
+         	url: "<%=request.getContextPath()%>/notification/firstNoti",
+         	async: false,
+         	success:function(list){	
+			        $("#replyBt").empty();
+         			if(list != null && list.length != 0){
+	            		let noti = "<span class='badge bg-primary badge-number' id='replyBt'>!</span>";
+	            		$(".notiNoti").append(noti);
+         			}
+         	}
+		});//ajax
+		 
 		 
 	})//드롭다운
 </script>
