@@ -305,7 +305,7 @@ public class BlogController {
 	}
 	
 	@RequestMapping(value="/modify", method=RequestMethod.POST)
-	public String modifyOk(/*HttpServletRequest request,*/ BlogVO vo, List<MultipartFile> uploadFile, @RequestParam(value="uploadedFiles") String[] uploadedFiles) throws Exception {
+	public String modifyOk(BlogVO vo, List<MultipartFile> uploadFile, @RequestParam(value="uploadedFiles") String[] uploadedFiles) throws Exception {
 		
 		// 로그인된 사용자 정보 가져오기.
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -357,6 +357,13 @@ public class BlogController {
 				blogService.removeFile(v);
 			}
 		}
+		
+		// 폴더 확인.
+		List<FolderVO> folders = blogService.getFolders(mno);
+		Map<Integer, FolderVO > hashFolders = new HashMap<Integer, FolderVO >();
+		for(FolderVO folderVo : folders){
+			hashFolders.put(folderVo.getFno(), folderVo);
+		}
 	
 		// 새로운 데이터 설정
 		originalBlogVO.setBgcontent(vo.getBgcontent());
@@ -364,6 +371,10 @@ public class BlogController {
 		// 태그 제거 데이터 넣기
 		Document doc = Jsoup.parse(originalBlogVO.getBgcontent());
 		originalBlogVO.setBgrealcontent(doc.text());
+		
+		if(hashFolders.containsKey(vo.getFno())) {
+			originalBlogVO.setFno(vo.getFno());
+		}
 		
 		originalBlogVO.setBlockyn(vo.getBlockyn());
 		// 공개/비공개 처리
@@ -553,6 +564,79 @@ public class BlogController {
 		
 		// 댓글은  AJAX로 요청함.
 		return "blog/view";
+	}
+	
+	@RequestMapping(value="/folder/list", method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> getFolderList() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVO user = (UserVO) authentication.getPrincipal();
+		int mno = user.getMno();
+		
+		
+		List<FolderVO> folders = blogService.getFolders(mno);
+		Map<Integer, FolderVO > hashFolders = new HashMap<Integer, FolderVO >();
+		for(FolderVO vo : folders){
+			hashFolders.put(vo.getFno(), vo);
+		}
+		
+		// 폴더 목록을 만들어서 넣기
+		// fno, name 두개만있으면됨.
+		List<FolderVO> rebuildFolders = new ArrayList<FolderVO>();
+		for(FolderVO vo : folders)
+		{
+			FolderVO folder = new FolderVO();
+			folder.setFno(vo.getFno());
+			folder.setFname(getRecursiveFolderName(hashFolders, vo));
+			rebuildFolders.add(folder);
+		}
+	
+		// 반환값 생성 
+		Map<String,Object> resMap = new HashMap<String,Object>();
+		resMap.put("result", "SUCCESS"); //  결과 추가
+		resMap.put("folders", rebuildFolders); // 노드 리스트 추가
+		
+		return resMap;
+	
+	}
+	
+	@RequestMapping(value="/folder/write", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> folderWrite(int pfno, String fname) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVO user = (UserVO) authentication.getPrincipal();
+		int mno = user.getMno();
+		
+		
+		List<FolderVO> folders = blogService.getFolders(mno);
+		Map<Integer, FolderVO > hashFolders = new HashMap<Integer, FolderVO >();
+		for(FolderVO vo : folders){
+			hashFolders.put(vo.getFno(), vo);
+		}
+		
+		Map<String,Object> resMap = new HashMap<String,Object>();
+		if(pfno != 0) { 
+			// 부모폴더 존재하지 않음.
+			if(hashFolders.containsKey(pfno) == false) {
+				resMap.put("result", "FAIL"); //  결과 추가
+				return resMap;
+			}
+		}
+		
+		FolderVO folderVO = new FolderVO();
+		folderVO.setFname(fname);
+		folderVO.setPfno(pfno);
+		folderVO.setMno(mno);
+		
+		int result = blogService.makeFolder(folderVO);
+		if(result > 0) {
+			resMap.put("result", "SUCCESS"); //  결과 추가
+		}
+		else {
+			resMap.put("result", "FAIL"); //  결과 추가
+		}
+		return resMap;
+	
 	}
 	
 	

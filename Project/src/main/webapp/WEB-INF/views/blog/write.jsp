@@ -40,6 +40,7 @@
 
   <main id="main" class="main">
   	<input type="hidden" id="inputMno" value="${mno}">
+  	<input type="hidden" id="folderFno" value="${-1}">
   	
 		<section class="section container-md">
 		<form action="writeOk" method="post" enctype="multipart/form-data">
@@ -52,8 +53,8 @@
 	      </div>
 	      <div class="col-auto mb-3 d-flex" >
 	        <div class="col d-flex justify-content-start">
-	          <div>
-	            <select class="form-select" aria-label="Default select example" name="fno">
+	          <div id="select_folder">
+	            <select class="form-select" aria-label="Default select example" id="folrder_list" name="fno">
 	            	<c:forEach var="folder" items="${folders}" varStatus="i">
 		            	<c:choose>
 		            		<c:when test="${i.first}">
@@ -94,7 +95,7 @@
 	
 	
 	<!-- popup -->
-	<%@ include file="../popup/blogWrite.jsp"%>
+	<%@ include file="../popup/blogFolder.jsp"%>
 	
 	<!-- catting popup -->
 	<%@ include file="../popup/chatting.jsp"%>
@@ -113,6 +114,7 @@
   <script src="<%=request.getContextPath()%>/resources/js/main.js"></script>
   <script src="<%=request.getContextPath()%>/resources/js/blog/base.js"></script>
   <script src="<%=request.getContextPath()%>/resources/js/blog/write.js"></script>
+  <script src="<%=request.getContextPath()%>/resources/js/blog/folder.js"></script>
 
   <!-- Last JS-->
   <script src="<%=request.getContextPath()%>/resources/js/chatting.js"></script>

@@ -40,6 +40,7 @@
 
   <main id="main" class="main">
   <input type="hidden" id="inputMno" value="${mno}"> 
+  <input type="hidden" id="folderFno" value="${vo.fno}">
   
 		<section class="section container-md">
 		<form action="modify" method="post" enctype="multipart/form-data">
@@ -48,6 +49,7 @@
 	        <input type="text" class="form-control" value="${vo.bgtitle}" name="bgtitle">
 	      </div>
 	      <div class="input-group mb-3">
+	      	<input type="hidden" name="uploadedFiles" value="-1">
 	        <label class="input-group-text" for="formFileMultiple" >파일첨부</label>
 	        <input type="file" class="form-control"  name="uploadFile" id="formFileMultiple" multiple>
 	        	<div class="d-flex justify-content-end">
@@ -72,7 +74,7 @@
 	      <div class="col-auto mb-3 d-flex" >
 	        <div class="col d-flex justify-content-start">
 	          <div>
-	            <select class="form-select" aria-label="Default select example" name="fno">
+	            <select class="form-select" aria-label="Default select example" id="folrder_list" name="fno">
 	            	<c:forEach var="folder" items="${folders}" varStatus="i">
 		            	<c:choose>
 		            		<c:when test="${vo.fno eq folder.fno}">
@@ -122,7 +124,7 @@
 	
 	
 	<!-- popup -->
-	<%@ include file="../popup/blogModify.jsp"%>
+	<%@ include file="../popup/blogFolder.jsp"%>
 	
 	<!-- catting popup -->
 	<%@ include file="../popup/chatting.jsp"%>
@@ -141,6 +143,7 @@
   <script src="<%=request.getContextPath()%>/resources/js/main.js"></script>
   <script src="<%=request.getContextPath()%>/resources/js/blog/base.js"></script>
   <script src="<%=request.getContextPath()%>/resources/js/blog/modify.js"></script>
+  <script src="<%=request.getContextPath()%>/resources/js/blog/folder.js"></script>
 
   <!-- Last JS-->
   <script src="<%=request.getContextPath()%>/resources/js/chatting.js"></script>
