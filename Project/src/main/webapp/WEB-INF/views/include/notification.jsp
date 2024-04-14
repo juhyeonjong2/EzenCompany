@@ -18,11 +18,6 @@
 
 <!-- 한덩이 -->
 		<div id="notiBox">
-
-
-
-              </div>
-            </li>
 		</div>
 <!-- 한덩이 -->
 
@@ -38,9 +33,9 @@
          	success:function(list){
          		//재생성 방지를 위해 실행될때마다 비워줌	
 			        $('#notiBox').empty();
+			        $("#replyBox").remove();
          			if(list == null || list.length == 0){
          				//가져올 값이 없다면
-         				$("#replyBox").remove();
          				$("#replyBt").remove();
          			}
 					for(let i = 0; i<list.length; i++){
@@ -63,6 +58,7 @@
 								 + '</div></li>'
 								 $('#notiBox').append(html);
 						}else{
+							console.log(1111111);
 							let html = '<li><hr class="dropdown-divider"></li>'
 								 + '<li class="notification-item">'
 								 + '<i class="bi bi-exclamation-circle text-warning"></i>'

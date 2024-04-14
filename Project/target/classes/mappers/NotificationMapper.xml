@@ -3,12 +3,16 @@
 			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ezen.ezencompany.mapper.notificationMapper">
 	
-	<select id="getNoti" parameterType="int" resultType="notificationVO">
-		SELECT code, targetname, nno FROM notification where mno = #{mno} and nconfirm = 1 order by nno DESC limit 0,3;
+	<select id="getNoti" parameterType="String" resultType="notificationVO">
+		SELECT code, targetname, nno FROM notification where targetname = #{targetname} and nconfirm = 1 order by nno DESC limit 0,3;
 	</select>
 	
 	<update id="checkNoti" parameterType="int">
 		update notification set nconfirm = 2 where nno = #{nno};
 	</update>
+	
+	<insert id="sendNoti" parameterType="java.util.Map">
+		insert into notification (mno, code, targetname, nconfirm) values (#{mno}, #{code}, #{targetName}, 1);
+	</insert>
 </mapper>
 	

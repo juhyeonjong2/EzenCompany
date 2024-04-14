@@ -267,7 +267,18 @@
         	            	async: false,
         	            	success:function(data){
         	            		if(data == "true"){
-        	            			console.log(myName);
+									//알림 보내기
+        	            			$.ajax({
+        	        	            	url: "<%=request.getContextPath()%>/notification/chatNoti",
+        	        	            	data: {targetMno : mno},
+        	        	            	success:function(data){
+        	        	            		//어차피 웹소켓 알림 보낼 때 표시되니 필요 없을 듯
+        	        	            		//$(".notiNoti").empty();
+        	        	            		//let noti = "<span class='badge bg-primary badge-number' id='replyBt'>!</span>";
+        	        	            		//$(".notiNoti").append(noti);
+        	        	            	}
+        	            			});
+
         	            			socket.send("채팅,"+mid+","+chat+","+myName);
         	            			//나의 채팅 그려주기
         	    					let html = '<div class="chatting_my_msg">'

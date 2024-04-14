@@ -1,5 +1,6 @@
 package ezen.ezencompany.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -18,12 +19,17 @@ public class NotificationDAO {
 	private final String namespace = "ezen.ezencompany.mapper.notificationMapper";
 	
 	//읽지 않은 알림을 가져옴
-	public List<NotificationVO> getNoti(int mno){
-		return sqlSession.selectList(namespace+".getNoti", mno);
+	public List<NotificationVO> getNoti(String targetName){
+		return sqlSession.selectList(namespace+".getNoti", targetName);
 	}
 	
 	//가져온 알림들을 읽음표시함
 	public void checkNoti(int nno){
 		 sqlSession.update(namespace+".checkNoti", nno);
+	}
+	
+	//알림을 보냄
+	public void sendNoti(HashMap<String, Object> map){
+		 sqlSession.insert(namespace+".sendNoti", map);
 	}
 }
