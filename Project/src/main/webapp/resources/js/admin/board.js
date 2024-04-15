@@ -516,8 +516,6 @@ function getTreeData(treeName){
 
 function requestBoardInfo(btno){
 
-	console.log("requestBoardInfo");
-
   let boardInfo = {
     no : 0,
   	title : "임시테이블",
