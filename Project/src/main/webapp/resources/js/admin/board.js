@@ -225,9 +225,9 @@ var setting = {
 
   }
 };
-const categoryOpenIconPath = "/ezencompany/resources/icon/layers.svg";
-const categoryCloseIconPath ="/ezencompany/resources/icon/layers-fill.svg";
-const attributeIconPath ="/ezencompany/resources/icon/puzzle.svg";
+const categoryOpenIconPath = "/resources/icon/layers.svg";
+const categoryCloseIconPath ="/resources/icon/layers-fill.svg";
+const attributeIconPath ="/resources/icon/puzzle.svg";
 
 // zTree data attributes, refer to the API documentation (treeNode data details)
 var zNodes =[];
@@ -323,7 +323,7 @@ function fetchCategorys(){
 	
 	$.ajax(
 	{
-		url: "/ezencompany/board/category/list",
+		url: "/board/category/list",
 		type: "get",
 		async : false,
 		success: function(categorys) {
@@ -354,7 +354,7 @@ function fetchAttributes(categoryCode){
   
   $.ajax(
 	{
-		url: "/ezencompany/board/attribute/list",
+		url: "/board/attribute/list",
 		type: "get",
 		data: {code:categoryCode},
 		async : false,
@@ -460,13 +460,13 @@ function insertBoard(){
   
   $.ajax(
 	{
-		url: "/ezencompany/admin/board/write",
+		url: "/admin/board/write",
 		type: "post",
 		//traditional : true,
 		data: {name:boardName, reader:readerJson, writer:wirterJson},
 		success: function(res) {
 			if(res.result="SUCCESS"){
-				location.replace("/ezencompany/admin/board");
+				location.replace("/admin/board");
 			}
 		},
 		error: function(error) {
@@ -527,7 +527,7 @@ function requestBoardInfo(btno){
          
    $.ajax(
 	{
-		url: "/ezencompany/admin/board/info",
+		url: "/admin/board/info",
 		type: "get",
 		async: false,
 		data: {btno : btno},
@@ -599,12 +599,12 @@ function editBoard(){
   
   $.ajax(
 	{
-		url: "/ezencompany/admin/board/modify",
+		url: "/admin/board/modify",
 		type: "post",
 		data: {btno:btno, name:boardName, reader:readerJson, writer:wirterJson},
 		success: function(res) {
 			if(res.result="SUCCESS"){
-				location.replace("/ezencompany/admin/board");
+				location.replace("/admin/board");
 			}
 		},
 		error: function(error) {

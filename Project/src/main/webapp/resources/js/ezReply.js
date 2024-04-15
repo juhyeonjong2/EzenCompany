@@ -12,10 +12,10 @@ function ezReply_onInput(event){
 
 // default : Init 함수로 외부에서 지정 가능.
 let ezReplyConfig = {
-	create : "/ezencompany/blog/reply/write",
-	read :   "/ezencompany/blog/reply/list",
-	update : "/ezencompany/blog/reply/modify",
-	delete : "/ezencompany/blog/reply/remove",
+	create : "/blog/reply/write",
+	read :   "/blog/reply/list",
+	update : "/blog/reply/modify",
+	delete : "/blog/reply/remove",
 	writer : "(블로그 주인)",
 	parser : function (vo) {
 		// 데이터 만들기

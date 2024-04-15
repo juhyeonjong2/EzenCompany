@@ -15,7 +15,7 @@
         {
              $.ajax(
 			{
-				url: "/ezencompany/blog/folder/list",
+				url: "/blog/folder/list",
 				type: "get",
 				async:false,				
 				success: function(resData) {
@@ -57,7 +57,7 @@ function insertFolder(){
 	
   	$.ajax(
 		{
-			url: "/ezencompany/blog/folder/write",
+			url: "/blog/folder/write",
 			type: "post",
 			data:{pfno:parentFno, fname:fname},				
 			success: function(resData) {
@@ -80,7 +80,7 @@ function insertFolder(){
 function refreshFolders(){
 	 $.ajax(
 	{
-		url: "/ezencompany/blog/folder/list",
+		url: "/blog/folder/list",
 		type: "get",				
 		success: function(resData) {
 			if(resData.result == "SUCCESS")

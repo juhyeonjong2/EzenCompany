@@ -46,7 +46,7 @@
              
              $.ajax(
 			{
-				url: "/ezencompany/admin/category/info",
+				url: "/admin/category/info",
 				type: "get",
 				async:false,
 				data : {cidx:category},
