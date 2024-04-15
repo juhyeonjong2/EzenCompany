@@ -111,6 +111,6 @@
 	    }
 	}
 	</script>
-	<div id='toastBox'></div>
+	<div id='toastBox' class='z-3'></div>
 </body>
 </html>

@@ -258,7 +258,7 @@
                 });// ajax끝
                 
         		//엔터키를 누르면 db저장 후 웹소켓으로 데이터를 보낸다(수정필요)
-        		$('#messageinput').on('keyup', function(key) {
+        		$('#messageinput').unbind('keyup').bind('keyup', function(key) {
         			if (key.keyCode == 13) {
         				let chat = $(this).val();
         				$.ajax({
@@ -292,7 +292,7 @@
         	            	}
         	            }); //ajax
         			}
-        		}); //엔터키
+        		} ); //엔터키
         	} //openChat
     }
     
@@ -309,8 +309,8 @@
                 }
             });// ajax끝
 		
-		attributeAddModal.removeEventListener('show.bs.modal', openChat);
-		attributeAddModal.addEventListener('show.bs.modal', openChat); 
+		//attributeAddModal.removeEventListener('show.bs.modal', openChat);
+		//attributeAddModal.addEventListener('show.bs.modal', openChat); 
 	}
 	
   })();

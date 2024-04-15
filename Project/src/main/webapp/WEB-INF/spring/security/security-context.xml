@@ -20,7 +20,7 @@
 		<security:session-management>
 			<security:concurrency-control max-sessions="1" 
 										  expired-url="/login"
-										  error-if-maximum-exceeded="true"/>
+										  error-if-maximum-exceeded="false"/>
 		</security:session-management>
 		<security:logout logout-url="/logout" logout-success-url="/login"
 						 invalidate-session="true" delete-cookies="JSESSIONID,SPRING_SECURITY_REMEMBER_ME_COOKIE"/>
