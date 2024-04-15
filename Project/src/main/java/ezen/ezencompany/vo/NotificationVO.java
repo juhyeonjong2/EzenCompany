@@ -4,7 +4,21 @@ public class NotificationVO {
 	private String code;
 	private String targetname;
 	private int nno;
-
+	private int mno;
+	private String myName;
+	
+	public String getMyName() {
+		return myName;
+	}
+	public void setMyName(String myName) {
+		this.myName = myName;
+	}
+	public int getMno() {
+		return mno;
+	}
+	public void setMno(int mno) {
+		this.mno = mno;
+	}
 	public int getNno() {
 		return nno;
 	}

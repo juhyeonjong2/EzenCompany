@@ -4,7 +4,7 @@
 <mapper namespace="ezen.ezencompany.mapper.notificationMapper">
 	
 	<select id="getNoti" parameterType="String" resultType="notificationVO">
-		SELECT code, targetname, nno FROM notification where targetname = #{targetname} and nconfirm = 1 order by nno DESC limit 0,3;
+		SELECT code, targetname, nno, mno FROM notification where targetname = #{targetname} and nconfirm = 1 order by nno DESC limit 0,3;
 	</select>
 	
 	<update id="checkNoti" parameterType="int">

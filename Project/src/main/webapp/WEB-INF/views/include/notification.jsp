@@ -60,7 +60,7 @@
 								 + '<li class="notification-item">'
 								 + '<i class="bi bi-exclamation-circle text-warning"></i>'
 								 + '<div><p>'
-								 + list[i].targetname
+								 + list[i].myName
 								 + '님이 블로그에 댓글을 남기셨습니다.</p>'
 								 + '</div></li>'
 								 $('#notiBox').append(html);
@@ -69,7 +69,7 @@
 								 + '<li class="notification-item">'
 								 + '<i class="bi bi-exclamation-circle text-warning"></i>'
 								 + '<div><p>'
-								 + list[i].targetname
+								 + list[i].myName
 								 + '님이 게시글에 댓글을 남기셨습니다.</p>'
 								 + '</div></li>'
 								 $('#notiBox').append(html);
@@ -78,7 +78,7 @@
 								 + '<li class="notification-item">'
 								 + '<i class="bi bi-exclamation-circle text-warning"></i>'
 								 + '<div><p>'
-								 + list[i].targetname
+								 + list[i].myName
 								 + '님이 채팅을 남기셨습니다.</p>'
 								 + '</div></li>'
 								 $('#notiBox').append(html);

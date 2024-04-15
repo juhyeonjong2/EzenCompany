@@ -1,5 +1,6 @@
 package ezen.ezencompany.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -53,6 +54,13 @@ public class NotificationController {
 		//번호로 이름 찾기
 		String targetName = chattingService.getName(mno);
 		List<NotificationVO> list = notificationService.getNoti(targetName);
+		
+
+		for(int i=0; i<list.size(); i++) {
+			String myName = chattingService.getName(list.get(i).getMno());
+			list.get(i).setMyName(myName);
+		}
+		
 		for(int i=0; i<list.size(); i++) {
 			notificationService.checkNoti(list.get(i).getNno());
 		}
