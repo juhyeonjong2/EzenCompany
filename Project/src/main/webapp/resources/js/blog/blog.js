@@ -14,6 +14,21 @@
       return document.querySelector(el)
     }
     }
+    
+     /**
+     * Initiate Modals
+     */
+	  // 삭제 팝업
+     const blogRemoveModal = document.getElementById('blogRemoveModal')
+     if (blogRemoveModal) 
+     {
+        blogRemoveModal.addEventListener('show.bs.modal', event => 
+        {
+             let button = event.relatedTarget;             
+             let bgno = button.getAttribute('data-bs-bgno');
+             $("#blogRemove_bgno").val(bgno);
+    	});
+	 }
 
 
   })();
@@ -27,10 +42,10 @@
 $(document).ready(function(){
 
 	let replyConfig = {
-		create : "/ezencompany/blog/reply/write",
-		read :   "/ezencompany/blog/reply/list",
-		update : "/ezencompany/blog/reply/modify",
-		delete : "/ezencompany/blog/reply/remove",
+		create : "/blog/reply/write",
+		read :   "/blog/reply/list",
+		update : "/blog/reply/modify",
+		delete : "/blog/reply/remove",
 		writer : "(블로그 주인)",
 		parser : function (vo) {
 			// 데이터 만들기

@@ -3,6 +3,7 @@ package ezen.ezencompany.controller;
 import java.io.File;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -65,7 +68,7 @@ public class BlogController {
 		// 1. 퇴사자
 		List<MemberVO> retiredEmployees = blogService.blogUserListByRetired(); // 탈퇴한 사람목록
 		// 2. 전체 사원
-		List<MemberVO> employees = blogService.blogUserListByActive();
+		List<MemberVO> employees = blogService.blogUserListByActive(user.getMno());
 		// 3. blogView 정보.
 		HashMap<String, List<MemberVO>> blogUsers = new HashMap<String, List<MemberVO>>();
 		// 내 옵션정보 가져옴
@@ -116,12 +119,16 @@ public class BlogController {
 		BlogVO vo = blogService.getLastOne(user.getMno(), true);
 		model.addAttribute("vo", vo);
 		if(vo!=null) {
-		model.addAttribute("bno", vo.getBgno()); // bgno
-		
-		// 첨부 파일들
-		List<BlogAttachVO> files = blogService.getFiles(vo.getBgno());
-		model.addAttribute("files", files);
+			model.addAttribute("bno", vo.getBgno()); // bgno
+			
+			// 첨부 파일들
+			List<BlogAttachVO> files = blogService.getFiles(vo.getBgno());
+			model.addAttribute("files", files);
 		}
+		
+		model.addAttribute("isEditable", true);
+		
+		
 
 		
 		
@@ -214,7 +221,8 @@ public class BlogController {
 				if(!multipartFile.getOriginalFilename().isEmpty()) {
 					
 					String originfileName = multipartFile.getOriginalFilename();
-					
+					String fileExtension = FilenameUtils.getExtension(originfileName);
+
 					// 업로드 경로 : basePath + upload/blog/{bgno}
 					String [] subPath =  {"upload", "blog", Integer.toString(vo.getBgno())};
 					
@@ -222,7 +230,11 @@ public class BlogController {
 					StringBuffer buffer = new StringBuffer();
 					buffer.append(fileName);
 					buffer.append("_");
-					buffer.append(originfileName); // 확장자까지
+					buffer.append(originfileName.hashCode()); //긴문자열 대비 해시코드로 변경
+					if(!fileExtension.isBlank()) {
+						buffer.append("."); 
+						buffer.append(fileExtension);
+					}
 					String realFileName = buffer.toString();
 					
 					String uploadPath = Path.getUploadPath(subPath);
@@ -233,17 +245,220 @@ public class BlogController {
 					attach.setBgforeignname(originfileName);
 					attach.setBgfrealname(realFileName);
 					
-					blogService.insertfile(attach);
+					blogService.insertFile(attach);
 					
 				}
 			}
-			
-			
-			
 		}
 		
 		return "redirect:home";
 	}
+	
+	@RequestMapping(value="/modify", method=RequestMethod.GET)
+	public String modify(Model model, int bgno) {
+		
+		// 로그인된 사용자 정보 가져오기.
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVO user = (UserVO) authentication.getPrincipal();
+		
+		int mno =  user.getMno();
+		model.addAttribute("mno", mno);
+		
+		// 블로그 데이터 가져오기.
+		BlogVO blogVO = blogService.selectOne(bgno, true); // 일단 강제로 가져온다.
+		// 이블로그를 쓴사람이 자신이라면 -> 그냥 보여주기. 
+		if(blogVO == null || blogVO.getMno() != mno)
+		{
+			// 블로그 주인장이 아니라면 수정권한이 없음.
+			return "redirect:/blog/home";
+		}
+		
+		model.addAttribute("vo", blogVO);
+		
+		// write 들어왔는데 폴더가 0개인경우 한개 기본 폴더 생성하기.
+		List<FolderVO> folders = blogService.getFolders(mno);
+		Map<Integer, FolderVO > hashFolders = new HashMap<Integer, FolderVO >();
+		for(FolderVO vo : folders){
+			hashFolders.put(vo.getFno(), vo);
+		}
+		
+		// 폴더 목록을 만들어서 넣기
+		// fno, name 두개만있으면됨.
+		List<FolderVO> rebuildFolders = new ArrayList<FolderVO>();
+		for(FolderVO vo : folders)
+		{
+			FolderVO folder = new FolderVO();
+			folder.setFno(vo.getFno());
+			folder.setFname(getRecursiveFolderName(hashFolders, vo));
+			rebuildFolders.add(folder);
+		}
+		model.addAttribute("folders", rebuildFolders);
+		
+		
+		// 첨부 파일들
+		List<BlogAttachVO> files = blogService.getFiles(bgno);
+		model.addAttribute("files", files);
+		
+		
+		
+		return "blog/modify";
+	}
+	
+	@RequestMapping(value="/modify", method=RequestMethod.POST)
+	public String modifyOk(BlogVO vo, List<MultipartFile> uploadFile, @RequestParam(value="uploadedFiles") String[] uploadedFiles) throws Exception {
+		
+		// 로그인된 사용자 정보 가져오기.
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVO user = (UserVO) authentication.getPrincipal();
+		
+		int mno =  user.getMno();
+		// 블로그 데이터 가져오기.
+		BlogVO originalBlogVO = blogService.selectOne(vo.getBgno(), true); // 일단 강제로 가져온다.
+		// 이블로그를 쓴사람이 자신이라면 -> 그냥 보여주기. 
+		if(originalBlogVO == null || originalBlogVO.getMno() != mno)
+		{
+			// 블로그 주인장이 아니라면 수정권한이 없음.
+			return "redirect:/blog/home";
+		}
+		
+		
+		//System.out.println("=========originalFiles========");
+		// 오리지날 버전을 준비한다. (Bgno)
+		List<BlogAttachVO> originalFiles = blogService.getFiles(vo.getBgno());
+		List<String> uploadedList = Arrays.asList(uploadedFiles);
+		List<Integer> removedList = new ArrayList<Integer>();
+		// 이전 데이터중 file이 변경되었다면 지울껀 지워주기.
+		for(BlogAttachVO file : originalFiles) {
+			//System.out.println(file.getBgfno());
+			String s =Integer.toString(file.getBgfno());
+			if(!uploadedList.contains(s)) {
+				removedList.add(file.getBgfno());
+			}
+			
+		}
+		// 삭제목록에 있는 파일 삭제.
+		//System.out.println("=========removedList========");
+		for(Integer v : removedList) {
+			//System.out.println(v);
+			int blogFileNo = v;
+			BlogAttachVO fileVo = blogService.getFile(blogFileNo);
+			if(fileVo != null) {
+				//1. 웹서버 드라이브에서 실제 파일 삭제
+				// 1-1. 저장된 파일 경로 - 업로드 경로 : basePath + upload/blog/{bgno}
+				String [] subPath =  {"upload", "blog", Integer.toString(fileVo.getBgno())};
+				String uploadPath = Path.getUploadPath(subPath);
+				// 1-2. 파일 삭제.
+				File file = new File(uploadPath, fileVo.getBgfrealname());
+				if( file.exists()) {
+		    		file.delete();
+				}
+				
+				//2. 디비에서 정보 삭제.
+				blogService.removeFile(v);
+			}
+		}
+		
+		// 폴더 확인.
+		List<FolderVO> folders = blogService.getFolders(mno);
+		Map<Integer, FolderVO > hashFolders = new HashMap<Integer, FolderVO >();
+		for(FolderVO folderVo : folders){
+			hashFolders.put(folderVo.getFno(), folderVo);
+		}
+	
+		// 새로운 데이터 설정
+		originalBlogVO.setBgcontent(vo.getBgcontent());
+		originalBlogVO.setBlockyn(originalBlogVO.getBlockyn());
+		// 태그 제거 데이터 넣기
+		Document doc = Jsoup.parse(originalBlogVO.getBgcontent());
+		originalBlogVO.setBgrealcontent(doc.text());
+		
+		if(hashFolders.containsKey(vo.getFno())) {
+			originalBlogVO.setFno(vo.getFno());
+		}
+		
+		originalBlogVO.setBlockyn(vo.getBlockyn());
+		// 공개/비공개 처리
+		if(originalBlogVO.getBlockyn() == null) {
+			originalBlogVO.setBlockyn("n");
+		}
+		
+		int result = blogService.modifyOne(originalBlogVO);
+		// 새로운 파일이 잇으면 추가.	
+		for (MultipartFile multipartFile : uploadFile) {
+			if(!multipartFile.getOriginalFilename().isEmpty()) {
+				
+				String originfileName = multipartFile.getOriginalFilename();
+				String fileExtension = FilenameUtils.getExtension(originfileName);
+				
+				// 업로드 경로 : basePath + upload/blog/{bgno}
+				String [] subPath =  {"upload", "blog", Integer.toString(originalBlogVO.getBgno())};
+				
+				String fileName = UUID.randomUUID().toString(); // 중복방지를 위한 랜덤 이름.
+				StringBuffer buffer = new StringBuffer();
+				buffer.append(fileName); // 오리지널 파일 이름이 긴경우가 있다. 예외를 방지하기위해 이것도 짧게 줄이자.
+				buffer.append("_");
+				buffer.append(originfileName.hashCode()); //긴문자열 대비 해시코드로 변경
+				if(!fileExtension.isBlank()) {
+					buffer.append("."); 
+					buffer.append(fileExtension);
+				}
+				String realFileName = buffer.toString();
+				String uploadPath = Path.getUploadPath(subPath);
+				multipartFile.transferTo(new File(uploadPath,realFileName)); // 저장
+				
+				BlogAttachVO attach = new BlogAttachVO();
+				attach.setBgno(originalBlogVO.getBgno());
+				attach.setBgforeignname(originfileName);
+				attach.setBgfrealname(realFileName);
+				
+				blogService.insertFile(attach);
+				
+			}
+		}
+
+		return "redirect:/blog/page/" + Integer.toString(originalBlogVO.getBgno());
+	}
+	
+	@RequestMapping(value="/remove", method=RequestMethod.POST)
+	public String removeOk(/*HttpServletRequest request,*/ int bgno){
+		// 로그인된 사용자 정보 가져오기.
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVO user = (UserVO) authentication.getPrincipal();
+		
+		int mno =  user.getMno();
+		// 블로그 데이터 가져오기.
+		BlogVO vo = blogService.selectOne(bgno, true); // 일단 강제로 가져온다.
+		// 이블로그를 쓴사람이 자신이라면 -> 그냥 보여주기. 
+		if(vo == null || vo.getMno() != mno)
+		{
+			// 블로그 주인장이 아니라면 수정권한이 없음.
+			return "redirect:/blog/home";
+		}
+		
+		//1. 해당 블로그가 가지고있는 모든 파일 삭제.
+		List<BlogAttachVO> originalFiles = blogService.getFiles(bgno);
+		for(BlogAttachVO fileVo : originalFiles) {
+		
+			//1. 웹서버 드라이브에서 실제 파일 삭제
+			// 1-1. 저장된 파일 경로 - 업로드 경로 : basePath + upload/blog/{bgno}
+			String [] subPath =  {"upload", "blog", Integer.toString(fileVo.getBgno())};
+			String uploadPath = Path.getUploadPath(subPath);
+			// 1-2. 파일 삭제.
+			File file = new File(uploadPath, fileVo.getBgfrealname());
+			if( file.exists()) {
+	    		file.delete();
+			}
+		}
+		// 2. 디비에서 파일 정보 일괄 삭제.
+		blogService.removeFiles(bgno);
+		
+		//3. 블로그 삭제
+		blogService.removeOne(bgno);
+		
+		// 삭제 뒤에도 홈으로.
+		return "redirect:/blog/home";
+	}
+	
 	
 	@GetMapping(value="/other/{mno}")
 	public String other(@PathVariable int mno) {
@@ -271,7 +486,7 @@ public class BlogController {
 		// 1. 퇴사자
 		List<MemberVO> retiredEmployees = blogService.blogUserListByRetired(); // 탈퇴한 사람목록
 		// 2. 전체 직원
-		List<MemberVO> employees = blogService.blogUserListByActive();
+		List<MemberVO> employees = blogService.blogUserListByActive(myMno);
 		// 3. blogView 정보.
 		HashMap<String, List<MemberVO>> blogUsers = new HashMap<String, List<MemberVO>>();
 		// 내 옵션정보 가져옴
@@ -341,8 +556,87 @@ public class BlogController {
 		List<BlogAttachVO> files = blogService.getFiles(bgno);
 		model.addAttribute("files", files);
 		
+		if(vo.getMno() == myMno) {
+			model.addAttribute("isEditable", true);
+		}else {
+			model.addAttribute("isEditable", false);
+		}
+		
 		// 댓글은  AJAX로 요청함.
 		return "blog/view";
+	}
+	
+	@RequestMapping(value="/folder/list", method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> getFolderList() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVO user = (UserVO) authentication.getPrincipal();
+		int mno = user.getMno();
+		
+		
+		List<FolderVO> folders = blogService.getFolders(mno);
+		Map<Integer, FolderVO > hashFolders = new HashMap<Integer, FolderVO >();
+		for(FolderVO vo : folders){
+			hashFolders.put(vo.getFno(), vo);
+		}
+		
+		// 폴더 목록을 만들어서 넣기
+		// fno, name 두개만있으면됨.
+		List<FolderVO> rebuildFolders = new ArrayList<FolderVO>();
+		for(FolderVO vo : folders)
+		{
+			FolderVO folder = new FolderVO();
+			folder.setFno(vo.getFno());
+			folder.setFname(getRecursiveFolderName(hashFolders, vo));
+			rebuildFolders.add(folder);
+		}
+	
+		// 반환값 생성 
+		Map<String,Object> resMap = new HashMap<String,Object>();
+		resMap.put("result", "SUCCESS"); //  결과 추가
+		resMap.put("folders", rebuildFolders); // 노드 리스트 추가
+		
+		return resMap;
+	
+	}
+	
+	@RequestMapping(value="/folder/write", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> folderWrite(int pfno, String fname) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVO user = (UserVO) authentication.getPrincipal();
+		int mno = user.getMno();
+		
+		
+		List<FolderVO> folders = blogService.getFolders(mno);
+		Map<Integer, FolderVO > hashFolders = new HashMap<Integer, FolderVO >();
+		for(FolderVO vo : folders){
+			hashFolders.put(vo.getFno(), vo);
+		}
+		
+		Map<String,Object> resMap = new HashMap<String,Object>();
+		if(pfno != 0) { 
+			// 부모폴더 존재하지 않음.
+			if(hashFolders.containsKey(pfno) == false) {
+				resMap.put("result", "FAIL"); //  결과 추가
+				return resMap;
+			}
+		}
+		
+		FolderVO folderVO = new FolderVO();
+		folderVO.setFname(fname);
+		folderVO.setPfno(pfno);
+		folderVO.setMno(mno);
+		
+		int result = blogService.makeFolder(folderVO);
+		if(result > 0) {
+			resMap.put("result", "SUCCESS"); //  결과 추가
+		}
+		else {
+			resMap.put("result", "FAIL"); //  결과 추가
+		}
+		return resMap;
+	
 	}
 	
 	

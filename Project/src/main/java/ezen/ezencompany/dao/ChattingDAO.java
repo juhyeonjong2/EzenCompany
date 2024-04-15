@@ -38,6 +38,41 @@ public class ChattingDAO {
 	
 	//채팅 내역 찾기
 	public List<ChatVO> chattingStart(String chattingroom){
-		return sqlSession.selectOne(namespace+".chattingStart", chattingroom);
+		return sqlSession.selectList(namespace+".chattingStart", chattingroom);
+	};
+	
+	//채팅방 만들기
+	public void chattingCreate(HashMap<String, Object> map){
+		sqlSession.insert(namespace+".chattingCreate", map);
+	};
+	
+	//채팅방 찾기
+	public String getProfile(int anotherMno){
+		return sqlSession.selectOne(namespace+".getProfile", anotherMno);
+	};
+	
+	//채팅하기
+	public void chatting(HashMap<String, Object> chatting){
+		sqlSession.insert(namespace+".chatting", chatting);
+	};
+	
+	//채팅 연결
+	public void linkStart(int mno){
+		sqlSession.update(namespace+".linkStart", mno);
+	};
+	
+	//채팅 끊기
+	public void linkEnd(int mno){
+		sqlSession.update(namespace+".linkEnd", mno);
+	};
+	
+	//링크 확인
+	public int checkLink(int mno){
+		return sqlSession.selectOne(namespace+".checkLink", mno);
+	};
+	
+	//채팅방 찾기
+	public String getName(int mno){
+		return sqlSession.selectOne(namespace+".getName", mno);
 	};
 }

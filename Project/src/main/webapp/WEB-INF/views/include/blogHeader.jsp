@@ -25,6 +25,9 @@
           </a>
       </li><!-- End Admin Icon-->
 <% } %>
+
+
+
       <li class="nav-item dropdown">
         <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
           <i class="bi bi-bell"></i>
@@ -68,10 +71,16 @@
         </ul><!-- End Notification Dropdown Items -->
       </li><!-- End Notification Nav -->
 
+
+
+
+
+
+
       <li class="nav-item">
         <a class="nav-link nav-icon" href="#" data-bs-toggle="modal" data-bs-target="#chattingModal">
           <i class="bi bi-chat-left-text"></i>
-          <span class="badge bg-success badge-number">3</span>
+          <span class="badge bg-success badge-number">!</span>
         </a>
       </li><!-- End Messages Icon -->
       

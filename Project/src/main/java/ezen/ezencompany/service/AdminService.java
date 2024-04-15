@@ -90,7 +90,17 @@ public class AdminService{
 				 	opmap.put("aidx", aidx);
 				 	opmap.put("cidx", category.get(aidx));
 				 	opmap.put("mno", mno);
-					adminDAO.employeeUpdate(opmap);
+				 	
+				 	//cidx가 존재하는지 확인
+				 	int option =adminDAO.searchOption(opmap);
+				 	System.out.println(option+"ssss");
+				 	if(option != 0) {
+				 		//만약 해당 cidx가 존재한다면 업데이트
+				 		adminDAO.employeeUpdate(opmap);
+				 	}else {
+				 		//만약 해당 cidx가 존재하지 않는다면 인서트
+				 		adminDAO.employeeInsert(opmap);
+				 	}
 			 }
 		}
 		 
@@ -108,7 +118,16 @@ public class AdminService{
 				 	opmap.put("aidx", aidx);
 				 	opmap.put("cidx", category.get(aidx));
 				 	opmap.put("mno", mno);
-					adminDAO.employeeUpdate(opmap);
+				 	
+				 	//cidx가 존재하는지 확인
+				 	int option =adminDAO.searchOption(opmap);
+				 	if(option != 0) {
+				 		//만약 해당 cidx가 존재한다면 업데이트
+				 		adminDAO.employeeUpdate(opmap);
+				 	}else {
+				 		//만약 해당 cidx가 존재하지 않는다면 인서트
+				 		adminDAO.employeeInsert(opmap);
+				 	}
 			 }
 		}
 		 

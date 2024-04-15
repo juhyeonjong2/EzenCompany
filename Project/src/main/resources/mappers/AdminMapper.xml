@@ -13,12 +13,12 @@
 	</select>
 	
 	<insert id="employeeRegistration" parameterType="java.util.Map">
-		INSERT INTO employeeOption (mno, cidx, aidx) VALUES
+		INSERT INTO employeeoption (mno, cidx, aidx) VALUES
 		    (#{mno}, #{cidx}, #{aidx});
 	</insert>
 	
 	<insert id="insertShortUrl" parameterType="java.util.Map">
-		INSERT INTO joinMail (mno, shortUrl) VALUES
+		INSERT INTO joinmail (mno, shortUrl) VALUES
 		    (#{mno}, #{url});
 	</insert>
 	
@@ -40,9 +40,18 @@
 		rdate = now() WHERE mno = #{mno}; 
 	</update>
 	
+	<select id="searchOption" parameterType="java.util.Map" resultType="int">
+		select count(cidx) from employeeoption where mno = #{mno} and cidx = #{cidx};
+	</select>
+	
 	<update id="employeeUpdate" parameterType="java.util.Map">
-		UPDATE employeeoption SET cidx = #{cidx}, aidx = #{aidx} WHERE mno = #{mno}; 
+		UPDATE employeeoption SET aidx = #{aidx} WHERE mno = #{mno} and cidx = #{cidx}; 
 	</update>
+	
+	<insert id="employeeInsert" parameterType="java.util.Map">
+		INSERT INTO employeeoption (mno, cidx, aidx)
+ 			VALUES(#{mno}, #{cidx}, #{aidx});
+	</insert>
 	
 	<update id="memberUpdate" parameterType="java.util.Map">
 		UPDATE member SET mname = #{mname}, email = #{email}, mphone = #{mphone},

@@ -66,9 +66,13 @@
 			let valuePw = $(".password").val();
 			let valueId = $(".id").val();
 			
-			const regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,20}$/; // 대소문자, 특문, 숫자 최소 한개씩 포함 8~20자 
+			// 대소문자, 특문, 숫자 최소 한개씩 포함 8~20자
+			const regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,20}$/; 
 			let regRs = regex.test(valuePw);
-			let regRs2 = regex.test(valuePw);
+			
+			//영문,숫자만 가능한 5~12자리
+			const regex2 =  /^[A-Za-z0-9]{5,12}$/;
+			let regRs2 = regex2.test(valueId);
 			
 			if(valuePw == ""){
 				errorPw.text("필수입력입니다");
@@ -89,7 +93,7 @@
 				errorId.css("color", "red");
 				check2 = false;
 			}else if(!regRs2){
-				errorId.text("영문 대소문자, 숫자, 특수문자 포함 8~20자입니다.");
+				errorId.text("영문, 숫자만 가능한 5~12자리입니다.");
 				errorId.css("color", "red");
 				check2 = false;
 			} else {

@@ -25,11 +25,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import ezen.ezencompany.service.BoardService;
+import ezen.ezencompany.service.BoardTypeService;
 import ezen.ezencompany.service.MemberService;
 import ezen.ezencompany.util.BoardAuthority;
 import ezen.ezencompany.util.Path;
 import ezen.ezencompany.vo.BoardAttachVO;
 import ezen.ezencompany.vo.BoardReplyVO;
+import ezen.ezencompany.vo.BoardTypeVO;
 import ezen.ezencompany.vo.BoardVO;
 import ezen.ezencompany.vo.MemberVO;
 import ezen.ezencompany.vo.UserVO;
@@ -43,6 +45,10 @@ public class BoardController {
 	
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	BoardTypeService boardTypeService;
+	
 	@Autowired
 	BoardAuthority boardAuthority;
 	
@@ -63,6 +69,21 @@ public class BoardController {
 		
 		List<BoardVO> list = boardService.list(bindexInt);
 		model.addAttribute("list", list);
+
+		List<BoardTypeVO> acceptedList = boardAuthority.getReadableList(mno);
+
+		model.addAttribute("boardType", acceptedList);
+
+		List<BoardVO> board = new ArrayList<BoardVO>();
+		for(int i =0; i<acceptedList.size(); i++) {
+			int bindex2 = acceptedList.get(i).getBindex();
+			List<BoardVO> boardList= boardTypeService.boardList(bindex2);
+			board.addAll(boardList);
+		};
+		
+		model.addAttribute("board", board);
+		
+		
 		return "board/list";
 		
 	

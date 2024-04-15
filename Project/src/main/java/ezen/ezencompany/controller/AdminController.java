@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -29,6 +30,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ezen.ezencompany.dto.BoardPermissionDTO;
 import ezen.ezencompany.dto.BoardTypeViewDTO;
 import ezen.ezencompany.service.AdminService;
@@ -36,6 +41,8 @@ import ezen.ezencompany.service.ManagementService;
 import ezen.ezencompany.service.MemberService;
 import ezen.ezencompany.util.Path;
 import ezen.ezencompany.vo.AttributeVO;
+import ezen.ezencompany.vo.BlogReplyVO;
+import ezen.ezencompany.vo.BlogVO;
 import ezen.ezencompany.vo.BoardReaderVO;
 import ezen.ezencompany.vo.BoardTypeVO;
 import ezen.ezencompany.vo.BoardWriterVO;
@@ -149,21 +156,25 @@ public class AdminController {
 			map.put(aidx, cidx);
 			list.add(map);
 		}
-
+		
 		//톰캣 상대경로를 사용하려 했지만 스프링은 상대경로 사용시 배포등등 여러문제가 발생해 절대경로를 쓰는게 좋아보인다
 		//정보 출처 : https://stir.tistory.com/147
 		// ws comment : D드라이브가 없는 컴퓨터가 있을 수 있다. 이런경우 절대경로를 사용하려면 xml등과 같은 설정파일로 압부분 경로를 변동 가능하게 해야 한다.
 		//              ex) D:\\EzenCompany\\Project\\src\\main\\webapp 의 경로를 특정 설정파일에서 불러오고
 		//                  불러온 경로 Path + \\resources\\upload" 연결해서 사용하는것이 좋다. (아마 이런식으로 설정할 수있을 것임)
 		//                  설정파일을 쓰기 싫다면 디비에 설정정보(경로)를 저장하고, 서버가 올라갈때 전역 변수로 BasePath를 넣는 방법도 있다.
-		
-		//String path = request.getSession().getServletContext().getRealPath("/resources/upload");
 
-		 //path = "D:\\EzenCompany\\Project\\src\\main\\webapp\\resources\\upload";
+		// 업로드 경로 : basePath + upload/아이디}	
+		//경로에 사용할 아이디
+		String mid = memberService.getId(mno);
 		
-		String path = Path.getPath()+"\\resources\\upload";
-		
+		String [] subPath =  {"upload", mid};
+		String uploadPath = Path.getUploadPath(subPath);
+		System.out.println(uploadPath);
 		if(!profileImg.getOriginalFilename().isEmpty()) { // 파일이 존재하는 경우
+			
+			//uuid 생성
+			String url = UUID.randomUUID().toString();
 			
 			String fileNM = profileImg.getOriginalFilename(); //원본 파일명
 			
@@ -171,7 +182,8 @@ public class AdminController {
 			String[] fileNMArr= fileNM.split("\\.");
 			String ext =  fileNMArr[fileNMArr.length-1];
 			
-			String realFileNM = fileNMArr[0]+"."+ ext; //실제 파일명
+			String realFileNM = url +"."+ ext; //실제 파일명
+			///블록 ㅡ컨트롤러 패스보고 그대로 사용하기 - 사용자 아이디(사원 수정에 사진 가져오는것도 아이디 추가한 경로로 수정해야함+uuid)
 			
 			int searchMno = adminService.searchMno(mno);
 			if(searchMno == 0) {
@@ -190,7 +202,7 @@ public class AdminController {
 				adminService.totalUpdateImg(map, memberMap, list, mno);
 			}
 			//파일 업로드
-			profileImg.transferTo(new File(path,realFileNM));
+			profileImg.transferTo(new File(uploadPath,realFileNM));
 		}else {
 			//프로필이미지를 변경하지 않은 경우
 			adminService.totalUpdate(memberMap, list, mno);
@@ -426,7 +438,6 @@ public class AdminController {
 		
 		return permissionMap;
 	}
-	
 
 	private HashMap<Integer, ArrayList<Integer>> getWriterMap(int bindex){
 		
@@ -452,7 +463,7 @@ public class AdminController {
 		//1. boardType 목록을 가져옴
 		List<BoardTypeVO> boardList = managementService.getBoardTypeList();
 		List<AttributeVO> attributeList = managementService.getAttributes();
-		List<CategoryVO> categoroyList = managementService.getCategorys();
+		List<CategoryVO> categoryList = managementService.getCategorys();
 		
 		List<BoardTypeViewDTO> boardViewList = new ArrayList<BoardTypeViewDTO>();
 		for(BoardTypeVO vo : boardList) {
@@ -466,12 +477,12 @@ public class AdminController {
 			
 			//reader
 			HashMap<Integer, ArrayList<Integer>> readerPermissionMap = getReaderMap(bindex);
-			List<BoardPermissionDTO> readers = getPermissionList(readerPermissionMap,categoroyList, attributeList );
+			List<BoardPermissionDTO> readers = getPermissionList(readerPermissionMap,categoryList, attributeList );
 			dto.setReaders(readers);
 			
 			//writer
 			HashMap<Integer, ArrayList<Integer>> writerPermissionMap = getWriterMap(bindex);
-			List<BoardPermissionDTO> writers = getPermissionList(writerPermissionMap,categoroyList, attributeList );
+			List<BoardPermissionDTO> writers = getPermissionList(writerPermissionMap,categoryList, attributeList );
 			dto.setWriters(writers);
 			
 			boardViewList.add(dto);
@@ -482,6 +493,268 @@ public class AdminController {
 		
 		return "admin/board";
 	}
+	
+	private List<BoardPermissionDTO> parsePermissions(String json) throws JsonParseException, JsonMappingException, IOException {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		//BoardPermissionDTO[] permissions = objectMapper.readValue(reader, BoardPermissionDTO[].class);
+		return Arrays.asList(mapper.readValue(json, BoardPermissionDTO[].class));
+	}
+	
+	private void printPermissions(List<BoardPermissionDTO> permissions) {
+		for(BoardPermissionDTO p : permissions) {
+			CategoryVO cate = p.getCategory();
+			System.out.println("Category : (" + cate.getCode() +"/" + cate.getValue() +"/" + cate.getCidx() +"/" + cate.getBlogView() +")");
+			
+			for(AttributeVO attr : p.getAttributes()) {
+				System.out.println("  Attribute : (" + attr.getOtkey() + "/" + attr.getValue() + "/" + attr.getAidx() + "/" + attr.getCidx() +")");
+			}
+			
+		}
+	}
+	
+	private CategoryVO findCategory(String code ,List<CategoryVO> categoroyList) {
+		if(categoroyList == null)
+			return null;
+		
+		// 0인경우 : 모두
+		if(code.toLowerCase() == "all") {
+			CategoryVO allCategory = new  CategoryVO(); // 메모리 낭비라 캐싱하면 좋음.
+			allCategory.setCidx(0);
+			allCategory.setCode("ALL");
+			allCategory.setValue("모두");
+			return allCategory;
+		}
+		
+		Iterator<CategoryVO> it = categoroyList.iterator();
+		while(it.hasNext()) {
+			CategoryVO category = it.next();
+			if(category.getCode().equals(code)) {
+				return category;
+			}
+		}
+		return null;
+		
+	}
+	
+	private AttributeVO findAttribute(int cidx, String otkey ,List<AttributeVO> attributeList) {
+		if(attributeList == null)
+			return null;
+		
+		// 0인경우 : 모두
+		if(otkey.toLowerCase() == "all" ) {
+			AttributeVO allAttribute = new  AttributeVO(); // 메모리 낭비라 캐싱하면 좋음.
+			allAttribute.setAidx(0);
+			allAttribute.setCidx(0);
+			allAttribute.setOtkey("ALL");
+			allAttribute.setValue("모두");
+			return allAttribute;
+		}
+		
+		Iterator<AttributeVO> it = attributeList.iterator();
+		while(it.hasNext()) {
+			AttributeVO attribute = it.next();
+			if(attribute.getCidx() == cidx && attribute.getOtkey().equals(otkey)) {
+				return attribute;
+			}
+		}
+		return null;
+		
+	}
+	
+	private void fillPermissionData(List<BoardPermissionDTO> permissions, List<CategoryVO> categoryList ,List<AttributeVO> attributeList) {
+		for(BoardPermissionDTO p : permissions) {
+			CategoryVO cate = p.getCategory();
+			CategoryVO findCate = findCategory(cate.getCode(), categoryList);
+			if(findCate != null) {
+				cate.setCidx(findCate.getCidx());
+				cate.setCode(findCate.getCode());
+				cate.setValue(findCate.getValue());
+				cate.setBlogView(findCate.getBlogView());
+			}
+			
+			int cidx =cate.getCidx();
+			for(AttributeVO attr : p.getAttributes()) {
+				AttributeVO findAttr = findAttribute(cidx, attr.getOtkey(), attributeList);
+				if(findAttr != null) {
+					attr.setAidx(findAttr.getAidx());
+					attr.setCidx(findAttr.getCidx());
+					attr.setOtkey(findAttr.getOtkey());
+					attr.setValue(findAttr.getValue());
+				}
+			}
+			
+		}
+	}
+	
+	private List<BoardReaderVO> toBoardReader(int bindex, List<BoardPermissionDTO> permissions){
+		List<BoardReaderVO> list = new ArrayList<BoardReaderVO>();
+		for(BoardPermissionDTO p : permissions) 
+		{
+			for(AttributeVO attr : p.getAttributes()) 
+			{
+				BoardReaderVO vo = new BoardReaderVO();
+				vo.setAidx(attr.getAidx());
+				vo.setCidx(attr.getCidx());
+				vo.setBindex(bindex);
+				list.add(vo);
+			}
+			
+		}
+		return list;
+	}
+	
+	private List<BoardWriterVO> toBoardWriter(int bindex, List<BoardPermissionDTO> permissions){
+		List<BoardWriterVO> list = new ArrayList<BoardWriterVO>();
+		for(BoardPermissionDTO p : permissions) 
+		{
+			for(AttributeVO attr : p.getAttributes()) 
+			{
+				BoardWriterVO vo = new BoardWriterVO();
+				vo.setAidx(attr.getAidx());
+				vo.setCidx(attr.getCidx());
+				vo.setBindex(bindex);
+				list.add(vo);
+			}
+			
+		}
+		return list;
+	}
+	
+	@RequestMapping(value="/board/write", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> boardWrite(String name, String reader, String writer) throws JsonParseException, JsonMappingException, IOException {
+		
+		
+		// 1. 퍼미션 데이터들을 채운다. 
+		List<AttributeVO> attributeList = managementService.getAttributes();
+		List<CategoryVO> categoryList = managementService.getCategorys();
+		List<BoardPermissionDTO> readPermissions = parsePermissions(reader);
+		List<BoardPermissionDTO> writePermissions = parsePermissions(writer);
+		fillPermissionData(readPermissions, categoryList, attributeList);
+		fillPermissionData(writePermissions, categoryList, attributeList);
+		// 디버그용 프린트
+		//printPermissions(readPermissions);
+		//printPermissions(writePermissions);
+		
+		// 2. 보드를 한개 인서트하고 해당 키를 받는다.
+		BoardTypeVO vo = new BoardTypeVO();
+		vo.setBtname(name);
+		int res = managementService.addBoardType(vo); // 완료후 키들어있음.
+		if(res > 0) {
+			int bindex = vo.getBindex();
+			
+			// 3. 읽기 권한을 설정한다.
+			List<BoardReaderVO> readers = toBoardReader(bindex, readPermissions);
+			if(readers.size() > 0 ) {
+				int readerRes = managementService.addBoardReaders(readers);
+			}
+			
+			// 4. 쓰기 권한을 설정한다.
+			List<BoardWriterVO> writers = toBoardWriter(bindex, writePermissions);
+			if(writers.size() > 0) {
+				int writerRes = managementService.addBoardWriters(writers);
+			}
+		}
+		
+		// return
+		Map<String,Object> resMap = new HashMap<String,Object>();
+		resMap.put("result", "SUCCESS"); //  성공
+		
+		
+		return resMap;
+	}
+	
+	@RequestMapping(value="/board/info", method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> boardInfo(int btno){
+		
+		Map<String,Object> resMap = new HashMap<String,Object>();
+		BoardTypeVO vo = managementService.getBoardType(btno);
+		if(vo != null) {
+			List<AttributeVO> attributeList = managementService.getAttributes();
+			List<CategoryVO> categoryList = managementService.getCategorys();
+
+			int bindex = vo.getBindex();
+			
+			BoardTypeViewDTO dto = new BoardTypeViewDTO();
+			dto.setBindex(bindex);
+			dto.setBtname(vo.getBtname());
+			
+			//reader
+			HashMap<Integer, ArrayList<Integer>> readerPermissionMap = getReaderMap(bindex);
+			List<BoardPermissionDTO> readers = getPermissionList(readerPermissionMap,categoryList, attributeList );
+			dto.setReaders(readers);
+			
+			//writer
+			HashMap<Integer, ArrayList<Integer>> writerPermissionMap = getWriterMap(bindex);
+			List<BoardPermissionDTO> writers = getPermissionList(writerPermissionMap,categoryList, attributeList );
+			dto.setWriters(writers);
+			
+			resMap.put("data", dto);
+		}
+		else {
+			resMap.put("result", "FAIL"); //  성공
+			
+		}
+		return resMap;
+	}
+	
+	@RequestMapping(value="/board/modify", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> boardModify(int btno, String name, String reader, String writer ) throws JsonParseException, JsonMappingException, IOException{
+		
+		// 1. 퍼미션 데이터들을 채운다. 
+		List<AttributeVO> attributeList = managementService.getAttributes();
+		List<CategoryVO> categoryList = managementService.getCategorys();
+		List<BoardPermissionDTO> readPermissions = parsePermissions(reader);
+		List<BoardPermissionDTO> writePermissions = parsePermissions(writer);
+		fillPermissionData(readPermissions, categoryList, attributeList);
+		fillPermissionData(writePermissions, categoryList, attributeList);
+		// 디버그용 프린트
+		//printPermissions(readPermissions);
+		//printPermissions(writePermissions);
+		
+		Map<String,Object> resMap = new HashMap<String,Object>();
+		BoardTypeVO vo = managementService.getBoardType(btno);
+		if(vo != null) {
+			int res = 0;
+			vo.setBindex(btno);
+			vo.setBtname(name);
+			res = managementService.modifyBoardType(vo); // 게시판 이름 변경.
+			System.out.println(res);
+			
+			// 읽기 권한 업데이트 (삭제후 다시 추가)			
+			List<BoardReaderVO> readers = toBoardReader(btno, readPermissions);
+			if(readers.size() > 0 ) {
+				res = managementService.removeBoardReader(btno);
+				System.out.println(res);
+				res = managementService.addBoardReaders(readers);
+			}
+			// 쓰기 권한 업데이트 (삭제후 다시 추가)
+			List<BoardWriterVO> writers = toBoardWriter(btno, writePermissions);
+			if(writers.size() > 0) {
+				res = managementService.removeBoardWriter(btno);
+				res = managementService.addBoardWriters(writers);
+			}
+			resMap.put("result", "SUCCESS"); //  성공
+		} else {
+			resMap.put("result", "FAIL"); //  성공
+		}
+		
+		return resMap;
+	}
+	
+	@RequestMapping(value = "/board/remove", method = RequestMethod.POST)
+	public String boardRemoveOk(int btno) {
+		
+		int res = managementService.removeBoardReader(btno);
+		res =managementService.removeBoardWriter(btno);
+		res = managementService.removeBoardType(btno);
+		
+		return "redirect:/admin/board";
+	}
+	
 	
 	///// category //////////
 	@RequestMapping(value="/category")

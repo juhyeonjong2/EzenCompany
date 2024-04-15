@@ -8,15 +8,48 @@
 	</select>
 	
 	<select id="detaleList" resultType="MemberVO">
-		select distinct m.mno, aidx, m.mname from member m inner join employeeoption e on m.mno = e.mno where cidx = 1;
+		select distinct m.mno, aidx, m.mname, m.mid from member m inner join employeeoption e on m.mno = e.mno where cidx = 1;
 	</select>
 	
 	<select id="getRoom" parameterType="java.util.Map" resultType="String">
-		select distinct b.chattingRoom from chatting a inner join chatting b 
-			on a.chattingRoom = b.chattingRoom where a.mno = #{amno} and b.mno = #{bmno};
+		select distinct b.chattingroom from chatting a inner join chatting b 
+			on a.chattingRoom = b.chattingRoom where a.mno = #{anotherMno} and b.mno = #{myMno};
 	</select>
 	
 	<select id="chattingStart" parameterType="String" resultType="chatVO">
-		select * from chatting where chattingroom = #{chattingroom};
+		SELECT distinct a.cindex, a.chat, a.mno, a.cdate FROM chatting a inner join chatting b 
+		   on a.chattingroom = b.chattingroom 
+		     WHERE a.chattingroom = #{chattingroom} order by a.cindex;
+	</select>
+	
+	<insert id="chattingCreate" parameterType="java.util.Map">
+		INSERT INTO chatting (chattingroom, cdate, mno) VALUES
+		    (#{uuid}, now(), #{myMno}),
+		    (#{uuid}, now(), #{anotherMno});
+	</insert>
+	
+	<select id="getProfile" parameterType="int" resultType="String">
+		SELECT mfrealname FROM memberattach WHERE mno = #{anotherMno};
+	</select>
+	
+	<insert id="chatting" parameterType="java.util.Map">
+		INSERT INTO chatting (chattingroom, cdate, mno, chat) VALUES
+		    (#{chattingRoom}, now(), #{myMno}, #{chat});
+	</insert>
+	
+	<update id="linkStart" parameterType="int">
+		UPDATE member SET link = 2 WHERE mno = #{mno};
+	</update>
+	
+	<update id="linkEnd" parameterType="int">
+		UPDATE member SET link = 1 WHERE mno = #{mno};
+	</update>
+	
+	<select id="checkLink" parameterType="int" resultType="int">
+		select link from member where mno = #{mno};
+	</select>
+	
+	<select id="getName" parameterType="int" resultType="String">
+		select mname from member where mno = #{mno};
 	</select>
 </mapper>

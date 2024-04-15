@@ -56,6 +56,10 @@
 		SELECT * FROM boardtype;
 	</select>
 	
+	<select id="selectBoardType" parameterType="int" resultType="boardTypeVO">
+		SELECT * FROM boardtype WHERE bindex=#{bindex};
+	</select>
+	
 	<select id="selectAllBoardReader" resultType="boardReaderVO">
 		SELECT * from boardreader;
 	</select>
@@ -71,6 +75,58 @@
 	<select id="selectBoardWriters" parameterType="int" resultType="boardWriterVO">
 		SELECT * from boardwriter WHERE bindex = #{bindex} ;
 	</select>
+	
+	<insert id="insertBoardType"  parameterType="boardTypeVO" useGeneratedKeys="true" keyProperty="bindex">
+		INSERT INTO boardtype(btname) VALUES(#{btname});
+	</insert>
+	
+	<update id="updateBoardType"  parameterType="boardTypeVO">
+		UPDATE boardtype SET btname=#{btname} WHERE bindex = #{bindex};
+	</update>
+	
+	<delete id="deleteBoardType"  parameterType="int">
+		DELETE FROM boardtype WHERE bindex = #{bindex};
+	</delete>
+	
+	<insert id="insertBoardReader"  parameterType="boardReaderVO">
+		INSERT INTO boardreader(bindex, reader, ridx) VALUES(#{bindex}, #{reader}, #{ridx});
+	</insert>
+	
+	<insert id="insertBoardReaders"  parameterType="java.util.List">
+		INSERT INTO boardreader(bindex, reader, ridx) VALUES
+		<foreach collection="list" item="item" separator=",">
+			(
+				#{item.bindex}, 
+				#{item.reader}, 
+				#{item.ridx}
+			)
+		</foreach>
+		;
+	</insert>
+	
+	<delete id="deleteBoardReader"  parameterType="int">
+		DELETE FROM boardreader WHERE bindex = #{bindex};
+	</delete>
+	
+	<insert id="insertBoardWriter"  parameterType="boardWriterVO">
+		INSERT INTO boardwriter(bindex, writer, widx) VALUES(#{bindex}, #{writer}, #{widx});
+	</insert>
+	
+	<insert id="insertBoardWriters"  parameterType="java.util.List">
+		INSERT INTO boardwriter(bindex, writer, widx) VALUES 
+		<foreach collection="list" item="item" separator=",">
+			(
+				#{item.bindex}, 
+				#{item.writer}, 
+				#{item.widx}
+			)
+		</foreach>
+	</insert>
+	
+	<delete id="deleteBoardWriter"  parameterType="int">
+		DELETE FROM boardwriter WHERE bindex = #{bindex};
+	</delete>
+	
 	
 	
 </mapper>

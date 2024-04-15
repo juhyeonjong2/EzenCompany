@@ -22,6 +22,7 @@
   <link href="<%=request.getContextPath()%>/resources/css/style.css" rel="stylesheet">
   <link href="<%=request.getContextPath()%>/resources/css/ezReply.css" rel="stylesheet">
   <link href="<%=request.getContextPath()%>/resources/css/chatting.css" rel="stylesheet">
+  <link href="<%=request.getContextPath()%>/resources/css/noti.css" rel="stylesheet">
 
   <!-- Predefined Script -->
   <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery-3.7.1.min.js"></script>
@@ -31,7 +32,10 @@
 
 	<%@ include file="../include/boardHeader.jsp"%>
 	<%@ include file="../include/boardSidebar.jsp"%>
-
+	<!-- catting popup -->
+	<%@ include file="../include/socketHeader.jsp"%>
+	<%@ include file="../popup/chatting.jsp"%>
+	
 	<main id="main" class="main">
     <section class="section">
       <div class="row row-cols-1 row-cols-md-3 g-1">
@@ -77,18 +81,8 @@
     <!-- 이 위치에 채팅팝업이 오면 될거같음 -->
   </main><!-- End #main -->
   
-  <footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>EzenCompany</span></strong>. All Rights Reserved
-    </div>
-    <div class="credits">
-      <!-- All the links in the footer should remain intact. -->
-      <!-- You can delete the links only if you purchased the pro version. -->
-      <!-- Licensing information: https://bootstrapmade.com/license/ -->
-      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      <!-- Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> -->
-    </div>
-  </footer><!-- End Footer -->
+  <!-- footer -->
+  <%@ include file="../include/footer.jsp"%>
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
@@ -104,7 +98,6 @@
 
 
     <!-- Last JS-->
-    <script src="<%=request.getContextPath()%>/resources/js/chatting.js"></script>
     <script src="<%=request.getContextPath()%>/resources/js/tooltips.js"></script>
 </body>
 </html>

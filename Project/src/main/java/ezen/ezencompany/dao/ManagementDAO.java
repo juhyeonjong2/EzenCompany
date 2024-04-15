@@ -78,6 +78,10 @@ public class ManagementDAO {
 		return sqlSession.selectList(namespace+".selectAllBoardType");
 	}
 	
+	public BoardTypeVO selectBoardType(int btno) {
+		return sqlSession.selectOne(namespace+".selectBoardType", btno);
+	}
+	
 	public List<BoardReaderVO> selectAllBoardReader(){
 		return sqlSession.selectList(namespace+".selectAllBoardReader");
 	}
@@ -93,6 +97,47 @@ public class ManagementDAO {
 	public List<BoardWriterVO> selectBoardWriters(int bindex){
 		return sqlSession.selectList(namespace+".selectBoardWriters", bindex);
 	}
+	
+	public int insertBoardType(BoardTypeVO vo){
+		return sqlSession.insert(namespace+".insertBoardType", vo);
+	}
+	
+	public int updateBoardType(BoardTypeVO vo){
+		return sqlSession.update(namespace+".updateBoardType", vo);
+	}
+	
+	public int deleteBoardType(int index ){
+		return sqlSession.delete(namespace+".deleteBoardType", index);
+	}
+	
+	
+	// erader에 업데이트는 없음. 업데이트 방법은 bindex에 포함하는 모든 목록을 지우고, 다시 추가하는게 업데이트)
+	public int insertBoardReader(BoardReaderVO vo){
+		return sqlSession.insert(namespace+".insertBoardReader", vo);
+	}
+	
+	public int insertBoardReaders(List<BoardReaderVO> list){
+		return sqlSession.insert(namespace+".insertBoardReaders", list);
+	}
+	
+	public int deleteBoardReader(int index ){
+		return sqlSession.delete(namespace+".deleteBoardReader", index);
+	}
+	
+	// writer에 업데이트는 없음. 업데이트 방법은 bindex에 포함하는 모든 목록을 지우고, 다시 추가하는게 업데이트)
+	public int insertBoardWriter(BoardWriterVO vo){
+		return sqlSession.insert(namespace+".insertBoardWriter", vo);
+	}
+	
+	public int insertBoardWriters(List<BoardWriterVO> list){
+		return sqlSession.insert(namespace+".insertBoardWriters", list);
+	}
+	
+	public int deleteBoardWriter(int index ){
+		return sqlSession.delete(namespace+".deleteBoardWriter", index);
+	}
+
+	
 	
 	
 }

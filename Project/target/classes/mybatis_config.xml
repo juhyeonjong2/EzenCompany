@@ -18,5 +18,6 @@
 		<typeAlias type="ezen.ezencompany.vo.BoardReaderVO" alias="boardReaderVO"/>
 		<typeAlias type="ezen.ezencompany.vo.BoardWriterVO" alias="boardWriterVO"/>
 		<typeAlias type="ezen.ezencompany.vo.BoardReplyVO" alias="boardReplyVO"/>
+		<typeAlias type="ezen.ezencompany.vo.NotificationVO" alias="notificationVO"/>
 	</typeAliases>
 </configuration>

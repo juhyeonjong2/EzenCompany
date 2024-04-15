@@ -153,8 +153,8 @@ public class SecurityController {
 		
 		//안에서 한번 더 정규식으로 검사를 한다
 		// 첫번째 매개값은 정규표현식이고 두번째 매개값은 검증 대상 문자열
-		boolean resultId = Pattern.matches("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^*_+|<>?:{}])[A-Za-z\\d~!@#$%^*_+|<>?:{}]{8,20}$", valueId);
-		boolean resultPw = Pattern.matches("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^*_+|<>?:{}])[A-Za-z\\d~!@#$%^*_+|<>?:{}]{8,20}$", valuePw);
+		boolean resultId = Pattern.matches("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^*_+|<>?:{}])[A-Za-z\\d~!@#$%^*_+|<>?:{}]{8,20}$", valuePw);
+		boolean resultPw = Pattern.matches("^[a-zA-Z0-9]{4,11}$", valueId);
 
 		if(resultId && resultPw) {
 			HashMap<String, Object> map = new HashMap<>();

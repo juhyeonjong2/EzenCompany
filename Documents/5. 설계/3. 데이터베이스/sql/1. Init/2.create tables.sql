@@ -12,7 +12,7 @@ CREATE TABLE member (
     mphone varchar(13) comment '연락처'
 );
 
-CREATE TABLE boardType(
+CREATE TABLE boardtype(
 	bindex int unsigned not null primary key auto_increment comment '게시판타입번호',
     btname varchar(50) unique not null comment '게시판 타입 명',
     reader JSON comment '읽기 권한',
@@ -28,7 +28,7 @@ CREATE TABLE board (
     mno int  unsigned not null comment '회원번호',
     foreign key(mno) references member(mno),
     bindex int unsigned not null comment '게시판타입번호',
-    foreign key(bindex) references boardType(bindex)
+    foreign key(bindex) references boardtype(bindex)
 ); 
 
 CREATE TABLE reply(
@@ -43,7 +43,7 @@ CREATE TABLE reply(
 	foreign key(mno) references member(mno)
 );
 
-CREATE TABLE boardAttach(
+CREATE TABLE boardattach(
 	bfno int unsigned not null primary key auto_increment comment '게시글파일번호',
 	bfrealname varchar(100) not null comment '실제이름',
     bforeignname varchar(100) not null comment '외부이름',
@@ -72,7 +72,7 @@ CREATE TABLE blog(
     foreign key(fno) references folder(fno)
 );
 
-CREATE TABLE blogAttach(
+CREATE TABLE blogattach(
 	bgfno int unsigned not null primary key auto_increment comment '블로그파일번호',
 	bgfrealname varchar(100) not null comment '실제이름',
     bgforeignname varchar(100) not null comment '외부이름',
@@ -80,7 +80,7 @@ CREATE TABLE blogAttach(
 	foreign key(bgno) references blog(bgno)
 );
 
-CREATE TABLE blogReply(
+CREATE TABLE blogreply(
 	bgrno int unsigned not null primary key auto_increment comment '블로그댓글번호',
 	bgrdate timestamp not null comment '작성일',
     bgrcontent varchar(500) not null comment '댓글내용',
@@ -93,7 +93,7 @@ CREATE TABLE blogReply(
 );
 
 # 회원가입 인증번호 테이블 생성
-CREATE TABLE joinCert (
+CREATE TABLE joincert (
 	email varchar(100) not null primary key comment '이메일',
     cert char(8) not null comment '인증번호'
 );
@@ -116,7 +116,7 @@ CREATE TABLE attribute (
 );
 
 #사원 옵션
-CREATE TABLE employeeOption (
+CREATE TABLE employeeoption (
 	mno int unsigned not null comment '회원번호',
 	foreign key(mno) references member(mno),
 	cidx int not null comment '분류번호',
@@ -131,12 +131,12 @@ CREATE TABLE notification (
 	mno int unsigned not null comment '회원번호',
 	foreign key(mno) references member(mno),
     code char(2) not null comment '알림코드',
-    targetmno int not null comment '대상회원 번호',
+    targetname int not null comment '대상이름',
     nconfirm char(1) not null comment '알림 확인'
 );
 
 #프로필 사진
-CREATE TABLE memberAttach (
+CREATE TABLE memberattach (
 	mfno int unsigned not null primary key auto_increment comment '프로필파일번호',
 	mfrealname varchar(100) not null comment '실제이름',
     mforeignname varchar(100) not null comment '외부이름',
@@ -146,7 +146,7 @@ CREATE TABLE memberAttach (
 );
 
 #메일발송 테이블
-CREATE TABLE joinMail (
+CREATE TABLE joinmail (
 	shortUrl varchar(100) not null unique comment '짧은 경로',
 	mno int unsigned not null comment '회원번호',
 	foreign key(mno) references member(mno)

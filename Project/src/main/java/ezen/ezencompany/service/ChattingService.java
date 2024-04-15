@@ -32,8 +32,43 @@ public class ChattingService {
 		return chattingDAO.getRoom(map);
 	}
 	
-	//채팅방 찾기
+	//채팅 내역 찾기
 	public List<ChatVO> chattingStart(String chattingroom){
 		return chattingDAO.chattingStart(chattingroom);
+	}
+	
+	//채팅방 만들기
+	public void chattingCreate(HashMap<String, Object> map){
+		chattingDAO.chattingCreate(map);
+	}
+	
+	//프로필사진 찾기
+	public String getProfile(int anotherMno){
+		return chattingDAO.getProfile(anotherMno);
+	}
+	
+	//채팅 메세지 기록하기
+	public void chatting(HashMap<String, Object> chatting){
+		chattingDAO.chatting(chatting);
+	}
+	
+	//채팅 연결
+	public void linkStart(int mno){
+		chattingDAO.linkStart(mno);
+	}
+	
+	//채팅 끊기
+	public void linkEnd(int mno){
+		chattingDAO.linkEnd(mno);
+	}
+	
+	//링크확인
+	public int checkLink(int mno){
+		return chattingDAO.checkLink(mno);
+	}
+	
+	//이름 찾기
+	public String getName(int mno){
+		return chattingDAO.getName(mno);
 	}
 }

@@ -1,7 +1,6 @@
 package ezen.ezencompany.dao;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -58,9 +57,19 @@ public class AdminDAO {
 		sqlSession.update(namespace+".updateImg", map);
 	}
 	
+	//cidx 찾기
+	public int searchOption(Map<String, Object> opmap) {
+		return sqlSession.selectOne(namespace+".searchOption", opmap);
+	}
+	
 	//사원 옵션 업데이트
 	public void employeeUpdate(Map<String, Object> opmap) {
 		sqlSession.update(namespace+".employeeUpdate", opmap);
+	}
+	
+	//사원 옵션 인서트
+	public void employeeInsert(Map<String, Object> opmap) {
+		sqlSession.insert(namespace+".employeeInsert", opmap);
 	}
 	
 	//멤버 업데이트
