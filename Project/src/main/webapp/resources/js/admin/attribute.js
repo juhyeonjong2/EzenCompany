@@ -87,7 +87,7 @@
              
              $.ajax(
 			{
-				url: "/ezencompany/admin/attribute/info",
+				url: "/admin/attribute/info",
 				type: "get",
 				async:false,
 				data : {aidx:attribute},

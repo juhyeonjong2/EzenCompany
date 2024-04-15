@@ -38,7 +38,7 @@ $(document).ready(function(){
 
 function moveBlogPage(event, treeId, treeNode) {
 	if(!treeNode.isParent){
-    	location.href = "/ezencompany/blog/page/" +  treeNode.ename;
+    	location.href = "/blog/page/" +  treeNode.ename;
     }
 };
 
@@ -49,7 +49,7 @@ function getBlogNodes(){
 	let mno = $("#inputMno").val();
 	$.ajax(
 	{
-		url: "/ezencompany/blog/folder/nodes",
+		url: "/blog/folder/nodes",
 		type: "get",
 		data : {mno:mno},
 		async : false,
