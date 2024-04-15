@@ -107,6 +107,28 @@ public class BoardController {
 	public String view(@RequestParam(value="bno") int bno,Model model) throws Exception {
 		
 
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVO user = (UserVO) authentication.getPrincipal();
+		
+		int mno = user.getMno();
+		List<BoardTypeVO> acceptedList = boardAuthority.getReadableList(mno);
+
+		model.addAttribute("boardType", acceptedList);
+
+		List<BoardVO> board = new ArrayList<BoardVO>();
+		for(int i =0; i<acceptedList.size(); i++) {
+			int bindex = acceptedList.get(i).getBindex();
+			List<BoardVO> boardList= boardTypeService.boardList(bindex);
+			board.addAll(boardList);
+		};
+		
+		model.addAttribute("board", board);
+		
+		
+		
+		
+		
 		//조회수 증가 service 추가
 		
 		// 서비스태우고 dao 태워서 쿼리문 실행되게 만들기
@@ -131,6 +153,26 @@ public class BoardController {
 	}
 	@RequestMapping(value="/modify.do",method=RequestMethod.GET) 
 	public String modify(@RequestParam(value="bno") int bno,Model model) throws Exception {
+		
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVO user = (UserVO) authentication.getPrincipal();
+		
+		int mno = user.getMno();
+		List<BoardTypeVO> acceptedList = boardAuthority.getReadableList(mno);
+
+		model.addAttribute("boardType", acceptedList);
+
+		List<BoardVO> board = new ArrayList<BoardVO>();
+		for(int i =0; i<acceptedList.size(); i++) {
+			int bindex = acceptedList.get(i).getBindex();
+			List<BoardVO> boardList= boardTypeService.boardList(bindex);
+			board.addAll(boardList);
+		};
+		
+		model.addAttribute("board", board);
+		
+		
 		
 		BoardVO vo = boardService.selectOneByBno(bno);
 		model.addAttribute("vo",vo);
@@ -178,11 +220,28 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/write.do",method=RequestMethod.GET)
-	public String write(@RequestParam(value="bindex") int btno ) {
+	public String write(@RequestParam(value="bindex") int btno, Model model ) {
+		
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserVO user = (UserVO) authentication.getPrincipal();
 		int mno = user.getMno();
+		
+		
+		List<BoardTypeVO> acceptedList = boardAuthority.getReadableList(mno);
+
+		model.addAttribute("boardType", acceptedList);
+
+		List<BoardVO> board = new ArrayList<BoardVO>();
+		for(int i =0; i<acceptedList.size(); i++) {
+			int bindex = acceptedList.get(i).getBindex();
+			List<BoardVO> boardList= boardTypeService.boardList(bindex);
+			board.addAll(boardList);
+		};
+		
+		model.addAttribute("board", board);
+		
+		
 		
 		boolean isWritable = boardAuthority.isWritable(btno, mno);
 		if(isWritable == false) {
