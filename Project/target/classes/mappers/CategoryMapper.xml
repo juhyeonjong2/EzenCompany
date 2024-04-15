@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ezen.ezencompany.mapper.categoryMapper">
+
+	<select id="selectCategory" resultType="java.util.Map">
+		SELECT * FROM category;
+	</select>
+	
+	<select id="selectAttribute" resultType="java.util.Map">
+		SELECT * FROM attribute;
+	</select>
+	
+	<select id="selectJson" resultType="java.util.Map">
+		SELECT reader->'$."-1"' as a, writer->'$' as b, bindex FROM boardtype;
+	</select>
+	
+</mapper>

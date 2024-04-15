@@ -1,0 +1,42 @@
+#toastBox{
+  position: fixed;
+  right: 0;
+  margin-right: 20px;
+  margin-top: 20px;
+  z-index: 9999999;
+}
+
+#toast{
+  font-size: 15px;
+  width: 350px;
+  height: 70px;
+  border: 4px solid #012970;
+  border-radius: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background-color: #fff;
+  text-align: center;
+}
+#toast span{
+  width: 150px;
+  line-height: 70px;
+  padding: 15px;
+}
+
+#replyBox{
+  font-size: 15px;
+  width: 250px;
+  height: 70px;
+  border: 4px solid #012970;
+  border-radius: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background-color: #fff;
+  text-align: center;
+}
+
+#replyBox span{
+  width: 150px;
+  line-height: 70px;
+  padding: 15px;
+}

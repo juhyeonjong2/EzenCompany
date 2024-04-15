@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ezen.ezencompany.mapper.adminMapper">
+
+	<insert id="memberRegistration" parameterType="java.util.Map">
+		INSERT INTO member (mname, email, authority, joindate, enabled)
+ 			VALUES(#{name}, #{email}, 'ROLE_USER', now(), 1);
+	</insert>
+	
+	<select id="getLastMno" parameterType="java.util.Map" resultType="int">
+		SELECT mno FROM member WHERE email = #{email};
+	</select>
+	
+	<insert id="employeeRegistration" parameterType="java.util.Map">
+		INSERT INTO employeeoption (mno, cidx, aidx) VALUES
+		    (#{mno}, #{cidx}, #{aidx});
+	</insert>
+	
+	<insert id="insertShortUrl" parameterType="java.util.Map">
+		INSERT INTO joinmail (mno, shortUrl) VALUES
+		    (#{mno}, #{url});
+	</insert>
+	
+	<select id="getMno" parameterType="String" resultType="int">
+		SELECT mno FROM member WHERE email = #{email};
+	</select>
+	
+	<select id="searchMno" parameterType="int" resultType="int">
+		SELECT count(mno) FROM memberattach WHERE mno = #{mno};
+	</select>
+	
+	<insert id="insertImg" parameterType="java.util.Map">
+		INSERT INTO memberattach (mfrealname, mforeignname, mno, rdate)
+ 			VALUES(#{mfrealname}, #{mforeignname}, #{mno}, now());
+	</insert>
+	
+	<update id="updateImg" parameterType="java.util.Map">
+		UPDATE memberattach SET mfrealname = #{mfrealname}, mforeignname = #{mforeignname},
+		rdate = now() WHERE mno = #{mno}; 
+	</update>
+	
+	<select id="searchOption" parameterType="java.util.Map" resultType="int">
+		select count(cidx) from employeeoption where mno = #{mno} and cidx = #{cidx};
+	</select>
+	
+	<update id="employeeUpdate" parameterType="java.util.Map">
+		UPDATE employeeoption SET aidx = #{aidx} WHERE mno = #{mno} and cidx = #{cidx}; 
+	</update>
+	
+	<insert id="employeeInsert" parameterType="java.util.Map">
+		INSERT INTO employeeoption (mno, cidx, aidx)
+ 			VALUES(#{mno}, #{cidx}, #{aidx});
+	</insert>
+	
+	<update id="memberUpdate" parameterType="java.util.Map">
+		UPDATE member SET mname = #{mname}, email = #{email}, mphone = #{mphone},
+		 authority = #{authority},  enabled = #{enabled} WHERE mno = #{mno}; 
+	</update>
+	
+	<update id="deleteMember" parameterType="int">
+		UPDATE member SET enabled = 2 WHERE mno = #{mno}; 
+	</update>
+	
+	<select id="checkDelete" parameterType="int" resultType="int">
+		SELECT enabled FROM member WHERE mno = #{mno};
+	</select>
+	
+	<select id="getUrl" parameterType="int" resultType="String">
+		SELECT shortUrl FROM joinmail WHERE mno = #{mno};
+	</select>
+</mapper>

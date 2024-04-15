@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ezen.ezencompany.mapper.blogMapper">
+
+<insert id="postBlog" parameterType="blogVo" useGeneratedKeys="true" keyProperty="bgno">
+	INSERT INTO blog( mno, fno, bgtitle, bgcontent, bgrealcontent, blockyn, bghit, bgdate)	 
+	VALUES ( #{mno}, #{fno}, #{bgtitle}, #{bgcontent}, #{bgrealcontent}, #{blockyn}, 0, now());
+</insert>
+	
+<select id="selectLast" parameterType="int" resultType="blogVo">
+	SELECT * FROM blog WHERE mno = #{mno} AND blockyn='n' ORDER BY bgno DESC LIMIT 1;
+</select>
+
+<select id="selectLastForce" parameterType="int" resultType="blogVo">
+	SELECT * FROM blog WHERE mno = #{mno} ORDER BY bgno DESC LIMIT 1;
+</select>
+
+<select id="selectRetireEmployees" resultType="memberVO">
+	SELECT * FROM member WHERE nullif(mid, '') IS NOT NULL AND enabled=0;
+</select>
+
+<select id="selectActiveEmployees"  resultType="memberVO">
+	SELECT * FROM member WHERE nullif(mid, '') IS NOT NULL AND enabled=1;
+</select>
+
+<select id="selectActiveEmployeesExcludeMember" parameterType="int" resultType="memberVO">
+	 <![CDATA[ 
+	 	SELECT * FROM member WHERE nullif(mid, '') IS NOT NULL AND enabled=1 AND mno <> #{value};
+	 ]]>
+</select>
+
+<select id="selectOptionEmployees" parameterType="employeeOptionVO" resultType="memberVO">
+	SELECT * FROM member as m 
+	LEFT JOIN employeeoption as e ON m.mno = e.mno 
+	WHERE e.cidx = #{cidx} AND e.aidx = #{aidx} AND m.enabled = 1;
+</select>
+
+<select id="selectCategorys" resultType="categoryVO">
+	SELECT * FROM category;
+</select>
+
+<select id="selectAttributes" resultType="attributeVO">
+	SELECT * FROM attribute;
+</select>
+
+<select id="selectAdditionalOptions" parameterType="int"  resultType="employeeOptionVO">
+	SELECT * FROM employeeoption WHERE mno=#{value};
+</select>
+
+<insert id="insertFolder" parameterType="folderVO" useGeneratedKeys="true" keyProperty="fno">
+	INSERT INTO folder(pfno, fname, mno) VALUES(#{pfno}, #{fname}, #{mno});
+</insert>
+
+<select id="selectFolders" parameterType="int"  resultType="folderVO">
+	SELECT * FROM folder WHERE mno=#{value};
+</select>
+
+<select id="selectBlogList" parameterType="int" resultType="blogVo">
+	SELECT * FROM blog WHERE mno = #{mno} AND blockyn='n';
+</select>
+
+<select id="selectBlogListAll" parameterType="int" resultType="blogVo">
+	SELECT * FROM blog WHERE mno = #{mno};
+</select>
+
+<select id="selectOneForce" parameterType="int" resultType="blogVo">
+	SELECT * FROM blog WHERE bgno = #{bgno};
+</select>
+
+<select id="selectOne" parameterType="int" resultType="blogVo">
+	SELECT * FROM blog WHERE bgno = #{bgno} AND blockyn='n';
+</select>
+
+<update id="modifyOne" parameterType="blogVO">
+	UPDATE blog 
+	SET fno=#{fno}, 
+		blockyn=#{blockyn}, 
+		bgcontent=#{bgcontent}, 
+		bgtitle=#{bgtitle}, 
+		bgrealcontent=#{bgrealcontent} 
+	WHERE bgno=#{bgno};
+	
+</update>
+
+<update id="removeOne" parameterType="int">
+	DELETE FROM blog WHERE bgno=#{bgno};
+</update>
+
+<select id="selectReply" parameterType="int" resultType="blogReplyVO" >
+	SELECT * FROM blogreply WHERE bgrno = #{bgrno};
+</select>
+
+<select id="selectReplyList" parameterType="int" resultType="blogReplyVO">
+	SELECT * FROM blogreply WHERE bgno = #{bgno};
+</select>
+
+<insert id="insertReply" parameterType="blogReplyVO" useGeneratedKeys="true" keyProperty="bgrno">
+	INSERT INTO blogreply(bgrpno, bgrcontent, bgrdate, bgno, mno, delyn) VALUES(#{bgrpno},#{bgrcontent}, now(), #{bgno}, #{mno}, 'n');
+</insert>
+
+<update id="removeReply" parameterType="int">
+	UPDATE blogreply SET delyn = 'y' WHERE bgrno = #{bgrno};
+</update>
+
+<update id="modifyReply" parameterType="blogReplyVO">
+	UPDATE blogreply 
+	SET bgrcontent = #{bgrcontent} 
+	WHERE bgrno = #{bgrno};
+</update>
+
+
+<insert id="insertfile" parameterType="blogAttachVO">
+	INSERT INTO blogattach(bgfrealname, bgforeignname, bgno)
+	 VALUES ( #{bgfrealname}, #{bgforeignname}, #{bgno})
+</insert> 
+
+<select id="selectFiles" parameterType="int" resultType="blogAttachVO">
+	SELECT * FROM blogattach WHERE bgno=#{bgno}
+</select>
+
+<select id="selectFile" parameterType="int" resultType="blogAttachVO">
+	SELECT * FROM blogattach WHERE bgfno=#{bgfno}
+</select>
+
+<delete id="removeFile" parameterType="int">
+	DELETE FROM blogattach WHERE bgfno = #{bgfno};
+</delete>
+
+<delete id="removeFiles" parameterType="int">
+	DELETE FROM blogattach WHERE bgno = #{bgno};
+</delete>
+
+
+
+
+</mapper>

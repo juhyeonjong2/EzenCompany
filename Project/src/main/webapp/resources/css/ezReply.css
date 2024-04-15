@@ -1,0 +1,50 @@
+
+/*--------------------------------------------------------------
+# Reply
+--------------------------------------------------------------*/
+.ezReply ul {
+    /*list-style: none;*/
+    list-style-image:url(../icon/arrow-return-right.svg);
+  }
+  
+.ezReply{
+list-style: none;
+margin: 0;
+padding: 0;
+}
+
+.ezReply_node{
+	 /*height: 100px;*/
+  background-color: #DFDFDF;
+  margin: 4px;
+}
+
+.ezReply_input textarea{
+	width:90%;
+	resize :none;
+	max-height: 100px;
+}
+
+.ezReply_input button{
+	width:10%;
+}
+
+
+
+
+/* 아래 삭제 예정 */
+.reply_node{
+  /*height: 100px;*/
+  background-color: #DFDFDF;
+  margin: 4px;
+}
+
+.reply_input textarea{
+	width:90%;
+	resize :none;
+	max-height: 100px;
+}
+
+.reply_input button{
+	width:10%;
+}

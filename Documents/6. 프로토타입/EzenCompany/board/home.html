@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+ <!-- Vendor CSS Files -->
+ <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+ <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+ <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+ <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+ <link href="../assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="../assets/css/style.css" rel="stylesheet">
+  <link href="../assets/css/ezReply.css" rel="stylesheet">
+  <link href="../assets/css/chatting.css" rel="stylesheet">
+
+  <!-- Predefined Script -->
+  <script type="text/javascript" src="../assets/js/jquery-3.7.1.min.js"></script>
+
+</head>
+<body>
+    
+    <!-- ======= Header - Board ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="home.html" class="logo d-flex align-items-center">
+        <i class="bx bx-world"></i> <!-- boxicons-->
+        <span class="d-none d-lg-block">EzenCompany</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <!-- 관리자가 아니라면 보이지 않음.-->
+        <li class="nav-item">
+            <a class="nav-link nav-icon" href="../admin/home.html">
+              <i class="bi bi-key"></i>
+            </a>
+        </li><!-- End Admin Icon-->
+
+        <li class="nav-item dropdown">
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-bell"></i>
+            <span class="badge bg-primary badge-number">3</span>
+          </a><!-- End Notification Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+            <li class="dropdown-header" style="width: 200px;">
+              알림
+            </li>
+
+            <li><hr class="dropdown-divider"></li>
+
+            <li class="notification-item">
+              <i class="bi bi-exclamation-circle text-warning"></i>
+              <div>
+                <p><a href='#'>이길동</a>님이 블로그에 댓글을 남기셧습니다.</p>
+              </div>
+            </li>
+
+            <li><hr class="dropdown-divider"></li>
+
+            <li class="notification-item">
+              <i class="bi bi-exclamation-circle text-warning"></i>
+              <div>
+                <p><a href='#'>박길동</a>님이 게시글에 댓글을 남기셧습니다.</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-exclamation-circle text-warning"></i>
+              <div>
+                <p><a href='#'>박길동</a>님이 회원님을 언급하셨습니다.</p>
+              </div>
+            </li>
+
+          </ul><!-- End Notification Dropdown Items -->
+        </li><!-- End Notification Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="modal" data-bs-target="#chattingModal">
+            <i class="bi bi-chat-left-text"></i>
+            <span class="badge bg-success badge-number">3</span>
+          </a>
+        </li><!-- End Messages Icon -->
+        
+        <li class="nav-item">
+            <a class="nav-link nav-icon search-bar-toggle" href="../board/home.html">
+              <i class="bi bi-grid"></i>
+            </a>
+        </li><!-- End Board Icon-->
+
+        <li class="nav-item">
+            <a class="nav-link nav-icon search-bar-toggle" href="../blog/home.html">
+              <i class="bi bi-house-door"></i>
+            </a>
+        </li><!-- End Home Icon-->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar - Board======= -->
+    <aside id="sidebar" class="sidebar">
+      <div class="board_tree_frame mt-5 ms-4 w-75 rounded overflow-y-auto">
+        <div class="list-group">
+          <a href="list.html" class="list-group-item list-group-item-action active" aria-current="true">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 1</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 2</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 3</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 4</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 5</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 6</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 7</span>
+          </a>
+          
+        </div>
+      </div>
+  
+    </aside><!-- End Sidebar-->
+
+  <main id="main" class="main">
+    <section class="section">
+      <div class="row row-cols-1 row-cols-md-3 g-1">
+
+        <div class="col">
+            <div class="card m-1">
+              <div class="card-body">
+                <div class="d-flex justify-content-between">
+                  <h5 class="card-title">게시판 제목1</h5>
+                  <span class="m-3"><a href="list.html">+ 더보기</a></span>
+                </div>
+                <hr class="m-0">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td>
+                          <a href="#">
+                            <p class="mini_table_title">제목11111111111111111111111111111111111111111111111111111</p>
+                          </a>
+                      </td>
+                      <td class="text-end">2024.03.29</td>
+                    </tr>
+                    <tr>
+                      <td>
+                          <a href="#">
+                            <p class="mini_table_title">제목2</p>
+                          </a>
+                      </td>
+                      <td class="text-end">2024.03.29</td>
+                    </tr>
+                    <tr>
+                      <td>
+                          <a href="#">
+                            <p class="mini_table_title">제목3</p>
+                          </a>
+                      </td>
+                      <td class="text-end">2024.03.29</td>
+                    </tr>
+                    <tr>
+                      <td>
+                          <a href="#">
+                            <p class="mini_table_title">제목4</p>
+                          </a>
+                      </td>
+                      <td class="text-end">2024.03.29</td>
+                    </tr>
+                    <tr>
+                      <td>
+                          <a href="#">
+                            <p class="mini_table_title">제목5</p>
+                          </a>
+                      </td>
+                      <td class="text-end">2024.03.29</td>
+                    </tr>
+                  
+                  </tbody>
+                </table>
+                <!-- End Default Table Example -->
+              </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card m-1">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <h5 class="card-title">게시판 제목2</h5>
+                <span class="m-3"><a href="list.html">+ 더보기</a></span>
+              </div>
+              <hr class="m-0">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td>
+                        <a href="#">
+                          <p class="mini_table_title">제목11111111111111111111111111111111111111111111111111111</p>
+                        </a>
+                    </td>
+                    <td class="text-end">2024.03.29</td>
+                  </tr>
+                  <tr>
+                    <td>
+                        <a href="#">
+                          <p class="mini_table_title">제목2</p>
+                        </a>
+                    </td>
+                    <td class="text-end">2024.03.29</td>
+                  </tr>
+                  <tr>
+                    <td>
+                        <a href="#">
+                          <p class="mini_table_title">제목3</p>
+                        </a>
+                    </td>
+                    <td class="text-end">2024.03.29</td>
+                  </tr>
+                  <tr>
+                    <td>
+                        <a href="#">
+                          <p class="mini_table_title">제목4</p>
+                        </a>
+                    </td>
+                    <td class="text-end">2024.03.29</td>
+                  </tr>
+                  <tr>
+                    <td>
+                        <a href="#">
+                          <p class="mini_table_title">제목5</p>
+                        </a>
+                    </td>
+                    <td class="text-end">2024.03.29</td>
+                  </tr>
+                
+                </tbody>
+              </table>
+              <!-- End Default Table Example -->
+            </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card m-1">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h5 class="card-title">게시판 제목3</h5>
+              <span class="m-3"><a href="list.html">+ 더보기</a></span>
+            </div>
+            <hr class="m-0">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td>
+                      <a href="#">
+                        <p class="mini_table_title">제목11111111111111111111111111111111111111111111111111111</p>
+                      </a>
+                  </td>
+                  <td class="text-end">2024.03.29</td>
+                </tr>
+                <tr>
+                  <td>
+                      <a href="#">
+                        <p class="mini_table_title">제목2</p>
+                      </a>
+                  </td>
+                  <td class="text-end">2024.03.29</td>
+                </tr>
+                <tr>
+                  <td>
+                      <a href="#">
+                        <p class="mini_table_title">제목3</p>
+                      </a>
+                  </td>
+                  <td class="text-end">2024.03.29</td>
+                </tr>
+                <tr>
+                  <td>
+                      <a href="#">
+                        <p class="mini_table_title">제목4</p>
+                      </a>
+                  </td>
+                  <td class="text-end">2024.03.29</td>
+                </tr>
+                <tr>
+                  <td>
+                      <a href="#">
+                        <p class="mini_table_title">제목5</p>
+                      </a>
+                  </td>
+                  <td class="text-end">2024.03.29</td>
+                </tr>
+              
+              </tbody>
+            </table>
+            <!-- End Default Table Example -->
+          </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card m-1">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <h5 class="card-title">게시판 제목4</h5>
+            <span class="m-3"><a href="list.html">+ 더보기</a></span>
+          </div>
+          <hr class="m-0">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td>
+                    <a href="#">
+                      <p class="mini_table_title">제목11111111111111111111111111111111111111111111111111111</p>
+                    </a>
+                </td>
+                <td class="text-end">2024.03.29</td>
+              </tr>
+              <tr>
+                <td>
+                    <a href="#">
+                      <p class="mini_table_title">제목2</p>
+                    </a>
+                </td>
+                <td class="text-end">2024.03.29</td>
+              </tr>
+              <tr>
+                <td>
+                    <a href="#">
+                      <p class="mini_table_title">제목3</p>
+                    </a>
+                </td>
+                <td class="text-end">2024.03.29</td>
+              </tr>
+              <tr>
+                <td>
+                    <a href="#">
+                      <p class="mini_table_title">제목4</p>
+                    </a>
+                </td>
+                <td class="text-end">2024.03.29</td>
+              </tr>
+              <tr>
+                <td>
+                    <a href="#">
+                      <p class="mini_table_title">제목5</p>
+                    </a>
+                </td>
+                <td class="text-end">2024.03.29</td>
+              </tr>
+            
+            </tbody>
+          </table>
+          <!-- End Default Table Example -->
+        </div>
+    </div>
+  </div>
+
+    <div class="col">
+      <div class="card m-1">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <h5 class="card-title">게시판 제목5</h5>
+            <span class="m-3"><a href="list.html">+ 더보기</a></span>
+          </div>
+          <hr class="m-0">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td>
+                    <a href="#">
+                      <p class="mini_table_title">제목11111111111111111111111111111111111111111111111111111</p>
+                    </a>
+                </td>
+                <td class="text-end">2024.03.29</td>
+              </tr>
+              <tr>
+                <td>
+                    <a href="#">
+                      <p class="mini_table_title">제목2</p>
+                    </a>
+                </td>
+                <td class="text-end">2024.03.29</td>
+              </tr>
+              <tr>
+                <td>
+                    <a href="#">
+                      <p class="mini_table_title">제목3</p>
+                    </a>
+                </td>
+                <td class="text-end">2024.03.29</td>
+              </tr>
+              <tr>
+                <td>
+                    <a href="#">
+                      <p class="mini_table_title">제목4</p>
+                    </a>
+                </td>
+                <td class="text-end">2024.03.29</td>
+              </tr>
+              <tr>
+                <td>
+                    <a href="#">
+                      <p class="mini_table_title">제목5</p>
+                    </a>
+                </td>
+                <td class="text-end">2024.03.29</td>
+              </tr>
+            
+            </tbody>
+          </table>
+          <!-- End Default Table Example -->
+        </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card m-1">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <h5 class="card-title">게시판 제목6</h5>
+          <span class="m-3"><a href="list.html">+ 더보기</a></span>
+        </div>
+        <hr class="m-0">
+        <table class="table">
+          <tbody>
+            <tr>
+              <td>
+                  <a href="#">
+                    <p class="mini_table_title">제목11111111111111111111111111111111111111111111111111111</p>
+                  </a>
+              </td>
+              <td class="text-end">2024.03.29</td>
+            </tr>
+            <tr>
+              <td>
+                  <a href="#">
+                    <p class="mini_table_title">제목2</p>
+                  </a>
+              </td>
+              <td class="text-end">2024.03.29</td>
+            </tr>
+            <tr>
+              <td>
+                  <a href="#">
+                    <p class="mini_table_title">제목3</p>
+                  </a>
+              </td>
+              <td class="text-end">2024.03.29</td>
+            </tr>
+            <tr>
+              <td>
+                  <a href="#">
+                    <p class="mini_table_title">제목4</p>
+                  </a>
+              </td>
+              <td class="text-end">2024.03.29</td>
+            </tr>
+            <tr>
+              <td>
+                  <a href="#">
+                    <p class="mini_table_title">제목5</p>
+                  </a>
+              </td>
+              <td class="text-end">2024.03.29</td>
+            </tr>
+          
+          </tbody>
+        </table>
+        <!-- End Default Table Example -->
+      </div>
+  </div>
+  </div>
+
+  <div class="col">
+    <div class="card m-1">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <h5 class="card-title">게시판 제목7</h5>
+          <span class="m-3"><a href="list.html">+ 더보기</a></span>
+        </div>
+        <hr class="m-0">
+        <table class="table">
+          <tbody>
+            <tr>
+              <td>
+                  <a href="#">
+                    <p class="mini_table_title">제목11111111111111111111111111111111111111111111111111111</p>
+                  </a>
+              </td>
+              <td class="text-end">2024.03.29</td>
+            </tr>
+            <tr>
+              <td>
+                  <a href="#">
+                    <p class="mini_table_title">제목2</p>
+                  </a>
+              </td>
+              <td class="text-end">2024.03.29</td>
+            </tr>
+            <tr>
+              <td>
+                  <a href="#">
+                    <p class="mini_table_title">제목3</p>
+                  </a>
+              </td>
+              <td class="text-end">2024.03.29</td>
+            </tr>
+            <tr>
+              <td>
+                  <a href="#">
+                    <p class="mini_table_title">제목4</p>
+                  </a>
+              </td>
+              <td class="text-end">2024.03.29</td>
+            </tr>
+            <tr>
+              <td>
+                  <a href="#">
+                    <p class="mini_table_title">제목5</p>
+                  </a>
+              </td>
+              <td class="text-end">2024.03.29</td>
+            </tr>
+          
+          </tbody>
+        </table>
+        <!-- End Default Table Example -->
+      </div>
+  </div>
+  </div>
+
+        
+      </div>
+    </section>
+    <section class="chatting_popup">
+      <!-- 채팅 팝업(사람 목록) -->
+      <div class="modal fade" id="chattingModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">대화 상대</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">  
+              <div class="container-fluid chatting_member">
+                <div class="accordion"> 
+                  <div class="accordion-item">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                       프로그래밍 팀
+                      </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                      <div class="accordion-body">
+                        <!-- chatting_user div가 한묶음-->
+                        <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="1">
+                          <div class="d-flex">
+                            <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+                            <div class="d-flex flex-column ms-2">      
+                                <span class="fw-bold user_name">홍길동</span>
+                                <span class="user_position">사원</span>
+                            </div>
+                          </div>
+                        </div>
+        
+                        <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="2">
+                          <div class="d-flex">
+                            <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+                            <div class="d-flex flex-column ms-2">      
+                                <span class="fw-bold user_name">김길동</span>
+                                <span class="user_position">과장</span>
+                            </div>
+                          </div>
+                        </div>
+        
+                        <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="3">
+                          <div class="d-flex">
+                            <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+                            <div class="d-flex flex-column ms-2">      
+                                <span class="fw-bold user_name">고길동</span>
+                                <span class="user_position">부장</span>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                        디자인 팀
+                      </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+                      <div class="accordion-body">
+                        <!-- chatting_user div가 한묶음-->
+                        <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="1">
+                          <div class="d-flex">
+                            <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+                            <div class="d-flex flex-column ms-2">      
+                                <span class="fw-bold user_name">홍길동</span>
+                                <span class="user_position">사원</span>
+                            </div>
+                          </div>
+                        </div>
+        
+                        <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="2">
+                          <div class="d-flex">
+                            <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+                            <div class="d-flex flex-column ms-2">      
+                                <span class="fw-bold user_name">김길동</span>
+                                <span class="user_position">과장</span>
+                            </div>
+                          </div>
+                        </div>
+        
+                        <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="3">
+                          <div class="d-flex">
+                            <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+                            <div class="d-flex flex-column ms-2">      
+                                <span class="fw-bold user_name">고길동</span>
+                                <span class="user_position">부장</span>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                        기획 팀
+                      </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+                      <div class="accordion-body">
+                          <!-- chatting_user div가 한묶음-->
+                          <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="1">
+                            <div class="d-flex">
+                              <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+                              <div class="d-flex flex-column ms-2">      
+                                  <span class="fw-bold user_name">홍길동</span>
+                                  <span class="user_position">사원</span>
+                              </div>
+                            </div>
+                          </div>
+          
+                          <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="2">
+                            <div class="d-flex">
+                              <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+                              <div class="d-flex flex-column ms-2">      
+                                  <span class="fw-bold user_name">김길동</span>
+                                  <span class="user_position">과장</span>
+                              </div>
+                            </div>
+                          </div>
+          
+                          <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="3">
+                            <div class="d-flex">
+                              <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+                              <div class="d-flex flex-column ms-2">      
+                                  <span class="fw-bold user_name">고길동</span>
+                                  <span class="user_position">부장</span>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 채팅 룸 팝업 -->
+      <div class="modal fade" id="chattingRoomModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header d-flex flex-column">
+              <div class="align-self-start">
+                <a href="#" class="link-secondary" data-bs-target="#chattingModal" data-bs-toggle="modal">&lt; 뒤로가기</a>  
+                
+              </div>
+              <div class="align-self-start d-flex mt-2">
+                <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+                <div class="d-flex flex-column ms-2">      
+                  <span class="fw-bold user_name">주현종</span>
+                  <span class="user_position">사원</span>
+                </div>
+              </div>
+            </div>
+            <div class="modal-body">  
+              <div class="container-fluid chatting_room">
+                <div class="chatting_other_msg">
+                  <div class="chatting_profile">
+                    <img src="../assets/img/profile-img.jpg" width="30" height="30" alt="Profile" class="rounded-circle">
+                  </div>
+                  <div class="msg">
+                    안녕하세요 반갑습니다 
+                    저는 새로 입사한 주현종입니다
+                    잘 부탁드려요
+                  </div>
+                </div>
+                <div class="chatting_my_msg">
+                  <div class="msg">
+                    네 안녕하세요 모르는게 있다면 
+                    편하게 물어보세요
+                  </div>
+                  <div class="chatting_profile">
+                    <img src="../assets/img/messages-2.jpg" width="30" height="30" alt="Profile" class="rounded-circle">
+                  </div>
+                </div>
+                <div class="chatting_other_msg">
+                  <div class="chatting_profile">
+                    <img src="../assets/img/profile-img.jpg" width="30" height="30" alt="Profile" class="rounded-circle">
+                  </div>
+                  <div class="msg">
+                    명령·규칙 또는 처분이 헌법이나 법률에 위반되는 여부가 재판의 전제가 된 경우에는 대법원은 이를 최종적으로 심사할 권한을 가진다.
+                  </div>
+                </div>
+                <div class="chatting_my_msg">
+                  <div class="msg">
+                    모든 국민은 근로의 의무를 진다. 국가는 근로의 의무의 내용과 조건을 민주주의원칙에 따라 법률로 정한다.
+                  </div>
+                  <div class="chatting_profile">
+                    <img src="../assets/img/messages-2.jpg" width="30" height="30" alt="Profile" class="rounded-circle">
+                  </div>
+                </div>
+                
+
+              </div>
+            </div>
+            <div class="modal-footer d-flex align-items-center justify-content-center">
+              
+                <input type="text" class="form-control" placeholder="메세지 입력.." id="messageinput">
+                
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>EzenCompany</span></strong>. All Rights Reserved
+    </div>
+    <div class="credits">
+      <!-- All the links in the footer should remain intact. -->
+      <!-- You can delete the links only if you purchased the pro version. -->
+      <!-- Licensing information: https://bootstrapmade.com/license/ -->
+      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+      <!-- Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> -->
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+
+    <!-- Vendor JS Files -->
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/simple-datatables/simple-datatables.js"></script>
+
+
+    <!-- Template Main JS File -->
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/board/board.js"></script>
+
+
+    <!-- Last JS-->
+    <script src="../assets/js/chatting.js"></script>
+    <script src="../assets/js/tooltips.js"></script>
+
+</body>
+</html>

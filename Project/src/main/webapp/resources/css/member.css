@@ -1,0 +1,75 @@
+@charset 'UTF-8';
+
+/*기본 설정*/
+/*임시 폰트*/
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;}
+
+* {margin:0; padding: 0; box-sizing: border-box;}
+
+ul, ol{list-style: none;}
+a{text-decoration: none; color: #000;}
+.clearfix::after{content: ''; display: block; clear: both;}
+.inner{width: 585px; margin: 0 auto; margin-top: 140px;}
+
+/*공중에 뜨는 태그 밑으로 정렬*/
+img {
+    vertical-align: bottom;
+  }
+input{
+    vertical-align: bottom;
+}
+
+
+.mainDiv{width: 585px; height: 800px; background: #8FC3F2}
+.loginFormTop{width: 442px; margin: auto; margin-top: 57px; margin-bottom: 136px; }
+.textBox{margin-bottom: 68px;}
+.Line1{width: 442px; height: 0px; border: 1px #2D3648 solid}
+.inputText{
+    width: 405px; color: #2D3648; font-size: 18px; font-weight: 300; word-wrap: break-word; 
+    background-color: #8FC3F2; border: 0; font-family: 'Pretendard-Regular'; height: 32px;}
+
+/*어드민 페이지 css*/
+.adminDiv{width: 585px; height: 800px; background: #5D5FEF}
+.adminText{
+    width: 405px; color: #2D3648; font-size: 18px; font-weight: 300; word-wrap: break-word; 
+    background-color: #5D5FEF; border: 0; font-family: 'Pretendard-Regular'; height: 32px;}
+
+
+
+
+/*placefolder 색 변경*/
+input::placeholder{
+    color: #111111;
+}
+
+.loginImg{margin-left: 206px; margin-top: 50px;}
+
+/*하단 링크*/
+.submitBox{text-align: center;}
+.LoginButton{
+    width: 442px; height: 57px; color: #111111; font-size: 18px; font-weight: 400; font-family: 'Pretendard-Regular'; 
+    word-wrap: break-word; background-color: #F3F4F3; display: inline-block; border-radius: 8px; margin-bottom: 23px; 
+    box-shadow: 1px 8px 10px 0 rgba(0, 0, 0, 0.2); line-height: 57px; border: 0; }
+
+.ForgotButton{
+    width: 442px; height: 57px; color: #111111; font-size: 18px; font-weight: 400; font-family: 'Pretendard-Regular';
+    word-wrap: break-word; background-color: #F3F4F3; display: inline-block; border-radius: 8px; 
+    box-shadow: 1px 8px 5px 0 rgba(0, 0, 0, 0.2); line-height: 57px;}
+
+
+
+/*회원가입 파트*/
+.joinFormTop{width: 442px; margin: auto; margin-top: 53px; margin-bottom: 44px; }
+.inputTextButton{
+    width: 250px; color: #2D3648; font-size: 18px; font-weight: 300; word-wrap: break-word; 
+    background-color: #8FC3F2; border: 0; font-family: 'Pretendard-Regular'; height: 32px;}
+.Line2{width: 290px; height: 0px; border: 1px #2D3648 solid}
+.joinButton{
+    color: #111111; font-family: 'Pretendard-Regular'; font-size: 18px; width: 140px; height: 40px; 
+    border: 0; border-radius: 8px; box-shadow: 1px 4px 5px 0 rgba(0, 0, 0, 0.2); line-height: 40px;
+    margin-left: 10px; background-color: #F3F4F3;}
+.iconImg{width: 30px;}

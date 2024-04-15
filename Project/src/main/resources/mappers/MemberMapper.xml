@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ezen.ezencompany.mapper.memberMapper">
+	
+	<select id="checkID" parameterType="String" resultType="int">
+		SELECT count(mid) FROM member where mid = #{text};
+	</select>
+	
+	<select id="requestMno" parameterType="String" resultType="int">
+		SELECT mno FROM joinmail WHERE shortUrl = #{url};
+	</select>
+	
+	<update id="joinOk" parameterType="MemberVO">
+		UPDATE member SET mid = #{mid}, mpassword = #{mpassword} WHERE mno = #{mno}; 
+	</update>
+
+	<select id="getEmail" parameterType="String" resultType="String" >
+		SELECT email from member WHERE mid = #{mid} 
+	</select>
+	
+	<select id="getEmail2" parameterType="int" resultType="String" >
+		SELECT email from member WHERE mno = #{mno} 
+	</select>
+	
+	<select id="selectNum" parameterType="String" resultType="int" >
+		SELECT count(cert) from joincert WHERE email = #{email} 
+	</select>
+	
+	<insert id="insertNum" parameterType="java.util.Map">
+		INSERT INTO joincert (email, cert) VALUES (#{email}, #{num});
+	</insert>
+	
+	<update id="updateNum" parameterType="java.util.Map">
+		UPDATE joincert SET cert = #{num} WHERE email = #{email};
+	</update>
+	
+	<select id="checkCert" parameterType="java.util.Map" resultType="int" >
+		SELECT count(cert) from joincert WHERE email = #{email} and cert = #{certNum}; 
+	</select>
+	
+	<select id="employeeList" parameterType="MemberVO" resultType="MemberVO" >
+		SELECT mid, mname, email, authority, substr(joindate, '1', '10' ) as joindate, enabled from member; 
+	</select>
+	
+	<select id="getMember" parameterType="String" resultType="MemberVO" >
+		SELECT mid, mname, email, authority, substr(joindate, '1', '10' ) as joindate, 
+		enabled, mphone from member WHERE email = #{email}; 
+	</select>
+	
+	<select id="getImg" parameterType="int" resultType="String" >
+		SELECT mfrealname from memberattach WHERE mno = #{mno}; 
+	</select>
+	
+	<select id="getOption" resultType="AttributeVO" >
+		SELECT aidx, cidx FROM employeeoption WHERE mno = #{mno};
+	</select>
+	
+	<select id="getEmailId" parameterType="String" resultType="String" >
+		SELECT email FROM member WHERE mid = #{mid};
+	</select>
+	
+	<update id="changePwOk" parameterType="java.util.Map">
+		UPDATE member SET mpassword = #{rePassword} WHERE mno = #{mno};
+	</update>
+	
+	<select id="getMemberByID" parameterType="int" resultType="MemberVO" >
+		SELECT mno, mid, mname, email, authority, substr(joindate, '1', '10' ) as joindate, 
+		enabled, mphone from member WHERE mno = #{mno}; 
+	</select>
+	
+	<select id="getId" parameterType="int" resultType="String" >
+		SELECT mid FROM member WHERE mno = #{mno};
+	</select>
+	
+	<select id="checkEm" parameterType="String" resultType="int" >
+		SELECT count(email) from joincert WHERE email = #{email}
+	</select>
+	
+</mapper>
+
+
+

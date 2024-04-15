@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+ <!-- Vendor CSS Files -->
+ <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+ <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+ <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+ <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+ <link href="../assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="../assets/css/style.css" rel="stylesheet">
+  <link href="../assets/css/ezReply.css" rel="stylesheet">
+  <link href="../assets/css/chatting.css" rel="stylesheet">
+
+  <!-- Predefined Script -->
+  <script src="https://cdn.tiny.cloud/1/3bif3ntggq2j5i7kj5tgxwt4wodd6se5f35dq4qu2s1aj007/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+  <script type="text/javascript" src="../assets/js/jquery-3.7.1.min.js"></script>
+
+</head>
+<body>
+    
+    <!-- ======= Header - Board ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="home.html" class="logo d-flex align-items-center">
+        <i class="bx bx-world"></i> <!-- boxicons-->
+        <span class="d-none d-lg-block">EzenCompany</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <!-- 관리자가 아니라면 보이지 않음.-->
+        <li class="nav-item">
+            <a class="nav-link nav-icon" href="../admin/home.html">
+              <i class="bi bi-key"></i>
+            </a>
+        </li><!-- End Admin Icon-->
+
+        <li class="nav-item dropdown">
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-bell"></i>
+            <span class="badge bg-primary badge-number">3</span>
+          </a><!-- End Notification Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+            <li class="dropdown-header" style="width: 200px;">
+              알림
+            </li>
+
+            <li><hr class="dropdown-divider"></li>
+
+            <li class="notification-item">
+              <i class="bi bi-exclamation-circle text-warning"></i>
+              <div>
+                <p><a href='#'>이길동</a>님이 블로그에 댓글을 남기셧습니다.</p>
+              </div>
+            </li>
+
+            <li><hr class="dropdown-divider"></li>
+
+            <li class="notification-item">
+              <i class="bi bi-exclamation-circle text-warning"></i>
+              <div>
+                <p><a href='#'>박길동</a>님이 게시글에 댓글을 남기셧습니다.</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-exclamation-circle text-warning"></i>
+              <div>
+                <p><a href='#'>박길동</a>님이 회원님을 언급하셨습니다.</p>
+              </div>
+            </li>
+
+          </ul><!-- End Notification Dropdown Items -->
+        </li><!-- End Notification Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="modal" data-bs-target="#chattingModal">
+            <i class="bi bi-chat-left-text"></i>
+            <span class="badge bg-success badge-number">3</span>
+          </a>
+        </li><!-- End Messages Icon -->
+        
+        <li class="nav-item">
+            <a class="nav-link nav-icon search-bar-toggle" href="../board/home.html">
+              <i class="bi bi-grid"></i>
+            </a>
+        </li><!-- End Board Icon-->
+
+        <li class="nav-item">
+            <a class="nav-link nav-icon search-bar-toggle" href="../blog/home.html">
+              <i class="bi bi-house-door"></i>
+            </a>
+        </li><!-- End Home Icon-->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar - Board======= -->
+    <aside id="sidebar" class="sidebar">
+      <div class="board_tree_frame mt-5 ms-4 w-75 rounded overflow-y-auto">
+        <div class="list-group">
+          <a href="list.html" class="list-group-item list-group-item-action active" aria-current="true">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 1</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 2</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 3</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 4</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 5</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 6</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <i class="bi bi-file-text"></i>
+            <span>게시판 7</span>
+          </a>
+          
+        </div>
+      </div>
+  
+    </aside><!-- End Sidebar-->
+
+  <main id="main" class="main">
+    <div class="pagetitle container-md mb-3">
+      <h1>게시판 1</h1>
+    </div><!-- End Page Title -->
+
+    <section class="section container-md">
+      <div class="blog_frame">
+          <div class="blog_title">
+                <div class="d-flex justify-content-center mb-3" >
+                  <h2 class="mt-3">게시판 샘플</h2>
+                </div>
+                <div class="d-flex justify-content-start ms-5">
+                  <img width="25" height="25" src="../assets/icon/user.png" alt="user_profile">
+                  <span class="ms-1">홍길동</span>
+                  <span class="ms-2">2024.03.29</span>
+                </div>      
+          </div>
+
+          <div class="blog_top_sep">
+            <hr class="mt-0 mb-0 mx-5 w-auto ">
+            <div class="d-flex justify-content-end">
+              <div class="dropdown me-5">
+                  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    첨부 파일
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">첨부파일1.pdf</a></li>
+                    <li><a class="dropdown-item" href="#">첨부파일2.png</a></li>
+                    <li><a class="dropdown-item" href="#">첨부파일3.pptx</a></li>
+                  </ul>
+                </div>
+            </div>
+          </div>
+
+          <div class="blog_content mt-2 mx-5 w-auto">
+            <p>감사원의 조직·직무범위·감사위원의 자격·감사대상공무원의 범위 기타 필요한 사항은 법률로 정한다. 누구든지 체포 또는 구속을 당한 때에는 즉시 변호인의 조력을 받을 권리를 가진다. 다만, 형사피고인이 스스로 변호인을 구할 수 없을 때에는 법률이 정하는 바에 의하여 국가가 변호인을 붙인다. 국가의 세입·세출의 결산, 국가 및 법률이 정한 단체의 회계검사와 행정기관 및 공무원의 직무에 관한 감찰을 하기 위하여 대통령 소속하에 감사원을 둔다. 국무총리는 국회의 동의를 얻어 대통령이 임명한다. 사면·감형 및 복권에 관한 사항은 법률로 정한다. 재의의 요구가 있을 때에는 국회는 재의에 붙이고, 재적의원과반수의 출석과 출석의원 3분의 2 이상의 찬성으로 전과 같은 의결을 하면 그 법률안은 법률로서 확정된다.</p>
+            <p>중앙선거관리위원회는 법령의 범위안에서 선거관리·국민투표관리 또는 정당사무에 관한 규칙을 제정할 수 있으며, 법률에 저촉되지 아니하는 범위안에서 내부규율에 관한 규칙을 제정할 수 있다. 비상계엄이 선포된 때에는 법률이 정하는 바에 의하여 영장제도, 언론·출판·집회·결사의 자유, 정부나 법원의 권한에 관하여 특별한 조치를 할 수 있다. 국가안전보장회의의 조직·직무범위 기타 필요한 사항은 법률로 정한다. 국회의원은 그 지위를 남용하여 국가·공공단체 또는 기업체와의 계약이나 그 처분에 의하여 재산상의 권리·이익 또는 직위를 취득하거나 타인을 위하여 그 취득을 알선할 수 없다.</p>
+            <p>외국인은 국제법과 조약이 정하는 바에 의하여 그 지위가 보장된다. 국무위원은 국정에 관하여 대통령을 보좌하며, 국무회의의 구성원으로서 국정을 심의한다. 선거에 있어서 최고득표자가 2인 이상인 때에는 국회의 재적의원 과반수가 출석한 공개회의에서 다수표를 얻은 자를 당선자로 한다. 누구든지 체포 또는 구속의 이유와 변호인의 조력을 받을 권리가 있음을 고지받지 아니하고는 체포 또는 구속을 당하지 아니한다. 체포 또는 구속을 당한 자의 가족등 법률이 정하는 자에게는 그 이유와 일시·장소가 지체없이 통지되어야 한다. 대통령은 헌법과 법률이 정하는 바에 의하여 공무원을 임면한다. 통신·방송의 시설기준과 신문의 기능을 보장하기 위하여 필요한 사항은 법률로 정한다.</p>
+            <p>헌법개정안은 국회가 의결한 후 30일 이내에 국민투표에 붙여 국회의원선거권자 과반수의 투표와 투표자 과반수의 찬성을 얻어야 한다. 국가는 모성의 보호를 위하여 노력하여야 한다. 대통령후보자가 1인일 때에는 그 득표수가 선거권자 총수의 3분의 1 이상이 아니면 대통령으로 당선될 수 없다. 국무회의는 대통령·국무총리와 15인 이상 30인 이하의 국무위원으로 구성한다. 환경권의 내용과 행사에 관하여는 법률로 정한다. 공무원의 직무상 불법행위로 손해를 받은 국민은 법률이 정하는 바에 의하여 국가 또는 공공단체에 정당한 배상을 청구할 수 있다. 이 경우 공무원 자신의 책임은 면제되지 아니한다.</p>
+            <p>국민의 자유와 권리는 헌법에 열거되지 아니한 이유로 경시되지 아니한다. 대통령은 법률안의 일부에 대하여 또는 법률안을 수정하여 재의를 요구할 수 없다. 공무원의 신분과 정치적 중립성은 법률이 정하는 바에 의하여 보장된다. 국회는 상호원조 또는 안전보장에 관한 조약, 중요한 국제조직에 관한 조약, 우호통상항해조약, 주권의 제약에 관한 조약, 강화조약, 국가나 국민에게 중대한 재정적 부담을 지우는 조약 또는 입법사항에 관한 조약의 체결·비준에 대한 동의권을 가진다. 대통령은 제1항과 제2항의 처분 또는 명령을 한 때에는 지체없이 국회에 보고하여 그 승인을 얻어야 한다. 국무총리·국무위원 또는 정부위원은 국회나 그 위원회에 출석하여 국정처리상황을 보고하거나 의견을 진술하고 질문에 응답할 수 있다.</p>
+            <p>사법권은 법관으로 구성된 법원에 속한다. 대법원과 각급법원의 조직은 법률로 정한다. 대통령은 필요하다고 인정할 때에는 외교·국방·통일 기타 국가안위에 관한 중요정책을 국민투표에 붙일 수 있다. 근로자는 근로조건의 향상을 위하여 자주적인 단결권·단체교섭권 및 단체행동권을 가진다. 국가는 건전한 소비행위를 계도하고 생산품의 품질향상을 촉구하기 위한 소비자보호운동을 법률이 정하는 바에 의하여 보장한다. 정당은 그 목적·조직과 활동이 민주적이어야 하며, 국민의 정치적 의사형성에 참여하는데 필요한 조직을 가져야 한다. 헌법재판소의 조직과 운영 기타 필요한 사항은 법률로 정한다.</p>
+            <p>군인은 현역을 면한 후가 아니면 국무총리로 임명될 수 없다. 대통령은 법률이 정하는 바에 의하여 사면·감형 또는 복권을 명할 수 있다. 국가는 농수산물의 수급균형과 유통구조의 개선에 노력하여 가격안정을 도모함으로써 농·어민의 이익을 보호한다. 국회는 법률에 저촉되지 아니하는 범위안에서 의사와 내부규율에 관한 규칙을 제정할 수 있다. 국가는 여자의 복지와 권익의 향상을 위하여 노력하여야 한다. 대통령의 국법상 행위는 문서로써 하며, 이 문서에는 국무총리와 관계 국무위원이 부서한다. 군사에 관한 것도 또한 같다. 대통령은 조국의 평화적 통일을 위한 성실한 의무를 진다. 공무원은 국민전체에 대한 봉사자이며, 국민에 대하여 책임을 진다.</p>
+            <p>모든 국민은 인간다운 생활을 할 권리를 가진다. 대통령은 국무회의의 의장이 되고, 국무총리는 부의장이 된다. 국회의원과 정부는 법률안을 제출할 수 있다. 대법원에 대법관을 둔다. 다만, 법률이 정하는 바에 의하여 대법관이 아닌 법관을 둘 수 있다. 중앙선거관리위원회는 대통령이 임명하는 3인, 국회에서 선출하는 3인과 대법원장이 지명하는 3인의 위원으로 구성한다. 위원장은 위원중에서 호선한다. 법률이 정하는 주요방위산업체에 종사하는 근로자의 단체행동권은 법률이 정하는 바에 의하여 이를 제한하거나 인정하지 아니할 수 있다. 대통령은 제3항과 제4항의 사유를 지체없이 공포하여야 한다.</p>
+            <p>국회는 의장 1인과 부의장 2인을 선출한다. 재산권의 행사는 공공복리에 적합하도록 하여야 한다. 모든 국민은 근로의 의무를 진다. 국가는 근로의 의무의 내용과 조건을 민주주의원칙에 따라 법률로 정한다. 국회는 국민의 보통·평등·직접·비밀선거에 의하여 선출된 국회의원으로 구성한다. 선거에 관한 경비는 법률이 정하는 경우를 제외하고는 정당 또는 후보자에게 부담시킬 수 없다. 대통령은 법률에서 구체적으로 범위를 정하여 위임받은 사항과 법률을 집행하기 위하여 필요한 사항에 관하여 대통령령을 발할 수 있다. 농업생산성의 제고와 농지의 합리적인 이용을 위하거나 불가피한 사정으로 발생하는 농지의 임대차와 위탁경영은 법률이 정하는 바에 의하여 인정된다.</p>
+            <p>대통령이 임시회의 집회를 요구할 때에는 기간과 집회요구의 이유를 명시하여야 한다. 대법원장은 국회의 동의를 얻어 대통령이 임명한다. 대통령은 조약을 체결·비준하고, 외교사절을 신임·접수 또는 파견하며, 선전포고와 강화를 한다. 국토와 자원은 국가의 보호를 받으며, 국가는 그 균형있는 개발과 이용을 위하여 필요한 계획을 수립한다. 헌법재판소 재판관은 정당에 가입하거나 정치에 관여할 수 없다. 각급 선거관리위원회는 선거인명부의 작성등 선거사무와 국민투표사무에 관하여 관계 행정기관에 필요한 지시를 할 수 있다. 이 헌법시행 당시에 이 헌법에 의하여 새로 설치될 기관의 권한에 속하는 직무를 행하고 있는 기관은 이 헌법에 의하여 새로운 기관이 설치될 때까지 존속하며 그 직무를 행한다.</p>
+          </div>
+
+          <!--분할바-->
+          <div class="blog_bottom_sep">
+            <hr class="mt-2 mx-1 w-auto ">
+          </div>
+
+          <div class="blog_reply reply d-flex flex-column">
+              <div class="reply_top">
+                <div class="ms-3">
+                  전체 댓글 <span>4개</span>
+                </div>
+                <hr class="ms-3 me-1 w-auto border border-secondary border-2 opacity-30">
+              </div>
+              <div class="reply_body ms-3 me-3">
+                <ul class="ezReply" id="blog_reply">
+                  <li>
+                    <div class="reply_node pb-1 d-flex">
+                       <div class="col-1 pt-2">
+                          <div class="reply_author">
+                            <p class="text-center m-0 t-0">고길동 :</p>
+                          </div>
+                          <div class="reply_author_me">
+                            <!--<p class="text-center m-0 t-0">(작성자)</p>-->
+                          </div>
+                       </div>
+                       <div class="col pt-2">
+                          <div class="reply_content">
+                            저번 회의에서 저런방식 말고 다른방식으로 하자고 부장님께서 말씀하셨습니다. 그래서 아마 3번줄부터 25번줄은 제거하는게 좋아보여요. <br>
+                            <br>
+                            그리고 Post.VO 에서 8번줄에 있는 pnum 필드는 왜 만든건가요? 어디서 사용하는지 잘 모르겠어요 <br>
+                            점심시간이 되면 제가 찾아갈테니 알려주실 수 있나요? <br>
+                            <br>
+                            @홍길동
+                          </div>
+                          <div><span class="fs-6 text-body-tertiary">2024.03.19</span></div>
+                          <div class="d-flex">
+                            <div class="col">
+                                <!-- 답장 버튼-->
+                                <button class="btn btn-secondary btn-sm ms-1">답글</button>
+                            </div>
+                            <div class="col d-flex justify-content-end ">
+                              <!-- 삭제/수정 버튼-->
+                              <!--<button class="btn btn-warning btn-sm me-2">수정</button>
+                              <button class="btn btn-danger btn-sm me-2">삭제</button>-->
+                            </div>
+                            
+                          </div>
+                       </div>
+                    </div>
+                    <ul>
+                        <li>
+                          <div class="reply_node pb-1 d-flex">
+                            <div class="col-1 pt-2">
+                               <div class="reply_author">
+                                 <p class="text-center m-0 t-0">홍길동 :</p>
+                               </div>
+                               <div class="reply_author_me">
+                                 <p class="text-center m-0 t-0 text-info-emphasis">(작성자)</p>
+                               </div>
+                            </div>
+                            <div class="col pt-2">
+                               <div class="reply_content">
+                                 네 알겠습니다.
+                               </div>
+                               <div><span class="fs-6 text-body-tertiary">2024.03.19</span></div>
+                               <div class="d-flex">
+                                 <div class="col">
+                                     <!-- 답장 버튼-->
+                                     <button class="btn btn-secondary btn-sm ms-1">답글</button>
+                                 </div>
+                                 <div class="col d-flex justify-content-end ">
+                                   <!-- 삭제/수정 버튼-->
+                                   <button class="btn btn-warning btn-sm me-2">수정</button>
+                                   <button class="btn btn-danger btn-sm me-2">삭제</button>
+                                 </div>
+                                 
+                               </div>
+                            </div>
+                         </div>
+                          <ul>
+                            <li>
+                              <div class="reply_node pb-1 d-flex">
+                                <div class="col-1 pt-2">
+                                   <div class="reply_author">
+                                     <p class="text-center m-0 t-0">고길동 :</p>
+                                   </div>
+                                   <div class="reply_author_me">
+                                     <!--<p class="text-center m-0 t-0 text-info-emphasis">(작성자)</p>-->
+                                   </div>
+                                </div>
+                                <div class="col pt-2">
+                                   <div class="reply_content">
+                                     지금 갑니다.
+                                   </div>
+                                   <div><span class="fs-6 text-body-tertiary">2024.03.19</span></div>
+                                   <div class="d-flex">
+                                     <div class="col">
+                                         <!-- 답장 버튼-->
+                                         <button class="btn btn-secondary btn-sm ms-1">답글</button>
+                                     </div>
+                                     <div class="col d-flex justify-content-end ">
+                                       <!-- 삭제/수정 버튼-->
+                                       <!--<button class="btn btn-warning btn-sm me-2">수정</button>
+                                       <button class="btn btn-danger btn-sm me-2">삭제</button>-->
+                                     </div>
+                                     
+                                   </div>
+                                </div>
+                             </div>
+                              <ul>
+                              </ul>
+                          </li>
+                        </ul>
+                        </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="reply_node pb-1 d-flex">
+                      <div class="col-1 pt-2">
+                         <div class="reply_author">
+                           <p class="text-center m-0 t-0">김길동 :</p>
+                         </div>
+                         <div class="reply_author_me">
+                           <!--<p class="text-center m-0 t-0">(작성자)</p>-->
+                         </div>
+                      </div>
+                      <div class="col pt-2">
+                         <div class="reply_content">
+                          고생하셨습니다.
+                         </div>
+                         <div><span class="fs-6 text-body-tertiary">2024.03.19</span></div>
+                         <div class="d-flex">
+                           <div class="col">
+                               <!-- 답장 버튼-->
+                               <button class="btn btn-secondary btn-sm ms-1">답글</button>
+                           </div>
+                           <div class="col d-flex justify-content-end ">
+                             <!-- 삭제/수정 버튼-->
+                             <!--<button class="btn btn-warning btn-sm me-2">수정</button>
+                             <button class="btn btn-danger btn-sm me-2">삭제</button>-->
+                           </div>
+                           
+                         </div>
+                      </div>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="reply_node pb-1 d-flex">
+                          <div class="col-1 pt-2">
+                             <div class="reply_author">
+                               <p class="text-center m-0 t-0">홍길동 :</p>
+                             </div>
+                             <div class="reply_author_me">
+                               <p class="text-center m-0 t-0">(작성자)</p>
+                             </div>
+                          </div>
+                          <div class="col pt-2">
+                             <div class="reply_content">
+                              감사합니다.
+                             </div>
+                             <div><span class="fs-6 text-body-tertiary">2024.03.19</span></div>
+                             <div class="d-flex">
+                               <div class="col">
+                                   <!-- 답장 버튼-->
+                                   <button class="btn btn-secondary btn-sm ms-1">답글</button>
+                               </div>
+                               <div class="col d-flex justify-content-end ">
+                                 <!-- 삭제/수정 버튼-->
+                                 <button class="btn btn-warning btn-sm me-2">수정</button>
+                                 <button class="btn btn-danger btn-sm me-2">삭제</button>
+                               </div> 
+                             </div>
+                          </div>
+                        </div>
+                        <ul>
+                        </ul>
+                      </li>
+                      <li>
+                        <div class="reply_node pb-1 d-flex">
+                          <div class="col-1 pt-2">
+                             <div class="reply_author">
+                               <p class="text-center m-0 t-0">한만석 :</p>
+                             </div>
+                             <div class="reply_author_me">
+                               <!--<p class="text-center m-0 t-0">(작성자)</p>-->
+                             </div>
+                          </div>
+                          <div class="col pt-2">
+                             <div class="reply_content">
+                              고생하셨습니다.
+                             </div>
+                             <div><span class="fs-6 text-body-tertiary">2024.03.19</span></div>
+                             <div class="d-flex">
+                               <div class="col">
+                                   <!-- 답장 버튼-->
+                                   <button class="btn btn-secondary btn-sm ms-1">답글</button>
+                               </div>
+                               <div class="col d-flex justify-content-end ">
+                                 <!-- 삭제/수정 버튼-->
+                                 <!--<button class="btn btn-warning btn-sm me-2">수정</button>
+                                 <button class="btn btn-danger btn-sm me-2">삭제</button>-->
+                               </div> 
+                             </div>
+                          </div>
+                        </div>
+                        <ul>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div class="reply_input ms-3">
+                <div class="form-floating">
+                  <input type="text" class="form-control" placeholder="Leave a comment here" id="replyinput" style="width:98%;">
+                  <label for="replyinput">댓글을 입력하세요</label>
+                </div>
+              </div>
+
+          </div>
+      </div>
+      <div class="blog_buttons mt-3 d-flex justify-content-end">
+          <a class="btn btn-primary me-2" role="button" href="modify.html">수정</a>
+          <button class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#boardRemoveModal">삭제</button>
+          <a class="btn btn-secondary" role="button" href="list.html">목록</a>
+      </div>
+      
+    </section>
+
+    <section class="popup">
+      <!-- 게시글 삭제 팝업-->
+      <div class="modal fade" id="boardRemoveModal" tabindex="-1" data-bs-backdrop="false">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title"></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              게시글을 삭제하시겠습니까?
+            </div>
+            <div class="modal-footer d-flex align-items-center justify-content-center">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">삭제</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+            </div>
+          </div>
+        </div>
+      </div><!-- End Disabled Backdrop Modal-->
+
+     
+    </section>
+    <section class="chatting_popup">
+      <!-- 채팅 팝업(사람 목록) -->
+      <div class="modal fade" id="chattingModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">대화 상대</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">  
+              <div class="container-fluid chatting_member">
+                <div class="accordion"> 
+                  <div class="accordion-item">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                       프로그래밍 팀
+                      </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                      <div class="accordion-body">
+                        <!-- chatting_user div가 한묶음-->
+                        <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="1">
+                          <div class="d-flex">
+                            <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+                            <div class="d-flex flex-column ms-2">      
+                                <span class="fw-bold user_name">홍길동</span>
+                                <span class="user_position">사원</span>
+                            </div>
+                          </div>
+                        </div>
+        
+                        <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="2">
+                          <div class="d-flex">
+                            <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+                            <div class="d-flex flex-column ms-2">      
+                                <span class="fw-bold user_name">김길동</span>
+                                <span class="user_position">과장</span>
+                            </div>
+                          </div>
+                        </div>
+        
+                        <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="3">
+                          <div class="d-flex">
+                            <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+                            <div class="d-flex flex-column ms-2">      
+                                <span class="fw-bold user_name">고길동</span>
+                                <span class="user_position">부장</span>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                        디자인 팀
+                      </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+                      <div class="accordion-body">
+                        <!-- chatting_user div가 한묶음-->
+                        <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="1">
+                          <div class="d-flex">
+                            <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+                            <div class="d-flex flex-column ms-2">      
+                                <span class="fw-bold user_name">홍길동</span>
+                                <span class="user_position">사원</span>
+                            </div>
+                          </div>
+                        </div>
+        
+                        <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="2">
+                          <div class="d-flex">
+                            <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+                            <div class="d-flex flex-column ms-2">      
+                                <span class="fw-bold user_name">김길동</span>
+                                <span class="user_position">과장</span>
+                            </div>
+                          </div>
+                        </div>
+        
+                        <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="3">
+                          <div class="d-flex">
+                            <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+                            <div class="d-flex flex-column ms-2">      
+                                <span class="fw-bold user_name">고길동</span>
+                                <span class="user_position">부장</span>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                        기획 팀
+                      </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+                      <div class="accordion-body">
+                          <!-- chatting_user div가 한묶음-->
+                          <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="1">
+                            <div class="d-flex">
+                              <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+                              <div class="d-flex flex-column ms-2">      
+                                  <span class="fw-bold user_name">홍길동</span>
+                                  <span class="user_position">사원</span>
+                              </div>
+                            </div>
+                          </div>
+          
+                          <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="2">
+                            <div class="d-flex">
+                              <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+                              <div class="d-flex flex-column ms-2">      
+                                  <span class="fw-bold user_name">김길동</span>
+                                  <span class="user_position">과장</span>
+                              </div>
+                            </div>
+                          </div>
+          
+                          <div class="chatting_user d-flex m-2 t-1" data-bs-target="#chattingRoomModal" data-bs-toggle="modal" data-bs-mno="3">
+                            <div class="d-flex">
+                              <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+                              <div class="d-flex flex-column ms-2">      
+                                  <span class="fw-bold user_name">고길동</span>
+                                  <span class="user_position">부장</span>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 채팅 룸 팝업 -->
+      <div class="modal fade" id="chattingRoomModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header d-flex flex-column">
+              <div class="align-self-start">
+                <a href="#" class="link-secondary" data-bs-target="#chattingModal" data-bs-toggle="modal">&lt; 뒤로가기</a>  
+                
+              </div>
+              <div class="align-self-start d-flex mt-2">
+                <img src="../assets/img/profile-img.jpg" width="50" height="50" alt="Profile" class="rounded-circle">
+                <div class="d-flex flex-column ms-2">      
+                  <span class="fw-bold user_name">주현종</span>
+                  <span class="user_position">사원</span>
+                </div>
+              </div>
+            </div>
+            <div class="modal-body">  
+              <div class="container-fluid chatting_room">
+                <div class="chatting_other_msg">
+                  <div class="chatting_profile">
+                    <img src="../assets/img/profile-img.jpg" width="30" height="30" alt="Profile" class="rounded-circle">
+                  </div>
+                  <div class="msg">
+                    안녕하세요 반갑습니다 
+                    저는 새로 입사한 주현종입니다
+                    잘 부탁드려요
+                  </div>
+                </div>
+                <div class="chatting_my_msg">
+                  <div class="msg">
+                    네 안녕하세요 모르는게 있다면 
+                    편하게 물어보세요
+                  </div>
+                  <div class="chatting_profile">
+                    <img src="../assets/img/messages-2.jpg" width="30" height="30" alt="Profile" class="rounded-circle">
+                  </div>
+                </div>
+                <div class="chatting_other_msg">
+                  <div class="chatting_profile">
+                    <img src="../assets/img/profile-img.jpg" width="30" height="30" alt="Profile" class="rounded-circle">
+                  </div>
+                  <div class="msg">
+                    명령·규칙 또는 처분이 헌법이나 법률에 위반되는 여부가 재판의 전제가 된 경우에는 대법원은 이를 최종적으로 심사할 권한을 가진다.
+                  </div>
+                </div>
+                <div class="chatting_my_msg">
+                  <div class="msg">
+                    모든 국민은 근로의 의무를 진다. 국가는 근로의 의무의 내용과 조건을 민주주의원칙에 따라 법률로 정한다.
+                  </div>
+                  <div class="chatting_profile">
+                    <img src="../assets/img/messages-2.jpg" width="30" height="30" alt="Profile" class="rounded-circle">
+                  </div>
+                </div>
+                
+
+              </div>
+            </div>
+            <div class="modal-footer d-flex align-items-center justify-content-center">
+              
+                <input type="text" class="form-control" placeholder="메세지 입력.." id="messageinput">
+                
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>EzenCompany</span></strong>. All Rights Reserved
+    </div>
+    <div class="credits">
+      <!-- All the links in the footer should remain intact. -->
+      <!-- You can delete the links only if you purchased the pro version. -->
+      <!-- Licensing information: https://bootstrapmade.com/license/ -->
+      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+      <!-- Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> -->
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+
+    <!-- Vendor JS Files -->
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/simple-datatables/simple-datatables.js"></script>
+
+
+    <!-- Template Main JS File -->
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/board/write.js"></script>
+
+    <!-- Last JS-->
+    <script src="../assets/js/chatting.js"></script>
+    <script src="../assets/js/tooltips.js"></script>
+
+</body>
+</html>
