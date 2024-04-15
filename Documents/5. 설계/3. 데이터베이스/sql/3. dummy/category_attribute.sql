@@ -20,7 +20,7 @@ INSERT INTO attribute (cidx, otkey, value) VALUES
 (2, 'Staff'                  , '사원'),
 (2, 'Associate'              , '주임'),
 (2, 'Associate Manager'      , '대리'),
-(2, 'General Manager'        , '과장'),
+(2, 'Senior Manager'        , '과장'),
 (2, 'Deputy General Manager' , '차장'),
 (2, 'General Manager'        , '부장'),
 (2, 'Director'               , '이사'),
