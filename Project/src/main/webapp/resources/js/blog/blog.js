@@ -59,7 +59,10 @@ $(document).ready(function(){
 						isMaster : vo.master,
 						isDeleted : vo.delyn =='n' ? false : true 
 					};
-		} 
+		} ,
+		noti : function (mno){
+			alert(mno);
+		}
 	};
 	
 	ezReply_init(replyConfig, true);

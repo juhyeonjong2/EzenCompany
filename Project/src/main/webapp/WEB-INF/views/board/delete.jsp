@@ -9,5 +9,6 @@
 <body>
 	<form action="delete.do" method="post">
 	<input type="text" name="bno" value="${vo.bno }"> 
+	</form>
 </body>
 </html>

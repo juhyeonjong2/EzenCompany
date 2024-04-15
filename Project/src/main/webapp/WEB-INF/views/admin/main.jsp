@@ -18,10 +18,16 @@
  <link href="<%=request.getContextPath()%>/resources/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
  <link href="<%=request.getContextPath()%>/resources/vendor/remixicon/remixicon.css" rel="stylesheet">
  <link href="<%=request.getContextPath()%>/resources/vendor/simple-datatables/style.css" rel="stylesheet">
+ <link href="<%=request.getContextPath()%>/resources/css/chatting.css" rel="stylesheet">
+ <link href="<%=request.getContextPath()%>/resources/css/noti.css" rel="stylesheet">
  
   <!-- Template Main CSS File -->
   <link href="<%=request.getContextPath()%>/resources/css/style_admin.css" rel="stylesheet">
   <script src="<%=request.getContextPath()%>/resources/js/jquery-3.7.1.min.js"></script>
+  <!-- catting popup -->
+  <%@ include file="../include/socketHeader.jsp"%>
+  <%@ include file="../popup/chatting.jsp"%>
+  
   <script>
 	//썸네일 생성 함수
 	function thumbnail(event,obj){

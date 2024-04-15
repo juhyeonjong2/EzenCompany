@@ -21,6 +21,7 @@
 	<!-- Template Main CSS File -->
 	<link href="<%=request.getContextPath()%>/resources/css/style_admin.css" rel="stylesheet">
 	<link href="<%=request.getContextPath()%>/resources/css/chatting.css" rel="stylesheet">
+  	<link href="<%=request.getContextPath()%>/resources/css/noti.css" rel="stylesheet">
 
 	<!-- Predefined Script -->
 	<script src="<%=request.getContextPath()%>/resources/js/jquery-3.7.1.min.js"></script>
@@ -29,6 +30,9 @@
 <body>
 	<%@ include file="../include/adminHeader.jsp"%>
 	<%@ include file="../include/adminSidebar.jsp"%>
+	<!-- catting popup -->
+	<%@ include file="../include/socketHeader.jsp"%>
+	<%@ include file="../popup/chatting.jsp"%>
 	
 	<main id="main" class="main">
 

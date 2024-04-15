@@ -22,6 +22,8 @@
   <!-- Template Main CSS File -->
   <link href="<%=request.getContextPath()%>/resources/css/style.css" rel="stylesheet">
   <link href="<%=request.getContextPath()%>/resources/css/ezReply.css" rel="stylesheet">
+  <link href="<%=request.getContextPath()%>/resources/css/chatting.css" rel="stylesheet">
+  <link href="<%=request.getContextPath()%>/resources/css/noti.css" rel="stylesheet">
 
   <!-- Predefined Script -->
   <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery-3.7.1.min.js"></script>
@@ -33,6 +35,9 @@
 	<%@ include file="../include/boardHeader.jsp"%>
 	<!-- sidebar -->
 	<%@ include file="../include/boardSidebar.jsp"%>
+	<!-- catting popup -->
+	<%@ include file="../include/socketHeader.jsp"%>
+	<%@ include file="../popup/chatting.jsp"%>
  	
 
 
