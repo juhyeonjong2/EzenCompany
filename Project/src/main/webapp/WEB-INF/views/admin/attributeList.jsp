@@ -99,7 +99,6 @@
     <script src="<%=request.getContextPath()%>/resources/js/admin/attribute.js"></script>
 
 	<!-- Last JS-->
-	<script src="<%=request.getContextPath()%>/resources/js/chatting.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/js/tooltips.js"></script>
 	
 </body>

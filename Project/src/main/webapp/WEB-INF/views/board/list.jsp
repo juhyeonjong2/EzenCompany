@@ -47,7 +47,7 @@
         <div class="card">
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-center">
-                <h5 class="card-title"><b>게시판 1</b></h5>  <!-- 여기부분도 DB 받아야됨 -->
+                <h5 class="card-title"><b>${btname}</b></h5>  <!-- 여기부분도 DB 받아야됨 -->
                 <c:if test="${isWritable eq true}">
                 	
                 	<a class="btn btn-primary h-50" href="write.do?bindex=${param.bindex}" role="button">+ 글쓰기</a>

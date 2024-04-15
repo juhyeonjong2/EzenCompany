@@ -47,7 +47,7 @@
 
   <main id="main" class="main">
     <div class="pagetitle container-md mb-3">
-      <h1>게시판 1</h1>
+      <h1>게시글 쓰기</h1>
     </div><!-- End Page Title -->
 
     <section class="section container-md">

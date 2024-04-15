@@ -32,7 +32,7 @@ public class UserAuthenticationService implements UserDetailsService {
 			//System.out.println("user::"+user); 로그사용권장함
 			throw new UsernameNotFoundException(username);
 		}
-	System.out.println(user);
+	//System.out.println(user);
 		
 		List<GrantedAuthority> authority = new ArrayList<>();
 		authority.add(new SimpleGrantedAuthority(user.get("authority").toString()));

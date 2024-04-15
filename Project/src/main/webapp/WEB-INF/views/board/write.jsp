@@ -96,7 +96,6 @@
     <script src="<%=request.getContextPath()%>/resources/js/board/write.js"></script>
 
     <!-- Last JS-->
-    <script src="<%=request.getContextPath()%>/resources/js/chatting.js"></script>
     <script src="<%=request.getContextPath()%>/resources/js/tooltips.js"></script>
     
 
