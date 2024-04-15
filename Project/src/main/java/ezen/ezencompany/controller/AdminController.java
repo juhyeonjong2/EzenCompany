@@ -592,15 +592,28 @@ public class AdminController {
 		List<BoardReaderVO> list = new ArrayList<BoardReaderVO>();
 		for(BoardPermissionDTO p : permissions) 
 		{
-			for(AttributeVO attr : p.getAttributes()) 
-			{
-				BoardReaderVO vo = new BoardReaderVO();
-				vo.setAidx(attr.getAidx());
-				vo.setCidx(attr.getCidx());
-				vo.setBindex(bindex);
-				list.add(vo);
+			List<AttributeVO> attributes = p.getAttributes();
+			if(attributes == null || attributes.size() == 0) {
+				// category 확인 : 모두일수 있음
+				if(p.getCategory().getCidx() == 0) {
+					// 모두의 경우
+					BoardReaderVO vo = new BoardReaderVO();
+					vo.setAidx(0);
+					vo.setCidx(0);
+					vo.setBindex(bindex);
+					list.add(vo);
+				}
 			}
-			
+			else {
+				for(AttributeVO attr : attributes) 
+				{
+					BoardReaderVO vo = new BoardReaderVO();
+					vo.setAidx(attr.getAidx());
+					vo.setCidx(attr.getCidx());
+					vo.setBindex(bindex);
+					list.add(vo);
+				}
+			}
 		}
 		return list;
 	}
@@ -609,13 +622,27 @@ public class AdminController {
 		List<BoardWriterVO> list = new ArrayList<BoardWriterVO>();
 		for(BoardPermissionDTO p : permissions) 
 		{
-			for(AttributeVO attr : p.getAttributes()) 
-			{
-				BoardWriterVO vo = new BoardWriterVO();
-				vo.setAidx(attr.getAidx());
-				vo.setCidx(attr.getCidx());
-				vo.setBindex(bindex);
-				list.add(vo);
+			List<AttributeVO> attributes = p.getAttributes();
+			if(attributes == null || attributes.size() == 0) {
+				// category 확인 : 모두일수 있음
+				if(p.getCategory().getCidx() == 0) {
+					// 모두의 경우
+					BoardWriterVO vo = new BoardWriterVO();
+					vo.setAidx(0);
+					vo.setCidx(0);
+					vo.setBindex(bindex);
+					list.add(vo);
+				}
+			}
+			else {
+				for(AttributeVO attr : p.getAttributes()) 
+				{
+					BoardWriterVO vo = new BoardWriterVO();
+					vo.setAidx(attr.getAidx());
+					vo.setCidx(attr.getCidx());
+					vo.setBindex(bindex);
+					list.add(vo);
+				}
 			}
 			
 		}
@@ -625,7 +652,6 @@ public class AdminController {
 	@RequestMapping(value="/board/write", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String,Object> boardWrite(String name, String reader, String writer) throws JsonParseException, JsonMappingException, IOException {
-		
 		
 		// 1. 퍼미션 데이터들을 채운다. 
 		List<AttributeVO> attributeList = managementService.getAttributes();
@@ -644,13 +670,11 @@ public class AdminController {
 		int res = managementService.addBoardType(vo); // 완료후 키들어있음.
 		if(res > 0) {
 			int bindex = vo.getBindex();
-			
 			// 3. 읽기 권한을 설정한다.
 			List<BoardReaderVO> readers = toBoardReader(bindex, readPermissions);
 			if(readers.size() > 0 ) {
 				int readerRes = managementService.addBoardReaders(readers);
 			}
-			
 			// 4. 쓰기 권한을 설정한다.
 			List<BoardWriterVO> writers = toBoardWriter(bindex, writePermissions);
 			if(writers.size() > 0) {
@@ -661,8 +685,6 @@ public class AdminController {
 		// return
 		Map<String,Object> resMap = new HashMap<String,Object>();
 		resMap.put("result", "SUCCESS"); //  성공
-		
-		
 		return resMap;
 	}
 	
