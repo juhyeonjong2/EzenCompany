@@ -26,7 +26,7 @@
   <link href="<%=request.getContextPath()%>/resources/css/noti.css" rel="stylesheet">
 
   <!-- Predefined Script -->
-  <script src="https://cdn.tiny.cloud/1/3bif3ntggq2j5i7kj5tgxwt4wodd6se5f35dq4qu2s1aj007/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+  <script src="<%=request.getContextPath()%>/resources/vendor/tinymce/tinymce.min.js" ></script>
   <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery-3.7.1.min.js"></script>
 
 </head>
