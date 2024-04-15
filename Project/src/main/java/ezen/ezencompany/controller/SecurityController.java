@@ -226,7 +226,7 @@ public class SecurityController {
 		}
 
 		//메일 발송
-		String link = "http://"+ ip + ":8080/ezencompany/changePw/" + url;
+		String link = "http://54.180.98.138/changePw/" + url;
 		String setFrom = "vhahaha513@naver.com"; //2단계 인증 x, 메일 설정에서 POP/IMAP 사용 설정에서 POP/SMTP 사용함으로 설정o
 		String toMail = email;
 		String title = "[이젠컴퍼니]비밀번호 재설정 링크입니다."; 

@@ -11,28 +11,41 @@ function ezReply_onInput(event){
 }
 
 // default : Init 함수로 외부에서 지정 가능.
-let ezReplyConfig = {
-	create : "/blog/reply/write",
-	read :   "/blog/reply/list",
-	update : "/blog/reply/modify",
-	delete : "/blog/reply/remove",
-	writer : "(블로그 주인)",
-	parser : function (vo) {
-		// 데이터 만들기
-		let data = {
-			rno : vo.bgrno,
-			prno : vo.bgrpno,
-			author: vo.author,
-			content :vo.bgrcontent,
-			date : vo.bgrdate,
-			isEditable : vo.editable,
-			isMaster : vo.master,
-			isDeleted : vo.delyn =='n' ? false : true,
-		};
+let ezReplyConfig = 
+{
+		create : "/blog/reply/write",
+		read :   "/blog/reply/list",
+		update : "/blog/reply/modify",
+		delete : "/blog/reply/remove",
+		writer : "(블로그 주인)",
 		
-		return data;
-	} 
-}
+		parser : function (vo) 
+		{
+			// 데이터 만들기
+			return {
+						rno : vo.bgrno,
+						prno : vo.bgrpno,
+						author: vo.author,
+						content :vo.bgrcontent,
+						date : vo.bgrdate,
+						isEditable : vo.editable,
+						isMaster : vo.master,
+						isDeleted : vo.delyn =='n' ? false : true 
+					};
+		},
+		noti : function (mno, mid){
+		console.log(222);
+			$.ajax({
+	        	url: "/notification/blogNoti",
+	        	data: {targetMno : mno},
+	        	success:function(data){
+	        	console.log(111);
+	        		socket.send("블로그댓글,"+mid+",블로그댓글,"+data);
+	        	}
+			});
+	
+		}
+	};
 
 function ezReply_init(config, isRefresh){
 	ezReplyConfig = config;
@@ -65,7 +78,6 @@ function ezReply_request_list(){
 
 
 function ezReply_request(data, callback){
-	
 	$.ajax(
 	{
 		url: ezReplyConfig.create,
@@ -82,6 +94,8 @@ function ezReply_request(data, callback){
 					
 					let data = ezReplyConfig.parser(resData.data);
 					ezReply_drawReply(data);	
+					
+					ezReplyConfig.noti(resData.targetMno, resData.targetMid);
 				}
 			}
 			

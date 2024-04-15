@@ -30,7 +30,7 @@
 		$.ajax({
          	url: "<%=request.getContextPath()%>/notification/firstNoti",
          	success:function(list){	
-			        $("#replyBt").empty();
+         			$("#replyBt").remove();
          			if(list != null && list.length != 0){
 	            		let noti = "<span class='badge bg-primary badge-number' id='replyBt'>!</span>";
 	            		$(".notiNoti").append(noti);
@@ -92,7 +92,7 @@
          	url: "<%=request.getContextPath()%>/notification/firstNoti",
          	async: false,
          	success:function(list){	
-			        $("#replyBt").empty();
+         			$("#replyBt").remove();
          			if(list != null && list.length != 0){
 	            		let noti = "<span class='badge bg-primary badge-number' id='replyBt'>!</span>";
 	            		$(".notiNoti").append(noti);

@@ -243,17 +243,17 @@ public class AdminController {
 		adminService.insertShortUrl(member, url);
 		
 		//생각해보니 자신의 ip주소를 구한다고 하더라도 자신이 타인이 세팅안하면 못쓰니 시험용으로만 사용하고 aws배운뒤 그걸로 수정필요
-		String ip = "";
-		InetAddress local;
-		try {
-			local = InetAddress.getLocalHost();
-			ip = local.getHostAddress();
-		} catch (UnknownHostException e1) {
-			e1.printStackTrace();
-		}
+		//String ip = "";
+		//InetAddress local;
+		//try {
+		//	local = InetAddress.getLocalHost();
+		//	ip = local.getHostAddress();
+		//} catch (UnknownHostException e1) {
+		//	e1.printStackTrace();
+		//}
 
 		//메일 발송
-		String link = "http://"+ ip + ":8080/ezencompany/join/" + url;
+		String link = "http://54.180.98.138/join/" + url;
 		String setFrom = "vhahaha513@naver.com"; //2단계 인증 x, 메일 설정에서 POP/IMAP 사용 설정에서 POP/SMTP 사용함으로 설정o
 		String toMail = email;
 		String title = "[이젠컴퍼니]회원가입 링크입니다."; 
@@ -316,8 +316,9 @@ public class AdminController {
 			e1.printStackTrace();
 		}
 
+		//String link = "http://"+ ip + ":8080/ezencompany/join/" + url;
 		//메일 발송
-		String link = "http://"+ ip + ":8080/ezencompany/join/" + url;
+		String link = "http://54.180.98.138/join/" + url;
 		String setFrom = "vhahaha513@naver.com"; //2단계 인증 x, 메일 설정에서 POP/IMAP 사용 설정에서 POP/SMTP 사용함으로 설정o
 		String toMail = email;
 		String title = "[이젠컴퍼니]회원가입 링크입니다."; 

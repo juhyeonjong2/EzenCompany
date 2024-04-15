@@ -59,7 +59,18 @@ $(document).ready(function(){
 						isMaster : vo.master,
 						isDeleted : vo.delyn =='n' ? false : true 
 					};
-		} 
+		} ,
+		noti : function (mno, mid){
+		console.log(222);
+			$.ajax({
+	        	url: "/notification/blogNoti",
+	        	data: {targetMno : mno},
+	        	success:function(data){
+	        	console.log(111);
+	        		socket.send("블로그댓글,"+mid+",블로그댓글,"+data);
+	        	}
+			});
+		}
 	};
 	
 	ezReply_init(replyConfig, true);

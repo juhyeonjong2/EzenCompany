@@ -20,12 +20,14 @@
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
 
-        <!-- 관리자가 아니라면 보이지 않음.-->
-        <li class="nav-item">
-            <a class="nav-link nav-icon" href="../admin/home.html">
-              <i class="bi bi-key"></i>
-            </a>
-        </li><!-- End Admin Icon-->
+<% if(request.isUserInRole("ROLE_ADMIN")){ %>
+      <!-- 관리자가 아니라면 보이지 않음.-->
+      <li class="nav-item">
+          <a class="nav-link nav-icon" href="<%=request.getContextPath()%>/admin/home">
+            <i class="bi bi-key"></i>
+          </a>
+      </li><!-- End Admin Icon-->
+<% } %>
 
         <!-- 알림 -->
         <%@ include file="../include/notification.jsp"%>
@@ -37,13 +39,13 @@
         </li><!-- End Messages Icon -->
         
         <li class="nav-item">
-            <a class="nav-link nav-icon search-bar-toggle" href="../board/home.html">
+            <a class="nav-link nav-icon search-bar-toggle" href="<%=request.getContextPath()%>/board/home">
               <i class="bi bi-grid"></i>
             </a>
         </li><!-- End Board Icon-->
 
         <li class="nav-item">
-            <a class="nav-link nav-icon search-bar-toggle" href="../blog/home.html">
+            <a class="nav-link nav-icon search-bar-toggle" href="<%=request.getContextPath()%>/blog/home">
               <i class="bi bi-house-door"></i>
             </a>
         </li><!-- End Home Icon-->

@@ -23,6 +23,7 @@
 	<link href="<%=request.getContextPath()%>/resources/css/style.css" rel="stylesheet">
 	<link href="<%=request.getContextPath()%>/resources/css/ezReply.css" rel="stylesheet">
 	<link href="<%=request.getContextPath()%>/resources/css/chatting.css" rel="stylesheet">
+  	<link href="<%=request.getContextPath()%>/resources/css/noti.css" rel="stylesheet">
   
 	<!-- Predefined Script -->
 	<!-- <script src="https://cdn.tiny.cloud/1/3bif3ntggq2j5i7kj5tgxwt4wodd6se5f35dq4qu2s1aj007/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script> -->
@@ -37,6 +38,9 @@
 	<%@ include file="../include/blogHeader.jsp"%>
 	<!-- sidebar -->
 	<%@ include file="../include/blogSidebar.jsp"%>
+	<!-- catting popup -->
+	<%@ include file="../include/socketHeader.jsp"%>
+	<%@ include file="../popup/chatting.jsp"%>
 
   <main id="main" class="main">
   <input type="hidden" id="inputMno" value="${mno}"> 

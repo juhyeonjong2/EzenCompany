@@ -25,6 +25,7 @@
 	<link href="<%=request.getContextPath()%>/resources/css/style.css" rel="stylesheet">
 	<link href="<%=request.getContextPath()%>/resources/css/ezReply.css" rel="stylesheet">
 	<link href="<%=request.getContextPath()%>/resources/css/chatting.css" rel="stylesheet">
+  	<link href="<%=request.getContextPath()%>/resources/css/noti.css" rel="stylesheet">
   
 	<!-- Predefined Script -->
 	<script src="<%=request.getContextPath()%>/resources/js/jquery-3.7.1.min.js"></script>

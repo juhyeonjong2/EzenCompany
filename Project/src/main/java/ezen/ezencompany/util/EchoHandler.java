@@ -45,6 +45,7 @@ public class EchoHandler extends TextWebSocketHandler {
 				String target = strs[1]; // mid 저장
 				String content = strs[2];
 				String myName = strs[3];
+				System.out.println(target);
 				//users에 키값을 넣어서 해당사람의 세션을 찾아 그 사람에게 보내준다
 				WebSocketSession targetSession = users.get(target);  // 메시지를 받을 세션 조회
 				

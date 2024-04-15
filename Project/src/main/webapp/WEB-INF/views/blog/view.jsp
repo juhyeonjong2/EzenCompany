@@ -25,6 +25,7 @@
 	<link href="<%=request.getContextPath()%>/resources/css/style.css" rel="stylesheet">
 	<link href="<%=request.getContextPath()%>/resources/css/ezReply.css" rel="stylesheet">
 	<link href="<%=request.getContextPath()%>/resources/css/chatting.css" rel="stylesheet">
+  	<link href="<%=request.getContextPath()%>/resources/css/noti.css" rel="stylesheet">
   
 	<!-- Predefined Script -->
 	<script src="<%=request.getContextPath()%>/resources/js/jquery-3.7.1.min.js"></script>
@@ -37,6 +38,9 @@
 	<%@ include file="../include/blogHeader.jsp"%>
 	<!-- sidebar -->
 	<%@ include file="../include/blogSidebar.jsp"%>
+	<!-- catting popup -->
+	<%@ include file="../include/socketHeader.jsp"%>
+	<%@ include file="../popup/chatting.jsp"%>
 
   <main id="main" class="main">
   	<input type="hidden" id="inputMno" value="${mno}"> 
@@ -197,11 +201,7 @@
 
 	<!-- popup -->
 	<%@ include file="../popup/blog.jsp"%>
-	
-	<!-- catting popup -->
-	<!--<script src="<%=request.getContextPath()%>/resources/js/socket.js"></script>-->
-	<%@ include file="../include/socketHeader.jsp"%>
-	<%@ include file="../popup/chatting.jsp"%>
+
   </main><!-- End #main -->
   
   <!-- footer -->
