@@ -695,7 +695,6 @@ public class BlogController {
 		BlogVO blog = blogService.selectOne(bno, true);
 		int ownerMno = blog.getMno();
 		
-		
 		BlogReplyVO vo = new BlogReplyVO();
 		vo.setMno(mno);
 		vo.setBgno(bno);
@@ -704,6 +703,14 @@ public class BlogController {
 		
 		int result = blogService.insertReply(vo);
 		
+		int targetMno=0;
+		if(prno != 0) {
+			BlogReplyVO preplyVO = blogService.getReply(prno);
+			targetMno = preplyVO.getMno(); // 타겟
+		}else {
+			targetMno = blog.getMno();
+		}
+		 
 		// 반환값 생성 
 		Map<String,Object> resMap = new HashMap<String,Object>();
 		if(result > 0 ) {
@@ -719,7 +726,8 @@ public class BlogController {
 
 			resMap.put("result", "SUCCESS"); //  성공
 			resMap.put("total", blogService.blogReplyList(bno).size()); //  갯수
-			resMap.put("data", vo); 
+			resMap.put("data", vo);
+			resMap.put("targetMno", targetMno);
 			
 		}
 		else {
