@@ -11,6 +11,7 @@ import ezen.ezencompany.service.ManagementService;
 import ezen.ezencompany.service.MemberService;
 import ezen.ezencompany.vo.AttributeVO;
 import ezen.ezencompany.vo.BoardTypeVO;
+import ezen.ezencompany.vo.MemberVO;
 
 @Component
 public class BoardAuthority {
@@ -30,41 +31,52 @@ public class BoardAuthority {
 		List<BoardTypeVO> list = boardTypeService.getBoardType(); //모든 보드타입 가져옴
 		List<BoardTypeVO> acceptedList = new ArrayList<BoardTypeVO>(); //사용할 보드타입 넣기용
 		
+		 boolean isAdmin = false;
+		 MemberVO member = memberService.getMember(mno);
+		 if(member.getAuthority().equals("ROLE_ADMIN"))
+		 {
+			 isAdmin = true;
+		 }
+		
 		//모든 보드타입만큼 반복하면서 읽기권한이 일치하는경우 break로 그 값만 얻어냄
 		for(int i = 0; i< list.size(); i++)
 		{
 			
 		  int index = list.get(i).getBindex();
 		  boolean isReadable = false; 
-		  List<AttributeVO> rlist = boardTypeService.getReader(index); // 모든 보드타입의 읽기권한을 가져옴
-		  
-		  for(int j = 0; j< rlist.size(); j++) 
+		  if(isAdmin) {
+			  // 어드민의 경우 무조건 읽기 가능
+			  acceptedList.add(list.get(i));
+		  }else 
 		  {
-			  AttributeVO rr =  rlist.get(j);
-			  //category(cidx)가 0인경우 "모두" 처리한다.
-			 if(rr.getCidx() == 0) {
-				 isReadable = true;
-				 break;
-			 }
-				 
-			  for(int k=0;k<option.size();k++)
+			  List<AttributeVO> rlist = boardTypeService.getReader(index); // 모든 보드타입의 읽기권한을 가져옴
+			  for(int j = 0; j< rlist.size(); j++) 
 			  {
-				  AttributeVO ev = option.get(k);
-				  if(rr.getCidx() ==   ev.getCidx() && rr.getAidx() == ev.getAidx()) 
+				  AttributeVO rr =  rlist.get(j);
+				  //category(cidx)가 0인경우 "모두" 처리한다.
+				 if(rr.getCidx() == 0) {
+					 isReadable = true;
+					 break;
+				 }
+					 
+				  for(int k=0;k<option.size();k++)
 				  {
-					  isReadable = true;
+					  AttributeVO ev = option.get(k);
+					  if(rr.getCidx() ==   ev.getCidx() && rr.getAidx() == ev.getAidx()) 
+					  {
+						  isReadable = true;
+						  break;
+					  }
+				  }
+				  if(isReadable){ 
 					  break;
 				  }
 			  }
-			  if(isReadable){ 
-				  break;
+			  //트루인 경우 새 리스트에 넣어줌
+			  if(isReadable){
+				  acceptedList.add(list.get(i));
 			  }
-		  	}
-		  //트루인 경우 새 리스트에 넣어줌
-		  if(isReadable){
-		  acceptedList.add(list.get(i));
 		  }
-		  
 		}
 		
 		return acceptedList;
@@ -79,9 +91,17 @@ public class BoardAuthority {
 		 List<AttributeVO> option = memberService.getOptions(mno);
 		 boolean isReadable = false;
 		 
-		 //list 가 null인경우 또는 아무것도 없는경우 모두 읽기 가능.
-		 if(list == null || list.size() == 0)
-			 return true; 
+		 // admin 확인
+		 MemberVO member = memberService.getMember(mno);
+		 if(member.getAuthority().equals("ROLE_ADMIN"))
+		 {
+			 return true;
+		 }
+		 
+		//list 가 null인경우 관리자만 읽기 가능.
+		 if(list == null || list.size() == 0) {
+			 return false; 
+		 }
 		 
 		 for(AttributeVO attr : list) 
 		 {
@@ -119,9 +139,16 @@ public class BoardAuthority {
 		 boolean isWritable = false;
 		 int acceptedCnt = 0;
 		 
+		// admin 확인
+		 MemberVO member = memberService.getMember(mno);
+		 if(member.getAuthority().equals("ROLE_ADMIN")) {
+			 return true;
+		 }
+		 
 		//list 가 null인경우 쓰기 불가능(관리자만)
-		 if(list == null || list.size() == 0)
+		 if(list == null || list.size() == 0) { 
 			 return false; 
+		 }
 		 
 		 for(AttributeVO attr : list) 
 		 {
