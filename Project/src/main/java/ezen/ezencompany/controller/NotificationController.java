@@ -61,13 +61,14 @@ public class NotificationController {
 	}
 	
 	//블로그에서 댓글을 단 경우
-	@RequestMapping(value = "/blogNoti", method = RequestMethod.GET)
+	@RequestMapping(value = "/blogNoti", method = RequestMethod.GET, produces = "application/string; charset=utf8")
 	@ResponseBody 
 	public String blogNoti(int targetMno) {
-		
+		System.out.println(targetMno+"sssss");
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserVO user = (UserVO) authentication.getPrincipal();
 		int mno = user.getMno();
+		String myName = chattingService.getName(mno);
 		
 		//보내고자 하는 상대의 targetMno로 이름을 얻어냄
 		String targetName = chattingService.getName(targetMno);
@@ -78,7 +79,7 @@ public class NotificationController {
 		map.put("code", "bg");
 		
 		notificationService.sendNoti(map);
-		return "true";
+		return myName;
 	}
 	
 	//게시글에서 댓글을 단 경우

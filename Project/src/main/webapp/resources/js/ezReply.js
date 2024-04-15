@@ -33,8 +33,17 @@ let ezReplyConfig =
 						isDeleted : vo.delyn =='n' ? false : true 
 					};
 		},
-		noti : function (mno){
-			alert(mno);
+		noti : function (mno, mid){
+		console.log(222);
+			$.ajax({
+	        	url: "/notification/blogNoti",
+	        	data: {targetMno : mno},
+	        	success:function(data){
+	        	console.log(111);
+	        		socket.send("블로그댓글,"+mid+",블로그댓글,"+data);
+	        	}
+			});
+	
 		}
 	};
 
@@ -69,7 +78,6 @@ function ezReply_request_list(){
 
 
 function ezReply_request(data, callback){
-	
 	$.ajax(
 	{
 		url: ezReplyConfig.create,
@@ -87,8 +95,7 @@ function ezReply_request(data, callback){
 					let data = ezReplyConfig.parser(resData.data);
 					ezReply_drawReply(data);	
 					
-					ezConfig.noti(resData.targetMno);
-					
+					ezReplyConfig.noti(resData.targetMno, resData.targetMid);
 				}
 			}
 			

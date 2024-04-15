@@ -201,11 +201,7 @@
 
 	<!-- popup -->
 	<%@ include file="../popup/blog.jsp"%>
-	
-	<!-- catting popup -->
-	<!--<script src="<%=request.getContextPath()%>/resources/js/socket.js"></script>-->
-	<%@ include file="../include/socketHeader.jsp"%>
-	<%@ include file="../popup/chatting.jsp"%>
+
   </main><!-- End #main -->
   
   <!-- footer -->

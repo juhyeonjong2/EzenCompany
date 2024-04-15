@@ -199,7 +199,7 @@
                 	url: "<%=request.getContextPath()%>/chatting/linkStart",
                 	success:function(data){
                 		if(data == "true"){
-                			console.log("연결됨");
+                			//console.log("연결됨");
                 		}
                 	}
                 });// ajax끝

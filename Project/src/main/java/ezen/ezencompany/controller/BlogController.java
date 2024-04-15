@@ -710,6 +710,8 @@ public class BlogController {
 		}else {
 			targetMno = blog.getMno();
 		}
+		
+		String targetMid = memberService.getId(targetMno);
 		 
 		// 반환값 생성 
 		Map<String,Object> resMap = new HashMap<String,Object>();
@@ -728,6 +730,7 @@ public class BlogController {
 			resMap.put("total", blogService.blogReplyList(bno).size()); //  갯수
 			resMap.put("data", vo);
 			resMap.put("targetMno", targetMno);
+			resMap.put("targetMid", targetMid);
 			
 		}
 		else {
