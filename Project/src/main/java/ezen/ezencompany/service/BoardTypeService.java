@@ -38,4 +38,9 @@ public class BoardTypeService {
 	public List<AttributeVO> getWriter(int index) {
 		return boardTypeDAO.getWriter(index);
 	}
+	
+	//게시판 이름을 가져옴
+	public String getBtname(int bindex) {
+		return boardTypeDAO.getBtname(bindex);
+	}
 }

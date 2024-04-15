@@ -38,4 +38,9 @@ public class BoardTypeDAO {
 	public List<AttributeVO> getWriter(int index){
 		return sqlSession.selectList(namespace+".getWriter", index);
 	}
+	
+	//게시판 이름을 가져옴
+	public String getBtname(int bindex){
+		return sqlSession.selectOne(namespace+".getBtname", bindex);
+	}
 }
