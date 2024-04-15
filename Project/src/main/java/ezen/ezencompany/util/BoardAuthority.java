@@ -1,13 +1,13 @@
 package ezen.ezencompany.util;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ezen.ezencompany.service.BoardTypeService;
-import ezen.ezencompany.service.ManagementService;
 import ezen.ezencompany.service.MemberService;
 import ezen.ezencompany.vo.AttributeVO;
 import ezen.ezencompany.vo.BoardTypeVO;
@@ -146,10 +146,11 @@ public class BoardAuthority {
 		 }
 		 
 		//list 가 null인경우 쓰기 불가능(관리자만)
-		 if(list == null || list.size() == 0) { 
+		 if(list == null || list.size() == 0) {
 			 return false; 
 		 }
 		 
+		 HashSet<Integer> cidxSet = new HashSet<Integer>();
 		 for(AttributeVO attr : list) 
 		 {
 			 // category(cidx)가 0인경우 "모두" 처리한다.
@@ -157,7 +158,7 @@ public class BoardAuthority {
 				 isWritable = true;
 				 break;
 			 }
-			 
+			 cidxSet.add(attr.getCidx());
 			 for(AttributeVO op : option) 
 			 { 	
 				 if(attr.getCidx() == op.getCidx() && attr.getAidx() == op.getAidx()) 
@@ -170,7 +171,7 @@ public class BoardAuthority {
 		
 		if(isWritable == false) {
 			// 모든 카테고리 조건에 부합한다면.
-		  if(acceptedCnt == list.size()) {
+		  if(acceptedCnt == cidxSet.size()) {
 			  isWritable = true;
 		  }
 		}
