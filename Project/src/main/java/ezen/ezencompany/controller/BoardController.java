@@ -84,6 +84,14 @@ public class BoardController {
 		model.addAttribute("board", board);
 		
 		
+		
+		String btname = boardTypeService.getBtname(bindexInt);
+		model.addAttribute("btname", btname);
+		
+		
+		
+		
+		
 		return "board/list";
 		
 	
@@ -124,11 +132,7 @@ public class BoardController {
 		};
 		
 		model.addAttribute("board", board);
-		
-		
-		
-		
-		
+
 		//조회수 증가 service 추가
 		
 		// 서비스태우고 dao 태워서 쿼리문 실행되게 만들기
