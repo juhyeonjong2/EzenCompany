@@ -94,4 +94,9 @@ public class MemberService {
 	public String getId(int mno) {
 		return memberDAO.getId(mno);
 	}
+	
+	//중복 이메일이 존재하는지 확인
+	public int checkEm(String email) {
+		return memberDAO.checkEm(email);
+	}
 }

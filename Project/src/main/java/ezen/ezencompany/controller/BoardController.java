@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
@@ -257,7 +258,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/write.do",method=RequestMethod.POST)
-	public String write(BoardVO vo, List<MultipartFile> uploadFile) throws Exception {
+	public String write(HttpServletRequest request, BoardVO vo, List<MultipartFile> uploadFile) throws Exception {
 		
 		
 		int result = boardService.insert(vo);
@@ -269,7 +270,7 @@ public class BoardController {
 				
 				// 업로드 경로 : basePath + upload/blog/{bgno}
 				String [] subPath =  {"upload", "board", Integer.toString(vo.getBno())};
-				
+				String basePath = request.getSession().getServletContext().getRealPath("resources");
 				String fileName = UUID.randomUUID().toString(); // 중복방지를 위한 랜덤 이름.
 				StringBuffer buffer = new StringBuffer();
 				buffer.append(fileName);
@@ -277,7 +278,8 @@ public class BoardController {
 				buffer.append(originfileName); // 확장자까지
 				String realFileName = buffer.toString();
 				
-				String uploadPath = Path.getUploadPath(subPath);
+				
+				String uploadPath = Path.getUploadPath(basePath, subPath);
 				multipartFile.transferTo(new File(uploadPath,realFileName)); // 저장
 				
 				BoardAttachVO attach = new BoardAttachVO();
@@ -485,13 +487,15 @@ public class BoardController {
 	
 	
 	@GetMapping("/download/{bfno}")
-	public void download(Model model, @PathVariable int bfno, HttpServletResponse response) throws Exception {
+	public void download(HttpServletRequest request, Model model, @PathVariable int bfno, HttpServletResponse response) throws Exception {
 		
 			 BoardAttachVO vo  = boardService.getFile(bfno);
 			 
 			 // 실제 파일경로 구하기.
 			 String [] subPath =  {"upload", "board", Integer.toString(vo.getBno())};
-			 String uploadPath = Path.getUploadPath(subPath);
+			 String basePath = request.getSession().getServletContext().getRealPath("resources");
+			 
+			 String uploadPath = Path.getUploadPath(basePath, subPath);
 			 
 			 File downloadFile = new File(uploadPath,vo.getBfrealname());
 			 byte fileByte[] =  FileUtils.readFileToByteArray(downloadFile);

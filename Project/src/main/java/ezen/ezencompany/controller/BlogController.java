@@ -191,7 +191,7 @@ public class BlogController {
 	}
 	
 	@RequestMapping(value="/writeOk", method=RequestMethod.POST)
-	public String writeOk(/*HttpServletRequest request,*/ BlogVO vo, List<MultipartFile> uploadFile) throws Exception {
+	public String writeOk(HttpServletRequest request, BlogVO vo, List<MultipartFile> uploadFile) throws Exception {
 		
 		// 로그인된 사용자 정보 가져오기.
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -236,8 +236,8 @@ public class BlogController {
 						buffer.append(fileExtension);
 					}
 					String realFileName = buffer.toString();
-					
-					String uploadPath = Path.getUploadPath(subPath);
+					String basePath = request.getSession().getServletContext().getRealPath("resources");
+					String uploadPath = Path.getUploadPath(basePath, subPath);
 					multipartFile.transferTo(new File(uploadPath,realFileName)); // 저장
 					
 					BlogAttachVO attach = new BlogAttachVO();
@@ -305,7 +305,7 @@ public class BlogController {
 	}
 	
 	@RequestMapping(value="/modify", method=RequestMethod.POST)
-	public String modifyOk(BlogVO vo, List<MultipartFile> uploadFile, @RequestParam(value="uploadedFiles") String[] uploadedFiles) throws Exception {
+	public String modifyOk(HttpServletRequest request ,BlogVO vo, List<MultipartFile> uploadFile, @RequestParam(value="uploadedFiles") String[] uploadedFiles) throws Exception {
 		
 		// 로그인된 사용자 정보 가져오기.
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -346,7 +346,8 @@ public class BlogController {
 				//1. 웹서버 드라이브에서 실제 파일 삭제
 				// 1-1. 저장된 파일 경로 - 업로드 경로 : basePath + upload/blog/{bgno}
 				String [] subPath =  {"upload", "blog", Integer.toString(fileVo.getBgno())};
-				String uploadPath = Path.getUploadPath(subPath);
+				String basePath = request.getSession().getServletContext().getRealPath("resources");
+				String uploadPath = Path.getUploadPath(basePath,subPath);
 				// 1-2. 파일 삭제.
 				File file = new File(uploadPath, fileVo.getBgfrealname());
 				if( file.exists()) {
@@ -403,7 +404,8 @@ public class BlogController {
 					buffer.append(fileExtension);
 				}
 				String realFileName = buffer.toString();
-				String uploadPath = Path.getUploadPath(subPath);
+				String basePath = request.getSession().getServletContext().getRealPath("resources");
+				String uploadPath = Path.getUploadPath(basePath, subPath);
 				multipartFile.transferTo(new File(uploadPath,realFileName)); // 저장
 				
 				BlogAttachVO attach = new BlogAttachVO();
@@ -420,7 +422,7 @@ public class BlogController {
 	}
 	
 	@RequestMapping(value="/remove", method=RequestMethod.POST)
-	public String removeOk(/*HttpServletRequest request,*/ int bgno){
+	public String removeOk(HttpServletRequest request, int bgno){
 		// 로그인된 사용자 정보 가져오기.
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserVO user = (UserVO) authentication.getPrincipal();
@@ -442,7 +444,8 @@ public class BlogController {
 			//1. 웹서버 드라이브에서 실제 파일 삭제
 			// 1-1. 저장된 파일 경로 - 업로드 경로 : basePath + upload/blog/{bgno}
 			String [] subPath =  {"upload", "blog", Integer.toString(fileVo.getBgno())};
-			String uploadPath = Path.getUploadPath(subPath);
+			String basePath = request.getSession().getServletContext().getRealPath("resources");
+			String uploadPath = Path.getUploadPath(basePath, subPath);
 			// 1-2. 파일 삭제.
 			File file = new File(uploadPath, fileVo.getBgfrealname());
 			if( file.exists()) {
@@ -886,14 +889,15 @@ public class BlogController {
 	
 	// 파일 다운로드
 	@GetMapping("/download/{bgfno}")
-	public void download(Model model, @PathVariable int bgfno, HttpServletResponse response) throws Exception {
+	public void download(HttpServletRequest request,Model model, @PathVariable int bgfno, HttpServletResponse response) throws Exception {
 		
 			 BlogAttachVO vo  = blogService.getFile(bgfno);
 			 
 			 // 실제 파일경로 구하기.
 			 String [] subPath =  {"upload", "blog", Integer.toString(vo.getBgno())};
-			 String uploadPath = Path.getUploadPath(subPath);
+			 String basePath = request.getSession().getServletContext().getRealPath("resources");
 			 
+			 String uploadPath = Path.getUploadPath(basePath,subPath);
 			 File downloadFile = new File(uploadPath,vo.getBgfrealname());
 			 byte fileByte[] =  FileUtils.readFileToByteArray(downloadFile);
 			 response.setContentType("application/octet-stream");

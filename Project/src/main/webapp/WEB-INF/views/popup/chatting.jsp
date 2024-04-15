@@ -120,7 +120,7 @@
 		                     //2차 반복문
 		                     for(let j =0; j<detaleList.length; j++){
 		                    	 if(list[i].aidx == detaleList[j].aidx && detaleList[j].mid != null){
-		                    		 let html2 = '<div class="chatting_user d-flex m-2 t-1 mdata" data-bs-target="#chattingRoomModal"'
+		                    		 let html2 = '<div class="chatting_user d-flex m-2 t-1 mdata_'+detaleList[j].mid+'" data-bs-target="#chattingRoomModal"'
 		                    		 		   + 'data-bs-toggle="modal" data-bs-mno="'
 		                    		 		   + detaleList[j].mno
 		                    		 		   + '" data-bs-value="'
@@ -133,7 +133,7 @@
 					                 	 	   + '<div class="d-flex">'
 			                    			   +'<img src="'
 							                   + "<%=request.getContextPath()%>"
-							                   + '/resources/img/MemberIcon.png" width="50" height="50" alt="Profile" class="rounded-circle Profile">'
+							                   + '/resources/img/MemberIcon.png" width="50" height="50" alt="Profile" class="rounded-circle Profile_'+detaleList[j].mid+'">'
 							                   + '<div class="d-flex flex-column ms-2">'
 			                    		  	   + '<span class="fw-bold user_name">'
 			                    			   + detaleList[j].mname
@@ -153,9 +153,9 @@
 				                             	 success:function(profile){
 				                             		 //해당 사원이 프로필 사진이 존재한다면
 				                             		if(profile != null && profile != ""){
-				                             			let img = "<%=request.getContextPath()%>/resources/upload/"+profile
-				                             			$('.Profile').attr("src", img);
-				                             			$('.mdata').attr("data-bs-img", profile);
+				                             			let img = "<%=request.getContextPath()%>/resources/upload/"+detaleList[j].mid+"/"+profile
+				                             			$('.Profile_'+detaleList[j].mid).attr("src", img);
+				                             			$('.mdata_'+detaleList[j].mid).attr("data-bs-img", profile);
 				                             		}
 				                             	 }
 				                              });//프로필 사진 ajax       	   
@@ -217,7 +217,7 @@
                 if(img == "MemberIcon.png"){
                 	profile = "<%=request.getContextPath()%>/resources/img/"+img
                 }else{
-                	profile = "<%=request.getContextPath()%>/resources/upload/"+img
+                	profile = "<%=request.getContextPath()%>/resources/upload/"+mid+"/"+img
                 }
                 $('.cImg').attr("src", profile);
                 
@@ -304,7 +304,7 @@
             url: "<%=request.getContextPath()%>/chatting/linkEnd",
             success:function(data){
 	               	if(data == "true"){
-	               		console.log("연결끊김");
+	               		//console.log("연결끊김");
 	               	}
                 }
             });// ajax끝

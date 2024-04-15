@@ -16,10 +16,10 @@ public class Path {
 		return Path;
 	}
 	
-	public static String getUploadPath(String[] subPath) {
+	public static String getUploadPath(String realPath , String[] subPath) {
 		
 		StringBuffer buffer = new StringBuffer();
-		buffer.append(getPath());
+		buffer.append(realPath);
 		for(String s : subPath){
 			buffer.append(File.separator); 
 			buffer.append(s);

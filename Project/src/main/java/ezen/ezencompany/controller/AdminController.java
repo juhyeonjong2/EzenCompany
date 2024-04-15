@@ -16,6 +16,7 @@ import java.util.UUID;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -169,8 +170,12 @@ public class AdminController {
 		String mid = memberService.getId(mno);
 		
 		String [] subPath =  {"upload", mid};
-		String uploadPath = Path.getUploadPath(subPath);
-		System.out.println(uploadPath);
+		//String uploadPath = Path.getUploadPath(subPath);
+		
+		String basePath = request.getSession().getServletContext().getRealPath("resources");
+		//System.out.println(basePath);
+		String uploadPath = Path.getUploadPath(basePath,subPath);
+		
 		if(!profileImg.getOriginalFilename().isEmpty()) { // 파일이 존재하는 경우
 			
 			//uuid 생성
@@ -213,10 +218,21 @@ public class AdminController {
 	
 	//사원등록을 누른경우
 	@RequestMapping(value="/registration")
-	public String registration(HttpServletRequest request, String name, String email) throws Exception{
+	public String registration(HttpServletRequest request, String name, String email, HttpServletResponse response) throws Exception{
 		Enumeration names = request.getParameterNames();
 		//hasMoreElements 다음에 읽어올 내용이 있다면 true반환 
 		//nextElement 사용할 때마다 처음부터 하나씩 name을 반환한다
+		
+		int checkEm = memberService.checkEm(email);
+		if(checkEm != 0) {
+			//응답할때 인코딩하기
+			response.setContentType("text/html; charset=utf-8");
+			response.setCharacterEncoding("UTF-8");
+			
+			response.getWriter().append("<script>alert('중복된 이메일이 존재합니다.');location.href='"
+			+request.getContextPath()+"/admin/home'</script>").flush();
+		}
+		
 		
 		//이름 이메일 담을 list
 		Map<String, Object> member = new HashMap<>();
@@ -253,7 +269,7 @@ public class AdminController {
 		//}
 
 		//메일 발송
-		String link = "http://54.180.98.138/join/" + url;
+		String link = "http://43.201.96.8/join/" + url;
 		String setFrom = "vhahaha513@naver.com"; //2단계 인증 x, 메일 설정에서 POP/IMAP 사용 설정에서 POP/SMTP 사용함으로 설정o
 		String toMail = email;
 		String title = "[이젠컴퍼니]회원가입 링크입니다."; 
@@ -318,7 +334,7 @@ public class AdminController {
 
 		//String link = "http://"+ ip + ":8080/ezencompany/join/" + url;
 		//메일 발송
-		String link = "http://54.180.98.138/join/" + url;
+		String link = "http://43.201.96.8/join/" + url;
 		String setFrom = "vhahaha513@naver.com"; //2단계 인증 x, 메일 설정에서 POP/IMAP 사용 설정에서 POP/SMTP 사용함으로 설정o
 		String toMail = email;
 		String title = "[이젠컴퍼니]회원가입 링크입니다."; 

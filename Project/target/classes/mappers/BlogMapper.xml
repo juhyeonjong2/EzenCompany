@@ -31,9 +31,9 @@
 </select>
 
 <select id="selectOptionEmployees" parameterType="employeeOptionVO" resultType="memberVO">
-	SELECT * FROM member as M 
-	LEFT JOIN employeeoption as E ON m.mno = e.mno 
-	WHERE E.cidx = #{cidx} AND E.aidx = #{aidx} AND M.enabled = 1;
+	SELECT * FROM member as m 
+	LEFT JOIN employeeoption as e ON m.mno = e.mno 
+	WHERE e.cidx = #{cidx} AND e.aidx = #{aidx} AND m.enabled = 1;
 </select>
 
 <select id="selectCategorys" resultType="categoryVO">

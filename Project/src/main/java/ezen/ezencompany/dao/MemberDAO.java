@@ -105,4 +105,9 @@ public class MemberDAO {
 	public String getId(int mno) {
 		return sqlSession.selectOne(namespace+".getId", mno);
 	}
+	
+	//중복이메일이 존재하는지 확인
+	public int checkEm(String email){
+		return sqlSession.selectOne(namespace+".checkEm", email);
+	}
 }

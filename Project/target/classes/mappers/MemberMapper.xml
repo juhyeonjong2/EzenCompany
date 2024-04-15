@@ -73,6 +73,10 @@
 		SELECT mid FROM member WHERE mno = #{mno};
 	</select>
 	
+	<select id="checkEm" parameterType="String" resultType="int" >
+		SELECT count(email) from joincert WHERE email = #{email}
+	</select>
+	
 </mapper>
 
 
