@@ -260,6 +260,11 @@ public class BoardController {
 	@RequestMapping(value="/write.do",method=RequestMethod.POST)
 	public String write(HttpServletRequest request, BoardVO vo, List<MultipartFile> uploadFile) throws Exception {
 		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVO user = (UserVO) authentication.getPrincipal();
+		int mno = user.getMno();
+		
+		vo.setMno(mno);
 		
 		int result = boardService.insert(vo);
 		if(result > 0) {

@@ -269,7 +269,7 @@ public class AdminController {
 		//}
 
 		//메일 발송
-		String link = "http://43.201.96.8/join/" + url;
+		String link = "http://192.168.0.202:8080/join/" + url;
 		String setFrom = "vhahaha513@naver.com"; //2단계 인증 x, 메일 설정에서 POP/IMAP 사용 설정에서 POP/SMTP 사용함으로 설정o
 		String toMail = email;
 		String title = "[이젠컴퍼니]회원가입 링크입니다."; 
@@ -332,9 +332,9 @@ public class AdminController {
 			e1.printStackTrace();
 		}
 
-		//String link = "http://"+ ip + ":8080/ezencompany/join/" + url;
+		String link = "http://192.168.0.202:8080/join/" + url;
 		//메일 발송
-		String link = "http://43.201.96.8/join/" + url;
+		//String link = "http://43.201.96.8:8080/join/" + url;
 		String setFrom = "vhahaha513@naver.com"; //2단계 인증 x, 메일 설정에서 POP/IMAP 사용 설정에서 POP/SMTP 사용함으로 설정o
 		String toMail = email;
 		String title = "[이젠컴퍼니]회원가입 링크입니다."; 

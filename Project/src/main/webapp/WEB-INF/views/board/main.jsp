@@ -58,7 +58,7 @@
 	                  <c:if test="${boardType.bindex eq board.bindex}">
 	                    <tr>
 	                      <td>
-	                          <a href="list.do?bno=${board.bno}">
+	                          <a href="view.do?bno=${board.bno}&${board.bindex}">
 	                            <p class="mini_table_title">${board.btitle}</p>
 	                          </a>
 	                      </td>

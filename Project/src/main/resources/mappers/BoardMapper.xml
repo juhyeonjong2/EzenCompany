@@ -39,7 +39,7 @@
 	<insert id="insert" parameterType="boardVO">
 	<![CDATA[
 		INSERT INTO board(btitle, bcontent, bhit, bdate,bindex, mno )
-		 VALUES (#{btitle} ,#{bcontent},0,now(),#{bindex},2)
+		 VALUES (#{btitle} ,#{bcontent},0,now(),#{bindex}, #{mno})
 	]]>
 	<selectKey order="AFTER" keyProperty="bno" resultType="int">
 		 	SELECT MAX(bno) FROM board

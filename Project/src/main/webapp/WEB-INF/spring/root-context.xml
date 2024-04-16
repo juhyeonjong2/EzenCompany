@@ -9,9 +9,9 @@
 	<!-- mysql 포트번호,이름등등 수정 -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://43.201.96.8/ezencompany?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=UTC" />
-		<property name="username" value="awsuser"/>
-		<property name="password" value="@rootAWS3db" />
+		<property name="url" value="jdbc:mysql://localhost:3306/ezencompany?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=UTC" />
+		<property name="username" value="ezencompany"/>
+		<property name="password" value="1234" />
 	</bean>
 	<!-- sqlsession추가(mybatis) -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
