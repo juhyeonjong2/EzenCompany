@@ -225,76 +225,79 @@ public class AdminController {
 		
 		int checkEm = memberService.checkEm(email);
 		if(checkEm != 0) {
+			//같은 이메일이 존재 한다면
 			//응답할때 인코딩하기
 			response.setContentType("text/html; charset=utf-8");
 			response.setCharacterEncoding("UTF-8");
 			
 			response.getWriter().append("<script>alert('중복된 이메일이 존재합니다.');location.href='"
 			+request.getContextPath()+"/admin/home'</script>").flush();
-		}
-		
-		
-		//이름 이메일 담을 list
-		Map<String, Object> member = new HashMap<>();
-		member.put("name", name);
-		member.put("email",email);
-		
-		// 분류<map>들을 담을 리스트 생성
-		List <HashMap<String, Object>> list = new ArrayList<>();
- 		names.nextElement(); //sysout삭제
-		names.nextElement();
-		while (names.hasMoreElements()) {
-			HashMap<String, Object> map = new HashMap<>();
-			String cidx = (String) names.nextElement();
-			String aidx = request.getParameter(cidx);
-			map.put(aidx, cidx);
-			list.add(map);
-		}
-		
-		//트랜잭션 들어간 서비스 호출
-		adminService.employeeRegistration(member, list);
-		//uuid 생성
-		String url = UUID.randomUUID().toString();
-		//여기서 id(짧은 경로)를 디비에 넣어줌
-		adminService.insertShortUrl(member, url);
-		
-		//생각해보니 자신의 ip주소를 구한다고 하더라도 자신이 타인이 세팅안하면 못쓰니 시험용으로만 사용하고 aws배운뒤 그걸로 수정필요
-		//String ip = "";
-		//InetAddress local;
-		//try {
-		//	local = InetAddress.getLocalHost();
-		//	ip = local.getHostAddress();
-		//} catch (UnknownHostException e1) {
-		//	e1.printStackTrace();
-		//}
+		}else {
+			
+			//같은 이메일이 존재 하지 않는다면
+			//이름 이메일 담을 list
+			Map<String, Object> member = new HashMap<>();
+			member.put("name", name);
+			member.put("email",email);
+			
+			// 분류<map>들을 담을 리스트 생성
+			List <HashMap<String, Object>> list = new ArrayList<>();
+	 		names.nextElement(); //sysout삭제
+			names.nextElement();
+			while (names.hasMoreElements()) {
+				HashMap<String, Object> map = new HashMap<>();
+				String cidx = (String) names.nextElement();
+				String aidx = request.getParameter(cidx);
+				map.put(aidx, cidx);
+				list.add(map);
+			}
+			
+			//트랜잭션 들어간 서비스 호출
+			adminService.employeeRegistration(member, list);
+			//uuid 생성
+			String url = UUID.randomUUID().toString();
+			//여기서 id(짧은 경로)를 디비에 넣어줌
+			adminService.insertShortUrl(member, url);
+			
+			//생각해보니 자신의 ip주소를 구한다고 하더라도 자신이 타인이 세팅안하면 못쓰니 시험용으로만 사용하고 aws배운뒤 그걸로 수정필요
+			//String ip = "";
+			//InetAddress local;
+			//try {
+			//	local = InetAddress.getLocalHost();
+			//	ip = local.getHostAddress();
+			//} catch (UnknownHostException e1) {
+			//	e1.printStackTrace();
+			//}
 
-		//메일 발송
-		String link = "http://192.168.0.202:8080/join/" + url;
-		String setFrom = "vhahaha513@naver.com"; //2단계 인증 x, 메일 설정에서 POP/IMAP 사용 설정에서 POP/SMTP 사용함으로 설정o
-		String toMail = email;
-		String title = "[이젠컴퍼니]회원가입 링크입니다."; 
-		String content = "이젠컴퍼니 회원가입 <a href='"+ link +"'> 링크 </a> 입니다." +
-						 "<br>" +
-						 "해당 링크로 들어가서 회원가입을 해주세요.";
-		
-		try {
-			//System.out.println("트라이 실행");
-			MimeMessage message = mailSender.createMimeMessage(); //Spring에서 제공하는 mail API
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
-            helper.setFrom(setFrom);
-            helper.setTo(toMail);
-            helper.setSubject(title);
-            helper.setText(content, true);
-            //System.out.println("메일 준비 끝");
-            mailSender.send(message);
-            //System.out.println("메일 보냄");
-		}catch (Exception e) {
-			//System.out.println("메일실패");
-			e.printStackTrace();
+			//메일 발송
+			String link = "http://192.168.0.202:8080/join/" + url;
+			String setFrom = "vhahaha513@naver.com"; //2단계 인증 x, 메일 설정에서 POP/IMAP 사용 설정에서 POP/SMTP 사용함으로 설정o
+			String toMail = email;
+			String title = "[이젠컴퍼니]회원가입 링크입니다."; 
+			String content = "이젠컴퍼니 회원가입 <a href='"+ link +"'> 링크 </a> 입니다." +
+							 "<br>" +
+							 "해당 링크로 들어가서 회원가입을 해주세요.";
+			
+			try {
+				//System.out.println("트라이 실행");
+				MimeMessage message = mailSender.createMimeMessage(); //Spring에서 제공하는 mail API
+	            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+	            helper.setFrom(setFrom);
+	            helper.setTo(toMail);
+	            helper.setSubject(title);
+	            helper.setText(content, true);
+	            //System.out.println("메일 준비 끝");
+	            mailSender.send(message);
+	            //System.out.println("메일 보냄");
+			}catch (Exception e) {
+				//System.out.println("메일실패");
+				e.printStackTrace();
+			}
 		}
+			//컨트롤러 간 이동을 할때(view resolver에 걸리지 않게 하려면)리다이렉트를 사용함
+			return "redirect:/admin/home";
 		
-		//컨트롤러 간 이동을 할때(view resolver에 걸리지 않게 하려면)리다이렉트를 사용함
-		return "redirect:/admin/home";
+		
 	}
 	
 	//회원탈퇴를 누른경우

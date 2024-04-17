@@ -74,7 +74,7 @@
 	</select>
 	
 	<select id="checkEm" parameterType="String" resultType="int" >
-		SELECT count(email) from joincert WHERE email = #{email}
+		SELECT count(email) from member WHERE email = #{email}
 	</select>
 	
 </mapper>
